@@ -8,7 +8,18 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <ThemeProvider theme={theme}>
         <Global styles={global} />
-        <Component {...pageProps} />
+        <div
+          css={{
+            margin: "0 auto",
+            minWidth: "32rem",
+            maxWidth: "40rem",
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Component {...pageProps} />
+        </div>
       </ThemeProvider>
     </>
   );

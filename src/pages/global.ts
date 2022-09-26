@@ -2,6 +2,9 @@ import { css } from "@emotion/react";
 export const global = css`
   @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
+  * {
+    box-sizing: border-box;
+  }
   html,
   body,
   div,
@@ -127,6 +130,10 @@ export const global = css`
 
   html {
     font-size: 62.5%;
+  }
+
+  body {
+    min-height: 100vh; /*그냥 height를 주면 고정된다. 반응형을 위해 min-height를 사용하자*/
   }
 
   body,
