@@ -2,7 +2,7 @@ import { useTheme } from "@emotion/react";
 import Image, { StaticImageData } from "next/image";
 import React, { FC } from "react";
 import bubble from "@/public/assets/speechbubble_square.png";
-import bubble_svg from "@/public/assets/speechbubble_sqaure.svg";
+import BubbleIcon from "@/public/assets/speechbubble_sqaure.svg";
 
 export interface HospitalInfo {
   title: string;
@@ -87,8 +87,8 @@ const Card: FC<ICardProps> = ({ hospitalInfo }) => {
                 color: theme.colors.grey,
               }}
             >
-              {/* {bubble_svg} */}
-              등록된 후기가 없어요
+              <BubbleIcon width="20" height="40" fill="#506978" /> 등록된 후기가
+              없어요
             </span>
           )}
         </div>
