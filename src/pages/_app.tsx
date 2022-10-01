@@ -1,8 +1,8 @@
+import { global } from "@/styles/global";
+import theme from "@/styles/theme";
 import { Global, ThemeProvider } from "@emotion/react";
 import type { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
-import { global } from "./global";
-import theme from "./theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

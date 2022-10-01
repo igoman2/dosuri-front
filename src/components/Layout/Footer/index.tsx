@@ -1,6 +1,6 @@
 import React, { FC } from "react";
+import { Menu } from "../menu";
 import FooterItem from "./FooterItem";
-import { Menu } from "../index";
 
 interface IFooterProps {
   menus: Menu[];
