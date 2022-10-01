@@ -23,7 +23,13 @@ const FooterItem: FC<IFooterItemProps> = ({ image, text }) => {
       }}
     >
       <Image src={image} alt={`${image}`} width={24} height={24} />
-      <span css={{ marginTop: "0.4rem", fontSize: theme.fontSizes.sm }}>
+      <span
+        css={{
+          marginTop: "0.4rem",
+          fontSize: theme.fontSizes.sm,
+          lineHeight: theme.lineHeights.sm,
+        }}
+      >
         {text}
       </span>
     </div>

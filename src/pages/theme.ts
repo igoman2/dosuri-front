@@ -10,6 +10,15 @@ const theme: Theme = {
     xxl: "2rem",
     xxxl: "2.4rem",
   },
+  lineHeights: {
+    xs: "1.4rem",
+    sm: "1.7rem",
+    md: "2.0rem",
+    lg: "2.2rem",
+    xl: "2.5rem",
+    xxl: "2.8rem",
+    xxxl: "3.4rem",
+  },
   colors: {
     purple: "#3D3DC1",
     purple_light: "#6666D9",

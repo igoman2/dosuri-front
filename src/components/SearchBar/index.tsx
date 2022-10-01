@@ -25,6 +25,7 @@ const SearchBar = () => {
     height: 3.4rem;
     width: 100%;
     font-size: ${theme.fontSizes.md};
+    line-height: ${theme.lineHeights.md};
     padding-left: 4rem;
     border-radius: 5rem;
     border: 0.1rem solid ${theme.colors.grey};

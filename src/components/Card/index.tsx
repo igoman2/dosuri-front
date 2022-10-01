@@ -1,7 +1,7 @@
 import { useTheme } from "@emotion/react";
 import Image, { StaticImageData } from "next/image";
 import React, { FC } from "react";
-import bubble from "@/public/assets/speechbubble_square.png";
+import bubble from "@/public/assets/speechbubble_sqaure.svg";
 import BubbleIcon from "@/public/assets/speechbubble_sqaure.svg";
 
 export interface HospitalInfo {
@@ -46,6 +46,7 @@ const Card: FC<ICardProps> = ({ hospitalInfo }) => {
         <div
           css={{
             fontSize: theme.fontSizes.md,
+            lineHeight: theme.lineHeights.md,
             fontWeight: 700,
           }}
         >
@@ -58,37 +59,42 @@ const Card: FC<ICardProps> = ({ hospitalInfo }) => {
             color: theme.colors.grey,
             gap: 10,
             fontSize: theme.fontSizes.md,
+            lineHeight: theme.lineHeights.md,
           }}
         >
           <div>{hospitalInfo.location}</div>
           <div>{`후기 ${hospitalInfo.reviewConut}개`}</div>
           <div>{`추천 ${hospitalInfo.thunbCount}명`}</div>
         </div>
-        <div
-          css={{
-            fontSize: theme.fontSizes.md,
-            display: "flex",
-            alignItems: "center",
-            gap: 4,
-          }}
-        >
-          <Image src={bubble} width={16} height={15} alt="bubble" />
+        <div>
           {hospitalInfo.recentReview ? (
             <span
               css={{
                 color: theme.colors.purple,
+                fontSize: theme.fontSizes.md,
+                lineHeight: theme.lineHeights.md,
+                display: "flex",
+                alignItems: "center",
+                gap: 4,
               }}
             >
+              <BubbleIcon width="16" height="15" fill={theme.colors.purple} />
+
               {hospitalInfo.recentReview}
             </span>
           ) : (
             <span
               css={{
                 color: theme.colors.grey,
+                fontSize: theme.fontSizes.md,
+                lineHeight: theme.lineHeights.md,
+                display: "flex",
+                alignItems: "center",
+                gap: 4,
               }}
             >
-              <BubbleIcon width="20" height="40" fill="#506978" /> 등록된 후기가
-              없어요
+              <BubbleIcon width="16" height="15" fill={theme.colors.grey} />
+              등록된 후기가 없어요
             </span>
           )}
         </div>

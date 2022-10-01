@@ -11,6 +11,7 @@ const Button: FC<IButtonProps> = ({ text }) => {
 
 const ButtonWrapper = styled.button`
   font-size: ${(props) => props.theme.fontSizes.xxxl};
+  line-height: ${(props) => props.theme.lineHeights.xxxl};
 `;
 
 export default Button;

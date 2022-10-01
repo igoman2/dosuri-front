@@ -22,7 +22,7 @@ const Header: FC<IHeaderProps> = ({ left, center, right }) => {
           flexGrow: 1,
         },
         height: "4.8rem",
-        marginBottom: "2.4rem",
+        marginBottom: "1.5rem",
         padding: "0 1rem",
       }}
     >

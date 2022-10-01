@@ -11,6 +11,15 @@ declare module "@emotion/react" {
       xxl: string;
       xxxl: string;
     };
+    lineHeights: {
+      xs: string;
+      sm: string;
+      md: string;
+      lg: string;
+      xl: string;
+      xxl: string;
+      xxxl: string;
+    };
     colors: {
       purple: string;
       purple_light: string;
