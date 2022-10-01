@@ -1,11 +1,12 @@
-import React from "react";
+import React, { FC } from "react";
 import FooterItem from "./FooterItem";
-import homeIcon from "@/public/assets/home.png";
-import crossIcon from "@/public/assets/cross.png";
-import buubleIcon from "@/public/assets/speechbubble_circle.png";
-import personIcon from "@/public/assets/person.png";
+import { Menu } from "../index";
 
-const Footer = () => {
+interface IFooterProps {
+  menus: Menu[];
+}
+
+const Footer: FC<IFooterProps> = ({ menus }) => {
   return (
     <nav
       css={{
@@ -23,10 +24,16 @@ const Footer = () => {
           display: "flex",
         }}
       >
-        <FooterItem text="홈" image={homeIcon} />
-        <FooterItem text="병원찾기" image={crossIcon} />
-        <FooterItem text="도수톡" image={buubleIcon} />
-        <FooterItem text="마이페이지" image={personIcon} />
+        {menus.map((menu, i) => {
+          return (
+            <FooterItem
+              key={i}
+              text={menu.title}
+              path={menu.path}
+              iconName={menu.iconName}
+            />
+          );
+        })}
       </div>
     </nav>
   );

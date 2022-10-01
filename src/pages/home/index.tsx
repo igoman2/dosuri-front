@@ -1,6 +1,5 @@
 import Card, { HospitalInfo } from "@/components/Card";
 import Layout from "@/components/Layout";
-import Footer from "@/components/Layout/Footer";
 import Header from "@/components/Layout/Header";
 import { useTheme } from "@emotion/react";
 import React from "react";
@@ -37,10 +36,7 @@ const Home = () => {
   ];
 
   return (
-    <Layout
-      header={<Header left={true} center={true} right={true} />}
-      footer={<Footer />}
-    >
+    <Layout header={<Header left={true} center={true} right={true} />}>
       <div
         css={{
           marginBottom: "2.5rem",

@@ -1,38 +1,70 @@
+import Icon from "@/util/Icon";
 import { useTheme } from "@emotion/react";
-import Image, { StaticImageData } from "next/image";
-import React, { FC, ReactElement } from "react";
+import Link from "next/link";
+import React, { FC } from "react";
+import { useRecoilValue } from "recoil";
+import { menuState } from "../store";
 
 interface IFooterItemProps {
-  image: StaticImageData;
+  iconName: string;
   text: string;
+  path: string;
 }
 
-const FooterItem: FC<IFooterItemProps> = ({ image, text }) => {
+const FooterItem: FC<IFooterItemProps> = ({ iconName, text, path }) => {
+  const currentMenu = useRecoilValue(menuState);
+
   const theme = useTheme();
+
+  const isCurrentPath = (): boolean => {
+    return path === currentMenu;
+  };
   return (
-    <div
-      css={{
-        flexGrow: 1,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "6.8rem",
-        gap: "0.3rem",
-        padding: "1rem 2.8rem 1.2rem 2.8rem",
-      }}
-    >
-      <Image src={image} alt={`${image}`} width={24} height={24} />
-      <span
+    <Link href={path}>
+      <a
         css={{
-          marginTop: "0.4rem",
-          fontSize: theme.fontSizes.sm,
-          lineHeight: theme.lineHeights.sm,
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "0.3rem",
+          position: "relative",
         }}
       >
-        {text}
-      </span>
-    </div>
+        <div
+          css={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "60%",
+            height: "6.8rem",
+            borderTop: isCurrentPath()
+              ? `2px solid ${theme.colors.purple}`
+              : "",
+            position: "absolute",
+            top: "-0.1rem",
+          }}
+        >
+          {isCurrentPath() ? (
+            <Icon name={`${iconName}_clicked`} />
+          ) : (
+            <Icon name={iconName} />
+          )}
+          <span
+            css={{
+              marginTop: "0.4rem",
+              fontSize: theme.fontSizes.sm,
+              lineHeight: theme.lineHeights.sm,
+              color: isCurrentPath() ? theme.colors.purple : theme.colors.black,
+            }}
+          >
+            {text}
+          </span>
+        </div>
+      </a>
+    </Link>
   );
 };
 

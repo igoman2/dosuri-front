@@ -1,6 +1,9 @@
-import React, { FC, ReactElement } from "react";
+import { useRouter } from "next/router";
+import React, { FC, ReactElement, useEffect } from "react";
 import Footer from "./Footer";
-import Header from "./Header";
+import { useSetRecoilState } from "recoil";
+import { menuState } from "./store";
+import { menus } from "./menu";
 
 interface ILayoutProps {
   header?: ReactElement;
@@ -9,6 +12,13 @@ interface ILayoutProps {
 }
 
 const Layout: FC<ILayoutProps> = ({ header, children, footer }) => {
+  const router = useRouter();
+  const setMenu = useSetRecoilState(menuState);
+
+  useEffect(() => {
+    setMenu(router.asPath);
+  }, [router, setMenu]);
+
   return (
     <>
       <header>{header}</header>
@@ -22,7 +32,7 @@ const Layout: FC<ILayoutProps> = ({ header, children, footer }) => {
       >
         {children}
       </main>
-      <footer>{footer}</footer>
+      <Footer menus={menus} />
     </>
   );
 };
