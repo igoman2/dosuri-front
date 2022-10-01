@@ -1,4 +1,4 @@
-import Card, { HospitalInfo } from "@/components/Card";
+import Card, { HospitalInfo } from "@/components/Card/HospitalCard";
 import Layout from "@/components/Layout";
 import Header from "@/components/Layout/Header";
 import { useTheme } from "@emotion/react";
