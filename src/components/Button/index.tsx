@@ -1,17 +1,40 @@
+import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import React, { FC } from "react";
+import React, { FC, ReactElement } from "react";
 
 interface IButtonProps {
-  text: string;
+  text: string | ReactElement;
+  size?: string;
+  color?: string;
+  backgroundColor?: string;
+  width?: string;
+  border?: string;
 }
 
-const Button: FC<IButtonProps> = ({ text }) => {
-  return <ButtonWrapper>{text}</ButtonWrapper>;
-};
+const Button: FC<IButtonProps> = ({
+  text,
+  size,
+  color,
+  backgroundColor,
+  border,
+}) => {
+  const theme = useTheme();
+  const button = css`
+    font-size: ${theme.fontSizes.lg};
+    line-height: ${theme.lineHeights.lg};
+    color: ${color ? color : theme.colors.white};
+    background-color: ${backgroundColor
+      ? backgroundColor
+      : theme.colors.purple_light2};
+    min-height: 4.2rem;
+    padding: 1rem;
+    box-shadow: none;
+    border-radius: 0.5rem;
+    border: ${border ? border : 0};
+    outline: 0;
+  `;
 
-const ButtonWrapper = styled.button`
-  font-size: ${(props) => props.theme.fontSizes.xxxl};
-  line-height: ${(props) => props.theme.lineHeights.xxxl};
-`;
+  return <button css={button}>{text}</button>;
+};
 
 export default Button;
