@@ -5,9 +5,7 @@ import Logo from "@/public/assets/logo2.png";
 import { css, useTheme } from "@emotion/react";
 import kakaoIcon from "@/public/assets/kakao.png";
 import googleIcon from "@/public/assets/google.png";
-import appleLogin from "@/public/assets/apple-login.png";
-import Head from "next/head";
-import Script from "next/script";
+import AppleLogin from "@/util/apple";
 
 const Login = () => {
   const theme = useTheme();
@@ -45,17 +43,7 @@ const Login = () => {
 
   return (
     <main css={mainLayout}>
-      <Head>
-        <meta name="appleid-signin-client-id" content="[CLIENT_ID]" />
-        <meta name="appleid-signin-scope" content="[SCOPES]" />
-        <meta name="appleid-signin-redirect-uri" content="[REDIRECT_URI]" />
-        <meta name="appleid-signin-state" content="[STATE]" />
-      </Head>
-      <Script
-        type="text/javascript"
-        src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"
-      ></Script>
-
+      <AppleLogin />
       <Image src={Logo} alt="로고" width={110} height={140} />
 
       <p css={logoTitle}>
