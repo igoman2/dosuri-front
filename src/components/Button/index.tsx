@@ -1,5 +1,4 @@
 import { css, useTheme } from "@emotion/react";
-import styled from "@emotion/styled";
 import React, { FC, ReactElement } from "react";
 
 interface IButtonProps {
@@ -9,6 +8,7 @@ interface IButtonProps {
   backgroundColor?: string;
   width?: string;
   border?: string;
+  onClick?: () => void;
 }
 
 const Button: FC<IButtonProps> = ({
@@ -17,6 +17,7 @@ const Button: FC<IButtonProps> = ({
   color,
   backgroundColor,
   border,
+  onClick,
 }) => {
   const theme = useTheme();
   const button = css`
@@ -32,9 +33,14 @@ const Button: FC<IButtonProps> = ({
     border-radius: 0.5rem;
     border: ${border ? border : 0};
     outline: 0;
+    cursor: pointer;
   `;
 
-  return <button css={button}>{text}</button>;
+  return (
+    <button css={button} onClick={onClick}>
+      {text}
+    </button>
+  );
 };
 
 export default Button;
