@@ -1,3 +1,4 @@
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Script from "next/script";
 import React from "react";
@@ -15,6 +16,7 @@ const AppleLogin = () => {
         <meta name="appleid-signin-state" content="[STATE]" />
       </Head>
       <Script
+        strategy="afterInteractive"
         type="text/javascript"
         src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"
       ></Script>

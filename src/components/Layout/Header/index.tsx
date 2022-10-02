@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import logo from "@/public/assets/logo1.png";
 import note from "@/public/assets/note.png";
 import SearchBar from "@/components/SearchBar";
+import Link from "next/link";
 
 interface IHeaderProps {
   left?: boolean;
@@ -26,9 +27,9 @@ const Header: FC<IHeaderProps> = ({ left, center, right }) => {
         padding: "0 1rem",
       }}
     >
-      <div>
-        {left && <Image src={logo} alt="logo" width={82} height={22} />}
-      </div>
+      <Link href="/">
+        <a>{left && <Image src={logo} alt="logo" width={82} height={22} />}</a>
+      </Link>
       <div className="center">{center && <SearchBar />}</div>
       <div>
         {right && <Image src={note} alt="register" width={28} height={28} />}
