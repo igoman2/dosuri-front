@@ -9,6 +9,7 @@ interface IButtonProps {
   width?: string;
   border?: string;
   onClick?: () => void;
+  type?: "button" | "submit" | "reset" | undefined;
 }
 
 const Button: FC<IButtonProps> = ({
@@ -18,6 +19,7 @@ const Button: FC<IButtonProps> = ({
   backgroundColor,
   border,
   onClick,
+  type,
 }) => {
   const theme = useTheme();
   const button = css`
@@ -37,7 +39,7 @@ const Button: FC<IButtonProps> = ({
   `;
 
   return (
-    <button css={button} onClick={onClick}>
+    <button css={button} onClick={onClick} type={type}>
       {text}
     </button>
   );

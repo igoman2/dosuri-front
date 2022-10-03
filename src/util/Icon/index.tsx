@@ -9,6 +9,7 @@ import HomeClicked from "@/public/assets/home_clicked.svg";
 import CrossClicked from "@/public/assets/cross_clicked.svg";
 import TalkClicked from "@/public/assets/talk_clicked.svg";
 import ProfileClicked from "@/public/assets/profile_clicked.svg";
+import Chevron from "@/public/assets/chevron.svg";
 
 interface IIconProps {
   name: string;
@@ -35,6 +36,7 @@ const iconTypes: any = {
   talk_clicked: TalkClicked,
   profile_clicked: ProfileClicked,
   talk_square: TalkSqaure,
+  chevron: Chevron,
 };
 
 const Icon: FC<IIconProps> = ({ name, ...props }) => {

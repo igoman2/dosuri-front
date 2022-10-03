@@ -8,10 +8,10 @@ import { menus } from "./menu";
 interface ILayoutProps {
   header?: ReactElement;
   children: ReactElement | ReactElement[];
-  footer?: ReactElement;
+  footer?: boolean;
 }
 
-const Layout: FC<ILayoutProps> = ({ header, children, footer }) => {
+const Layout: FC<ILayoutProps> = ({ header, children, footer = true }) => {
   const router = useRouter();
   const setMenu = useSetRecoilState(menuState);
 
@@ -32,7 +32,7 @@ const Layout: FC<ILayoutProps> = ({ header, children, footer }) => {
       >
         {children}
       </main>
-      <Footer menus={menus} />
+      {footer && <Footer menus={menus} />}
     </>
   );
 };
