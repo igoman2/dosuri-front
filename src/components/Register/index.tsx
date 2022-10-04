@@ -15,7 +15,7 @@ import Select, {
   components,
 } from "react-select";
 import { do_si, gu_dong } from "./location";
-import { useId } from "react";
+import { useId, useState } from "react";
 import Chevron from "@/public/assets/Chevron.svg";
 import Image from "next/image";
 import Icon from "@/util/Icon";
@@ -24,22 +24,67 @@ interface MyFormValues {
   firstName: string;
 }
 
-const Symtoms = [
-  "머리",
-  "목",
-  "어깨",
-  "허리",
-  "골반",
-  "무릎",
-  "손목",
-  "발목",
-  "관절",
-  "그외",
+interface Symtom {
+  title: string;
+  selected: boolean;
+}
+
+const Symtoms: Symtom[] = [
+  {
+    title: "머리",
+    selected: false,
+  },
+  {
+    title: "목",
+    selected: false,
+  },
+  {
+    title: "허리",
+    selected: false,
+  },
+  {
+    title: "어깨",
+    selected: false,
+  },
+  {
+    title: "골반",
+    selected: false,
+  },
+  {
+    title: "무릎",
+    selected: false,
+  },
+  {
+    title: "손목",
+    selected: false,
+  },
+  {
+    title: "발목",
+    selected: false,
+  },
+  {
+    title: "관절",
+    selected: false,
+  },
+  {
+    title: "그외",
+    selected: false,
+  },
 ];
 
 const RegisterForm: React.FC<{}> = () => {
   const initialValues: MyFormValues = { firstName: "" };
   const theme = useTheme();
+  const [symtoms, setSymtoms] = useState<Symtom[]>(Symtoms);
+
+  const onSymtomClick = (symtom: Symtom) => {
+    setSymtoms((prev) => {
+      const selectedIndex = prev.findIndex((s) => s.title === symtom.title);
+      prev[selectedIndex].selected = true;
+
+      return [...prev];
+    });
+  };
 
   const colourStyles: any = {
     container: (styles: CSSObject) => ({
@@ -109,7 +154,7 @@ const RegisterForm: React.FC<{}> = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={(values, actions) => {
-          console.log({ values, actions });
+          // console.log({ values, actions });
           actions.setSubmitting(false);
         }}
       >
@@ -210,15 +255,27 @@ const RegisterForm: React.FC<{}> = () => {
             <div className="divider">
               <label className="label">통증 부위</label>
               <ButtonWrapper className="">
-                {Symtoms.map((symtom, i) => (
-                  <Button
-                    key={i}
-                    text={symtom}
-                    backgroundColor={theme.colors.white}
-                    color={theme.colors.purple}
-                    border={`0.1rem solid ${theme.colors.purple}`}
-                  />
-                ))}
+                {Symtoms.map((symtom, i) =>
+                  symtom.selected ? (
+                    <Button
+                      key={i}
+                      text={symtom.title}
+                      backgroundColor={theme.colors.white}
+                      color={theme.colors.purple}
+                      border={`0.1rem solid ${theme.colors.purple}`}
+                      onClick={() => onSymtomClick(symtom)}
+                    />
+                  ) : (
+                    <Button
+                      key={i}
+                      text={symtom.title}
+                      backgroundColor={theme.colors.white}
+                      color={theme.colors.grey}
+                      border={`0.1rem solid ${theme.colors.grey}`}
+                      onClick={() => onSymtomClick(symtom)}
+                    />
+                  )
+                )}
               </ButtonWrapper>
             </div>
           </div>
