@@ -22,7 +22,6 @@ export default Register;
 
 const RegisterWrapper = styled.div`
   .top {
-    margin-top: 2.4rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
