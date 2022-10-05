@@ -14,7 +14,7 @@ import Select, {
   ValueContainerProps,
   components,
 } from "react-select";
-import { do_si, gu_dong } from "./location";
+import { do_si, gu_dong, LOCATIONS, Location } from "./location";
 import { useId, useState } from "react";
 import Chevron from "@/public/assets/Chevron.svg";
 import Image from "next/image";
@@ -76,11 +76,26 @@ const RegisterForm: React.FC<{}> = () => {
   const initialValues: MyFormValues = { firstName: "" };
   const theme = useTheme();
   const [symtoms, setSymtoms] = useState<Symtom[]>(Symtoms);
+  const [dosi, setDosi] = useState<string>();
+  const [gudong, setGudong] = useState<string>();
+
+  /**
+   * ts 적용
+   * https://stackoverflow.com/questions/66546842/add-typescript-types-to-react-select-onchange-function
+   */
+  const onDoSiSelect = (selectedValue: any) => {
+    setDosi(selectedValue.value);
+  };
+
+  const onGuDongSelect = (selectedValue: any) => {
+    setGudong(selectedValue.value);
+  };
 
   const onSymtomClick = (symtom: Symtom) => {
     setSymtoms((prev) => {
       const selectedIndex = prev.findIndex((s) => s.title === symtom.title);
-      prev[selectedIndex].selected = true;
+      const currentStatus = prev[selectedIndex].selected;
+      prev[selectedIndex].selected = !currentStatus;
 
       return [...prev];
     });
@@ -90,8 +105,8 @@ const RegisterForm: React.FC<{}> = () => {
     container: (styles: CSSObject) => ({
       ...styles,
       flexGrow: 1,
+      width: "calc(50% - 2rem)",
     }),
-
     control: (styles: CSSObject) => ({
       ...styles,
       borderRadius: "0.5rem",
@@ -100,22 +115,26 @@ const RegisterForm: React.FC<{}> = () => {
       "&:hover": {
         border: `0.1rem solid ${theme.colors.grey}`,
       },
-      cursor: "pointer",
+      cursor: "text",
       height: "4.2rem",
       padding: "0 1rem",
     }),
-
+    menu: (styles: CSSObject) => ({
+      border: `0.1rem solid ${theme.colors.purple}`,
+      borderRadius: "0.5rem",
+    }),
     option: (styles: CSSObject, { isDisabled }: any) => ({
       ...styles,
       color: `${theme.colors["black"]}`,
       backgroundColor: `${theme.colors.white}`,
+      fontSize: theme.fontSizes.lg,
+      lineHeight: theme.lineHeights.lg,
       ":active": {
         ...styles[":active"],
         backgroundColor: `${theme.colors.white}`,
       },
       ":hover": {
-        backgroundColor: `${theme.colors.purple}`,
-        color: `${theme.colors.white}`,
+        backgroundColor: "rgba(152, 143, 255, 0.2)",
       },
       cursor: isDisabled ? "not-allowed" : "pointer",
     }),
@@ -126,13 +145,19 @@ const RegisterForm: React.FC<{}> = () => {
     }),
     valueContainer: (styles: CSSObject) => ({
       ...styles,
+      fontSize: theme.fontSizes.lg,
+      lineHeight: theme.lineHeights.lg,
       padding: 0,
       margin: 0,
     }),
   };
 
   const CustomIcon = () => {
-    return <Icon name={`chevron`} />;
+    return (
+      <div css={{ cursor: "pointer" }}>
+        <Icon name={`chevron`} />
+      </div>
+    );
   };
   const DropdownIndicator = (props: DropdownIndicatorProps) => {
     return (
@@ -154,7 +179,7 @@ const RegisterForm: React.FC<{}> = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={(values, actions) => {
-          // console.log({ values, actions });
+          console.log({ values, actions });
           actions.setSubmitting(false);
         }}
       >
@@ -237,9 +262,20 @@ const RegisterForm: React.FC<{}> = () => {
                   }}
                   styles={colourStyles}
                   placeholder="시/도 선택"
+                  onChange={onDoSiSelect}
                 />
                 <Select
-                  options={gu_dong.sort((a, b) => (a.label > b.label ? 1 : -1))}
+                  isDisabled={!dosi}
+                  options={LOCATIONS.filter((location) =>
+                    location.label.includes(dosi as string)
+                  )
+                    .sort((a, b) => (a.label > b.label ? 1 : -1))
+                    .map((lo) => {
+                      return {
+                        value: lo.label.replace(dosi as string, "").trim(),
+                        label: lo.label.replace(dosi as string, "").trim(),
+                      };
+                    })}
                   instanceId={useId()}
                   components={{
                     ValueContainer,
@@ -248,6 +284,7 @@ const RegisterForm: React.FC<{}> = () => {
                   }}
                   styles={colourStyles}
                   placeholder="시/군/구 선택"
+                  onChange={onGuDongSelect}
                 />
               </div>
             </div>
@@ -363,10 +400,10 @@ const FormWrapper = styled.div`
     font-size: ${(props) => props.theme.fontSizes.lg};
     line-height: ${(props) => props.theme.lineHeights.lg};
     flex-grow: 1;
+    padding: 1rem;
 
     &::placeholder {
       color: ${(props) => props.theme.colors.grey};
-      padding: 1rem;
     }
   }
 
