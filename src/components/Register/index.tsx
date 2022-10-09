@@ -78,11 +78,18 @@ const RegisterForm: React.FC<{}> = () => {
   const [symtoms, setSymtoms] = useState<Symtom[]>(Symtoms);
   const [dosi, setDosi] = useState<string>();
   const [gudong, setGudong] = useState<string>();
+  const [isNicknameValid, setIsNicknameValid] = useState(false);
+  const [didNicknameValidCheck, setDidNicknameValidCheck] = useState(false);
 
   /**
    * ts 적용
    * https://stackoverflow.com/questions/66546842/add-typescript-types-to-react-select-onchange-function
    */
+
+  const onNicknameValidation = () => {
+    setDidNicknameValidCheck(true);
+  };
+
   const onDoSiSelect = (selectedValue: any) => {
     setDosi(selectedValue.value);
   };
@@ -200,7 +207,19 @@ const RegisterForm: React.FC<{}> = () => {
                   text="중복확인"
                   backgroundColor={theme.colors.purple_light2}
                   type="submit"
+                  onClick={onNicknameValidation}
                 />
+              </div>
+              <div className="noti">
+                {didNicknameValidCheck ? (
+                  isNicknameValid ? (
+                    <div className=" valid">사용 가능한 닉네임입니다.</div>
+                  ) : (
+                    <div className=" invalid">사용 불가능한 닉네임입니다.</div>
+                  )
+                ) : (
+                  <div className="invisible">dd</div>
+                )}
               </div>
             </div>
 
@@ -334,7 +353,25 @@ const FormWrapper = styled.div`
     gap: 1rem;
 
     &.nickname {
+      position: relative;
       margin-bottom: 3.5rem;
+    }
+  }
+
+  .noti {
+    position: absolute;
+    bottom: -2.5rem;
+    font-size: ${(props) => props.theme.fontSizes.md};
+    line-height: ${(props) => props.theme.lineHeights.md};
+
+    & .valid {
+      color: ${(props) => props.theme.colors.purple};
+    }
+    & .invalid {
+      color: ${(props) => props.theme.colors.red};
+    }
+    & .invisible {
+      visibility: hidden;
     }
   }
 
