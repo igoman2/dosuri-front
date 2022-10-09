@@ -1,3 +1,4 @@
+import { useTheme } from "@emotion/react";
 import React, { FC } from "react";
 import { Menu } from "../menu";
 import FooterItem from "./FooterItem";
@@ -7,6 +8,8 @@ interface IFooterProps {
 }
 
 const Footer: FC<IFooterProps> = ({ menus }) => {
+  const theme = useTheme();
+
   return (
     <nav
       css={{
@@ -16,7 +19,15 @@ const Footer: FC<IFooterProps> = ({ menus }) => {
         height: "6.5rem",
         width: "100%",
         zIndex: 10,
-        borderTop: "0.1rem solid rgb(214, 214, 214)",
+        "&:before": {
+          content: "''",
+          position: "absolute",
+          width: "100%",
+          height: "1px",
+          background: `linear-gradient(to top, ${theme.colors.grey}, white)`,
+          top: "-1px",
+          left: "0",
+        },
       }}
     >
       <div
