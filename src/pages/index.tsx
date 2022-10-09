@@ -3,6 +3,7 @@ import Layout from "@/components/Layout";
 import Header from "@/components/Layout/Header";
 import CardModal from "@/components/Modal/CardModal";
 import ModalBase from "@/components/Modal/ModalBase";
+import DoSwiper from "@/components/Swiper";
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useState } from "react";
@@ -41,6 +42,7 @@ const Home: NextPage = () => {
       </div>
       <Button text="모달창 띄우기 버튼" onClick={onClickModalOn} />
 
+      <DoSwiper />
       <ModalBase active={isActive} closeEvent={onClickModalOff}>
         <CardModal
           closeEvent={onClickModalOff}
