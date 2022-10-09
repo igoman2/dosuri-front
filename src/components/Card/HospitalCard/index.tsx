@@ -1,24 +1,21 @@
-import { useTheme } from "@emotion/react";
 import Image, { StaticImageData } from "next/image";
-import React, { FC } from "react";
-import Icon from "@/util/Icon";
+import React, { FC, ReactNode } from "react";
+import Description from "../Description";
 
 export interface HospitalInfo {
   title: string;
   location: string;
   reviewConut: number;
   thunbCount: number;
-  recentReview: string | null;
+  recentReview: ReactNode | string | null;
   hospitalImage: StaticImageData; // 서버에서 받아오는거로 변경할 예정
 }
 
-interface ICardProps {
+export interface IHospitalCardProps {
   hospitalInfo: HospitalInfo;
 }
 
-const Card: FC<ICardProps> = ({ hospitalInfo }) => {
-  const theme = useTheme();
-
+const HospitalCard: FC<IHospitalCardProps> = ({ hospitalInfo }) => {
   return (
     <div
       css={{
@@ -33,83 +30,9 @@ const Card: FC<ICardProps> = ({ hospitalInfo }) => {
         height={90}
         alt="hospitalImage"
       />
-      <div
-        css={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          gap: "0.5rem",
-          marginLeft: "1rem",
-        }}
-      >
-        <div
-          css={{
-            fontSize: theme.fontSizes.md,
-            lineHeight: theme.lineHeights.md,
-            fontWeight: 700,
-          }}
-        >
-          {hospitalInfo.title}
-        </div>
-
-        <div
-          css={{
-            display: "flex",
-            color: theme.colors.grey,
-            gap: 10,
-            fontSize: theme.fontSizes.md,
-            lineHeight: theme.lineHeights.md,
-          }}
-        >
-          <div>{hospitalInfo.location}</div>
-          <div>{`후기 ${hospitalInfo.reviewConut}개`}</div>
-          <div>{`추천 ${hospitalInfo.thunbCount}명`}</div>
-        </div>
-        <div>
-          {hospitalInfo.recentReview ? (
-            <span
-              css={{
-                color: theme.colors.purple,
-                fontSize: theme.fontSizes.md,
-                lineHeight: theme.lineHeights.md,
-                display: "flex",
-                alignItems: "center",
-                gap: 4,
-              }}
-            >
-              <Icon
-                name="talk_square"
-                width="16"
-                height="15"
-                fill={theme.colors.purple}
-              />
-
-              {hospitalInfo.recentReview}
-            </span>
-          ) : (
-            <span
-              css={{
-                color: theme.colors.grey,
-                fontSize: theme.fontSizes.md,
-                lineHeight: theme.lineHeights.md,
-                display: "flex",
-                alignItems: "center",
-                gap: 4,
-              }}
-            >
-              <Icon
-                name="talk_square"
-                width="16"
-                height="15"
-                fill={theme.colors.grey}
-              />
-              등록된 후기가 없어요
-            </span>
-          )}
-        </div>
-      </div>
+      <Description hospitalInfo={hospitalInfo} size="md" />
     </div>
   );
 };
 
-export default Card;
+export default HospitalCard;
