@@ -1,31 +1,43 @@
 import DoSwiper from "@/components/Swiper";
 import Icon from "@/util/Icon";
 import styled from "@emotion/styled";
-import React from "react";
+import React, { FC } from "react";
 
-const ReviewCard = () => {
+export interface Review {
+  nickname: string;
+  registered: string;
+  hospitalName: string;
+  images: string[];
+  review: string;
+  heart: number;
+  comment: number;
+}
+
+interface IReveiwCardProps {
+  review: Review;
+}
+
+const ReviewCard: FC<IReveiwCardProps> = ({ review }) => {
   return (
     <ReviewCardWrapper>
       <div className="review-head">
-        <div className="nickname">해리케인</div>
-        <div className="register-time">12시간 전</div>
+        <div className="nickname">{review.nickname}</div>
+        <div className="register-time">{review.registered}</div>
       </div>
-      <div className="hospital-name">논현신사정형외과의원</div>
+      <div className="hospital-name">{review.hospitalName}</div>
       <div className="swiper-layout">
-        <DoSwiper />
+        <DoSwiper source={review.images} />
       </div>
 
-      <div className="review-comment">
-        친절하고 좋아요! 도수 받았는데 시원하고 좋아요~~!
-      </div>
+      <div className="review-comment">{review.review}</div>
       <div className="review-bottom">
         <div className="heart">
           <Icon name="heart" />
-          <span>11</span>
+          <span>{review.heart}</span>
         </div>
         <div className="comment">
           <Icon name="comment" />
-          <span>11</span>
+          <span>{review.comment}</span>
         </div>
       </div>
     </ReviewCardWrapper>

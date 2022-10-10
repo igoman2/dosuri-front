@@ -6,6 +6,7 @@ import React from "react";
 import SampleImage from "@/public/assets/sample.png";
 import DoctorCard, { DoctorInfo } from "@/components/Card/DoctorCard";
 import Icon from "@/util/Icon";
+import ReviewCard, { Review } from "@/components/Card/ReviewCard";
 
 const Home = () => {
   const theme = useTheme();
@@ -81,6 +82,48 @@ const Home = () => {
       thunbCount: 11,
       recentReview: "#도수 #마취 #비수술",
       hospitalImage: SampleImage,
+    },
+  ];
+
+  const reviews: Review[] = [
+    {
+      nickname: "해리케인",
+      registered: "12시간전",
+      hospitalName: "논현신사정형외과의원",
+      images: [
+        "https://dosuri-images.s3.ap-northeast-2.amazonaws.com/sample.png",
+        "https://dosuri-images.s3.ap-northeast-2.amazonaws.com/sample.png",
+        "https://dosuri-images.s3.ap-northeast-2.amazonaws.com/sample.png",
+      ],
+      review: "친절하고 좋아요! 도수 받았는데 시원하고 좋아요~~!",
+      heart: 11,
+      comment: 11,
+    },
+    {
+      nickname: "해리케인",
+      registered: "12시간전",
+      hospitalName: "논현신사정형외과의원",
+      images: [
+        "https://dosuri-images.s3.ap-northeast-2.amazonaws.com/sample.png",
+        "https://dosuri-images.s3.ap-northeast-2.amazonaws.com/sample.png",
+        "https://dosuri-images.s3.ap-northeast-2.amazonaws.com/sample.png",
+      ],
+      review: "친절하고 좋아요! 도수 받았는데 시원하고 좋아요~~!",
+      heart: 11,
+      comment: 11,
+    },
+    {
+      nickname: "해리케인",
+      registered: "12시간전",
+      hospitalName: "논현신사정형외과의원",
+      images: [
+        "https://dosuri-images.s3.ap-northeast-2.amazonaws.com/sample.png",
+        "https://dosuri-images.s3.ap-northeast-2.amazonaws.com/sample.png",
+        "https://dosuri-images.s3.ap-northeast-2.amazonaws.com/sample.png",
+      ],
+      review: "친절하고 좋아요! 도수 받았는데 시원하고 좋아요~~!",
+      heart: 11,
+      comment: 11,
     },
   ];
 
@@ -175,9 +218,8 @@ const Home = () => {
         >
           HOT 도수톡
         </div>
-
-        {list.map((hospital: HospitalInfo, i) => (
-          <HospitalCard hospitalInfo={hospital} key={i} />
+        {reviews.map((review, i) => (
+          <ReviewCard review={review} key={i} />
         ))}
       </div>
     </Layout>

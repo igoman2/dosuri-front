@@ -1,12 +1,16 @@
-import React from "react";
+import React, { FC } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Scrollbar, A11y } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import SampleImage from "@/public/assets/sample.png";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
-const DoSwiper = () => {
+interface DoSwiperProps {
+  source: string[];
+}
+
+const DoSwiper: FC<DoSwiperProps> = ({ source }) => {
   return (
     <Swiper
       style={{
@@ -22,24 +26,20 @@ const DoSwiper = () => {
       }}
       autoplay={{ delay: 3000 }}
     >
-      <SwiperSlide>
-        <Image src={SampleImage} alt="hospitalImage" />
-      </SwiperSlide>
-      <SwiperSlide>
-        <Image src={SampleImage} alt="hospitalImage" />
-      </SwiperSlide>
-      <SwiperSlide>
-        <Image src={SampleImage} alt="hospitalImage" />
-      </SwiperSlide>
-      <SwiperSlide>
-        <Image src={SampleImage} alt="hospitalImage" />
-      </SwiperSlide>
-      <SwiperSlide>
-        <Image src={SampleImage} alt="hospitalImage" />
-      </SwiperSlide>
-      <SwiperSlide>
-        <Image src={SampleImage} alt="hospitalImage" />
-      </SwiperSlide>
+      {source.map((src, i) => (
+        <SwiperSlide key={i} style={{ width: "50%" }}>
+          <div
+            style={{
+              position: "relative",
+              width: "100%",
+              height: "120px",
+              backgroundColor: "black",
+            }}
+          >
+            <Image alt={src} src={src} layout="fill" objectFit="contain" />
+          </div>
+        </SwiperSlide>
+      ))}
     </Swiper>
   );
 };
