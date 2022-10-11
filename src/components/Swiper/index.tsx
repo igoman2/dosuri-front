@@ -32,7 +32,7 @@ const DoSwiper: FC<DoSwiperProps> = ({ source }) => {
             style={{
               position: "relative",
               width: "100%",
-              height: "120px",
+              height: "12rem",
               backgroundColor: "black",
             }}
           >

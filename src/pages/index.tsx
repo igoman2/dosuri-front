@@ -26,8 +26,8 @@ const Home: NextPage = () => {
       <div
         css={{
           display: "flex",
-          gap: "20px",
-          fontSize: "16px",
+          gap: "2rem",
+          fontSize: "1.6rem",
         }}
       >
         <Link href="/home">

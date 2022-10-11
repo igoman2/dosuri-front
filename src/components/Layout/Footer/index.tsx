@@ -23,9 +23,9 @@ const Footer: FC<IFooterProps> = ({ menus }) => {
           content: "''",
           position: "absolute",
           width: "100%",
-          height: "1px",
+          height: "0.1rem",
           background: `linear-gradient(to top, ${theme.colors.grey}, white)`,
-          top: "-1px",
+          top: "-0.1rem",
           left: "0",
         },
       }}

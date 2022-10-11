@@ -75,12 +75,12 @@ const ModalBaseContainer = styled.div<{ active: boolean }>`
   .modal_content {
     position: relative;
     z-index: 10;
-    max-width: 400px;
+    max-width: 40rem;
     width: 100%;
     background-color: ${(props) => props.theme.colors.white};
     margin: 2rem;
     padding: 2rem;
-    border-radius: 15px;
+    border-radius: 1.5rem;
     overflow: hidden;
     ${(props) =>
       props.active
@@ -94,25 +94,25 @@ const ModalBaseContainer = styled.div<{ active: boolean }>`
   @keyframes popInFromBottom {
     0% {
       opacity: 0;
-      transform: translateY(400px) scale(0.75);
+      transform: translateY(40rem) scale(0.75);
     }
     75% {
       opacity: 1;
-      transform: translateY(-16px) scale(1);
+      transform: translateY(-1.6rem) scale(1);
     }
     100% {
       opacity: 1;
-      transform: translateY(0px);
+      transform: translateY(0);
     }
   }
   @keyframes popOutToBottom {
     0% {
       opacity: 1;
-      transform: translateY(0px) scale(1);
+      transform: translateY(0) scale(1);
     }
     100% {
       opacity: 0;
-      transform: translateY(400px) scale(0.75);
+      transform: translateY(40rem) scale(0.75);
     }
   }
 `;

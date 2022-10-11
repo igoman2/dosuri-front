@@ -41,7 +41,7 @@ const FooterItem: FC<IFooterItemProps> = ({ iconName, text, path }) => {
             width: "60%",
             height: "6.8rem",
             borderTop: isCurrentPath()
-              ? `2px solid ${theme.colors.purple}`
+              ? `0.2rem solid ${theme.colors.purple}`
               : "",
             position: "absolute",
             top: "-0.1rem",

@@ -115,7 +115,7 @@ const Login = () => {
           }
           color={theme.colors.black}
           backgroundColor={theme.colors.white}
-          border={`1px solid ${theme.colors.grey}`}
+          border={`0.1rem solid ${theme.colors.grey}`}
         />
       </div>
     </main>
