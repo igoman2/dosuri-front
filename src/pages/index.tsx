@@ -3,6 +3,7 @@ import Layout from "@/components/Layout";
 import Header from "@/components/Layout/Header";
 import CardModal from "@/components/Modal/CardModal";
 import ModalBase from "@/components/Modal/ModalBase";
+import Checkbox from "@/components/UI/Checkbox";
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useState } from "react";
@@ -53,6 +54,9 @@ const Home: NextPage = () => {
           삭제한 초대장은 복구 할 수 없습니다.
         </CardModal>
       </ModalBase>
+
+      <Checkbox text="도수치료" />
+      <Checkbox text="도수치료" />
     </Layout>
   );
 };

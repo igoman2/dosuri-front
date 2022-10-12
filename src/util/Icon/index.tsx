@@ -12,6 +12,7 @@ import ProfileClicked from "@/public/assets/profile_clicked.svg";
 import Chevron from "@/public/assets/chevron.svg";
 import Heart from "@/public/assets/heart.svg";
 import Comment from "@/public/assets/comment.svg";
+import Check from "@/public/assets/check.svg";
 
 interface IIconProps {
   name: string;
@@ -41,6 +42,7 @@ const iconTypes: any = {
   chevron: Chevron,
   heart: Heart,
   comment: Comment,
+  check: Check,
 };
 
 const Icon: FC<IIconProps> = ({ name, ...props }) => {
