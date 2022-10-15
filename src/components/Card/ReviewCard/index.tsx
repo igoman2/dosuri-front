@@ -1,4 +1,4 @@
-import DoSwiper from "@/components/Swiper";
+import DoSwiper from "@/components/DoSwiper";
 import Icon from "@/util/Icon";
 import styled from "@emotion/styled";
 import React, { FC, useEffect, useRef, useState } from "react";

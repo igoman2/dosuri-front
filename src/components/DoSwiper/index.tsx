@@ -3,8 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Scrollbar, A11y } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
-import SampleImage from "@/public/assets/sample.png";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 
 interface DoSwiperProps {
   source: string[];
@@ -34,6 +33,7 @@ const DoSwiper: FC<DoSwiperProps> = ({ source }) => {
               width: "100%",
               height: "12rem",
               backgroundColor: "black",
+              borderRadius: "0.5rem",
             }}
           >
             <Image alt={src} src={src} layout="fill" objectFit="contain" />
