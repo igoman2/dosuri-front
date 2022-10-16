@@ -27,6 +27,7 @@ const Layout: FC<ILayoutProps> = ({ header, children, footer = true }) => {
           position: `relative`,
           flex: `1 1 0%`,
           overflowY: `auto`,
+          overflowX: "hidden",
           padding: "0 2rem",
         }}
       >

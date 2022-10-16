@@ -3,23 +3,24 @@ import React, { FC, ReactElement } from "react";
 
 interface IButtonProps {
   text: string | ReactElement;
-  size?: string;
   color?: string;
   backgroundColor?: string;
-  width?: string;
   border?: string;
+  width?: string;
   onClick?: () => void;
   type?: "button" | "submit" | "reset" | undefined;
+  disabled?: boolean;
 }
 
 const Button: FC<IButtonProps> = ({
   text,
-  size,
   color,
   backgroundColor,
   border,
   onClick,
   type,
+  width,
+  disabled,
 }) => {
   const theme = useTheme();
   const button = css`
@@ -34,12 +35,18 @@ const Button: FC<IButtonProps> = ({
     box-shadow: none;
     border-radius: 0.5rem;
     border: ${border ? border : 0};
+    width: ${width ? width : "auto"};
     outline: 0;
     cursor: pointer;
+
+    &:disabled {
+      background-color: ${theme.colors.grey};
+      color: ${theme.colors.white};
+    }
   `;
 
   return (
-    <button css={button} onClick={onClick} type={type}>
+    <button css={button} onClick={onClick} type={type} disabled={disabled}>
       {text}
     </button>
   );

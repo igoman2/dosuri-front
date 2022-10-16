@@ -13,6 +13,7 @@ import Chevron from "@/public/assets/chevron.svg";
 import Heart from "@/public/assets/heart.svg";
 import Comment from "@/public/assets/comment.svg";
 import Check from "@/public/assets/check.svg";
+import Arrow from "@/public/assets/arrow.svg";
 
 interface IIconProps {
   name: string;
@@ -43,6 +44,7 @@ const iconTypes: any = {
   heart: Heart,
   comment: Comment,
   check: Check,
+  arrow: Arrow,
 };
 
 const Icon: FC<IIconProps> = ({ name, ...props }) => {

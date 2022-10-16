@@ -334,6 +334,9 @@ const RegisterForm: React.FC<{}> = () => {
                 )}
               </ButtonWrapper>
             </div>
+            <div className="save-button-wrapper">
+              <Button text="도수리 시작하기" width="100%" disabled={true} />
+            </div>
           </div>
         </Form>
       </Formik>
@@ -451,6 +454,11 @@ const FormWrapper = styled.div`
     font-size: ${(props) => props.theme.fontSizes.lg};
     line-height: ${(props) => props.theme.lineHeights.lg};
     padding: 1rem 0.5rem;
+  }
+
+  .save-button-wrapper {
+    padding: 1rem 0;
+    width: 100%;
   }
 `;
 

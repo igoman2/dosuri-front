@@ -1,4 +1,6 @@
 import { css } from "@emotion/react";
+import theme from "./theme";
+
 export const global = css`
   @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
@@ -143,6 +145,17 @@ export const global = css`
   }
 
   a {
+    text-decoration: none;
+    color: inherit;
     cursor: pointer;
+  }
+
+  input {
+    :disabled {
+      background: ${theme.colors.grey_light};
+      ::placeholder {
+        -webkit-text-fill-color: ${theme.colors.black};
+      }
+    }
   }
 `;
