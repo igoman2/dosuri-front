@@ -4,9 +4,9 @@ import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import styled from "@emotion/styled";
 import React from "react";
 import { reviews } from "@/mock/reviews";
-import CircularButton from "@/components/Button/CircularButton";
 import Icon from "@/util/Icon";
 import Button from "@/components/Button";
+import Link from "next/link";
 
 const Review = () => {
   return (
@@ -15,7 +15,11 @@ const Review = () => {
         <div className="sub-title">내 후기 총 2개</div>
 
         {reviews.map((review, i) => (
-          <ReviewCard review={review} key={i} />
+          <Link href={`review/${review.id}`} key={i}>
+            <a>
+              <ReviewCard review={review} />
+            </a>
+          </Link>
         ))}
       </ReviewWrapper>
 

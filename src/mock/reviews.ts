@@ -1,5 +1,6 @@
 export const reviews: Review[] = [
   {
+    id: 1,
     nickname: "해리케인",
     registered: "12시간전",
     hospitalName: "논현신사정형외과의원",
@@ -14,6 +15,7 @@ export const reviews: Review[] = [
     comment: 11,
   },
   {
+    id: 2,
     nickname: "해리케인",
     registered: "12시간전",
     hospitalName: "논현신사정형외과의원",
@@ -30,6 +32,7 @@ export const reviews: Review[] = [
 ];
 
 export interface Review {
+  id: number;
   nickname: string;
   registered: string;
   hospitalName: string;
