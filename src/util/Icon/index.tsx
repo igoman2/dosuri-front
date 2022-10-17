@@ -14,6 +14,7 @@ import Heart from "@/public/assets/heart.svg";
 import Comment from "@/public/assets/comment.svg";
 import Check from "@/public/assets/check.svg";
 import Arrow from "@/public/assets/arrow.svg";
+import Pen from "@/public/assets/pen.svg";
 
 interface IIconProps {
   name: string;
@@ -30,7 +31,7 @@ interface IIconProps {
 //   profile: Profile,
 // };
 
-const iconTypes: any = {
+export const iconTypes: any = {
   home: Home,
   cross: Cross,
   talk: Talk,
@@ -45,6 +46,7 @@ const iconTypes: any = {
   comment: Comment,
   check: Check,
   arrow: Arrow,
+  pen: Pen,
 };
 
 const Icon: FC<IIconProps> = ({ name, ...props }) => {

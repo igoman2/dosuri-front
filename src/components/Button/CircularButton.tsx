@@ -12,10 +12,10 @@ interface IButtonProps {
   onClick?: () => void;
   type?: "button" | "submit" | "reset" | undefined;
   disabled?: boolean;
-  iconName?: string;
+  iconName: string;
 }
 
-const Button: FC<IButtonProps> = ({
+const CircularButton: FC<IButtonProps> = ({
   text,
   color,
   backgroundColor,
@@ -28,16 +28,15 @@ const Button: FC<IButtonProps> = ({
 }) => {
   const theme = useTheme();
   const button = css`
-    font-size: ${iconName ? theme.fontSizes.md : theme.fontSizes.lg};
-    line-height: ${iconName ? theme.lineHeights.md : theme.lineHeights.lg};
+    font-size: ${theme.fontSizes.md};
+    line-height: ${theme.lineHeights.md};
     color: ${color ? color : theme.colors.white};
     background-color: ${backgroundColor
       ? backgroundColor
       : theme.colors.purple_light2};
-    /* min-height: 4.2rem; */
     padding: 1rem;
     box-shadow: none;
-    border-radius: ${iconName ? "4rem" : "0.5rem"};
+    border-radius: 4rem;
     border: ${border ? border : 0};
     width: ${width ? width : "auto"};
     outline: 0;
@@ -50,35 +49,26 @@ const Button: FC<IButtonProps> = ({
   `;
 
   return (
-    <>
-      {iconName ? (
-        <ButtonWrapper>
-          <button
-            css={button}
-            onClick={onClick}
-            type={type}
-            disabled={disabled}
-          >
-            <Icon name={iconName} />
-            <span className="text">{text}</span>
-          </button>
-        </ButtonWrapper>
-      ) : (
-        <button css={button} onClick={onClick} type={type} disabled={disabled}>
-          {text}
-        </button>
-      )}
-    </>
+    <ButtonWrapper>
+      <button css={button} onClick={onClick} type={type} disabled={disabled}>
+        <Icon name={iconName} />
+        <span className="text">{text}</span>
+      </button>
+    </ButtonWrapper>
   );
 };
 
-export default Button;
+export default CircularButton;
 
 const ButtonWrapper = styled.div`
   button {
-    padding: 1rem 2rem;
+    padding: 0.9rem 2rem;
     display: flex;
     gap: 1rem;
     align-items: center;
+
+    .text {
+      padding-top: 0.2rem;
+    }
   }
 `;

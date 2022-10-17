@@ -61,7 +61,6 @@ const ModalBaseContainer = styled.div<{ active: boolean }>`
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  box-sizing: border-box;
 
   .modal_back {
     position: absolute;

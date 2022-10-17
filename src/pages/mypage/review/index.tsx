@@ -4,6 +4,9 @@ import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import styled from "@emotion/styled";
 import React from "react";
 import { reviews } from "@/mock/reviews";
+import CircularButton from "@/components/Button/CircularButton";
+import Icon from "@/util/Icon";
+import Button from "@/components/Button";
 
 const Review = () => {
   return (
@@ -15,6 +18,8 @@ const Review = () => {
           <ReviewCard review={review} key={i} />
         ))}
       </ReviewWrapper>
+
+      <Button iconName="pen" text="후기 또는 질문 쓰기" />
     </Layout>
   );
 };
