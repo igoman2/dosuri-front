@@ -23,7 +23,7 @@ const ListTab: FC<IListTabProps> = ({
   return (
     <Link href={link}>
       <a>
-        <ListTabWrapper>
+        <ListTabWrapper isLast={isLast}>
           <div className="list-title">
             <div className="text">
               <div>{text}</div>
@@ -43,7 +43,11 @@ const ListTab: FC<IListTabProps> = ({
 
 export default ListTab;
 
-const ListTabWrapper = styled.div`
+interface ListTapWrapperProps {
+  isLast: boolean;
+}
+
+const ListTabWrapper = styled.div<ListTapWrapperProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -69,6 +73,8 @@ const ListTabWrapper = styled.div`
       font-size: ${(props) => props.theme.fontSizes.xl};
       line-height: ${(props) => props.theme.lineHeights.xl};
       font-weight: 700;
+      color: ${(props) =>
+        props.isLast ? props.theme.colors.red_light : props.theme.colors.black};
     }
 
     & .sub-text {

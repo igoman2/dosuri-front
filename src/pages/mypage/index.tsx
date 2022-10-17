@@ -38,11 +38,18 @@ const Mypage = () => {
         <div className="nickname">닉네임최대열글자이하</div>
         <div className="edit-profile">
           <Link href="mypage/edit">
-            <a className="text">내 정보 수정</a>
+            <a className="text">
+              <span>내 정보 수정</span>
+              <span className="image-wrapper">
+                <Image
+                  src={ArrowRight}
+                  width={14}
+                  height={14}
+                  alt="arrow-right"
+                />
+              </span>
+            </a>
           </Link>
-          <span className="image-wrapper">
-            <Image src={ArrowRight} width={14} height={14} alt="arrow-right" />
-          </span>
         </div>
       </ProfileSectionWrapper>
 
@@ -84,9 +91,14 @@ const ProfileSectionWrapper = styled.div`
     gap: 0.5rem;
 
     & .text {
+      display: flex;
+      align-items: center;
       font-size: ${(props) => props.theme.fontSizes.md};
       line-height: ${(props) => props.theme.lineHeights.md};
-      padding-top: 0.2rem;
+
+      &span {
+        padding-top: 0.2rem;
+      }
     }
   }
 
