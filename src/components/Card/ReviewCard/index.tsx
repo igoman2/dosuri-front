@@ -1,17 +1,9 @@
 import DoSwiper from "@/components/DoSwiper";
+import Divider from "@/components/UI/Divider";
+import { Review } from "@/mock/reviews";
 import Icon from "@/util/Icon";
 import styled from "@emotion/styled";
 import React, { FC, useEffect, useRef, useState } from "react";
-
-export interface Review {
-  nickname: string;
-  registered: string;
-  hospitalName: string;
-  images: string[];
-  review: string;
-  heart: number;
-  comment: number;
-}
 
 interface IReveiwCardProps {
   review: Review;
@@ -65,42 +57,45 @@ const ReviewCard: FC<IReveiwCardProps> = ({ review }) => {
   };
 
   return (
-    <ReviewCardWrapper>
-      <div className="review-head">
-        <div className="nickname">{review.nickname}</div>
-        <div className="register-time">{review.registered}</div>
-      </div>
-      <div className="hospital-name">{review.hospitalName}</div>
-      <div className="swiper-layout">
-        <DoSwiper source={review.images} />
-      </div>
-      <div className="review-comment">
-        <div
-          className={!isShowMoreClicked && isCommentOver3Line ? "hide" : ""}
-          ref={commentRef}
-        >
-          {review.review}
+    <>
+      <ReviewCardWrapper>
+        <div className="review-head">
+          <div className="nickname">{review.nickname}</div>
+          <div className="register-time">{review.registered}</div>
         </div>
-        {showMoreRender()}
-      </div>
-      <div className="review-bottom">
-        <div className="heart">
-          <Icon name="heart" />
-          <span>{review.heart}</span>
+        <div className="hospital-name">{review.hospitalName}</div>
+        <div className="swiper-layout">
+          <DoSwiper source={review.images} />
         </div>
-        <div className="comment">
-          <Icon name="comment" />
-          <span>{review.comment}</span>
+        <div className="review-comment">
+          <div
+            className={!isShowMoreClicked && isCommentOver3Line ? "hide" : ""}
+            ref={commentRef}
+          >
+            {review.review}
+          </div>
+          {showMoreRender()}
         </div>
-      </div>
-    </ReviewCardWrapper>
+        <div className="review-bottom">
+          <div className="heart">
+            <Icon name="heart" />
+            <span>{review.heart}</span>
+          </div>
+          <div className="comment">
+            <Icon name="comment" />
+            <span>{review.comment}</span>
+          </div>
+        </div>
+      </ReviewCardWrapper>
+      <Divider height={1} />
+    </>
   );
 };
 
 export default ReviewCard;
 
 const ReviewCardWrapper = styled.div`
-  margin-bottom: 2rem;
+  margin: 1rem 0;
 
   .review-head {
     display: flex;
@@ -109,6 +104,7 @@ const ReviewCardWrapper = styled.div`
     .nickname {
       font-size: ${(props) => props.theme.fontSizes.md};
       line-height: ${(props) => props.theme.lineHeights.md};
+      font-weight: 700;
     }
 
     .register-time {

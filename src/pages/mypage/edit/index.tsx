@@ -25,7 +25,7 @@ import Chevron from "@/public/assets/Chevron.svg";
 import Image from "next/image";
 import Icon from "@/util/Icon";
 import Layout from "@/components/Layout";
-import HeaderInDepth from "@/components/Layout/Header/HeaderDepth";
+import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 
 interface MyFormValues {
   firstName: string;
@@ -189,7 +189,7 @@ const RegisterForm: React.FC<{}> = () => {
   };
 
   return (
-    <Layout header={<HeaderInDepth />}>
+    <Layout header={<HeaderDepth />}>
       <FormWrapper>
         <Formik
           initialValues={initialValues}

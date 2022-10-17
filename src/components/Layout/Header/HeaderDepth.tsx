@@ -3,7 +3,7 @@ import Icon from "@/util/Icon";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
-const Header: FC = () => {
+const HeaderDepth: FC = () => {
   const router = useRouter();
 
   const onBack = () => {
@@ -31,7 +31,7 @@ const Header: FC = () => {
   );
 };
 
-export default Header;
+export default HeaderDepth;
 
 const BackButton = styled.div`
   cursor: pointer;
