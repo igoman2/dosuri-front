@@ -4,7 +4,7 @@ import React from "react";
 
 const ReviewDetail = () => {
   return (
-    <Layout header={<HeaderDepth />}>
+    <Layout header={<HeaderDepth />} footer={false}>
       <div>detail</div>
     </Layout>
   );

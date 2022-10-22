@@ -33,7 +33,7 @@ const Layout: FC<ILayoutProps> = ({ header, children, footer = true }) => {
             overflowY: `auto`,
             overflowX: "hidden",
             padding: "0 2rem",
-            marginBottom: "6.5rem",
+            marginBottom: footer ? "6.5rem" : "",
           }}
         >
           {children}

@@ -11,7 +11,7 @@ const DIRECTION = {
   Up: "UP",
   Down: "Down",
 } as const;
-type DIRECTION = typeof DIRECTION[keyof typeof DIRECTION]; // 'UP' | 'DOWN'
+type DIRECTION = typeof DIRECTION[keyof typeof DIRECTION]; // 'UP' | DOWN'
 
 const Review = () => {
   const [scrollDir, setScrollDir] = useState<DIRECTION>();
@@ -46,7 +46,7 @@ const Review = () => {
   }, [scrollDir]);
 
   return (
-    <Layout header={<HeaderDepth />}>
+    <Layout header={<HeaderDepth />} footer={false}>
       <>
         <ReviewWrapper>
           <div className="sub-title">내 후기 총 2개</div>
