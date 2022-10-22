@@ -14,7 +14,7 @@ const Footer: FC<IFooterProps> = ({ menus }) => {
     <nav
       css={{
         backgroundColor: " rgb(255, 255, 255)",
-        position: "sticky",
+        position: "fixed",
         bottom: "0",
         height: "6.5rem",
         width: "100%",
