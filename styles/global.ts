@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import theme from "./theme";
 
 export const global = css`
-  @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+  @import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
   * {
     box-sizing: border-box;
