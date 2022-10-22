@@ -17,7 +17,9 @@ const Footer: FC<IFooterProps> = ({ menus }) => {
         position: "fixed",
         bottom: "0",
         height: "6.5rem",
-        width: "40rem",
+        minWidth: "32rem",
+        maxWidth: " 40rem",
+        width: "100%",
         zIndex: 10,
         "&:before": {
           content: "''",
