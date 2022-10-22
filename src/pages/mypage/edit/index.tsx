@@ -189,7 +189,7 @@ const RegisterForm: React.FC<{}> = () => {
   };
 
   return (
-    <Layout header={<HeaderDepth />}>
+    <Layout header={<HeaderDepth />} footer={false}>
       <FormWrapper>
         <Formik
           initialValues={initialValues}
