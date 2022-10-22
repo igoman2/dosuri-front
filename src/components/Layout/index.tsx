@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { FC, ReactElement, useEffect } from "react";
+import React, { FC, ReactElement, useEffect, useRef, useState } from "react";
 import Footer from "./Footer";
 import { useSetRecoilState } from "recoil";
 import { menuState } from "./store";
@@ -22,17 +22,23 @@ const Layout: FC<ILayoutProps> = ({ header, children, footer = true }) => {
   return (
     <>
       <header>{header}</header>
-      <main
+      <div
         css={{
           position: `relative`,
           flex: `1 1 0%`,
-          overflowY: `auto`,
-          overflowX: "hidden",
-          padding: "0 2rem",
         }}
       >
-        {children}
-      </main>
+        <main
+          css={{
+            overflowY: `auto`,
+            overflowX: "hidden",
+            padding: "0 2rem",
+          }}
+        >
+          {children}
+        </main>
+      </div>
+
       {footer && <Footer menus={menus} />}
     </>
   );
