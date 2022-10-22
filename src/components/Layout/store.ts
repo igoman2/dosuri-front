@@ -5,3 +5,8 @@ export const menuState = atom({
   key: `menuState${v4()}`,
   default: "/home",
 });
+
+export const modalState = atom({
+  key: `modalState${v4()}`,
+  default: false,
+});

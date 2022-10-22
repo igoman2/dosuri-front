@@ -13,6 +13,8 @@ interface IButtonProps {
   type?: "button" | "submit" | "reset" | undefined;
   disabled?: boolean;
   iconName?: string;
+  bold?: boolean;
+  fontSize?: "xxxl" | "xxl" | "xl" | "lg" | "md" | "sm" | "xs";
 }
 
 const Button: FC<IButtonProps> = ({
@@ -25,11 +27,21 @@ const Button: FC<IButtonProps> = ({
   width,
   disabled,
   iconName,
+  bold,
+  fontSize,
 }) => {
   const theme = useTheme();
   const button = css`
-    font-size: ${iconName ? theme.fontSizes.md : theme.fontSizes.lg};
-    line-height: ${iconName ? theme.lineHeights.md : theme.lineHeights.lg};
+    font-size: ${fontSize
+      ? theme.fontSizes[fontSize]
+      : iconName
+      ? theme.fontSizes.md
+      : theme.fontSizes.lg};
+    line-height: ${fontSize
+      ? theme.lineHeights[fontSize]
+      : iconName
+      ? theme.lineHeights.md
+      : theme.lineHeights.lg};
     color: ${color ? color : theme.colors.white};
     background-color: ${backgroundColor
       ? backgroundColor
@@ -42,6 +54,7 @@ const Button: FC<IButtonProps> = ({
     width: ${width ? width : "auto"};
     outline: 0;
     cursor: pointer;
+    font-weight: ${bold ? 700 : 400};
 
     &:disabled {
       background-color: ${theme.colors.grey};

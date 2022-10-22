@@ -1,9 +1,13 @@
-import React, { FC } from "react";
+import React, { FC, ReactElement } from "react";
 import Icon from "@/util/Icon";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
-const HeaderDepth: FC = () => {
+interface IHeaderDepthProps {
+  left?: ReactElement;
+}
+
+const HeaderDepth: FC<IHeaderDepthProps> = ({ left }) => {
   const router = useRouter();
 
   const onBack = () => {
@@ -15,6 +19,7 @@ const HeaderDepth: FC = () => {
       css={{
         display: "flex",
         gap: "1rem",
+        justifyContent: "space-between",
         alignItems: "center",
         "& .center": {
           flexGrow: 1,
@@ -27,6 +32,8 @@ const HeaderDepth: FC = () => {
       <BackButton onClick={onBack}>
         <Icon name="arrow" width="24" height="24" />
       </BackButton>
+
+      {left}
     </div>
   );
 };
