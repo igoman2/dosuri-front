@@ -15,6 +15,7 @@ interface IButtonProps {
   iconName?: string;
   bold?: boolean;
   fontSize?: "xxxl" | "xxl" | "xl" | "lg" | "md" | "sm" | "xs";
+  dense?: boolean;
 }
 
 const Button: FC<IButtonProps> = ({
@@ -28,6 +29,7 @@ const Button: FC<IButtonProps> = ({
   disabled,
   iconName,
   bold,
+  dense,
   fontSize,
 }) => {
   const theme = useTheme();
@@ -46,8 +48,7 @@ const Button: FC<IButtonProps> = ({
     background-color: ${backgroundColor
       ? backgroundColor
       : theme.colors.purple_light2};
-    /* min-height: 4.2rem; */
-    padding: 1rem;
+    padding: ${dense ? "0.5rem" : "1rem"};
     box-shadow: none;
     border-radius: ${iconName ? "4rem" : "0.5rem"};
     border: ${border ? border : 0};

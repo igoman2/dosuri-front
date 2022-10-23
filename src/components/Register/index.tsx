@@ -19,58 +19,11 @@ import { useId, useState } from "react";
 import Chevron from "@/public/assets/Chevron.svg";
 import Image from "next/image";
 import Icon from "@/util/Icon";
+import { Symtom, Symtoms } from "@/mock/symtoms";
 
 interface MyFormValues {
   firstName: string;
 }
-
-interface Symtom {
-  title: string;
-  selected: boolean;
-}
-
-const Symtoms: Symtom[] = [
-  {
-    title: "머리",
-    selected: false,
-  },
-  {
-    title: "목",
-    selected: false,
-  },
-  {
-    title: "허리",
-    selected: false,
-  },
-  {
-    title: "어깨",
-    selected: false,
-  },
-  {
-    title: "골반",
-    selected: false,
-  },
-  {
-    title: "무릎",
-    selected: false,
-  },
-  {
-    title: "손목",
-    selected: false,
-  },
-  {
-    title: "발목",
-    selected: false,
-  },
-  {
-    title: "관절",
-    selected: false,
-  },
-  {
-    title: "그외",
-    selected: false,
-  },
-];
 
 const RegisterForm: React.FC<{}> = () => {
   const initialValues: MyFormValues = { firstName: "" };
@@ -310,7 +263,7 @@ const RegisterForm: React.FC<{}> = () => {
 
             <div className="divider">
               <label className="label">통증 부위</label>
-              <ButtonWrapper className="">
+              <ButtonWrapper>
                 {Symtoms.map((symtom, i) =>
                   symtom.selected ? (
                     <Button
