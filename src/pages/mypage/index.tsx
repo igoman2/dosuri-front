@@ -3,7 +3,7 @@ import Header from "@/components/Layout/Header";
 import ListTab from "@/components/UI/ListTab";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import ArrowRight from "@/public/assets/arrow-right-bold.png";
+import ArrowRight from "@/public/assets/arrow-right.png";
 import React from "react";
 import Divider from "@/components/UI/Divider";
 import Link from "next/link";
@@ -57,14 +57,28 @@ const Mypage = () => {
 
       <div className="list-section">
         {tabList.map((tab, i) => (
-          <ListTab
-            text={tab.text}
-            subText={tab.subtext}
-            hasNoti={tab.hasNoti}
-            link={tab.link}
-            key={i}
-            isLast={tabList.length - 1 === i ? true : false}
-          />
+          <Link href={tab.link} key={`${tab.text}-${i}`}>
+            <a>
+              <ListTab
+                text={tab.text}
+                subText={tab.subtext}
+                hasNoti={tab.hasNoti}
+                color={tab.text === "병원 입점 문의" ? "red_light" : "black"}
+                key={i}
+                right={
+                  <div>
+                    <Image
+                      src={ArrowRight}
+                      width={25}
+                      height={25}
+                      alt="arrow-right"
+                    />
+                  </div>
+                }
+                isLast={tabList.length - 1 === i ? true : false}
+              />
+            </a>
+          </Link>
         ))}
       </div>
     </Layout>

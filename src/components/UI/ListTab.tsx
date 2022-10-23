@@ -1,43 +1,40 @@
+import { Theme } from "@emotion/react";
 import styled from "@emotion/styled";
-import Image from "next/image";
-import ArrowRight from "@/public/assets/arrow-right.png";
-import { FC } from "react";
-import Link from "next/link";
+import { FC, ReactElement } from "react";
 import Divider from "./Divider";
 
 interface IListTabProps {
   text: string;
   subText: string;
-  link: string;
   hasNoti?: boolean;
   isLast: boolean;
+  right?: ReactElement;
+  color?: keyof Theme["colors"];
 }
+// type SUBJECT = typeof SUBJECT[keyof typeof SUBJECT]; // 'Math' | 'English'
 
 const ListTab: FC<IListTabProps> = ({
   text,
   subText,
-  link,
   hasNoti,
   isLast,
+  right,
+  color,
 }) => {
   return (
-    <Link href={link}>
-      <a>
-        <ListTabWrapper isLast={isLast}>
-          <div className="list-title">
-            <div className="text">
-              <div>{text}</div>
-              {hasNoti && <div className="bubble"></div>}
-            </div>
-            <div className="sub-text">{subText}</div>
+    <>
+      <ListTabWrapper isLast={isLast} color={color}>
+        <div className="list-title">
+          <div className="text">
+            <div>{text}</div>
+            {hasNoti && <div className="bubble"></div>}
           </div>
-          <div>
-            <Image src={ArrowRight} width={25} height={25} alt="arrow-right" />
-          </div>
-        </ListTabWrapper>
-        {!isLast && <Divider height={1} />}
-      </a>
-    </Link>
+          <div className="sub-text">{subText}</div>
+        </div>
+        <div>{right}</div>
+      </ListTabWrapper>
+      {!isLast && <Divider height={1} />}
+    </>
   );
 };
 
@@ -45,13 +42,14 @@ export default ListTab;
 
 interface ListTapWrapperProps {
   isLast: boolean;
+  color?: keyof Theme["colors"];
 }
 
 const ListTabWrapper = styled.div<ListTapWrapperProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 0rem;
+  padding: 1rem 0rem;
 
   .list-title {
     display: flex;
@@ -74,7 +72,9 @@ const ListTabWrapper = styled.div<ListTapWrapperProps>`
       line-height: ${(props) => props.theme.lineHeights.xl};
       font-weight: 700;
       color: ${(props) =>
-        props.isLast ? props.theme.colors.red_light : props.theme.colors.black};
+        props.color
+          ? props.theme.colors[props.color]
+          : props.theme.colors.black};
     }
 
     & .sub-text {
