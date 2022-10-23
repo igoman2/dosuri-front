@@ -17,6 +17,7 @@ const tabList = [
     hasNoti: false,
   },
   { text: "공지사항", subtext: "", link: "mypage/notification", hasNoti: true },
+  { text: "설정", subtext: "", link: "mypage/setting", hasNoti: false },
   {
     text: "도수리 팀에게 의견 보내기",
     subtext: "",
