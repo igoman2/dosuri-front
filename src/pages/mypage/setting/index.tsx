@@ -8,6 +8,7 @@ import Image from "next/image";
 import ArrowRight from "@/public/assets/arrow-right.png";
 import React from "react";
 import ListTab from "@/components/UI/ListTab";
+import Link from "next/link";
 
 const Setting = () => {
   return (
@@ -89,23 +90,27 @@ const Setting = () => {
                 </div>
               }
             />
-            <ListTab
-              text="회원 탈퇴"
-              key="회원 탈퇴"
-              subText=""
-              isLast={true}
-              color="grey"
-              right={
-                <div>
-                  <Image
-                    src={ArrowRight}
-                    width={25}
-                    height={25}
-                    alt="arrow-right"
-                  />
-                </div>
-              }
-            />
+            <Link href="/mypage/secession">
+              <a>
+                <ListTab
+                  text="회원 탈퇴"
+                  key="회원 탈퇴"
+                  subText=""
+                  isLast={true}
+                  color="grey"
+                  right={
+                    <div>
+                      <Image
+                        src={ArrowRight}
+                        width={25}
+                        height={25}
+                        alt="arrow-right"
+                      />
+                    </div>
+                  }
+                />
+              </a>
+            </Link>
           </ul>
         </div>
       </SettingWrapper>
