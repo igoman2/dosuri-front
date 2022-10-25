@@ -1,4 +1,4 @@
-export const reviews: Review[] = [
+export const posts: Post[] = [
   {
     id: 1,
     nickname: "해리케인",
@@ -31,7 +31,7 @@ export const reviews: Review[] = [
   },
 ];
 
-export interface Review {
+export interface Post {
   id: number;
   nickname: string;
   registered: string;

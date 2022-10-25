@@ -1,11 +1,12 @@
-import ReviewCard from "@/components/Card/ReviewCard";
+import PostCard from "@/components/Card/PostCard";
 import Layout from "@/components/Layout";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
-import { reviews } from "@/mock/reviews";
 import Button from "@/components/Button";
 import Link from "next/link";
+import { Post, posts } from "@/mock/posts";
+import Icon from "@/util/Icon";
 
 const DIRECTION = {
   Up: "UP",
@@ -45,16 +46,33 @@ const Review = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, [scrollDir]);
 
+  const renderPostBottom = (post: Post) => {
+    return (
+      <PostBottom>
+        <div className="post-bottom">
+          <div className="heart">
+            <Icon name="heart" width="17" height="17" />
+            <span>{post.heart}</span>
+          </div>
+          <div className="comment">
+            <Icon name="comment" />
+            <span>{post.comment}</span>
+          </div>
+        </div>
+      </PostBottom>
+    );
+  };
+
   return (
     <Layout header={<HeaderDepth />} footer={false}>
       <>
         <ReviewWrapper>
           <div className="sub-title">내 후기 총 2개</div>
 
-          {reviews.map((review, i) => (
-            <Link href={`review/${review.id}`} key={i}>
+          {posts.map((post, i) => (
+            <Link href={`review/${post.id}`} key={i}>
               <a>
-                <ReviewCard review={review} />
+                <PostCard post={post} bottom={renderPostBottom(post)} />
               </a>
             </Link>
           ))}
@@ -95,4 +113,23 @@ const Float = styled.div<FloatProps>`
   transition: all 0.3s linear;
   transform: ${(props) =>
     props.direction === DIRECTION.Up ? "" : "translateY(10rem)"};
+`;
+
+const PostBottom = styled.div`
+  .post-bottom {
+    display: flex;
+    gap: 1rem;
+    font-size: ${(props) => props.theme.fontSizes.sm};
+    line-height: ${(props) => props.theme.lineHeights.sm};
+    .heart {
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+    }
+    .comment {
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+    }
+  }
 `;

@@ -1,8 +1,8 @@
 import Layout from "@/components/Layout";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import React from "react";
-import { reviews } from "@/mock/reviews";
-import ReviewCard from "@/components/Card/ReviewCard";
+import { Post, posts } from "@/mock/posts";
+import PostCard from "@/components/Card/PostCard";
 import Comment from "@/components/Comment";
 import { comment } from "@/mock/comment";
 import Button from "@/components/Button";
@@ -11,6 +11,8 @@ import { useRecoilState } from "recoil";
 import { modalState } from "@/components/Layout/store";
 import ModalBase from "@/components/Modal/ModalBase";
 import CardModal from "@/components/Modal/CardModal";
+import styled from "@emotion/styled";
+import Icon from "@/util/Icon";
 
 const ReviewDetail = () => {
   const theme = useTheme();
@@ -27,6 +29,19 @@ const ReviewDetail = () => {
 
   const onDeleteHander = () => {
     setIsActive(true);
+  };
+
+  const renderPostBottom = (post: Post) => {
+    return (
+      <PostBottom>
+        <div className="post-bottom">
+          <div className="heart">
+            <Icon name="heart" width="20" height="20" />
+            <span>좋아요</span>
+          </div>
+        </div>
+      </PostBottom>
+    );
   };
 
   return (
@@ -48,8 +63,8 @@ const ReviewDetail = () => {
       footer={false}
     >
       <>
-        {[reviews[0]].map((review, i) => (
-          <ReviewCard review={review} key={i} />
+        {[posts[0]].map((post, i) => (
+          <PostCard post={post} key={i} bottom={renderPostBottom(post)} />
         ))}
         <Comment comment={comment} />
       </>
@@ -71,3 +86,19 @@ const ReviewDetail = () => {
 };
 
 export default ReviewDetail;
+
+const PostBottom = styled.div`
+  .post-bottom {
+    display: flex;
+    gap: 1rem;
+    font-size: ${(props) => props.theme.fontSizes.md};
+    line-height: ${(props) => props.theme.lineHeights.md};
+    color: ${(props) => props.theme.colors.grey};
+
+    .heart {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+  }
+`;

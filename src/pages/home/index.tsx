@@ -6,8 +6,9 @@ import React from "react";
 import SampleImage from "@/public/assets/sample.png";
 import DoctorCard, { DoctorInfo } from "@/components/Card/DoctorCard";
 import Icon from "@/util/Icon";
-import ReviewCard from "@/components/Card/ReviewCard";
-import { reviews } from "@/mock/reviews";
+import { Post, posts } from "@/mock/posts";
+import PostCard from "@/components/Card/PostCard";
+import styled from "@emotion/styled";
 
 const Home = () => {
   const theme = useTheme();
@@ -85,6 +86,19 @@ const Home = () => {
       hospitalImage: SampleImage,
     },
   ];
+
+  const renderPostBottom = (post: Post) => {
+    return (
+      <PostBottom>
+        <div className="post-bottom">
+          <div className="heart">
+            <Icon name="heart" width="20" height="20" />
+            <span>좋아요</span>
+          </div>
+        </div>
+      </PostBottom>
+    );
+  };
 
   return (
     <Layout header={<Header left={true} center={true} right={true} />}>
@@ -177,8 +191,8 @@ const Home = () => {
         >
           HOT 도수톡
         </div>
-        {reviews.map((review, i) => (
-          <ReviewCard review={review} key={i} />
+        {posts.map((post, i) => (
+          <PostCard post={post} key={i} bottom={renderPostBottom(post)} />
         ))}
       </div>
     </Layout>
@@ -186,3 +200,19 @@ const Home = () => {
 };
 
 export default Home;
+
+const PostBottom = styled.div`
+  .post-bottom {
+    display: flex;
+    gap: 1rem;
+    font-size: ${(props) => props.theme.fontSizes.md};
+    line-height: ${(props) => props.theme.lineHeights.md};
+    color: ${(props) => props.theme.colors.grey};
+
+    .heart {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+  }
+`;

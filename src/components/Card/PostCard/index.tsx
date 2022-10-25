@@ -1,15 +1,15 @@
 import DoSwiper from "@/components/DoSwiper";
 import Divider from "@/components/UI/Divider";
-import { Review } from "@/mock/reviews";
-import Icon from "@/util/Icon";
+import { Post } from "@/mock/posts";
 import styled from "@emotion/styled";
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, ReactElement, useEffect, useRef, useState } from "react";
 
-interface IReveiwCardProps {
-  review: Review;
+interface IPostCardProps {
+  post: Post;
+  bottom: ReactElement;
 }
 
-const ReviewCard: FC<IReveiwCardProps> = ({ review }) => {
+const PostCard: FC<IPostCardProps> = ({ post, bottom }) => {
   const [isCommentOver3Line, setIsCommentOver3Line] = useState<boolean>();
   const [isShowMoreClicked, setIsShowMoreClicked] = useState<boolean>(false);
   const commentRef = useRef<HTMLDivElement>(null);
@@ -58,46 +58,37 @@ const ReviewCard: FC<IReveiwCardProps> = ({ review }) => {
 
   return (
     <>
-      <ReviewCardWrapper>
-        <div className="review-head">
-          <div className="nickname">{review.nickname}</div>
-          <div className="register-time">{review.registered}</div>
+      <PostCardWrapper>
+        <div className="post-head">
+          <div className="nickname">{post.nickname}</div>
+          <div className="register-time">{post.registered}</div>
         </div>
-        <div className="hospital-name">{review.hospitalName}</div>
+        <div className="hospital-name">{post.hospitalName}</div>
         <div className="swiper-layout">
-          <DoSwiper source={review.images} />
+          <DoSwiper source={post.images} />
         </div>
-        <div className="review-comment">
+        <div className="post-comment">
           <div
             className={!isShowMoreClicked && isCommentOver3Line ? "hide" : ""}
             ref={commentRef}
           >
-            {review.review}
+            {post.review}
           </div>
           {showMoreRender()}
         </div>
-        <div className="review-bottom">
-          <div className="heart">
-            <Icon name="heart" />
-            <span>{review.heart}</span>
-          </div>
-          <div className="comment">
-            <Icon name="comment" />
-            <span>{review.comment}</span>
-          </div>
-        </div>
-      </ReviewCardWrapper>
+        {bottom}
+      </PostCardWrapper>
       <Divider height={1} />
     </>
   );
 };
 
-export default ReviewCard;
+export default PostCard;
 
-const ReviewCardWrapper = styled.div`
+const PostCardWrapper = styled.div`
   margin: 1rem 0;
 
-  .review-head {
+  .post-head {
     display: flex;
     gap: 1rem;
 
@@ -126,7 +117,7 @@ const ReviewCardWrapper = styled.div`
     margin: 1rem 0;
   }
 
-  .review-comment {
+  .post-comment {
     & .hide {
       overflow-y: hidden;
       text-overflow: ellipsis;
@@ -145,22 +136,5 @@ const ReviewCardWrapper = styled.div`
     color: ${(props) => props.theme.colors.grey};
     font-size: ${(props) => props.theme.fontSizes.lg};
     line-height: ${(props) => props.theme.lineHeights.lg};
-  }
-
-  .review-bottom {
-    display: flex;
-    gap: 1rem;
-    font-size: ${(props) => props.theme.fontSizes.sm};
-    line-height: ${(props) => props.theme.lineHeights.sm};
-    .heart {
-      display: flex;
-      gap: 0.3rem;
-      align-items: center;
-    }
-    .comment {
-      display: flex;
-      gap: 0.3rem;
-      align-items: center;
-    }
   }
 `;

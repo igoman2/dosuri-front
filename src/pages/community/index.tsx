@@ -1,8 +1,9 @@
 import Button from "@/components/Button";
-import ReviewCard from "@/components/Card/ReviewCard";
+import PostCard from "@/components/Card/PostCard";
 import Layout from "@/components/Layout";
 import Header from "@/components/Layout/Header";
-import { reviews } from "@/mock/reviews";
+import { Post, posts } from "@/mock/posts";
+import Icon from "@/util/Icon";
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import Link from "next/link";
@@ -16,6 +17,23 @@ const Community = () => {
 
   const onTabClick = (tab: string) => {
     setCurrentTab(tab);
+  };
+
+  const renderPostBottom = (post: Post) => {
+    return (
+      <PostBottom>
+        <div className="post-bottom">
+          <div className="heart">
+            <Icon name="heart" width="17" height="17" />
+            <span>{post.heart}</span>
+          </div>
+          <div className="comment">
+            <Icon name="comment" />
+            <span>{post.comment}</span>
+          </div>
+        </div>
+      </PostBottom>
+    );
   };
 
   return (
@@ -43,10 +61,10 @@ const Community = () => {
           </ButtonWrapper>
         </div>
 
-        {reviews.map((review, i) => (
-          <Link href={`review/${review.id}`} key={i}>
+        {posts.map((post, i) => (
+          <Link href={`community/${post.id}`} key={i}>
             <a>
-              <ReviewCard review={review} />
+              <PostCard post={post} bottom={renderPostBottom(post)} />
             </a>
           </Link>
         ))}
@@ -62,4 +80,23 @@ const ButtonWrapper = styled.div`
   gap: 1rem;
   flex-wrap: wrap;
   margin: 0.5rem 0 1.5rem 0;
+`;
+
+const PostBottom = styled.div`
+  .post-bottom {
+    display: flex;
+    gap: 1rem;
+    font-size: ${(props) => props.theme.fontSizes.sm};
+    line-height: ${(props) => props.theme.lineHeights.sm};
+    .heart {
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+    }
+    .comment {
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+    }
+  }
 `;
