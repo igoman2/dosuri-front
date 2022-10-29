@@ -7,7 +7,7 @@ export interface Menu {
 export const menus: Menu[] = [
   {
     title: "홈",
-    path: "/home",
+    path: "/",
     iconName: "home",
   },
   {

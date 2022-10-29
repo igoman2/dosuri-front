@@ -3,7 +3,7 @@ import { v4 } from "uuid";
 
 export const menuState = atom({
   key: `menuState${v4()}`,
-  default: "/home",
+  default: "/",
 });
 
 export const modalState = atom({
