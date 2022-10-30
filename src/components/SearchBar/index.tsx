@@ -2,6 +2,7 @@ import Image from "next/image";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import magnifier_grey from "@/public/assets/magnifier_grey.png";
 import { css, useTheme } from "@emotion/react";
+import Link from "next/link";
 
 const SearchBar = () => {
   const [inputText, setInputText] = useState("");

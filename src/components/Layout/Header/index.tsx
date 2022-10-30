@@ -30,7 +30,15 @@ const Header: FC<IHeaderProps> = ({ left, center, right }) => {
       <Link href="/">
         <a>{left && <Image src={logo} alt="logo" width={82} height={22} />}</a>
       </Link>
-      <div className="center">{center && <SearchBar />}</div>
+      <div className="center">
+        {center && (
+          <Link href="/search/input">
+            <a>
+              <SearchBar />
+            </a>
+          </Link>
+        )}
+      </div>
       <div>
         {right && <Image src={note} alt="register" width={28} height={28} />}
       </div>
