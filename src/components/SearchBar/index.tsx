@@ -1,8 +1,16 @@
 import Image from "next/image";
-import React, { ChangeEvent, FC, FormEvent, useState } from "react";
+import React, {
+  ChangeEvent,
+  FC,
+  FormEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import magnifier_grey from "@/public/assets/magnifier_grey.png";
 import { css, useTheme } from "@emotion/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface ISearchBarProps {
   inputText: string;
@@ -15,8 +23,18 @@ const SearchBar: FC<ISearchBarProps> = ({ inputText, onInput }) => {
     console.log(inputText);
   };
 
+  const inputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme();
+  const router = useRouter();
 
+  useEffect(() => {
+    if (router.asPath !== "/search/input") {
+      return;
+    }
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
   const inputWrapper = css`
     position: relative;
     color: ${theme.colors.grey};
@@ -59,6 +77,7 @@ const SearchBar: FC<ISearchBarProps> = ({ inputText, onInput }) => {
             />
           </span>
           <input
+            ref={inputRef}
             css={input}
             value={inputText}
             onChange={onInput}
