@@ -1,18 +1,18 @@
 import Image from "next/image";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 import magnifier_grey from "@/public/assets/magnifier_grey.png";
 import { css, useTheme } from "@emotion/react";
 import Link from "next/link";
 
-const SearchBar = () => {
-  const [inputText, setInputText] = useState("");
+interface ISearchBarProps {
+  inputText: string;
+  onInput?: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+const SearchBar: FC<ISearchBarProps> = ({ inputText, onInput }) => {
   const onSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(inputText);
-  };
-
-  const onInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputText(e.target.value);
   };
 
   const theme = useTheme();
@@ -58,7 +58,6 @@ const SearchBar = () => {
               height={20}
             />
           </span>
-
           <input
             css={input}
             value={inputText}
