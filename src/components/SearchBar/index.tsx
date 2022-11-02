@@ -1,31 +1,32 @@
 import Image from "next/image";
-import React, {
-  ChangeEvent,
-  FC,
-  FormEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { ChangeEvent, FC, FormEvent, useEffect, useRef } from "react";
 import magnifier_grey from "@/public/assets/magnifier_grey.png";
 import { css, useTheme } from "@emotion/react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 interface ISearchBarProps {
-  inputText: string;
+  inputText?: string;
   onInput?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const SearchBar: FC<ISearchBarProps> = ({ inputText, onInput }) => {
   const onSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(inputText);
+    router.replace({
+      pathname: `/search/${inputText}`,
+      query: { keyword: inputText, tab: "all" },
+    });
   };
 
   const inputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme();
   const router = useRouter();
+
+  const onClickHandler = () => {
+    if (router.asPath !== "/search/input") {
+      router.push("/search/input");
+    }
+  };
 
   useEffect(() => {
     if (router.asPath !== "/search/input") {
@@ -65,6 +66,7 @@ const SearchBar: FC<ISearchBarProps> = ({ inputText, onInput }) => {
       css={{
         flexGrow: 1,
       }}
+      onClick={onClickHandler}
     >
       <form onSubmit={onSearch}>
         <div css={inputWrapper}>

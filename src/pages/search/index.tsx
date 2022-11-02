@@ -9,7 +9,7 @@ import styled from "@emotion/styled";
 import ImageTextView from "@/components/UI/ImageTextView";
 import Image from "next/image";
 import ChevronDowm from "@/public/assets/chevron-down.png";
-import { BottomSheet, BottomSheetRef } from "react-spring-bottom-sheet";
+import { BottomSheet } from "react-spring-bottom-sheet";
 import "react-spring-bottom-sheet/dist/style.css";
 import Divider from "@/components/UI/Divider";
 import { ListItem, SELECT_LIST } from "@/mock/searchCategory";
