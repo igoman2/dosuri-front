@@ -1,10 +1,8 @@
-import HospitalCard, { HospitalInfo } from "@/components/Card/HospitalCard";
+import HospitalCard from "@/components/Card/HospitalCard";
 import Layout from "@/components/Layout";
 import Header from "@/components/Layout/Header";
 import { useTheme } from "@emotion/react";
 import React, { useState } from "react";
-import SampleImage from "@/public/assets/sample.png";
-import Icon from "@/util/Icon";
 import styled from "@emotion/styled";
 import ImageTextView from "@/components/UI/ImageTextView";
 import Image from "next/image";
@@ -13,6 +11,7 @@ import { BottomSheet } from "react-spring-bottom-sheet";
 import "react-spring-bottom-sheet/dist/style.css";
 import Divider from "@/components/UI/Divider";
 import { ListItem, SELECT_LIST } from "@/mock/searchCategory";
+import { HospitalInfo, hospitalList } from "@/mock/hospitals";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
@@ -26,53 +25,6 @@ const Home = () => {
     setCategory(item);
     onDismiss();
   };
-
-  const list: HospitalInfo[] = [
-    {
-      title: "압구정강남바른정형외과의원",
-      location: "신사동",
-      reviewConut: 1,
-      thunbCount: 11,
-      recentReview: (
-        <>
-          <Icon
-            name="talk_square"
-            width="16"
-            height="15"
-            fill={theme.colors.purple}
-          />
-          친절한 의료진과 주차가 편합니다
-        </>
-      ),
-      hospitalImage: SampleImage,
-    },
-    {
-      title: "두발로병원",
-      location: "압구정동",
-      reviewConut: 0,
-      thunbCount: 0,
-      recentReview: null,
-      hospitalImage: SampleImage,
-    },
-    {
-      title: "압구정강남바른정형외과의원",
-      location: "신사동",
-      reviewConut: 1,
-      thunbCount: 11,
-      recentReview: (
-        <>
-          <Icon
-            name="talk_square"
-            width="16"
-            height="15"
-            fill={theme.colors.purple}
-          />
-          친절한 의료진과 주차가 편합니다
-        </>
-      ),
-      hospitalImage: SampleImage,
-    },
-  ];
 
   return (
     <Layout header={<Header left={true} center={true} right={true} />}>
@@ -90,7 +42,7 @@ const Home = () => {
           따끈한 후기가 새로 등록됐어요!
         </div>
 
-        {list.map((hospital: HospitalInfo, i) => (
+        {hospitalList.map((hospital: HospitalInfo, i) => (
           <HospitalCard hospitalInfo={hospital} key={i} />
         ))}
       </div>
@@ -108,7 +60,7 @@ const Home = () => {
           후기는 다다익선! 치료 후기 많은 곳
         </div>
 
-        {list.map((hospital: HospitalInfo, i) => (
+        {hospitalList.map((hospital: HospitalInfo, i) => (
           <HospitalCard hospitalInfo={hospital} key={i} />
         ))}
       </div>
@@ -140,7 +92,7 @@ const Home = () => {
           />
         </ImageTextViewWrapper>
 
-        {list.map((hospital: HospitalInfo, i) => (
+        {hospitalList.map((hospital: HospitalInfo, i) => (
           <HospitalCard hospitalInfo={hospital} key={i} />
         ))}
       </div>

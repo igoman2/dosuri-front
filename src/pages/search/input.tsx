@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import React, { ChangeEvent, useState } from "react";
 import RecentSearchList from "@/components/UI/RecentSearchList";
 import { recentSearchList } from "@/mock/recentSearchList";
-import SearchHeader from "./SearchHeader";
+import SearchHeader from "@/components/SearchHeader";
 import styled from "@emotion/styled";
 
 const SearchInput = () => {

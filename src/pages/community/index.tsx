@@ -1,9 +1,9 @@
 import Button from "@/components/Button";
 import PostCard from "@/components/Card/PostCard";
+import PostBottom from "@/components/Card/PostCard/PostBottom";
 import Layout from "@/components/Layout";
 import Header from "@/components/Layout/Header";
-import { Post, posts } from "@/mock/posts";
-import Icon from "@/util/Icon";
+import { posts } from "@/mock/posts";
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import Link from "next/link";
@@ -17,23 +17,6 @@ const Community = () => {
 
   const onTabClick = (tab: string) => {
     setCurrentTab(tab);
-  };
-
-  const renderPostBottom = (post: Post) => {
-    return (
-      <PostBottom>
-        <div className="post-bottom">
-          <div className="heart">
-            <Icon name="heart" width="17" height="17" />
-            <span>{post.heart}</span>
-          </div>
-          <div className="comment">
-            <Icon name="comment" />
-            <span>{post.comment}</span>
-          </div>
-        </div>
-      </PostBottom>
-    );
   };
 
   return (
@@ -64,7 +47,7 @@ const Community = () => {
         {posts.map((post, i) => (
           <Link href={`community/${post.id}`} key={i}>
             <a>
-              <PostCard post={post} bottom={renderPostBottom(post)} />
+              <PostCard post={post} bottom={<PostBottom post={post} />} />
             </a>
           </Link>
         ))}
@@ -80,23 +63,4 @@ const ButtonWrapper = styled.div`
   gap: 1rem;
   flex-wrap: wrap;
   margin: 0.5rem 0 1.5rem 0;
-`;
-
-const PostBottom = styled.div`
-  .post-bottom {
-    display: flex;
-    gap: 1rem;
-    font-size: ${(props) => props.theme.fontSizes.sm};
-    line-height: ${(props) => props.theme.lineHeights.sm};
-    .heart {
-      display: flex;
-      gap: 0.3rem;
-      align-items: center;
-    }
-    .comment {
-      display: flex;
-      gap: 0.3rem;
-      align-items: center;
-    }
-  }
 `;

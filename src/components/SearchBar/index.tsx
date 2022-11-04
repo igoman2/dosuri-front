@@ -29,13 +29,22 @@ const SearchBar: FC<ISearchBarProps> = ({ inputText, onInput }) => {
   };
 
   useEffect(() => {
+    if (router.query.keyword) {
+      if (inputRef.current) {
+        inputRef.current.value = router.query.keyword as string;
+      }
+      return;
+    }
+  }, [router]);
+
+  useEffect(() => {
     if (router.asPath !== "/search/input") {
       return;
     }
     if (inputRef.current) {
       inputRef.current.focus();
     }
-  }, []);
+  }, [router]);
   const inputWrapper = css`
     position: relative;
     color: ${theme.colors.grey};

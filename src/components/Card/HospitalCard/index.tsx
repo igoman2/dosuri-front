@@ -1,15 +1,7 @@
-import Image, { StaticImageData } from "next/image";
-import React, { FC, ReactNode } from "react";
+import { HospitalInfo } from "@/mock/hospitals";
+import Image from "next/image";
+import React, { FC } from "react";
 import Description from "../Description";
-
-export interface HospitalInfo {
-  title: string;
-  location: string;
-  reviewConut: number;
-  thunbCount: number;
-  recentReview: ReactNode | string | null;
-  hospitalImage: StaticImageData; // 서버에서 받아오는거로 변경할 예정
-}
 
 export interface IHospitalCardProps {
   hospitalInfo: HospitalInfo;

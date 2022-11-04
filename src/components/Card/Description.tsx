@@ -1,7 +1,7 @@
+import { HospitalInfo } from "@/mock/hospitals";
 import Icon from "@/util/Icon";
 import { useTheme } from "@emotion/react";
 import React, { FC } from "react";
-import { HospitalInfo } from "./HospitalCard";
 
 export interface IDescriptionProps {
   hospitalInfo: HospitalInfo;
@@ -56,6 +56,12 @@ const Description: FC<IDescriptionProps> = ({ hospitalInfo, size }) => {
               gap: 4,
             }}
           >
+            <Icon
+              name="talk_square"
+              width="16"
+              height="15"
+              fill={theme.colors.purple}
+            />
             {hospitalInfo.recentReview}
           </span>
         ) : (

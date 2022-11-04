@@ -8,6 +8,7 @@ interface IButtonProps {
   color?: string;
   backgroundColor?: string;
   border?: string;
+  borderRadius?: string;
   width?: string;
   onClick?: () => void;
   type?: "button" | "submit" | "reset" | undefined;
@@ -23,6 +24,7 @@ const Button: FC<IButtonProps> = ({
   color,
   backgroundColor,
   border,
+  borderRadius,
   onClick,
   type,
   width,
@@ -50,7 +52,11 @@ const Button: FC<IButtonProps> = ({
       : theme.colors.purple_light2};
     padding: ${dense ? "0.5rem" : "1rem"};
     box-shadow: none;
-    border-radius: ${iconName ? "4rem" : "0.5rem"};
+    border-radius: ${borderRadius
+      ? borderRadius
+      : iconName
+      ? "4rem"
+      : "0.5rem"};
     border: ${border ? border : 0};
     width: ${width ? width : "auto"};
     outline: 0;
