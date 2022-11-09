@@ -52,6 +52,7 @@ const Login = () => {
 
       <div css={buttonSection}>
         <Kakao />
+
         <div
           id="appleid-signin"
           data-mode="center-align"
@@ -61,6 +62,7 @@ const Login = () => {
           data-border-radius="5"
           data-height="50"
         ></div>
+
         <Google />
       </div>
     </main>

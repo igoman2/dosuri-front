@@ -7,9 +7,9 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import ArrowRight from "@/public/assets/arrow-right.png";
 import React from "react";
-import { signOut } from "next-auth/react";
 import ListTab from "@/components/UI/ListTab";
 import Link from "next/link";
+import { logout } from "@/pages/withauth";
 
 const Setting = () => {
   return (
@@ -75,7 +75,7 @@ const Setting = () => {
               }
             />
             <ListTab
-              onClick={() => signOut({ callbackUrl: "/" })}
+              onClick={() => logout()}
               text="로그아웃"
               key="로그아웃"
               subText=""

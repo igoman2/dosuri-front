@@ -7,6 +7,7 @@ import ArrowRight from "@/public/assets/arrow-right.png";
 import React from "react";
 import Divider from "@/components/UI/Divider";
 import Link from "next/link";
+import withAuth from "../withauth";
 
 const tabList = [
   { text: "내 치료후기", subtext: "", link: "mypage/review", hasNoti: false },
@@ -86,7 +87,7 @@ const Mypage = () => {
   );
 };
 
-export default Mypage;
+export default withAuth(Mypage);
 
 const ProfileSectionWrapper = styled.div`
   display: flex;

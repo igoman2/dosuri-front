@@ -11,6 +11,15 @@ const nextConfig = {
   images: {
     domains: ["dosuri-images.s3.ap-northeast-2.amazonaws.com"],
   },
+
+  async rewrites() {
+    return [
+      {
+        source: "/:path*",
+        destination: "https://server.dosuri.site/:path*" + "/",
+      },
+    ];
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,
@@ -24,6 +33,9 @@ const nextConfig = {
 
 const sentryWebpackPluginOptions = {};
 
-// Make sure adding Sentry options is the last code to run before exporting, to
-// ensure that your source maps include changes from all other Webpack plugins
-module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);
+let config = {};
+
+process.env.NODE_ENV === "production"
+  ? (config = withSentryConfig(nextConfig, sentryWebpackPluginOptions))
+  : (config = nextConfig);
+module.exports = config;

@@ -17,3 +17,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       ]);
   else res.status(401).send({ error: "failed to fetch data" });
 }
+
+export const config = {
+  api: {
+    externalResolver: true,
+  },
+};

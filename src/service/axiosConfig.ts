@@ -1,36 +1,14 @@
-import axios, {
-  AxiosInstance,
-  AxiosInterceptorManager,
-  AxiosRequestConfig,
-  AxiosResponse,
-} from "axios";
-import { getSession } from "next-auth/react";
+import axios from "axios";
+import { getCookie } from "cookies-next";
 
-type CustomResponseFormat<T = any> = {
-  response: T;
-  refreshedToken?: string;
-};
-interface CustomInstance extends AxiosInstance {
-  interceptors: {
-    request: AxiosInterceptorManager<AxiosRequestConfig>;
-    response: AxiosInterceptorManager<AxiosResponse<CustomResponseFormat>>;
-  };
-  getUri(config?: AxiosRequestConfig): string;
-  request<T>(config: AxiosRequestConfig): Promise<T>;
-  get<T>(url: string, config?: AxiosRequestConfig): Promise<T>;
-  delete<T>(url: string, config?: AxiosRequestConfig): Promise<T>;
-  head<T>(url: string, config?: AxiosRequestConfig): Promise<T>;
-  options<T>(url: string, config?: AxiosRequestConfig): Promise<T>;
-  post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
-  put<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
-  patch<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
-}
-
-const api: CustomInstance = axios.create({
-  baseURL: process.env.NODE_ENV === "production" ? "" : "http://localhost:3000",
+const api = axios.create({
+  baseURL:
+    process.env.NODE_ENV === "production"
+      ? process.env.NEXT_PUBLIC_API_URL
+      : "http://localhost:3000",
   headers: {
-    "Content-type": "application/json; charset=UTF-8",
-    accept: "application/json,",
+    Accept: "application/json",
+    "Content-Type": "application/json",
   },
 });
 
@@ -39,24 +17,20 @@ const api: CustomInstance = axios.create({
  2개의 콜백 함수를 받습니다.
  */
 api.interceptors.request.use(
-  async (config) => {
-    const session = await getSession();
-
-    if (session) {
-      if (!config?.headers) {
-        throw new Error(
-          `Expected 'config' and 'config.headers' not to be undefined`
-        );
+  (config) => {
+    // HTTP Authorization 요청 헤더에 jwt-token을 넣음
+    // 서버측 미들웨어에서 이를 확인하고 검증한 후 해당 API에 요청함.
+    const token = getCookie("accessToken");
+    config!.headers = { ...config!.headers };
+    try {
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
       }
-      const token = session.accessToken;
-      config.headers = {
-        Authorization: `Bearer ${token}`,
-      };
 
-      // config.headers?.Authorization = `Bearer ${token}`;
       return config;
+    } catch (err) {
+      console.error("[_axios.interceptors.request] config : " + err);
     }
-
     return config;
   },
   (error) => {
@@ -87,9 +61,14 @@ api.interceptors.response.use(
     } = error;
     if (status === 401) {
       const originalRequest = config;
+      originalRequest!.headers = { ...originalRequest!.headers };
 
-      const resp = await axios.get("/api/auth/session?update");
-      const newAccessToken = resp.data.accessToken;
+      const refreshToken = getCookie("refreshToken");
+
+      const resp = await api.post("/user/v1/token/refresh", {
+        refresh: refreshToken,
+      });
+      const newAccessToken = resp.data.access;
 
       axios.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
       originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;

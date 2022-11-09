@@ -12,7 +12,6 @@ const ModalContent = () => {
 
   const onModalAction = () => {
     modal.action();
-    console.log("@@");
   };
 
   return (
