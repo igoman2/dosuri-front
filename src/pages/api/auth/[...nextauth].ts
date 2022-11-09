@@ -16,46 +16,19 @@ const createOptions = (req: NextApiRequest): NextAuthOptions => ({
     }),
   ],
 
+  //   secret: process.env.SECRET,
   callbacks: {
     async jwt({ token, account }) {
-      if (req.url === "/api/auth/session?update") {
-        const { data } = await axios.post(
-          "http://dosuri-env.eba-igc5wtjb.ap-northeast-2.elasticbeanstalk.com/user/v1/token/refresh/",
-          {
-            refresh: token.refreshToken,
-          }
-        );
-        token.accessToken = data.access;
-
-        return token;
-      }
-
+      // Persist the OAuth access_token to the token right after signin
       if (account) {
-        try {
-          const resp = await axios.post(
-            "http://dosuri-env.eba-igc5wtjb.ap-northeast-2.elasticbeanstalk.com/user/v1/auth/",
-            {
-              username: token.email,
-              token: account.access_token,
-              type: account.provider,
-            }
-          );
-
-          token.accessToken = resp.data.access_token;
-          token.refreshToken = resp.data.refresh_token;
-        } catch (e) {
-          console.log(e);
-        }
+        token.accessToken = account.access_token;
       }
       return token;
     },
-    async session({ session, token }: any) {
+    async session({ session, token, user }: any) {
+      // Send properties to the client, like an access_token from a provider.
       session.accessToken = token.accessToken;
-      session.refreshToken = token.refreshToken;
       return session;
-    },
-    async redirect({ baseUrl }) {
-      return baseUrl;
     },
   },
 
@@ -63,14 +36,6 @@ const createOptions = (req: NextApiRequest): NextAuthOptions => ({
     strategy: "jwt",
   },
   pages: {
-    signIn: "/login",
-    error: "/error",
+    signIn: "/",
   },
-  secret: process.env.JWT_SECRET,
 });
-
-const Auth = async (req: NextApiRequest, res: NextApiResponse<any>) => {
-  return NextAuth(req, res, createOptions(req));
-};
-
-export default Auth;
