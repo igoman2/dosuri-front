@@ -3,9 +3,12 @@ import Image from "next/image";
 import React from "react";
 import Logo from "@/public/assets/logo2.png";
 import { css, useTheme } from "@emotion/react";
-import kakaoIcon from "@/public/assets/kakao.png";
-import googleIcon from "@/public/assets/google.png";
 import AppleLogin from "@/util/apple";
+import Link from "next/link";
+import Kakao from "@/components/Oauth/Kakao";
+import dynamic from "next/dynamic";
+import { signIn, signOut, useSession } from "next-auth/react";
+import Google from "@/components/Oauth/Google";
 
 const Login = () => {
   const theme = useTheme();
@@ -41,6 +44,10 @@ const Login = () => {
     width: 100%;
   `;
 
+  const { data: session, status } = useSession();
+  console.log(session);
+  const loading = status === "loading";
+
   return (
     <main css={mainLayout}>
       <AppleLogin />
@@ -50,31 +57,9 @@ const Login = () => {
         <span>도수 통증치료 병원정보는</span>
         <span>도수리</span>
       </p>
-      <div css={buttonSection}>
-        <Button
-          text={
-            <div
-              css={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "1rem",
-                "& .text": {
-                  fontSize: theme.fontSizes.lg,
-                  lineHeight: theme.lineHeights.lg,
-                  fontWeight: 700,
-                  paddingTop: "0.2rem",
-                },
-              }}
-            >
-              <Image src={kakaoIcon} alt="kakao-logo" width={30} height={30} />
-              <div className="text">카카오 계정으로 시작하기</div>
-            </div>
-          }
-          color={theme.colors.black}
-          backgroundColor="#FAE100"
-        />
 
+      <div css={buttonSection}>
+        <Kakao />
         <div
           id="appleid-signin"
           data-mode="center-align"
@@ -84,40 +69,11 @@ const Login = () => {
           data-border-radius="5"
           data-height="50"
         ></div>
-
-        <Button
-          text={
-            <div
-              css={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "1rem",
-                fontSize: theme.fontSizes.lg,
-                lineHeight: theme.lineHeights.lg,
-                fontWeight: 700,
-                "& .text": {
-                  fontSize: theme.fontSizes.lg,
-                  lineHeight: theme.lineHeights.lg,
-                  fontWeight: 700,
-                  paddingTop: "0.2rem",
-                },
-              }}
-            >
-              <Image
-                src={googleIcon}
-                alt="google-logo"
-                width={20}
-                height={20}
-              />
-              <div className="text"> 구글 계정으로 시작하기</div>
-            </div>
-          }
-          color={theme.colors.black}
-          backgroundColor={theme.colors.white}
-          border={`0.1rem solid ${theme.colors.grey}`}
-        />
+        <Google />
       </div>
+      {session && (
+        <button onClick={() => signOut({ callbackUrl: "/" })}>signOut</button>
+      )}
     </main>
   );
 };
