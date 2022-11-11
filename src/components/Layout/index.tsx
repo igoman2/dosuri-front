@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
-import React, { FC, ReactElement, useEffect, useRef, useState } from "react";
+import React, { FC, ReactElement, useEffect } from "react";
 import Footer from "./Footer";
 import { useSetRecoilState } from "recoil";
 import { menuState } from "./store";
 import { menus } from "./menu";
+import ModalBase from "../Modal/ModalBase";
 
 interface ILayoutProps {
   header?: ReactElement;
@@ -42,6 +43,7 @@ const Layout: FC<ILayoutProps> = ({ header, children, footer = true }) => {
       </div>
 
       {footer && <Footer menus={menus} />}
+      <ModalBase />
     </>
   );
 };

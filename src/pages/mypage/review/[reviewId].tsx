@@ -8,28 +8,15 @@ import { comment } from "@/mock/comment";
 import Button from "@/components/Button";
 import { useTheme } from "@emotion/react";
 import { useRecoilState } from "recoil";
-import { modalState } from "@/components/Layout/store";
-import ModalBase from "@/components/Modal/ModalBase";
-import CardModal from "@/components/Modal/CardModal";
 import styled from "@emotion/styled";
 import Icon from "@/util/Icon";
+import { modalContentState, modalState } from "@/components/Modal/store";
 
 const ReviewDetail = () => {
   const theme = useTheme();
 
-  const [isActive, setIsActive] = useRecoilState(modalState);
-
-  const onClickModalOff = () => {
-    setIsActive(false);
-  };
-
-  const onClickCardRemove = () => {
-    alert("이벤트 실행");
-  };
-
-  const onDeleteHander = () => {
-    setIsActive(true);
-  };
+  const [_, setIsActive] = useRecoilState(modalState);
+  const [__, setModalContent] = useRecoilState(modalContentState);
 
   const renderPostBottom = (post: Post) => {
     return (
@@ -44,6 +31,19 @@ const ReviewDetail = () => {
     );
   };
 
+  const onReviewDelete = () => {
+    setModalContent({
+      title: "내 후기 삭제하기",
+      content: `
+      후기의 내용과 댓글이 모두 삭제되며, 삭제한 후기는 복구할 수
+      없습니다. 정말로 삭제하시겠어요?
+      삭제한 초대장은 복구 할 수 없습니다.`,
+      actionString: "삭제",
+    });
+    setIsActive((prev) => {
+      return { ...prev, isActive: true };
+    });
+  };
   return (
     <Layout
       header={
@@ -51,7 +51,7 @@ const ReviewDetail = () => {
           left={
             <Button
               text="삭제"
-              onClick={onDeleteHander}
+              onClick={onReviewDelete}
               color={theme.colors.red_light}
               backgroundColor={theme.colors.white}
               fontSize="md"
@@ -68,19 +68,6 @@ const ReviewDetail = () => {
         ))}
         <Comment comment={comment} />
       </>
-      <ModalBase active={isActive} closeEvent={onClickModalOff}>
-        <CardModal
-          closeEvent={onClickModalOff}
-          title="내 후기 삭제하기"
-          actionMsg="삭제"
-          actionEvent={onClickCardRemove}
-        >
-          후기의 내용과 댓글이 모두 삭제되며, 삭제한 후기는 복구할 수 없습니다.
-          정말로 삭제하시겠어요?
-          <br />
-          삭제한 초대장은 복구 할 수 없습니다.
-        </CardModal>
-      </ModalBase>
     </Layout>
   );
 };

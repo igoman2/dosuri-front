@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
+import ModalContent from "./ModalContent";
+import { useRecoilState } from "recoil";
+import { modalState } from "./store";
 
-export type ModalBaseProps = {
-  active: boolean;
-  closeEvent?: (e?: React.MouseEvent<HTMLDivElement>) => void;
-  children: React.ReactNode;
-};
-
-const ModalBase = ({ active, closeEvent, children }: ModalBaseProps) => {
+const ModalBase = () => {
   const [closed, setClosed] = useState(true);
+  const [modal, setModal] = useRecoilState(modalState);
   useEffect(() => {
-    document.body.style.overflowY = active ? "hidden" : "initial";
+    document.body.style.overflowY = modal.isActive ? "hidden" : "initial";
 
     let timeoutId: any;
-    if (active) {
+    if (modal.isActive) {
       setClosed(false);
     } else {
       timeoutId = setTimeout(() => {
@@ -26,7 +24,7 @@ const ModalBase = ({ active, closeEvent, children }: ModalBaseProps) => {
         clearTimeout(timeoutId);
       }
     };
-  }, [active]);
+  }, [modal.isActive]);
 
   useEffect(() => {
     return () => {
@@ -34,20 +32,25 @@ const ModalBase = ({ active, closeEvent, children }: ModalBaseProps) => {
     };
   }, []);
 
-  if (!active && closed) return null;
+  if (!modal.isActive && closed) return null;
 
   return (
     <>
-      <ModalBaseContainer active={active}>
-        <div className="modal_back" onClick={closeEvent} />
-        <div className="modal_content">{children}</div>
+      <ModalBaseContainer active={modal.isActive}>
+        <div
+          className="modal_back"
+          onClick={() => {
+            setModal(() => {
+              return { isActive: false, action: () => {} };
+            });
+          }}
+        />
+        <div className="modal_content">
+          <ModalContent />
+        </div>
       </ModalBaseContainer>
     </>
   );
-};
-
-ModalBase.defaultProps = {
-  active: false,
 };
 
 const ModalBaseContainer = styled.div<{ active: boolean }>`
