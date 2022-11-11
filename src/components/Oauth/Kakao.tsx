@@ -32,7 +32,7 @@ const Kakao = () => {
       }
       color={theme.colors.black}
       backgroundColor="#FAE100"
-      onClick={() => signIn("kakao", { callbackUrl: "/" })}
+      onClick={() => signIn("kakao")}
     />
   );
 };

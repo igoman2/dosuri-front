@@ -1,13 +1,9 @@
-import Button from "@/components/Button";
 import Image from "next/image";
 import React from "react";
 import Logo from "@/public/assets/logo2.png";
 import { css, useTheme } from "@emotion/react";
 import AppleLogin from "@/util/apple";
-import Link from "next/link";
 import Kakao from "@/components/Oauth/Kakao";
-import dynamic from "next/dynamic";
-import { signIn, signOut, useSession } from "next-auth/react";
 import Google from "@/components/Oauth/Google";
 
 const Login = () => {
@@ -44,10 +40,6 @@ const Login = () => {
     width: 100%;
   `;
 
-  const { data: session, status } = useSession();
-  console.log(session);
-  const loading = status === "loading";
-
   return (
     <main css={mainLayout}>
       <AppleLogin />
@@ -71,9 +63,6 @@ const Login = () => {
         ></div>
         <Google />
       </div>
-      {session && (
-        <button onClick={() => signOut({ callbackUrl: "/" })}>signOut</button>
-      )}
     </main>
   );
 };

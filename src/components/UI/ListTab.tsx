@@ -10,6 +10,7 @@ interface IListTabProps {
   isLast: boolean;
   right?: ReactElement;
   color?: keyof Theme["colors"];
+  onClick?: () => void;
 }
 // type SUBJECT = typeof SUBJECT[keyof typeof SUBJECT]; // 'Math' | 'English'
 
@@ -20,10 +21,11 @@ const ListTab: FC<IListTabProps> = ({
   isLast,
   right,
   color,
+  onClick,
 }) => {
   return (
     <>
-      <ListTabWrapper isLast={isLast} color={color}>
+      <ListTabWrapper isLast={isLast} color={color} onClick={onClick}>
         <div className="list-title">
           <div className="text">
             <div>{text}</div>
@@ -50,6 +52,7 @@ const ListTabWrapper = styled.div<ListTapWrapperProps>`
   align-items: center;
   justify-content: space-between;
   padding: 1rem 0rem;
+  cursor: pointer;
 
   .list-title {
     display: flex;

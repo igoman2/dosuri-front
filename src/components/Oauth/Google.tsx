@@ -37,11 +37,7 @@ const Google = () => {
         color={theme.colors.black}
         backgroundColor={theme.colors.white}
         border={`0.1rem solid ${theme.colors.grey}`}
-        onClick={() =>
-          signIn("google", {
-            callbackUrl: "/",
-          })
-        }
+        onClick={() => signIn("google")}
       />
     </>
   );
