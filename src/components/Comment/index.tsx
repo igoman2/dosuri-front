@@ -11,9 +11,9 @@ const Comment: FC<ICommentProps> = ({ comment }) => {
   return (
     <CommentCardWrapper>
       <>
-        {comment.replyList.map((reply) => {
+        {comment.replyList.map((reply, i) => {
           return (
-            <>
+            <div key={i}>
               <CommentBox
                 nickname={reply.nickname}
                 registered={reply.registered}
@@ -33,7 +33,7 @@ const Comment: FC<ICommentProps> = ({ comment }) => {
                   })}
                 </div>
               </CommentBox>
-            </>
+            </div>
           );
         })}
       </>
