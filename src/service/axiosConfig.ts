@@ -1,6 +1,32 @@
-import axios from "axios";
+import axios, {
+  AxiosInstance,
+  AxiosInterceptorManager,
+  AxiosRequestConfig,
+  AxiosResponse,
+} from "axios";
+import { getSession } from "next-auth/react";
 
-const api = axios.create({
+type CustomResponseFormat<T = any> = {
+  response: T;
+  refreshedToken?: string;
+};
+interface CustomInstance extends AxiosInstance {
+  interceptors: {
+    request: AxiosInterceptorManager<AxiosRequestConfig>;
+    response: AxiosInterceptorManager<AxiosResponse<CustomResponseFormat>>;
+  };
+  getUri(config?: AxiosRequestConfig): string;
+  request<T>(config: AxiosRequestConfig): Promise<T>;
+  get<T>(url: string, config?: AxiosRequestConfig): Promise<T>;
+  delete<T>(url: string, config?: AxiosRequestConfig): Promise<T>;
+  head<T>(url: string, config?: AxiosRequestConfig): Promise<T>;
+  options<T>(url: string, config?: AxiosRequestConfig): Promise<T>;
+  post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
+  put<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
+  patch<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
+}
+
+const api: CustomInstance = axios.create({
   baseURL: process.env.NODE_ENV === "production" ? "" : "http://localhost:3000",
   headers: {
     "Content-type": "application/json; charset=UTF-8",
@@ -13,19 +39,24 @@ const api = axios.create({
  2개의 콜백 함수를 받습니다.
  */
 api.interceptors.request.use(
-  (config) => {
-    // HTTP Authorization 요청 헤더에 jwt-token을 넣음
-    // 서버측 미들웨어에서 이를 확인하고 검증한 후 해당 API에 요청함.
-    // const token = store.getState().Auth.token;
-    // try {
-    //   if (token && jwtUtils.isAuth(token)) {
-    //     config.headers.Authorization = `Bearer ${token}`;
-    //   }
+  async (config) => {
+    const session = await getSession();
 
-    //   return config;
-    // } catch (err) {
-    //   console.error("[_axios.interceptors.request] config : " + err);
-    // }
+    if (session) {
+      if (!config?.headers) {
+        throw new Error(
+          `Expected 'config' and 'config.headers' not to be undefined`
+        );
+      }
+      const token = session.accessToken;
+      config.headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      // config.headers?.Authorization = `Bearer ${token}`;
+      return config;
+    }
+
     return config;
   },
   (error) => {
@@ -49,12 +80,23 @@ api.interceptors.response.use(
     return response;
   },
 
-  (error) => {
-    /*
-        http status가 200이 아닌 경우
-        응답 에러 직전 호출됩니다.
-        .catch() 으로 이어집니다.
-    */
+  async (error) => {
+    const {
+      config,
+      response: { status },
+    } = error;
+    if (status === 401) {
+      const originalRequest = config;
+
+      const resp = await axios.get("/api/auth/session?update");
+      const newAccessToken = resp.data.accessToken;
+
+      axios.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
+      originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
+      // 401로 요청 실패했던 요청 새로운 accessToken으로 재요청
+      return axios(originalRequest);
+    }
     return Promise.reject(error);
   }
 );

@@ -2,7 +2,7 @@ import HospitalCard from "@/components/Card/HospitalCard";
 import Layout from "@/components/Layout";
 import Header from "@/components/Layout/Header";
 import { useTheme } from "@emotion/react";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Icon from "@/util/Icon";
 import { Post, posts } from "@/mock/posts";
 import PostCard from "@/components/Card/PostCard";
@@ -30,9 +30,9 @@ const Home = () => {
   const day_input = useRef<HTMLInputElement>(null);
   const time_input = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
-  const { isLoading, data } = useQuery("all", apis.getPosts, {
-    staleTime: 10000,
-  });
+  // const { isLoading, data } = useQuery("all", apis.getPosts, {
+  //   staleTime: 10000,
+  // });
   const { mutate } = useMutation(apis.updateToken, {
     onSuccess: () => {
       queryClient.invalidateQueries("all"); //invalidateQueries(무효화 시킬 queryKey 이름)
@@ -45,6 +45,11 @@ const Home = () => {
       }
     },
   });
+
+  useEffect(() => {
+    console.log("@@");
+    apis.getPosts();
+  }, []);
 
   return (
     <Layout header={<Header left={true} center={true} right={true} />}>
