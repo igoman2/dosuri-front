@@ -2,6 +2,11 @@
   "name": "dosuri-front",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=18.12.1",
+    "npm": ">=8.19.2"
+  },
+  "engine-strict": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -44,6 +49,7 @@
     "@types/react-dom": "18.0.6",
     "@types/uuid": "^8.3.4",
     "babel-loader": "^8.2.5",
+    "dayjs": "^1.11.6",
     "eslint": "8.24.0",
     "eslint-config-next": "12.3.1",
     "eslint-plugin-storybook": "^0.6.4",
