@@ -1,3 +1,5 @@
-export interface GetToken {
-  requestCode: string;
+export interface GetUserAuth {
+  username: string;
+  token: string;
+  type: string;
 }

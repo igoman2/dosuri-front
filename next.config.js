@@ -11,6 +11,17 @@ const nextConfig = {
   images: {
     domains: ["dosuri-images.s3.ap-northeast-2.amazonaws.com"],
   },
+
+  async rewrites() {
+    return [
+      {
+        source: "/:path*",
+        destination:
+          "http://dosuri-env.eba-igc5wtjb.ap-northeast-2.elasticbeanstalk.com/:path*" +
+          "/",
+      },
+    ];
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,

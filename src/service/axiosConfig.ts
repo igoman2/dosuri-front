@@ -1,10 +1,13 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.NODE_ENV === "production" ? "" : "http://localhost:3000",
+  baseURL:
+    process.env.NODE_ENV === "production"
+      ? "http://dosuri-env.eba-igc5wtjb.ap-northeast-2.elasticbeanstalk.com"
+      : "http://localhost:3000",
   headers: {
-    "Content-type": "application/json; charset=UTF-8",
-    accept: "application/json,",
+    Accept: "application/json",
+    "Content-Type": "application/json",
   },
 });
 
