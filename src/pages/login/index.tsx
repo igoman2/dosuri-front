@@ -53,8 +53,6 @@ const Login = () => {
       <div css={buttonSection}>
         <Kakao />
 
-      <div css={buttonSection}>
-        <Kakao />
         <div
           id="appleid-signin"
           data-mode="center-align"

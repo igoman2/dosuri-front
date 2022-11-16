@@ -7,7 +7,7 @@ export const ClientPassword = "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";
 
 import { useTheme } from "@emotion/react";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Button from "../Button";
 import googleIcon from "@/public/assets/google.png";
 import GoogleLogin, {
@@ -15,7 +15,6 @@ import GoogleLogin, {
   GoogleLoginResponseOffline,
   useGoogleLogin,
 } from "react-google-login";
-import { signIn, signOut, useSession } from "next-auth/react";
 
 const Google = () => {
   const theme = useTheme();
@@ -66,11 +65,6 @@ const Google = () => {
         color={theme.colors.black}
         backgroundColor={theme.colors.white}
         border={`0.1rem solid ${theme.colors.grey}`}
-        onClick={() =>
-          signIn("google", {
-            callbackUrl: "/",
-          })
-        }
       />
       {/* <GoogleLogin
         cookiePolicy={"single_host_origin"}
