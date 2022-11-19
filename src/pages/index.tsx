@@ -27,14 +27,24 @@ const Home = () => {
     );
   };
 
-  const queryClient = useQueryClient();
-  // const { isLoading, data } = useQuery("all", apis.getPosts, {
-  //   staleTime: 10000,
+  const { isLoading: getAddressesIsLoading, data: getAddressesData } = useQuery(
+    "all",
+    apis.getMyInfo,
+    {
+      retry: 0,
+      onSuccess: (resp) => {
+        console.log(resp.data);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    }
+  );
+  // const { mutate } = useMutation(apis.updateToken, {
+  //   onSuccess: () => {
+  //     console.log("@@");
+  //   },
   // });
-
-  useEffect(() => {
-    apis.getPosts();
-  }, []);
 
   return (
     <Layout header={<Header left={true} center={true} right={true} />}>

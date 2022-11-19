@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { deleteCookie, getCookie } from "cookies-next";
@@ -39,19 +38,7 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
       if (!accessToken) {
         window.location.replace("/login");
       } else {
-        const isTokenVerified = async () => {
-          try {
-            await axios.post("/user/v1/token/verify", {
-              token: accessToken,
-            });
-            setVerified(true);
-          } catch (e) {
-            deleteCookie("accessToken");
-            deleteCookie("refreshToken");
-            window.location.replace("/login");
-          }
-        };
-        isTokenVerified();
+        setVerified(true);
       }
     }, [router]);
 

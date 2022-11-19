@@ -42,7 +42,7 @@ const Login = () => {
 
   return (
     <main css={mainLayout}>
-      <AppleLogin />
+      {/* <AppleLogin /> */}
       <Image src={Logo} alt="로고" width={110} height={140} />
 
       <p css={logoTitle}>
@@ -63,7 +63,7 @@ const Login = () => {
           data-height="50"
         ></div>
 
-        <Google />
+        {/* <Google /> */}
       </div>
     </main>
   );

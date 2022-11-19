@@ -15,13 +15,7 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang="kr">
-        <Head>
-          {/* mixed content 회피 */}
-          <meta
-            httpEquiv="Content-Security-Policy"
-            content="upgrade-insecure-requests"
-          />
-        </Head>
+        <Head></Head>
         <body>
           <Main />
           <NextScript />

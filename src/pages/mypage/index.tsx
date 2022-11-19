@@ -87,7 +87,7 @@ const Mypage = () => {
   );
 };
 
-export default withAuth(Mypage);
+export default Mypage;
 
 const ProfileSectionWrapper = styled.div`
   display: flex;

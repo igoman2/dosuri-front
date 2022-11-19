@@ -3,9 +3,9 @@ import { GetUserAuth } from "./types";
 
 export const apis = {
   getPosts: () => api.get("/api/posts"),
-  getUserAuth: ({ username, token, type }: GetUserAuth) =>
-    api.post("/user/v1/auth", {
-      username,
+  getMyInfo: () => api.get("/api/user/v1/users/me"),
+  getUserAuth: ({ token, type }: GetUserAuth) =>
+    api.post("/api/user/v1/auth", {
       token,
       type,
     }),
