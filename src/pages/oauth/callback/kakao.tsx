@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { GetServerSideProps } from "next";
 import axios from "axios";
 import * as Sentry from "@sentry/nextjs";
+import { apis } from "@/service/api";
 
 interface IKakaoProps {
   accessToken: string;
@@ -30,16 +31,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     query: { code },
   } = context;
 
-  console.log("@@");
-  console.log(code);
   try {
-    const resp = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/user/v1/auth/`,
-      {
-        token: code,
-        type: "kakao",
-      }
-    );
+    const resp = await apis.getUserAuth({
+      token: code as string,
+      type: "kakao",
+    });
 
     const {
       data: { access_token: accessToken, refresh_token: refreshToken },
