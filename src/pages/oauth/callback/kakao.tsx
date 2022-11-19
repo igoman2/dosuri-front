@@ -52,6 +52,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   } catch (e) {
+    Sentry.setTag("api", "kakao-login");
     Sentry.captureException(e);
     return {
       redirect: {
