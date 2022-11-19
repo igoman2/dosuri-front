@@ -4,6 +4,7 @@ import { GetUserAuth } from "./types";
 export const apis = {
   getPosts: () => api.get("/api/posts"),
   getMyInfo: () => api.get("/api/user/v1/users/me"),
+  getHospitalKeyword: () => api.get("/api/hospital/v1/keywords"),
   getUserAuth: ({ token, type }: GetUserAuth) =>
     api.post("/api/user/v1/auth", {
       token,

@@ -40,6 +40,19 @@ const Home = () => {
       },
     }
   );
+
+  const {
+    isLoading: getHospitalKeywordIsLoading,
+    data: getHospitalKeywordData,
+  } = useQuery("all2", apis.getHospitalKeyword, {
+    retry: 0,
+    onSuccess: (resp) => {
+      console.log(resp.data);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
   // const { mutate } = useMutation(apis.updateToken, {
   //   onSuccess: () => {
   //     console.log("@@");
