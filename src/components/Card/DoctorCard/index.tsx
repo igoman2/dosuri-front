@@ -4,6 +4,7 @@ import React, { FC } from "react";
 import Description from "../Description";
 
 export interface DoctorInfo {
+  id: number;
   title: string;
   location: string;
   reviewConut: number;

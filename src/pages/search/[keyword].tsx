@@ -8,13 +8,13 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
-import SearchHeader from "@/components/SearchHeader";
 import HospitalCard from "@/components/Card/HospitalCard";
 import { HospitalInfo, hospitalList } from "@/mock/hospitals";
 import Button from "@/components/Button";
 import { useTheme } from "@emotion/react";
 import Image from "next/image";
 import ArrowRight from "@/public/assets/arrow-right-bold.png";
+import SearchHeader from "@/components/Layout/Header/SearchHeader";
 
 const SearchResult = () => {
   const [inputText, setInputText] = useState("");

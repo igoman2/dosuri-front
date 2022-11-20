@@ -15,6 +15,7 @@ import Comment from "@/public/assets/comment.svg";
 import Check from "@/public/assets/check.svg";
 import Arrow from "@/public/assets/arrow.svg";
 import Pen from "@/public/assets/pen.svg";
+import Thumb from "@/public/assets/thumb.svg";
 
 interface IIconProps {
   name: string;
@@ -47,6 +48,7 @@ export const iconTypes: any = {
   check: Check,
   arrow: Arrow,
   pen: Pen,
+  thumb: Thumb,
 };
 
 const Icon: FC<IIconProps> = ({ name, ...props }) => {

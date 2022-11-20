@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 
 export const hospitalList: HospitalInfo[] = [
   {
+    id: 1,
     title: "압구정강남바른정형외과의원",
     location: "신사동",
     reviewConut: 1,
@@ -12,6 +13,7 @@ export const hospitalList: HospitalInfo[] = [
     hospitalImage: SampleImage,
   },
   {
+    id: 2,
     title: "두발로병원",
     location: "압구정동",
     reviewConut: 0,
@@ -20,6 +22,7 @@ export const hospitalList: HospitalInfo[] = [
     hospitalImage: SampleImage,
   },
   {
+    id: 3,
     title: "압구정강남바른정형외과의원",
     location: "신사동",
     reviewConut: 1,
@@ -30,6 +33,7 @@ export const hospitalList: HospitalInfo[] = [
 ];
 
 export interface HospitalInfo {
+  id: number;
   title: string;
   location: string;
   reviewConut: number;
