@@ -26,13 +26,6 @@ interface IIconProps {
   height?: string;
 }
 
-// const iconTypes: Record<string, StaticImageData> = {
-//   home: Home,
-//   cross: Cross,
-//   talk: Talk,
-//   profile: Profile,
-// };
-
 export const iconTypes: any = {
   home: Home,
   cross: Cross,

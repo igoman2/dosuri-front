@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import Layout from "@/components/Layout";
-import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
+import HeaderDepth from "@/components/Layout/Header/Depth/HeaderDepth";
 import Checkbox from "@/components/UI/Checkbox";
 import styled from "@emotion/styled";
 import { Field, Form, Formik } from "formik";

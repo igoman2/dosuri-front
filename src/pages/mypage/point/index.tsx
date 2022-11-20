@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout";
-import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
+import HeaderDepth from "@/components/Layout/Header/Depth/HeaderDepth";
 import Divider from "@/components/UI/Divider";
 import { pointHistory } from "@/mock/pointHistory";
 import styled from "@emotion/styled";

@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout";
-import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
+import HeaderDepth from "@/components/Layout/Header/Depth/HeaderDepth";
 import React from "react";
 import { Post, posts } from "@/mock/posts";
 import PostCard from "@/components/Card/PostCard";

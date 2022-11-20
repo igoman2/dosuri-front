@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout";
-import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
+import HeaderDepth from "@/components/Layout/Header/Depth/HeaderDepth";
 import Avatar from "@/components/UI/Avatar";
 import Divider from "@/components/UI/Divider";
 import { notifications } from "@/mock/notifications";
