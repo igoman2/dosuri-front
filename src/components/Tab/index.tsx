@@ -31,6 +31,7 @@ const TabWrapper = styled.div`
   gap: 3rem;
   font-size: ${(props) => props.theme.fontSizes.xl};
   line-height: ${(props) => props.theme.lineHeights.xl};
+  cursor: pointer;
 
   .current {
     font-weight: 700;

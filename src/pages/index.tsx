@@ -10,6 +10,7 @@ import styled from "@emotion/styled";
 import { HospitalInfo, hospitalList } from "@/mock/hospitals";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { apis } from "@/service/api";
+import Link from "next/link";
 
 const Home = () => {
   const theme = useTheme();
@@ -76,7 +77,11 @@ const Home = () => {
         </div>
 
         {hospitalList.map((hospital: HospitalInfo, i) => (
-          <HospitalCard hospitalInfo={hospital} key={i} />
+          <Link href={`/hospital/${hospital.id}`} key={i}>
+            <a>
+              <HospitalCard hospitalInfo={hospital} />
+            </a>
+          </Link>
         ))}
       </div>
 
