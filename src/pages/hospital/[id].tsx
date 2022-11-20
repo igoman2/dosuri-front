@@ -36,6 +36,8 @@ const TabList: TabItem[] = [
 ];
 
 const HospitalInformation = () => {
+  const isRecommended = false;
+
   const theme = useTheme();
   const keywords: string[] = [
     "카이로프랙틱",
@@ -78,8 +80,13 @@ const HospitalInformation = () => {
             <div className="hospital-name">압구정강남바른정형외과의원</div>
             <ImageTextView
               text={"추천"}
-              color={theme.colors.green}
-              image={<Icon name="thumb" />}
+              color={isRecommended ? theme.colors.green : theme.colors.grey}
+              image={
+                <Icon
+                  name="thumb"
+                  fill={isRecommended ? theme.colors.green : theme.colors.grey}
+                />
+              }
               reverse
             />
           </div>
