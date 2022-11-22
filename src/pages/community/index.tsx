@@ -3,6 +3,8 @@ import PostCard from "@/components/Card/PostCard";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
 import Layout from "@/components/Layout";
 import Header from "@/components/Layout/Header";
+import Float from "@/components/UI/Float";
+import useDirection from "@/hooks/useDirection";
 import { posts } from "@/mock/posts";
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
@@ -14,6 +16,7 @@ const Tablist = ["전체보기", "치료후기만 보기", "질문/상담만 보
 const Community = () => {
   const theme = useTheme();
   const [currentTab, setCurrentTab] = useState<string>("전체보기");
+  const [scrollDir] = useDirection();
 
   const onTabClick = (tab: string) => {
     setCurrentTab(tab);
@@ -51,6 +54,8 @@ const Community = () => {
             </a>
           </Link>
         ))}
+
+        <Float scrollDir={scrollDir} distance="8.5rem" />
       </>
     </Layout>
   );
