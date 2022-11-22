@@ -20,7 +20,7 @@ const Footer: FC<IFooterProps> = ({ menus }) => {
         minWidth: "32rem",
         maxWidth: " 40rem",
         width: "100%",
-        zIndex: 10,
+        zIndex: 50,
         "&:before": {
           content: "''",
           position: "absolute",
