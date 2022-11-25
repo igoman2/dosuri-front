@@ -149,6 +149,7 @@ const ResultWrapper = styled.div`
     line-height: ${(props) => props.theme.lineHeights.xl};
     font-weight: 700;
   }
+
   .list-length {
     color: ${(props) => props.theme.colors.purple};
   }

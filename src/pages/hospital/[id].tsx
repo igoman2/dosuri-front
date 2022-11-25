@@ -2,11 +2,14 @@ import Button from "@/components/Button";
 import CustomImage from "@/components/CustomImage";
 import Layout from "@/components/Layout";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
+import Doctors from "@/components/pages/Hospital/Doctors";
+import Information from "@/components/pages/Hospital/Information";
+import Price from "@/components/pages/Hospital/Price";
+import Reviews from "@/components/pages/Hospital/Reviews";
 import Tab from "@/components/Tab";
-import TimeTable from "@/components/TimeTable";
 import ImageTextView from "@/components/UI/ImageTextView";
+import theme from "@/styles/theme";
 import Icon from "@/util/Icon";
-import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -37,20 +40,9 @@ const TabList: TabItem[] = [
 ];
 
 const HospitalInformation = () => {
-  const isRecommended = false;
-
-  const theme = useTheme();
-  const keywords: string[] = [
-    "카이로프랙틱",
-    "척추",
-    "운동병행",
-    "치료복 구비",
-    "재활",
-    "운동프로그램",
-  ];
-
   const [currentTab, setCurrentTab] = useState<TabItem>(TabList[0]);
   const router = useRouter();
+  const isRecommended = false;
 
   useEffect(() => {
     router.replace({
@@ -70,70 +62,37 @@ const HospitalInformation = () => {
 
   return (
     <Layout header={<HeaderDepth />} footer={false}>
-      <HospitalInformationWrapper>
-        <div>
-          <CustomImage
-            src={
-              "https://dosuri-images.s3.ap-northeast-2.amazonaws.com/hospitalThumbnail.png"
+      <Hospital>
+        <CustomImage
+          src={
+            "https://dosuri-images.s3.ap-northeast-2.amazonaws.com/hospitalThumbnail.png"
+          }
+        />
+        <div className="head">
+          <div className="hospital-name">압구정강남바른정형외과의원</div>
+          <ImageTextView
+            text={"추천"}
+            color={isRecommended ? theme.colors.green : theme.colors.grey}
+            image={
+              <Icon
+                name="thumb"
+                fill={isRecommended ? theme.colors.green : theme.colors.grey}
+              />
             }
+            reverse
           />
-          <Content>
-            <div className="head">
-              <div className="hospital-name">압구정강남바른정형외과의원</div>
-              <ImageTextView
-                text={"추천"}
-                color={isRecommended ? theme.colors.green : theme.colors.grey}
-                image={
-                  <Icon
-                    name="thumb"
-                    fill={
-                      isRecommended ? theme.colors.green : theme.colors.grey
-                    }
-                  />
-                }
-                reverse
-              />
-            </div>
-            <div className="tab-wrapper">
-              <Tab
-                tabList={TabList}
-                currentTab={currentTab}
-                onTabClickHander={onTabClickHander}
-              />
-            </div>
-
-            <div className="list">
-              <div className="list-title">병원 소개</div>
-              <div>압구정역 4번 출구 강남 바른정형외과 입니다.</div>
-            </div>
-            <div className="list">
-              <div className="list-title">치료 키워드</div>
-              <ButtonWrapper>
-                {keywords.map((keyword, i) => (
-                  <Button
-                    key={i}
-                    text={keyword}
-                    backgroundColor={theme.colors.white}
-                    color={theme.colors.black}
-                    border={`0.1rem solid ${theme.colors.grey}`}
-                  />
-                ))}
-              </ButtonWrapper>
-            </div>
-            <div className="list">
-              <div className="list-title">진료 시간</div>
-              <TimeTable />
-            </div>
-            <div className="list">
-              <div className="list-title">주소</div>
-              <div>서울특별시 강남구 도산대로1길 4</div>
-            </div>
-            <div className="list">
-              <div className="list-title">전화번호</div>
-              <div className="phone-number">02-585-2231</div>
-            </div>
-          </Content>
         </div>
+        <div className="tab-wrapper">
+          <Tab
+            tabList={TabList}
+            currentTab={currentTab}
+            onTabClickHander={onTabClickHander}
+          />
+        </div>
+        {currentTab.value === "information" && <Information />}
+        {currentTab.value === "doctors" && <Doctors />}
+        {currentTab.value === "reviews" && <Reviews />}
+        {currentTab.value === "price" && <Price />}
 
         <SaleButtonWrapper>
           <Link href="/insurance-register/confirm">
@@ -146,21 +105,14 @@ const HospitalInformation = () => {
             </a>
           </Link>
         </SaleButtonWrapper>
-      </HospitalInformationWrapper>
+      </Hospital>
     </Layout>
   );
 };
 
 export default HospitalInformation;
 
-const HospitalInformationWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-`;
-
-const Content = styled.div`
+const Hospital = styled.div`
   .head {
     display: flex;
     justify-content: space-between;
@@ -178,34 +130,9 @@ const Content = styled.div`
   .tab-wrapper {
     margin-bottom: 2.5rem;
   }
-
-  .list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
-    font-size: ${(props) => props.theme.fontSizes.lg};
-    line-height: ${(props) => props.theme.lineHeights.lg};
-
-    &-title {
-      color: ${(props) => props.theme.colors.purple};
-      font-weight: 700;
-    }
-  }
-
-  .phone-number {
-    color: ${(props) => props.theme.colors.purple_light};
-    text-decoration: underline;
-  }
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
 `;
 
 const SaleButtonWrapper = styled.div`
-  padding: 1rem;
-  width: 100%;
+  margin-top: 2rem;
+  padding: 1rem 0;
 `;
