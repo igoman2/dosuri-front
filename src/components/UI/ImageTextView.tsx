@@ -49,9 +49,7 @@ const ImageTextViewWrapper = styled.div<ImageTextViewWrapperProps>`
     gap: 0.2rem;
     padding: 0.5rem 1rem;
     border: ${(props) =>
-      props.border
-        ? "1px solid ${(props) => props.theme.colors.grey_light"
-        : ""};
+      props.border ? `1px solid ${props.theme.colors.grey_light}` : ""};
     border-radius: 0.5rem;
     font-size: ${(props) => props.theme.fontSizes.sm};
     line-height: ${(props) => props.theme.lineHeights.sm};

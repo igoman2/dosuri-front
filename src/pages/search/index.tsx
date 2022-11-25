@@ -81,6 +81,7 @@ const Home = () => {
         <ImageTextViewWrapper onClick={() => setOpen(!open)}>
           <ImageTextView
             text={category.title}
+            border
             image={
               <Image
                 src={ChevronDowm}
