@@ -1,9 +1,11 @@
 import Image from "next/image";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import logo from "@/public/assets/logo1.png";
 import note from "@/public/assets/note.png";
 import SearchBar from "@/components/SearchBar";
 import Link from "next/link";
+import FullModalBase from "@/components/Modal/FullModalBase";
+import WriteQuesiton from "@/components/Write/Question";
 
 interface IHeaderProps {
   left?: boolean;
@@ -12,6 +14,11 @@ interface IHeaderProps {
 }
 
 const Header: FC<IHeaderProps> = ({ left, center, right }) => {
+  const [isActive, setIsActive] = useState<boolean>(false);
+
+  const onWriteHandler = () => {
+    setIsActive(true);
+  };
   return (
     <div
       css={{
@@ -40,8 +47,24 @@ const Header: FC<IHeaderProps> = ({ left, center, right }) => {
         )}
       </div>
       <div>
-        {right && <Image src={note} alt="register" width={28} height={28} />}
+        {right && (
+          <Image
+            src={note}
+            alt="register"
+            width={28}
+            height={28}
+            onClick={onWriteHandler}
+          />
+        )}
       </div>
+
+      <FullModalBase
+        isActive={isActive}
+        onClose={() => setIsActive(false)}
+        title="질문/상담 쓰기"
+      >
+        <WriteQuesiton />
+      </FullModalBase>
     </div>
   );
 };

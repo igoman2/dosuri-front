@@ -53,7 +53,7 @@ const ModalBase = () => {
   );
 };
 
-const ModalBaseContainer = styled.div<{ active: boolean }>`
+export const ModalBaseContainer = styled.div<{ active: boolean }>`
   display: flex;
   position: fixed;
   top: 0;
