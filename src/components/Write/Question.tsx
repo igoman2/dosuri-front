@@ -1,7 +1,7 @@
 import theme from "@/styles/theme";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import Button from "../Button";
 import Content from "./Form/Content";
 import InputForm from "./Form/InputForm";
@@ -12,6 +12,10 @@ const WriteQuesiton = () => {
 
   const onCickImageUpload = () => {
     imageInput.current && imageInput.current.click();
+  };
+
+  const submitHandler = () => {
+    console.log("질문 등록하기!");
   };
   return (
     <WriteQuesitonWrapper>
@@ -56,6 +60,7 @@ const WriteQuesiton = () => {
           text="질문 등록하기"
           width="50%"
           backgroundColor={theme.colors.purple_light}
+          onClick={submitHandler}
         />
       </ButtonWrapper>
     </WriteQuesitonWrapper>
@@ -139,5 +144,4 @@ const TitleWrapper = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: right;
-  margin-bottom: 5rem;
 `;

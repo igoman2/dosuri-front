@@ -95,14 +95,17 @@ const FullModalBaseWrapper = styled(ModalBaseContainer)`
     height: 6rem;
   }
 
-  .content {
-    margin-top: 0.5rem;
-  }
-
   .modal_content {
-    height: 100vh;
+    height: 100%;
     margin: 0;
     border-radius: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content {
+    margin-top: 0.5rem;
+    flex: 1;
   }
 
   .title {
