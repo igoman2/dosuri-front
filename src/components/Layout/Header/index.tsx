@@ -6,6 +6,7 @@ import SearchBar from "@/components/SearchBar";
 import Link from "next/link";
 import FullModalBase from "@/components/Modal/FullModalBase";
 import WriteQuesiton from "@/components/Write/Question";
+import WriteReview from "@/components/Write/Review";
 
 interface IHeaderProps {
   left?: boolean;
@@ -14,10 +15,21 @@ interface IHeaderProps {
 }
 
 const Header: FC<IHeaderProps> = ({ left, center, right }) => {
-  const [isActive, setIsActive] = useState<boolean>(false);
-
+  const [isActive, setIsActive] = useState(false);
+  const [modalType, setModalType] = useState("");
   const onWriteHandler = () => {
+    setModalType("question");
     setIsActive(true);
+  };
+
+  const onSwapModalType = () => {
+    setIsActive(false);
+    setModalType("review");
+    setIsActive(true);
+  };
+
+  const changeActiveHandler = () => {
+    setIsActive(false);
   };
   return (
     <div
@@ -58,13 +70,15 @@ const Header: FC<IHeaderProps> = ({ left, center, right }) => {
         )}
       </div>
 
-      <FullModalBase
-        isActive={isActive}
-        onClose={() => setIsActive(false)}
-        title="질문/상담 쓰기"
-      >
-        <WriteQuesiton />
-      </FullModalBase>
+      {modalType === "question" ? (
+        <WriteQuesiton
+          onSwap={onSwapModalType}
+          isActive={isActive}
+          onChangeActive={changeActiveHandler}
+        />
+      ) : (
+        <WriteReview isActive={isActive} onChangeActive={changeActiveHandler} />
+      )}
     </div>
   );
 };

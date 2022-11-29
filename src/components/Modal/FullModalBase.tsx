@@ -6,9 +6,9 @@ import Icon from "@/util/Icon";
 
 interface IFullModalBase {
   isActive: boolean;
-  onClose: () => void;
   children: ReactNode;
   title: string;
+  onClose: () => void;
 }
 
 const FullModalBase: FC<IFullModalBase> = ({

@@ -2,22 +2,18 @@ import theme from "@/styles/theme";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import React, { FC, useRef } from "react";
-import Button from "../Button";
-import Content from "./Form/Content";
-import InputForm from "./Form/InputForm";
 import UploadFileImage from "@/public/assets/upload-file.png";
-import FullModalBase from "../Modal/FullModalBase";
+import Content from "../Form/Content";
+import InputForm from "../Form/InputForm";
+import Button from "@/components/Button";
+import FullModalBase from "@/components/Modal/FullModalBase";
 
-interface IWriteQeustionProps {
+interface IWriteReviewProps {
   isActive: boolean;
-  onSwap: () => void;
   onChangeActive: () => void;
 }
-const WriteQuesiton: FC<IWriteQeustionProps> = ({
-  isActive,
-  onSwap,
-  onChangeActive,
-}) => {
+
+const WriteReview: FC<IWriteReviewProps> = ({ isActive, onChangeActive }) => {
   const imageInput = useRef<HTMLInputElement>(null);
 
   const onCickImageUpload = () => {
@@ -25,25 +21,22 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
   };
 
   const submitHandler = () => {
-    onSwap();
     console.log("질문 등록하기!");
   };
   return (
     <FullModalBase
       isActive={isActive}
       onClose={() => onChangeActive()}
-      title="질문/상담 쓰기"
+      title="치료후기 쓰기 (1/3) - 기본정보"
     >
-      <WriteQuesitonWrapper>
+      <WriteReviewWrapper>
         <div>
           <Content>
             <div className="container">
               <TitleWrapper>
-                <div className="title">질문/상담 내용을 적어주세요.</div>
+                <div className="title">방문하신 병원을 알려주세요.</div>
                 <div className="required">{"(필수)"}</div>
               </TitleWrapper>
-
-              <div className="text-limit">0자 / 최소 20자</div>
             </div>
 
             <InputForm />
@@ -79,14 +72,14 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
             onClick={submitHandler}
           />
         </ButtonWrapper>
-      </WriteQuesitonWrapper>
+      </WriteReviewWrapper>
     </FullModalBase>
   );
 };
 
-export default WriteQuesiton;
+export default WriteReview;
 
-const WriteQuesitonWrapper = styled.div`
+const WriteReviewWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
