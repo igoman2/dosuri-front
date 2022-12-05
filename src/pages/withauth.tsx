@@ -9,6 +9,7 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
   return (props: any) => {
     const router = useRouter();
     const [verified, setVerified] = useState(false);
+    const [isProcessing, setIsProcessing] = useState(false);
 
     let isProtected = false;
 
@@ -19,17 +20,21 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
       }
     }
 
-    useEffect(() => {
+    const checkAuth = () => {
       if (
         router.asPath === "/" ||
         router.asPath === "/500" ||
         router.asPath === "/404"
       ) {
         setVerified(true);
+        setIsProcessing(false);
+
         return;
       }
       if (isProtected) {
         setVerified(true);
+        setIsProcessing(false);
+
         return;
       }
 
@@ -39,11 +44,17 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
         window.location.replace("/login");
       } else {
         setVerified(true);
+        setIsProcessing(false);
       }
+    };
+
+    useEffect(() => {
+      setIsProcessing(true);
+      checkAuth();
     }, [router]);
 
     if (verified) {
-      return <WrappedComponent {...props} />;
+      return !isProcessing && <WrappedComponent {...props} />;
     } else {
       return null;
     }
