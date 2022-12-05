@@ -1,12 +1,12 @@
 import { global } from "@/styles/global";
 import theme from "@/styles/theme";
 import { Global, ThemeProvider } from "@emotion/react";
-import type { AppProps } from "next/app";
+import { getCookie } from "cookies-next";
+import type { AppContext, AppProps } from "next/app";
 import Head from "next/head";
 import { useState } from "react";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { RecoilRoot } from "recoil";
-import withAuth from "./withauth";
 
 function MyApp({
   Component,
@@ -48,4 +48,35 @@ function MyApp({
     </>
   );
 }
-export default withAuth(MyApp);
+// export default withAuth(MyApp);
+MyApp.getInitialProps = async ({ Component, ctx }: AppContext) => {
+  let pageProps = {};
+  if (Component.getInitialProps) {
+    pageProps = await Component.getInitialProps(ctx);
+  }
+
+  pageProps = { ...pageProps };
+
+  const { req, res, pathname } = ctx;
+
+  if (
+    pathname === "/" ||
+    pathname === "/500" ||
+    pathname === "/404" ||
+    pathname === "/login" ||
+    pathname === "oauth"
+  ) {
+    return { pageProps };
+  }
+
+  const accessToken = getCookie("accessToken", { req, res });
+
+  if (!accessToken) {
+    console.log("redirect");
+    window.location.replace("/login");
+  }
+
+  return { pageProps };
+};
+
+export default MyApp;

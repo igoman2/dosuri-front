@@ -9,7 +9,7 @@ import ArrowRight from "@/public/assets/arrow-right.png";
 import React from "react";
 import ListTab from "@/components/UI/ListTab";
 import Link from "next/link";
-import { logout } from "@/pages/withauth";
+import { logout } from "@/util/auth";
 
 const Setting = () => {
   return (

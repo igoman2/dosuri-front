@@ -4,6 +4,13 @@ import { deleteCookie, getCookie } from "cookies-next";
 
 const freeRoute = ["/login", "oauth"];
 
+/**
+ * 클라이언트 측 권한 관리를 위한 코드
+ * _app.tsx 에서
+ * export default withAuth(MyApp)
+ * 로 사용됨
+ * useEffect에서 로그인 검사를 하는 동안 화면에 컨텐츠가 잠시 보이는 이슈로 인해 사용하지 않게 됨
+ */
 const withAuth = (WrappedComponent: React.ComponentType<any>) => {
   // eslint-disable-next-line react/display-name
   return (props: any) => {
@@ -51,9 +58,3 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
 };
 
 export default withAuth;
-
-export const logout = () => {
-  deleteCookie("accessToken");
-  deleteCookie("refreshToken");
-  window.location.replace("/");
-};
