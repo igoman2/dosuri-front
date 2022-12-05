@@ -5,7 +5,7 @@ export const modalState = atom({
   key: `modalState${v4()}`,
   default: {
     isActive: false,
-    action: () => {},
+    // action: () => {},
   },
 });
 
@@ -14,6 +14,8 @@ export const modalContentState = atom({
   default: {
     title: "",
     content: "",
-    actionString: "",
+    actionLeft: { text: "", action: () => {} },
+    actionRight: { text: "", action: () => {} },
+    // actionString: "",
   },
 });

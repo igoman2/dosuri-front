@@ -38,8 +38,25 @@ const ReviewDetail = () => {
       후기의 내용과 댓글이 모두 삭제되며, 삭제한 후기는 복구할 수
       없습니다. 정말로 삭제하시겠어요?
       삭제한 초대장은 복구 할 수 없습니다.`,
-      actionString: "삭제",
+      actionLeft: {
+        text: "취소",
+        action: () => {
+          setIsActive((prev) => {
+            return { ...prev, isActive: false };
+          });
+        },
+      },
+      actionRight: {
+        text: "삭제",
+        action: () => {
+          console.log("삭제!");
+          setIsActive((prev) => {
+            return { ...prev, isActive: false };
+          });
+        },
+      },
     });
+
     setIsActive((prev) => {
       return { ...prev, isActive: true };
     });

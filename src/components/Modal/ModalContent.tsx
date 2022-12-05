@@ -7,12 +7,7 @@ import { modalContentState, modalState } from "./store";
 
 const ModalContent = () => {
   const theme = useTheme();
-  const [modal, setModal] = useRecoilState(modalState);
   const [modalContent, setModalContent] = useRecoilState(modalContentState);
-
-  const onModalAction = () => {
-    modal.action();
-  };
 
   return (
     <ModalWrapper>
@@ -23,19 +18,15 @@ const ModalContent = () => {
       <div className="msg">{modalContent.content}</div>
       <div className="action_box">
         <Button
-          text="취소"
-          onClick={() => {
-            setModal((prev) => {
-              return { ...prev, isActive: false };
-            });
-          }}
+          text={modalContent.actionLeft.text}
+          onClick={modalContent.actionLeft.action}
           color={theme.colors.black}
           backgroundColor={theme.colors.grey_light}
         />
         <Button
-          text={modalContent.actionString}
+          text={modalContent.actionRight.text}
           backgroundColor={theme.colors.red}
-          onClick={onModalAction}
+          onClick={modalContent.actionRight.action}
         />
       </div>
     </ModalWrapper>

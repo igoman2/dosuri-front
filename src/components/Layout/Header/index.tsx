@@ -37,7 +37,19 @@ const Header: FC<IHeaderProps> = ({ left, center, right }) => {
       title: "후기 작성을 취소하시겠어요?",
       content: `
       작성을 취소할 경우 지금까지 입력한 내용이 모두 사라집니다.`,
-      actionString: "계속 작성",
+      actionLeft: {
+        text: "작성 취소",
+        action: () => {
+          setIsActive(false);
+          setModalIsActive({ isActive: false });
+        },
+      },
+      actionRight: {
+        text: "계속 작성",
+        action: () => {
+          setModalIsActive({ isActive: false });
+        },
+      },
     });
     setModalIsActive((prev) => ({
       action: () => {
