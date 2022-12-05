@@ -101,6 +101,7 @@ const FullModalBaseWrapper = styled(ModalBaseContainer)`
     border-radius: 0;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
   }
 
   .content {

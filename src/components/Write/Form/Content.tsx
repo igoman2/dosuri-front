@@ -16,5 +16,5 @@ const Content: FC<IContentForm> = ({ children }) => {
 export default Content;
 
 const FormContentWrapper = styled.div`
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 `;

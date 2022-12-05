@@ -4,9 +4,10 @@ import logo from "@/public/assets/logo1.png";
 import note from "@/public/assets/note.png";
 import SearchBar from "@/components/SearchBar";
 import Link from "next/link";
-import FullModalBase from "@/components/Modal/FullModalBase";
 import WriteQuesiton from "@/components/Write/Question";
 import WriteReview from "@/components/Write/Review";
+import { useSetRecoilState } from "recoil";
+import { modalContentState, modalState } from "@/components/Modal/store";
 
 interface IHeaderProps {
   left?: boolean;
@@ -17,6 +18,9 @@ interface IHeaderProps {
 const Header: FC<IHeaderProps> = ({ left, center, right }) => {
   const [isActive, setIsActive] = useState(false);
   const [modalType, setModalType] = useState("");
+  const setModalIsActive = useSetRecoilState(modalState);
+  const setModalContent = useSetRecoilState(modalContentState);
+
   const onWriteHandler = () => {
     setModalType("question");
     setIsActive(true);
@@ -29,7 +33,18 @@ const Header: FC<IHeaderProps> = ({ left, center, right }) => {
   };
 
   const changeActiveHandler = () => {
-    setIsActive(false);
+    setModalContent({
+      title: "후기 작성을 취소하시겠어요?",
+      content: `
+      작성을 취소할 경우 지금까지 입력한 내용이 모두 사라집니다.`,
+      actionString: "계속 작성",
+    });
+    setModalIsActive((prev) => ({
+      action: () => {
+        setModalIsActive((prev) => ({ ...prev, isActive: false }));
+      },
+      isActive: true,
+    }));
   };
   return (
     <div

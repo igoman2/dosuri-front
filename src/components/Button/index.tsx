@@ -33,6 +33,7 @@ const Button: FC<IButtonProps> = ({
   bold,
   dense,
   fontSize,
+  ...props
 }) => {
   const theme = useTheme();
   const button = css`
@@ -78,13 +79,20 @@ const Button: FC<IButtonProps> = ({
             onClick={onClick}
             type={type}
             disabled={disabled}
+            {...props}
           >
             <Icon name={iconName} />
             <span className="text">{text}</span>
           </button>
         </ButtonWrapper>
       ) : (
-        <button css={button} onClick={onClick} type={type} disabled={disabled}>
+        <button
+          css={button}
+          onClick={onClick}
+          type={type}
+          disabled={disabled}
+          {...props}
+        >
           {text}
         </button>
       )}

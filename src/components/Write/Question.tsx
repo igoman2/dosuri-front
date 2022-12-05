@@ -46,7 +46,10 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
               <div className="text-limit">0자 / 최소 20자</div>
             </div>
 
-            <InputForm />
+            <InputForm
+              placeholder="궁금한거나 공유하고 싶은 내용을 다른 회원들에게 공유해주세요."
+              type="textarea"
+            />
           </Content>
 
           <Content>
@@ -113,7 +116,7 @@ const WriteQuesitonWrapper = styled.div`
   }
 
   .field {
-    width: 32rem;
+    width: 100%;
     height: 16rem;
     border-radius: 1rem;
     border: 0.1rem solid ${(props) => props.theme.colors.grey};
@@ -121,6 +124,7 @@ const WriteQuesitonWrapper = styled.div`
     line-height: ${(props) => props.theme.lineHeights.lg};
     flex-grow: 1;
     padding: 1rem;
+    resize: none;
 
     &::placeholder {
       color: ${(props) => props.theme.colors.grey};

@@ -1,11 +1,20 @@
-import React from "react";
+import React, { FC } from "react";
 import { Formik, Form, Field } from "formik";
 
 interface MyFormValues {
   firstName: string;
 }
 
-const InputForm = () => {
+interface IInputFormProps {
+  placeholder: string;
+  type?: string;
+}
+
+const InputForm: FC<IInputFormProps> = ({
+  placeholder,
+  type = "input",
+  ...props
+}) => {
   const initialValues: MyFormValues = { firstName: "" };
 
   return (
@@ -15,13 +24,15 @@ const InputForm = () => {
         console.log({ values, actions });
         actions.setSubmitting(false);
       }}
+      {...props}
     >
       <Form>
         <Field
           className="field"
           id="nickname"
           name="nickname"
-          placeholder="궁금한거나 공유하고 싶은 내용을 다른 회원들에게 공유해주세요."
+          placeholder={placeholder}
+          as={type}
         />
       </Form>
     </Formik>
