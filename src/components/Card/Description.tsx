@@ -1,10 +1,10 @@
-import { HospitalInfo } from "@/mock/hospitals";
+import { IHospitalInfo } from "@/mock/hospitals";
 import Icon from "@/util/Icon";
 import { useTheme } from "@emotion/react";
 import React, { FC } from "react";
 
 export interface IDescriptionProps {
-  hospitalInfo: HospitalInfo;
+  hospitalInfo: IHospitalInfo;
   size: "xxxl" | "xxl" | "xl" | "lg" | "md" | "sm" | "xs";
 }
 
@@ -28,7 +28,7 @@ const Description: FC<IDescriptionProps> = ({ hospitalInfo, size }) => {
           fontWeight: 700,
         }}
       >
-        {hospitalInfo.title}
+        {hospitalInfo.name}
       </div>
 
       <div
@@ -40,12 +40,13 @@ const Description: FC<IDescriptionProps> = ({ hospitalInfo, size }) => {
           lineHeight: theme.lineHeights[size],
         }}
       >
-        <div>{hospitalInfo.location}</div>
-        <div>{`후기 ${hospitalInfo.reviewConut}개`}</div>
-        <div>{`추천 ${hospitalInfo.thunbCount}명`}</div>
+        {/* <div>{hospitalInfo.address.match()}</div> */}
+        <div>신사동</div>
+        <div>{`후기 ${hospitalInfo.view_count}개`}</div>
+        <div>{`추천 ${hospitalInfo.up_count}명`}</div>
       </div>
       <div>
-        {hospitalInfo.recentReview ? (
+        {hospitalInfo.introduction ? (
           <span
             css={{
               color: theme.colors.purple,
@@ -62,7 +63,7 @@ const Description: FC<IDescriptionProps> = ({ hospitalInfo, size }) => {
               height="15"
               fill={theme.colors.purple}
             />
-            {hospitalInfo.recentReview}
+            {hospitalInfo.introduction}
           </span>
         ) : (
           <span

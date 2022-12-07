@@ -18,7 +18,9 @@ export default CustomImage;
 
 const ImageWrapper = styled.div`
   width: 100%;
-  position: relative;
+  top: -6rem;
+  z-index: 10;
+
   & > span {
     position: unset !important;
   }

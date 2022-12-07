@@ -135,7 +135,7 @@ const PriceWrapper = styled.div`
 
       .line {
         position: absolute;
-        border: 0.3rem solid ${(props) => props.theme.colors.purple};
+        border: 0.2rem solid ${(props) => props.theme.colors.purple};
         border-radius: 0.3rem;
         width: 100%;
       }

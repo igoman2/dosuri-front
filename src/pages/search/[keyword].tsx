@@ -9,18 +9,43 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import HospitalCard from "@/components/Card/HospitalCard";
-import { HospitalInfo, hospitalList } from "@/mock/hospitals";
+import {
+  HospitalInfo,
+  hospitalList,
+  IHospitalInfo,
+  IHospitalInfoResponse,
+} from "@/mock/hospitals";
 import Button from "@/components/Button";
 import { useTheme } from "@emotion/react";
 import Image from "next/image";
 import ArrowRight from "@/public/assets/arrow-right-bold.png";
 import SearchHeader from "@/components/Layout/Header/SearchHeader";
+import { getHospitalList } from "@/service/apis";
+import { AxiosError } from "axios";
+import { useQuery } from "react-query";
 
 const SearchResult = () => {
   const [inputText, setInputText] = useState("");
   const [currentTab, setCurrentTab] = useState<TabItem>(TabList[0]);
   const router = useRouter();
   const theme = useTheme();
+  const [hospitals, setHospitals] =
+    useState<IHospitalInfoResponse | null>(null);
+
+  const { isLoading: getHispitalListIsLoading, data: getHispitalListData } =
+    useQuery<IHospitalInfoResponse, AxiosError>(
+      "'getHospitalList'",
+      getHospitalList,
+      {
+        retry: 0,
+        onSuccess: (res) => {
+          setHospitals(res);
+        },
+        onError: (err: any) => {
+          setHospitals(err.response.data);
+        },
+      }
+    );
 
   const onTabClickHander = (tab: TabItem) => {
     setCurrentTab(tab);
@@ -41,8 +66,13 @@ const SearchResult = () => {
           병원
           <span className="list-length"> 10</span>건
         </div>
-        {hospitalList.map((hospital: HospitalInfo, i) => (
-          <HospitalCard hospitalInfo={hospital} key={i} />
+
+        {hospitals?.results.map((hospital: IHospitalInfo, i) => (
+          <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+            <a>
+              <HospitalCard hospitalInfo={hospital} />
+            </a>
+          </Link>
         ))}
       </div>
     </ResultWrapper>

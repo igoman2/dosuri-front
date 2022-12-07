@@ -11,9 +11,11 @@ import ImageTextView from "@/components/UI/ImageTextView";
 import theme from "@/styles/theme";
 import Icon from "@/util/Icon";
 import styled from "@emotion/styled";
+import { NextPageContext } from "next";
+import { AppContext } from "next/app";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 interface TabItem {
   title: string;
@@ -39,17 +41,24 @@ const TabList: TabItem[] = [
   },
 ];
 
-const HospitalInformation = () => {
-  const [currentTab, setCurrentTab] = useState<TabItem>(TabList[0]);
+interface IHospitalInformationProps {
+  id: number;
+  tab: string;
+}
+
+const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
+  const [currentTab, setCurrentTab] = useState<TabItem>(
+    TabList.find((t) => t.value === tab) ?? TabList[0]
+  );
   const router = useRouter();
   const isRecommended = false;
 
   useEffect(() => {
     router.replace({
-      pathname: `/hospital/${router.query.id}`,
+      pathname: `/hospital/${id}`,
       query: { tab: currentTab.value },
     });
-  }, []);
+  }, [currentTab]);
 
   const onTabClickHander = (tab: TabItem) => {
     setCurrentTab(tab);
@@ -68,43 +77,46 @@ const HospitalInformation = () => {
             "https://dosuri-images.s3.ap-northeast-2.amazonaws.com/hospitalThumbnail.png"
           }
         />
-        <div className="head">
-          <div className="hospital-name">압구정강남바른정형외과의원</div>
-          <ImageTextView
-            text={"추천"}
-            color={isRecommended ? theme.colors.green : theme.colors.grey}
-            image={
-              <Icon
-                name="thumb"
-                fill={isRecommended ? theme.colors.green : theme.colors.grey}
-              />
-            }
-            reverse
-          />
-        </div>
-        <div className="tab-wrapper">
-          <Tab
-            tabList={TabList}
-            currentTab={currentTab}
-            onTabClickHander={onTabClickHander}
-          />
-        </div>
-        {currentTab.value === "information" && <Information />}
-        {currentTab.value === "doctors" && <Doctors />}
-        {currentTab.value === "reviews" && <Reviews />}
-        {currentTab.value === "price" && <Price />}
+        <div className="hospital-content">
+          <div className="head">
+            <div className="hospital-name">압구정강남바른정형외과의원</div>
+            <ImageTextView
+              text={"추천"}
+              color={isRecommended ? theme.colors.green : theme.colors.grey}
+              image={
+                <Icon
+                  name="thumb"
+                  fill={isRecommended ? theme.colors.green : theme.colors.grey}
+                />
+              }
+              reverse
+            />
+          </div>
+          <div className="tab-wrapper">
+            <Tab
+              tabList={TabList}
+              currentTab={currentTab}
+              onTabClickHander={onTabClickHander}
+            />
+          </div>
+          {currentTab.value === "information" && <Information />}
+          {currentTab.value === "doctors" && <Doctors />}
+          {currentTab.value === "reviews" && <Reviews />}
+          {currentTab.value === "price" && <Price />}
 
-        <SaleButtonWrapper>
-          <Link href="/insurance-register/confirm">
-            <a>
-              <Button
-                text="도수리에서 최대 70% 싸게 도수치료 받기"
-                width="100%"
-                backgroundColor={theme.colors.purple_light}
-              />
-            </a>
-          </Link>
-        </SaleButtonWrapper>
+          <SaleButtonWrapper>
+            <Link href="/insurance-register/confirm">
+              <a>
+                <Button
+                  text="도수리에서 최대 70% 싸게 도수치료 받기"
+                  width="100%"
+                  borderRadius="0.3rem"
+                  backgroundColor={theme.colors.purple_light}
+                />
+              </a>
+            </Link>
+          </SaleButtonWrapper>
+        </div>
       </Hospital>
     </Layout>
   );
@@ -113,6 +125,16 @@ const HospitalInformation = () => {
 export default HospitalInformation;
 
 const Hospital = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -6rem;
+  margin: auto;
+
+  .hospital-content {
+    padding: 0 2rem;
+  }
+
   .head {
     display: flex;
     justify-content: space-between;
@@ -136,3 +158,14 @@ const SaleButtonWrapper = styled.div`
   margin-top: 2rem;
   padding: 1rem 0;
 `;
+
+export const getServerSideProps = async (context: NextPageContext) => {
+  const { query } = context;
+  const { id, tab } = query;
+  return {
+    props: {
+      id,
+      tab: tab ?? "information",
+    },
+  };
+};

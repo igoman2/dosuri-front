@@ -11,7 +11,11 @@ import { BottomSheet } from "react-spring-bottom-sheet";
 import "react-spring-bottom-sheet/dist/style.css";
 import Divider from "@/components/UI/Divider";
 import { ListItem, SELECT_LIST } from "@/mock/searchCategory";
-import { HospitalInfo, hospitalList } from "@/mock/hospitals";
+import { IHospitalInfo, IHospitalInfoResponse } from "@/mock/hospitals";
+import { useQuery } from "react-query";
+import { getHospitalList } from "@/service/apis";
+import { AxiosError } from "axios";
+import Link from "next/link";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
@@ -20,11 +24,32 @@ const Home = () => {
     setOpen(false);
   }
   const theme = useTheme();
+  const [hospitals, setHospitals] =
+    useState<IHospitalInfoResponse | null>(null);
+
+  const { isLoading: getHispitalListIsLoading, data: getHispitalListData } =
+    useQuery<IHospitalInfoResponse, AxiosError>(
+      "'getHospitalList'",
+      getHospitalList,
+      {
+        retry: 0,
+        onSuccess: (res) => {
+          setHospitals(res);
+        },
+        onError: (err: any) => {
+          setHospitals(err.response.data);
+        },
+      }
+    );
 
   const onListClick = (item: ListItem) => {
     setCategory(item);
     onDismiss();
   };
+
+  if (getHispitalListIsLoading) {
+    return <h1>Loading</h1>;
+  }
 
   return (
     <Layout header={<Header left={true} center={true} right={true} />}>
@@ -42,8 +67,12 @@ const Home = () => {
           따끈한 후기가 새로 등록됐어요!
         </div>
 
-        {hospitalList.map((hospital: HospitalInfo, i) => (
-          <HospitalCard hospitalInfo={hospital} key={i} />
+        {hospitals?.results.map((hospital: IHospitalInfo, i) => (
+          <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+            <a>
+              <HospitalCard hospitalInfo={hospital} />
+            </a>
+          </Link>
         ))}
       </div>
       <div
@@ -60,8 +89,18 @@ const Home = () => {
           후기는 다다익선! 치료 후기 많은 곳
         </div>
 
-        {hospitalList.map((hospital: HospitalInfo, i) => (
-          <HospitalCard hospitalInfo={hospital} key={i} />
+        {hospitals?.results.map((hospital: IHospitalInfo, i) => (
+          <Link
+            href={{
+              pathname: `hospital/${hospital.uuid}`,
+              query: hospital.uuid,
+            }}
+            key={hospital.uuid}
+          >
+            <a>
+              <HospitalCard hospitalInfo={hospital} />
+            </a>
+          </Link>
         ))}
       </div>
       <div
@@ -93,7 +132,7 @@ const Home = () => {
           />
         </ImageTextViewWrapper>
 
-        {hospitalList.map((hospital: HospitalInfo, i) => (
+        {hospitals?.results.map((hospital: IHospitalInfo, i) => (
           <HospitalCard hospitalInfo={hospital} key={i} />
         ))}
       </div>

@@ -20,7 +20,13 @@ const SearchHeader: FC<ISearchHeaderProps> = ({ inputText, onInput }) => {
     <SearchWrapper>
       <div className="header">
         <BackButton onClick={onBack}>
-          <Icon name="arrow" width="24" height="24" />
+          <Icon
+            name="arrow"
+            width="24"
+            height="24"
+            stroke="black"
+            stroke-width="2"
+          />
         </BackButton>
         <div className="center">
           {<SearchBar inputText={inputText} onInput={onInput} />}

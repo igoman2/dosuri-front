@@ -1,10 +1,11 @@
-import { HospitalInfo } from "@/mock/hospitals";
+import { IHospitalInfo } from "@/mock/hospitals";
 import Image from "next/image";
 import React, { FC } from "react";
 import Description from "../Description";
+import SampleImage from "@/public/assets/sample.png";
 
 export interface IHospitalCardProps {
-  hospitalInfo: HospitalInfo;
+  hospitalInfo: IHospitalInfo;
 }
 
 const HospitalCard: FC<IHospitalCardProps> = ({ hospitalInfo }) => {
@@ -17,7 +18,8 @@ const HospitalCard: FC<IHospitalCardProps> = ({ hospitalInfo }) => {
       }}
     >
       <Image
-        src={hospitalInfo.hospitalImage}
+        src={SampleImage}
+        // src={hospitalInfo.hospitalImage}
         width={90}
         height={90}
         alt="hospitalImage"

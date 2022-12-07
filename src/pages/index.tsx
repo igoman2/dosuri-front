@@ -1,19 +1,29 @@
-import HospitalCard from "@/components/Card/HospitalCard";
+import HospitalCard, {
+  IHospitalCardProps,
+} from "@/components/Card/HospitalCard";
 import Layout from "@/components/Layout";
 import Header from "@/components/Layout/Header";
 import { useTheme } from "@emotion/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Icon from "@/util/Icon";
 import { Post, posts } from "@/mock/posts";
 import PostCard from "@/components/Card/PostCard";
 import styled from "@emotion/styled";
-import { HospitalInfo, hospitalList } from "@/mock/hospitals";
+import {
+  HospitalInfo,
+  hospitalList,
+  IHospitalInfo,
+  IHospitalInfoResponse,
+} from "@/mock/hospitals";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { apis } from "@/service/api";
+import { apis, getHospitalList } from "@/service/apis";
 import Link from "next/link";
+import { AxiosError } from "axios";
 
 const Home = () => {
   const theme = useTheme();
+  const [hospitals, setHospitals] =
+    useState<IHospitalInfoResponse | null>(null);
 
   const renderPostBottom = (post: Post) => {
     return (
@@ -28,19 +38,21 @@ const Home = () => {
     );
   };
 
-  const { isLoading: getAddressesIsLoading, data: getAddressesData } = useQuery(
-    "all",
-    apis.getMyInfo,
-    {
-      retry: 0,
-      onSuccess: (resp) => {
-        console.log(resp.data);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-    }
-  );
+  const { isLoading: getHispitalListIsLoading, data: getHispitalListData } =
+    useQuery<IHospitalInfoResponse, AxiosError>(
+      "'getHospitalList'",
+      getHospitalList,
+      {
+        retry: 0,
+        onSuccess: (res) => {
+          setHospitals(res);
+          console.log(res.results);
+        },
+        onError: (err: any) => {
+          setHospitals(err.response.data);
+        },
+      }
+    );
 
   const {
     isLoading: getHospitalKeywordIsLoading,
@@ -76,8 +88,8 @@ const Home = () => {
           내 주변 TOP 병원
         </div>
 
-        {hospitalList.map((hospital: HospitalInfo, i) => (
-          <Link href={`/hospital/${hospital.id}`} key={i}>
+        {hospitals?.results.map((hospital: IHospitalInfo, i) => (
+          <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
             <a>
               <HospitalCard hospitalInfo={hospital} />
             </a>
@@ -99,8 +111,12 @@ const Home = () => {
           새로 생긴 병원
         </div>
 
-        {hospitalList.map((hospital: HospitalInfo, i) => (
-          <HospitalCard hospitalInfo={hospital} key={i} />
+        {hospitals?.results.map((hospital: IHospitalInfo, i) => (
+          <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+            <a>
+              <HospitalCard hospitalInfo={hospital} />
+            </a>
+          </Link>
         ))}
       </div>
 
@@ -118,8 +134,12 @@ const Home = () => {
           후기가 좋은 병원
         </div>
 
-        {hospitalList.map((hospital: HospitalInfo, i) => (
-          <HospitalCard hospitalInfo={hospital} key={i} />
+        {hospitals?.results.map((hospital: IHospitalInfo, i) => (
+          <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+            <a>
+              <HospitalCard hospitalInfo={hospital} />
+            </a>
+          </Link>
         ))}
       </div>
 

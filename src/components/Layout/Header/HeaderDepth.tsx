@@ -27,10 +27,18 @@ const HeaderDepth: FC<IHeaderDepthProps> = ({ left }) => {
         height: "5.4rem",
         marginBottom: "0.5rem",
         padding: "0 1rem",
+        zIndex: "50",
+        position: "relative",
       }}
     >
       <BackButton onClick={onBack}>
-        <Icon name="arrow" width="24" height="24" />
+        <Icon
+          name="arrow"
+          width="24"
+          height="24"
+          stroke="black"
+          stroke-width="2"
+        />
       </BackButton>
 
       {left}

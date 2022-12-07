@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { GetServerSideProps } from "next";
 import axios from "axios";
 import * as Sentry from "@sentry/nextjs";
-import { apis } from "@/service/api";
+import { apis } from "@/service/apis";
 
 interface IKakaoProps {
   accessToken: string;

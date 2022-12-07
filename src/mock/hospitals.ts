@@ -41,3 +41,26 @@ export interface HospitalInfo {
   recentReview: ReactNode | string | null;
   hospitalImage: StaticImageData; // 서버에서 받아오는거로 변경할 예정
 }
+
+export interface IHospitalInfoResponse {
+  count: number;
+  next: string;
+  previous: string;
+  results: IHospitalInfo[];
+}
+
+export interface IHospitalInfo {
+  uuid: "string";
+  address: "string";
+  name: "string";
+  introduction: "string";
+  phone_no: "string";
+  up_count: 0;
+  view_count: 0;
+  is_partner: true;
+  opened_at: "2022-12-07T13:04:47.154Z";
+  created_at: "2022-12-07T13:04:47.154Z";
+  code: "string";
+  latitude: 0;
+  longitude: 0;
+}
