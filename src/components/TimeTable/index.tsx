@@ -1,24 +1,34 @@
 import { Column, useTable } from "react-table";
+import { FC, useMemo } from "react";
 
-import ReactTable from "react-table";
 import styled from "@emotion/styled";
-import { useMemo } from "react";
-import { useTheme } from "@emotion/react";
 
-const TimeTable = () => {
+interface ITimeTableProps {
+  times: {
+    monday: string;
+    tuesday: string;
+    wednesday: string;
+    thursday: string;
+    friday: string;
+    saturday: string;
+    sunday: string;
+  };
+}
+
+const TimeTable: FC<ITimeTableProps> = ({ times }) => {
   const data = useMemo(
     () => [
       {
-        mon: "10:00 ~ 20:00",
-        tue: "10:00 ~ 20:00",
-        wed: "10:00 ~ 20:00",
-        thu: "10:00 ~ 20:00",
-        fri: "10:00 ~ 20:00",
-        sat: "10:00 ~ 20:00",
-        sun: "휴진",
+        mon: times.monday ?? "휴진",
+        tue: times.tuesday ?? "휴진",
+        wed: times.wednesday ?? "휴진",
+        thu: times.thursday ?? "휴진",
+        fri: times.friday ?? "휴진",
+        sat: times.saturday ?? "휴진",
+        sun: times.sunday ?? "휴진",
       },
     ],
-    []
+    [times]
   );
 
   const columns: ReadonlyArray<Column> = useMemo(

@@ -31,16 +31,36 @@ const Price: FC<IPriceProps> = ({ hospitalData }) => {
     []
   );
 
+  // const data = useMemo(
+  //   () => [
+  //     {
+  //       name: "도수치료 A (30분당)",
+  //       description: "물리치료사,요추또는경추,개인보험없을시",
+  //       price: "1,000,000원",
+  //     },
+  //     {
+  //       name: "도수치료 B (30분당)",
+  //       description: "원장이 직접 실시",
+  //       price: "100,000원",
+  //     },
+  //     {
+  //       name: "도수치료 A (30분당)",
+  //       description: "원장이 직접 실시",
+  //       price: "250,000원",
+  //     },
+  //   ],
+  //   []
+  // );
   const columns: ReadonlyArray<Column> = useMemo(
     () => [
       {
         Header: "구분",
-        accessor: "type",
+        accessor: "name",
         width: 100,
       },
       {
         Header: "특이사항",
-        accessor: "note",
+        accessor: "description",
       },
       {
         Header: "금액",
@@ -167,6 +187,7 @@ const PriceWrapper = styled.div`
 
   table {
     border: 0;
+    width: 100%;
 
     thead {
       color: ${(props) => props.theme.colors.purple};

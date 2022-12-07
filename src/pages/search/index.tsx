@@ -8,7 +8,20 @@ import { BottomSheet } from "react-spring-bottom-sheet";
 import ChevronDowm from "@/public/assets/chevron-down.png";
 import Divider from "@/components/UI/Divider";
 import Header from "@/components/Layout/Header";
+import "react-spring-bottom-sheet/dist/style.css";
+
+import { IHospitalInfo, IHospitalInfoResponse } from "@/mock/hospitals";
+import { ListItem, SELECT_LIST } from "@/mock/searchCategory";
+import React, { useEffect, useState } from "react";
+import { getHospitalImages, getHospitalList } from "@/service/apis";
+
+import { BottomSheet } from "react-spring-bottom-sheet";
+import ChevronDowm from "@/public/assets/chevron-down.png";
+import Divider from "@/components/UI/Divider";
+import Header from "@/components/Layout/Header";
 import HospitalCard from "@/components/Card/HospitalCard";
+import Image from "next/image";
+import ImageTextView from "@/components/UI/ImageTextView";
 import Image from "next/image";
 import ImageTextView from "@/components/UI/ImageTextView";
 import Layout from "@/components/Layout";
@@ -25,22 +38,86 @@ const Home = () => {
     setOpen(false);
   }
   const theme = useTheme();
-  const [hospitals, setHospitals] =
+  const [hospitals1, setHospitals1] =
+    useState<IHospitalInfoResponse | null>(null);
+  const [hospitals2, setHospitals2] =
+    useState<IHospitalInfoResponse | null>(null);
+  const [hospitals3, setHospitals3] =
     useState<IHospitalInfoResponse | null>(null);
 
-  const { isLoading: getHispitalListIsLoading, data: getHispitalListData } =
+  const [hospitalsImages1, setHospitalsImages1] =
+    useState<IHospitalInfoResponse | null>(null);
+  const [hospitalsImages2, setHospitalsImages12] =
+    useState<IHospitalInfoResponse | null>(null);
+  const [hospitalsImages3, setHospitalsImages13] =
+    useState<IHospitalInfoResponse | null>(null);
+
+  const { isLoading: asd, data: qwe } = useQuery({
+    queryKey: ["getHospitalList-image", category],
+    queryFn: async () => {
+      const data = await getHospitalImages();
+      return data;
+    },
+    retry: 0,
+    onSuccess: (res) => {
+      setHospitals1(res);
+    },
+    onError: (err: any) => {
+      setHospitals1(err.response.data);
+    },
+  });
+
+  const { isLoading: getHispitalListIsLoading1, data: getHispitalListData1 } =
     useQuery({
-      queryKey: ["getHospitalList-search", category],
+      queryKey: ["getHospitalList-search-1", category],
       queryFn: async () => {
-        const data = await getHospitalList({ ordering: category.key });
+        const data = await getHospitalList({
+          ordering: "-latest_article_created_at",
+        });
         return data;
       },
       retry: 0,
       onSuccess: (res) => {
-        setHospitals(res);
+        setHospitals1(res);
       },
       onError: (err: any) => {
-        setHospitals(err.response.data);
+        setHospitals1(err.response.data);
+      },
+    });
+
+  const { isLoading: getHispitalListIsLoading2, data: getHispitalListData2 } =
+    useQuery({
+      queryKey: ["getHospitalList-search-2", category],
+      queryFn: async () => {
+        const data = await getHospitalList({
+          ordering: "-article_count",
+        });
+        return data;
+      },
+      retry: 0,
+      onSuccess: (res) => {
+        setHospitals2(res);
+      },
+      onError: (err: any) => {
+        setHospitals2(err.response.data);
+      },
+    });
+
+  const { isLoading: getHispitalListIsLoading3, data: getHispitalListData3 } =
+    useQuery({
+      queryKey: ["getHospitalList-search-3", category],
+      queryFn: async () => {
+        const data = await getHospitalList({
+          ordering: "-view_count",
+        });
+        return data;
+      },
+      retry: 0,
+      onSuccess: (res) => {
+        setHospitals3(res);
+      },
+      onError: (err: any) => {
+        setHospitals3(err.response.data);
       },
     });
 
@@ -49,7 +126,11 @@ const Home = () => {
     onDismiss();
   };
 
-  if (getHispitalListIsLoading) {
+  if (
+    getHispitalListIsLoading1 ||
+    getHispitalListIsLoading2 ||
+    getHispitalListIsLoading3
+  ) {
     return <h1>Loading</h1>;
   }
 
@@ -69,7 +150,7 @@ const Home = () => {
           따끈한 후기가 새로 등록됐어요!
         </div>
 
-        {hospitals?.results.map((hospital: IHospitalInfo, i) => (
+        {hospitals1?.results.map((hospital: IHospitalInfo, i) => (
           <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
             <a>
               <HospitalCard hospitalInfo={hospital} />
@@ -91,7 +172,7 @@ const Home = () => {
           후기는 다다익선! 치료 후기 많은 곳
         </div>
 
-        {hospitals?.results.map((hospital: IHospitalInfo, i) => (
+        {hospitals2?.results.map((hospital: IHospitalInfo, i) => (
           <Link
             href={{
               pathname: `hospital/${hospital.uuid}`,
@@ -134,7 +215,7 @@ const Home = () => {
           />
         </ImageTextViewWrapper>
 
-        {hospitals?.results.map((hospital: IHospitalInfo, i) => (
+        {hospitals3?.results.map((hospital: IHospitalInfo, i) => (
           <HospitalCard hospitalInfo={hospital} key={i} />
         ))}
       </div>

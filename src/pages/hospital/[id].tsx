@@ -79,12 +79,50 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
 
   const onTabClickHander = (tab: TabItem) => {
     setCurrentTab(tab);
-    console.log(router);
     router.replace({
       pathname: `/hospital/${router.query.id}`,
       query: { tab: tab.value },
     });
   };
+
+  const { isLoading, data, error } = useQuery({
+    queryKey: ["getHospitalInfo"],
+    queryFn: async () => {
+      const data = await getHospitalInfo(id);
+      return data;
+    },
+    staleTime: 3000,
+    retry: 0,
+  });
+
+  const uuid = data?.uuid;
+
+  const {
+    data: hospitalTreatmentsData,
+    isLoading: hospitalTreatmentsIsLoading,
+  } = useQuery({
+    queryKey: "hospital-treatments",
+    queryFn: async () => {
+      const resp = await getHospitalTreatments(uuid!);
+      return resp.results;
+    },
+    enabled: !!uuid,
+    onSuccess: (res) => {
+      console.log(res);
+    },
+  });
+
+  if (error) {
+    return <div>Error</div>;
+  }
+
+  if (isLoading) {
+    return <div>Loading</div>;
+  }
+
+  if (!data) {
+    return <div>bug</div>;
+  }
 
   return (
     <Layout header={<HeaderDepth />} footer={false}>

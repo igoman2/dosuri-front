@@ -22,6 +22,19 @@ const Information: FC<IInformationProps> = ({ hospitalData }) => {
     "운동프로그램",
   ];
 
+  const { isLoading, data } = useQuery({
+    queryKey: ["getHospitalOperationTime"],
+    queryFn: async () => {
+      const data = await getHospitalOperationTime(hospitalData.uuid);
+      return data.results;
+    },
+    staleTime: 3000,
+    retry: 0,
+  });
+  if (!data) {
+    return <div>bug</div>;
+  }
+
   return (
     <HospitalInformationWrapper>
       <div>
@@ -46,7 +59,17 @@ const Information: FC<IInformationProps> = ({ hospitalData }) => {
           </div>
           <div className="list">
             <div className="list-title">진료 시간</div>
-            <TimeTable />
+            <TimeTable
+              times={{
+                monday: data[0].monday,
+                tuesday: data[0].tuesday,
+                wednesday: data[0].wednesday,
+                thursday: data[0].thursday,
+                friday: data[0].friday,
+                saturday: data[0].saturday,
+                sunday: data[0].sunday,
+              }}
+            />
           </div>
           <div className="list">
             <div className="list-title">주소</div>
