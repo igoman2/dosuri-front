@@ -40,8 +40,7 @@ const Description: FC<IDescriptionProps> = ({ hospitalInfo, size }) => {
           lineHeight: theme.lineHeights[size],
         }}
       >
-        {/* <div>{hospitalInfo.address.match()}</div> */}
-        <div>신사동</div>
+        <div>{hospitalInfo.area}</div>
         <div>{`후기 ${hospitalInfo.view_count}개`}</div>
         <div>{`추천 ${hospitalInfo.up_count}명`}</div>
       </div>

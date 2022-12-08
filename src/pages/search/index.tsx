@@ -2,7 +2,7 @@ import HospitalCard from "@/components/Card/HospitalCard";
 import Layout from "@/components/Layout";
 import Header from "@/components/Layout/Header";
 import { useTheme } from "@emotion/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import ImageTextView from "@/components/UI/ImageTextView";
 import Image from "next/image";
@@ -27,20 +27,24 @@ const Home = () => {
   const [hospitals, setHospitals] =
     useState<IHospitalInfoResponse | null>(null);
 
-  const { isLoading: getHispitalListIsLoading, data: getHispitalListData } =
-    useQuery<IHospitalInfoResponse, AxiosError>(
-      "'getHospitalList'",
-      getHospitalList,
-      {
-        retry: 0,
-        onSuccess: (res) => {
-          setHospitals(res);
-        },
-        onError: (err: any) => {
-          setHospitals(err.response.data);
-        },
-      }
-    );
+  const {
+    isLoading: getHispitalListIsLoading,
+    data: getHispitalListData,
+    refetch,
+  } = useQuery({
+    queryKey: ["getHospitalList", category],
+    queryFn: async () => {
+      const data = await getHospitalList({ ordering: category.key });
+      return data;
+    },
+    retry: 0,
+    onSuccess: (res) => {
+      setHospitals(res);
+    },
+    onError: (err: any) => {
+      setHospitals(err.response.data);
+    },
+  });
 
   const onListClick = (item: ListItem) => {
     setCategory(item);

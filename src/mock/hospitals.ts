@@ -53,6 +53,7 @@ export interface IHospitalInfo {
   uuid: "string";
   address: "string";
   name: "string";
+  area: string;
   introduction: "string";
   phone_no: "string";
   up_count: 0;
