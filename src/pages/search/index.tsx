@@ -14,7 +14,6 @@ import { ListItem, SELECT_LIST } from "@/mock/searchCategory";
 import { IHospitalInfo, IHospitalInfoResponse } from "@/mock/hospitals";
 import { useQuery } from "react-query";
 import { getHospitalList } from "@/service/apis";
-import { AxiosError } from "axios";
 import Link from "next/link";
 
 const Home = () => {
@@ -32,7 +31,7 @@ const Home = () => {
     data: getHispitalListData,
     refetch,
   } = useQuery({
-    queryKey: ["getHospitalList", category],
+    queryKey: ["getHospitalList-search", category],
     queryFn: async () => {
       const data = await getHospitalList({ ordering: category.key });
       return data;

@@ -34,7 +34,7 @@ const SearchResult = () => {
 
   const { isLoading: getHispitalListIsLoading, data: getHispitalListData } =
     useQuery<IHospitalInfoResponse, AxiosError>(
-      "'getHospitalList'",
+      "getHospitalList-keyword",
       getHospitalList,
       {
         retry: 0,

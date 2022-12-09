@@ -40,7 +40,7 @@ const Home = () => {
 
   const { isLoading: getHispitalListIsLoading, data: getHispitalListData } =
     useQuery<IHospitalInfoResponse, AxiosError>(
-      "'getHospitalList'",
+      "getHospitalList-home",
       getHospitalList,
       {
         retry: 0,

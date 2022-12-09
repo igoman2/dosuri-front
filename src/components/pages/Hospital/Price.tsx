@@ -1,9 +1,14 @@
 import styled from "@emotion/styled";
-import React, { useMemo } from "react";
+import React, { FC, useMemo } from "react";
 import { Column, useTable } from "react-table";
 import ReactTable from "react-table";
+import { IGetHospitalInfo } from "@/service/apis";
 
-const Price = () => {
+interface IPriceProps {
+  hospitalData?: IGetHospitalInfo;
+}
+
+const Price: FC<IPriceProps> = ({ hospitalData }) => {
   const data = useMemo(
     () => [
       {

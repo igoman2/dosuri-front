@@ -1,9 +1,14 @@
 import DoctorCard from "@/components/Card/DoctorCard";
 import { doctors, subDoctors } from "@/mock/doctors";
+import { IGetHospitalInfo } from "@/service/apis";
 import styled from "@emotion/styled";
-import React from "react";
+import React, { FC } from "react";
 
-const Doctors = () => {
+interface IDoctorsProps {
+  hospitalData?: IGetHospitalInfo;
+}
+
+const Doctors: FC<IDoctorsProps> = ({ hospitalData }) => {
   return (
     <DoctorsWrapper>
       <div>

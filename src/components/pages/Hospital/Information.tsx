@@ -3,9 +3,14 @@ import TimeTable from "@/components/TimeTable";
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import Link from "next/link";
-import React from "react";
+import React, { FC } from "react";
+import { IGetHospitalInfo } from "@/service/apis";
 
-const Information = () => {
+interface IInformationProps {
+  hospitalData?: IGetHospitalInfo;
+}
+
+const Information: FC<IInformationProps> = ({ hospitalData }) => {
   const theme = useTheme();
   const keywords: string[] = [
     "카이로프랙틱",
@@ -22,7 +27,7 @@ const Information = () => {
         <Content>
           <div className="list">
             <div className="list-title">병원 소개</div>
-            <div>압구정역 4번 출구 강남 바른정형외과 입니다.</div>
+            <div>{hospitalData?.introduction}</div>
           </div>
           <div className="list">
             <div className="list-title">치료 키워드</div>

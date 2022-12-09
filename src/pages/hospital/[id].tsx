@@ -8,6 +8,7 @@ import Price from "@/components/pages/Hospital/Price";
 import Reviews from "@/components/pages/Hospital/Reviews";
 import Tab from "@/components/Tab";
 import ImageTextView from "@/components/UI/ImageTextView";
+import { getHospitalInfo } from "@/service/apis";
 import theme from "@/styles/theme";
 import Icon from "@/util/Icon";
 import styled from "@emotion/styled";
@@ -16,6 +17,7 @@ import { AppContext } from "next/app";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
+import { useQuery } from "react-query";
 
 interface TabItem {
   title: string;
@@ -53,6 +55,20 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
   const router = useRouter();
   const isRecommended = false;
 
+  const { isLoading: getHispitalListIsLoading, data: hospitalData } = useQuery({
+    queryKey: ["getHospitalInfo"],
+    queryFn: async () => {
+      const data = await getHospitalInfo(id);
+      return data;
+    },
+    staleTime: 3000,
+    retry: 0,
+    onSuccess: (res) => {
+      console.log(res);
+    },
+    onError: (err: any) => {},
+  });
+
   useEffect(() => {
     router.replace({
       pathname: `/hospital/${id}`,
@@ -79,7 +95,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
         />
         <div className="hospital-content">
           <div className="head">
-            <div className="hospital-name">압구정강남바른정형외과의원</div>
+            <div className="hospital-name">{hospitalData?.name}</div>
             <ImageTextView
               text={"추천"}
               color={isRecommended ? theme.colors.green : theme.colors.grey}
@@ -99,10 +115,18 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
               onTabClickHander={onTabClickHander}
             />
           </div>
-          {currentTab.value === "information" && <Information />}
-          {currentTab.value === "doctors" && <Doctors />}
-          {currentTab.value === "reviews" && <Reviews />}
-          {currentTab.value === "price" && <Price />}
+          {currentTab.value === "information" && (
+            <Information hospitalData={hospitalData} />
+          )}
+          {currentTab.value === "doctors" && (
+            <Doctors hospitalData={hospitalData} />
+          )}
+          {currentTab.value === "reviews" && (
+            <Reviews hospitalData={hospitalData} />
+          )}
+          {currentTab.value === "price" && (
+            <Price hospitalData={hospitalData} />
+          )}
 
           <SaleButtonWrapper>
             <Link href="/insurance-register/confirm">

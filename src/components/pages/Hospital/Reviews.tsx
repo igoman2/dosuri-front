@@ -1,11 +1,16 @@
 import PostCard from "@/components/Card/PostCard";
 import PostBottom from "@/components/UI/emotion/PostBottom";
 import { Post, posts } from "@/mock/posts";
+import { IGetHospitalInfo } from "@/service/apis";
 import Icon from "@/util/Icon";
 import styled from "@emotion/styled";
-import React from "react";
+import React, { FC } from "react";
 
-const Reviews = () => {
+interface IReviewsProps {
+  hospitalData?: IGetHospitalInfo;
+}
+
+const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
   const renderPostBottom = (post: Post) => {
     return (
       <PostBottom>
