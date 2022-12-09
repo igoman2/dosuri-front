@@ -8,8 +8,10 @@ import useDirection from "@/hooks/useDirection";
 import { posts } from "@/mock/posts";
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
+import { NextPageContext } from "next";
 import Link from "next/link";
 import React, { useState } from "react";
+import { withAuthentication } from "../withAuthenticate";
 
 const Tablist = ["전체보기", "치료후기만 보기", "질문/상담만 보기"];
 
@@ -62,6 +64,12 @@ const Community = () => {
 };
 
 export default Community;
+
+export const getServerSideProps = withAuthentication(
+  async (context: NextPageContext) => {
+    return { props: {} };
+  }
+);
 
 const ButtonWrapper = styled.div`
   display: flex;

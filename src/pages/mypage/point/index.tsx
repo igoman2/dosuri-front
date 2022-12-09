@@ -2,7 +2,9 @@ import Layout from "@/components/Layout";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Divider from "@/components/UI/Divider";
 import { pointHistory } from "@/mock/pointHistory";
+import { withAuthentication } from "@/pages/withAuthenticate";
 import styled from "@emotion/styled";
+import { NextPageContext } from "next";
 import React from "react";
 
 const Point = () => {
@@ -60,3 +62,9 @@ const PointWrapper = styled.div`
     }
   }
 `;
+
+export const getServerSideProps = withAuthentication(
+  async (context: NextPageContext) => {
+    return { props: {} };
+  }
+);

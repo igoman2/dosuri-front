@@ -7,6 +7,8 @@ import { comment } from "@/mock/comment";
 import styled from "@emotion/styled";
 import Icon from "@/util/Icon";
 import { posts } from "@/mock/posts";
+import { NextPageContext } from "next";
+import { withAuthentication } from "../withAuthenticate";
 
 const Post = () => {
   const renderPostBottom = () => {
@@ -35,6 +37,12 @@ const Post = () => {
 };
 
 export default Post;
+
+export const getServerSideProps = withAuthentication(
+  async (context: NextPageContext) => {
+    return { props: {} };
+  }
+);
 
 const PostBottom = styled.div`
   .post-bottom {

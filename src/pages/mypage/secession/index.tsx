@@ -2,8 +2,10 @@ import Button from "@/components/Button";
 import Layout from "@/components/Layout";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Checkbox from "@/components/UI/Checkbox";
+import { withAuthentication } from "@/pages/withAuthenticate";
 import styled from "@emotion/styled";
 import { Field, Form, Formik } from "formik";
+import { NextPageContext } from "next";
 import React from "react";
 
 interface MyFormValues {
@@ -125,3 +127,9 @@ const CheckboxWrapper = styled.div`
   gap: 1.5rem;
   margin-bottom: 1rem;
 `;
+
+export const getServerSideProps = withAuthentication(
+  async (context: NextPageContext) => {
+    return { props: {} };
+  }
+);

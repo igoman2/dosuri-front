@@ -6,7 +6,6 @@ import Head from "next/head";
 import { Suspense, useState } from "react";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { RecoilRoot } from "recoil";
-import withAuth from "./withauth";
 
 function Progress() {
   return <h1>Loading...</h1>;
@@ -62,4 +61,8 @@ function MyApp({
     </>
   );
 }
-export default withAuth(MyApp);
+/**
+ * withAuth(MyApp)을 사용하면 HOC 패턴으로 권한 체크를 하고
+ * 그렇지 않으면 인증이 필요한 컴포넌트 각각에 HOF 패턴으로 권한 체크를 하게 된다.
+ */
+export default MyApp;

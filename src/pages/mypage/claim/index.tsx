@@ -1,3 +1,5 @@
+import { withAuthentication } from "@/pages/withAuthenticate";
+import { NextPageContext } from "next";
 import React from "react";
 
 const Claim = () => {
@@ -5,3 +7,9 @@ const Claim = () => {
 };
 
 export default Claim;
+
+export const getServerSideProps = withAuthentication(
+  async (context: NextPageContext) => {
+    return { props: {} };
+  }
+);

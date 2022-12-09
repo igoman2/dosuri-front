@@ -15,6 +15,8 @@ import { IHospitalInfo, IHospitalInfoResponse } from "@/mock/hospitals";
 import { useQuery } from "react-query";
 import { getHospitalList } from "@/service/apis";
 import Link from "next/link";
+import { NextPageContext } from "next";
+import { withAuthentication } from "../withAuthenticate";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
@@ -179,3 +181,9 @@ const SelectList = styled.div`
     line-height: ${(props) => props.theme.lineHeights.xxl};
   }
 `;
+
+export const getServerSideProps = withAuthentication(
+  async (context: NextPageContext) => {
+    return { props: {} };
+  }
+);

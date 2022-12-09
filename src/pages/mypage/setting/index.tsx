@@ -10,6 +10,8 @@ import React from "react";
 import ListTab from "@/components/UI/ListTab";
 import Link from "next/link";
 import { logout } from "@/pages/withauth";
+import { withAuthentication } from "@/pages/withAuthenticate";
+import { NextPageContext } from "next";
 
 const Setting = () => {
   return (
@@ -166,3 +168,9 @@ const Version = styled.div`
   color: ${(props) => props.theme.colors.grey};
   font-weight: 400;
 `;
+
+export const getServerSideProps = withAuthentication(
+  async (context: NextPageContext) => {
+    return { props: {} };
+  }
+);

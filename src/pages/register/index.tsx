@@ -3,6 +3,8 @@ import Header from "@/components/Layout/Header";
 import styled from "@emotion/styled";
 import React from "react";
 import RegisterForm from "@/components/Register";
+import { NextPageContext } from "next";
+import { withAuthentication } from "../withAuthenticate";
 
 const Register = () => {
   return (

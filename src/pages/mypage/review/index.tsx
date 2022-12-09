@@ -8,6 +8,8 @@ import { Post, posts } from "@/mock/posts";
 import Icon from "@/util/Icon";
 import Float from "@/components/UI/Float";
 import useDirection from "@/hooks/useDirection";
+import { withAuthentication } from "@/pages/withAuthenticate";
+import { NextPageContext } from "next";
 
 export const DIRECTION = {
   Up: "UP",
@@ -86,3 +88,9 @@ const PostBottom = styled.div`
     }
   }
 `;
+
+export const getServerSideProps = withAuthentication(
+  async (context: NextPageContext) => {
+    return { props: {} };
+  }
+);

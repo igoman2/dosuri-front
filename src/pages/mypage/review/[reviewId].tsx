@@ -11,6 +11,8 @@ import { useRecoilState } from "recoil";
 import styled from "@emotion/styled";
 import Icon from "@/util/Icon";
 import { modalContentState, modalState } from "@/components/Modal/store";
+import { withAuthentication } from "@/pages/withAuthenticate";
+import { NextPageContext } from "next";
 
 const ReviewDetail = () => {
   const theme = useTheme();
@@ -106,3 +108,9 @@ const PostBottom = styled.div`
     }
   }
 `;
+
+export const getServerSideProps = withAuthentication(
+  async (context: NextPageContext) => {
+    return { props: {} };
+  }
+);

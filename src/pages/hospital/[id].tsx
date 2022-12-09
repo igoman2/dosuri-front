@@ -13,11 +13,11 @@ import theme from "@/styles/theme";
 import Icon from "@/util/Icon";
 import styled from "@emotion/styled";
 import { NextPageContext } from "next";
-import { AppContext } from "next/app";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { withAuthentication } from "../withAuthenticate";
 
 interface TabItem {
   title: string;
@@ -183,13 +183,15 @@ const SaleButtonWrapper = styled.div`
   padding: 1rem 0;
 `;
 
-export const getServerSideProps = async (context: NextPageContext) => {
-  const { query } = context;
-  const { id, tab } = query;
-  return {
-    props: {
-      id,
-      tab: tab ?? "information",
-    },
-  };
-};
+export const getServerSideProps = withAuthentication(
+  async (context: NextPageContext) => {
+    const { query } = context;
+    const { id, tab } = query;
+    return {
+      props: {
+        id,
+        tab: tab ?? "information",
+      },
+    };
+  }
+);

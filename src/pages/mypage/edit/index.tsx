@@ -26,6 +26,8 @@ import Image from "next/image";
 import Icon from "@/util/Icon";
 import Layout from "@/components/Layout";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
+import { withAuthentication } from "@/pages/withAuthenticate";
+import { NextPageContext } from "next";
 
 interface MyFormValues {
   firstName: string;
@@ -523,3 +525,9 @@ const ButtonWrapper = styled.div`
     max-width: 6rem;
   }
 `;
+
+export const getServerSideProps = withAuthentication(
+  async (context: NextPageContext) => {
+    return { props: {} };
+  }
+);

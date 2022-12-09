@@ -23,6 +23,8 @@ import SearchHeader from "@/components/Layout/Header/SearchHeader";
 import { getHospitalList } from "@/service/apis";
 import { AxiosError } from "axios";
 import { useQuery } from "react-query";
+import { NextPageContext } from "next";
+import { withAuthentication } from "../withAuthenticate";
 
 const SearchResult = () => {
   const [inputText, setInputText] = useState("");
@@ -196,3 +198,9 @@ const MoreButton = styled.div`
   align-items: center;
   gap: 0.5rem;
 `;
+
+export const getServerSideProps = withAuthentication(
+  async (context: NextPageContext) => {
+    return { props: {} };
+  }
+);

@@ -5,6 +5,8 @@ import styled from "@emotion/styled";
 import React from "react";
 import { useTheme } from "@emotion/react";
 import Link from "next/link";
+import { withAuthentication } from "@/pages/withAuthenticate";
+import { NextPageContext } from "next";
 
 const Confirm = () => {
   const theme = useTheme();
@@ -56,6 +58,12 @@ const Confirm = () => {
 };
 
 export default Confirm;
+
+export const getServerSideProps = withAuthentication(
+  async (context: NextPageContext) => {
+    return { props: {} };
+  }
+);
 
 const ListElement = styled.div`
   display: flex;

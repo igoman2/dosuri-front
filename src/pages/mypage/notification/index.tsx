@@ -3,7 +3,9 @@ import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Avatar from "@/components/UI/Avatar";
 import Divider from "@/components/UI/Divider";
 import { notifications } from "@/mock/notifications";
+import { withAuthentication } from "@/pages/withAuthenticate";
 import styled from "@emotion/styled";
+import { NextPageContext } from "next";
 import React from "react";
 
 const Notification = () => {
@@ -105,3 +107,9 @@ const NotificationWrapper = styled.div`
     height: 0.5rem;
   }
 `;
+
+export const getServerSideProps = withAuthentication(
+  async (context: NextPageContext) => {
+    return { props: {} };
+  }
+);

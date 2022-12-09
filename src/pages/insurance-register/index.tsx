@@ -9,6 +9,8 @@ import ArrowBottomIcon from "@/public/assets/bordered-arrow-bottom.png";
 import Image from "next/image";
 import { useTheme } from "@emotion/react";
 import Link from "next/link";
+import { withAuthentication } from "../withAuthenticate";
+import { NextPageContext } from "next";
 
 const InsuranceRegister = () => {
   const theme = useTheme();
@@ -73,6 +75,12 @@ const InsuranceRegister = () => {
 };
 
 export default InsuranceRegister;
+
+export const getServerSideProps = withAuthentication(
+  async (context: NextPageContext) => {
+    return { props: {} };
+  }
+);
 
 const Compare = styled.div`
   display: flex;

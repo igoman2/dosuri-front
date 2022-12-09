@@ -7,7 +7,8 @@ import ArrowRight from "@/public/assets/arrow-right.png";
 import React from "react";
 import Divider from "@/components/UI/Divider";
 import Link from "next/link";
-import withAuth from "../withauth";
+import { NextPageContext } from "next";
+import { withAuthentication } from "../withAuthenticate";
 
 const tabList = [
   { text: "내 치료후기", subtext: "", link: "mypage/review", hasNoti: false },
@@ -126,3 +127,9 @@ const ProfileSectionWrapper = styled.div`
     color: ${(props) => props.theme.colors.red} !important;
   }
 `;
+
+export const getServerSideProps = withAuthentication(
+  async (context: NextPageContext) => {
+    return { props: {} };
+  }
+);

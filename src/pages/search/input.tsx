@@ -4,6 +4,8 @@ import RecentSearchList from "@/components/UI/RecentSearchList";
 import { recentSearchList } from "@/mock/recentSearchList";
 import SearchHeader from "@/components/Layout/Header/SearchHeader";
 import styled from "@emotion/styled";
+import { withAuthentication } from "../withAuthenticate";
+import { NextPageContext } from "next";
 
 const SearchInput = () => {
   const [inputText, setInputText] = useState("");
@@ -56,3 +58,9 @@ const Main = styled.div`
     }
   }
 `;
+
+export const getServerSideProps = withAuthentication(
+  async (context: NextPageContext) => {
+    return { props: {} };
+  }
+);
