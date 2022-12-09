@@ -1,6 +1,6 @@
 import PostCard from "@/components/Card/PostCard";
 import Layout from "@/components/Layout";
-import HeaderDepth from "@/components/Layout/Header/Depth/HeaderDepth";
+import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";

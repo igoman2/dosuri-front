@@ -26,16 +26,11 @@ const Google = () => {
     //   googleId,
     //   profileObj: { email, name },
     // } = response;
-    console.log("!!!");
-    console.log(response);
     // await onGoogleLogin();
     // 구글 로그인 성공시 서버에 전달할 데이터
   };
 
-  const onFailure = (error: any) => {
-    console.log("@@");
-    console.log(error);
-  };
+  const onFailure = (error: any) => {};
 
   return (
     <>

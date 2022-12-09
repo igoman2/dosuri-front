@@ -129,7 +129,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
           )}
 
           <SaleButtonWrapper>
-            <Link href="/insurance-register/confirm">
+            <Link href="/insurance-register">
               <a>
                 <Button
                   text="도수리에서 최대 70% 싸게 도수치료 받기"

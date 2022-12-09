@@ -57,7 +57,7 @@ const InsuranceRegister = () => {
         </div>
 
         <ButtonWrapper>
-          <Link href="/insurance-register/confirm">
+          <Link href="/insurance-register">
             <a>
               <Button
                 text="터치 한번으로 실손보험 상담 신청하기"

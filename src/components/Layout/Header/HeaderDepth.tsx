@@ -2,7 +2,6 @@ import React, { FC, ReactElement } from "react";
 import Icon from "@/util/Icon";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
-import Wrapper from "./Wrapper";
 
 interface IHeaderDepthProps {
   left?: ReactElement;
@@ -16,7 +15,22 @@ const HeaderDepth: FC<IHeaderDepthProps> = ({ left }) => {
   };
 
   return (
-    <Wrapper>
+    <div
+      css={{
+        display: "flex",
+        gap: "1rem",
+        justifyContent: "space-between",
+        alignItems: "center",
+        "& .center": {
+          flexGrow: 1,
+        },
+        height: "5.4rem",
+        marginBottom: "0.5rem",
+        padding: "0 1rem",
+        zIndex: "50",
+        position: "relative",
+      }}
+    >
       <BackButton onClick={onBack}>
         <Icon
           name="arrow"
@@ -28,7 +42,7 @@ const HeaderDepth: FC<IHeaderDepthProps> = ({ left }) => {
       </BackButton>
 
       {left}
-    </Wrapper>
+    </div>
   );
 };
 
