@@ -1,8 +1,9 @@
-import DoctorCard from "@/components/Card/DoctorCard";
+import React, { FC } from "react";
 import { doctors, subDoctors } from "@/mock/doctors";
+
+import DoctorCard from "@/components/Card/DoctorCard";
 import { IGetHospitalInfo } from "@/service/apis";
 import styled from "@emotion/styled";
-import React, { FC } from "react";
 
 interface IDoctorsProps {
   hospitalData?: IGetHospitalInfo;

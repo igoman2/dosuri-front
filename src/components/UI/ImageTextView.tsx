@@ -1,6 +1,7 @@
+import React, { FC, ReactElement } from "react";
+
 import Icon from "@/util/Icon";
 import styled from "@emotion/styled";
-import React, { FC, ReactElement } from "react";
 
 interface ImageTextViewProps {
   image: ReactElement;

@@ -1,8 +1,9 @@
-import styled from "@emotion/styled";
-import React, { FC, useMemo } from "react";
 import { Column, useTable } from "react-table";
-import ReactTable from "react-table";
+import React, { FC, useMemo } from "react";
+
 import { IGetHospitalInfo } from "@/service/apis";
+import ReactTable from "react-table";
+import styled from "@emotion/styled";
 
 interface IPriceProps {
   hospitalData?: IGetHospitalInfo;

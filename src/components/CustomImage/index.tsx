@@ -1,6 +1,7 @@
-import styled from "@emotion/styled";
 import React, { FC } from "react";
+
 import Image from "next/image";
+import styled from "@emotion/styled";
 
 interface ICustomImageProps {
   src: string;

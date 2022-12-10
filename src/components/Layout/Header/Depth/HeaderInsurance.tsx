@@ -1,12 +1,12 @@
+import CloseIcon from "@/public/assets/close-bold.png";
+import HyundaiLogo from "@/public/assets/logo-hyundai.png";
 import Icon from "@/util/Icon";
-import styled from "@emotion/styled";
-import { useRouter } from "next/router";
+import Image from "next/image";
+import Logo from "@/public/assets/logo-horizontal.png";
 import React from "react";
 import Wrapper from "./Wrapper";
-import Logo from "@/public/assets/logo-horizontal.png";
-import HyundaiLogo from "@/public/assets/logo-hyundai.png";
-import CloseIcon from "@/public/assets/close-bold.png";
-import Image from "next/image";
+import styled from "@emotion/styled";
+import { useRouter } from "next/router";
 
 const HeaderInsurance = () => {
   const router = useRouter();

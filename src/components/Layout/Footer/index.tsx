@@ -1,7 +1,8 @@
-import { useTheme } from "@emotion/react";
 import React, { FC } from "react";
-import { Menu } from "../menu";
+
 import FooterItem from "./FooterItem";
+import { Menu } from "../menu";
+import { useTheme } from "@emotion/react";
 
 interface IFooterProps {
   menus: Menu[];

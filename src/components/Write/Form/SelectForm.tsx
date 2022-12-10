@@ -1,4 +1,3 @@
-import { do_si } from "@/components/Register/location";
 import { CSSObject, useTheme } from "@emotion/react";
 import React, { useId } from "react";
 import Select, {
@@ -6,9 +5,11 @@ import Select, {
   ValueContainerProps,
   components,
 } from "react-select";
+
 import ArrowRight from "@/public/assets/arrow-right.png";
-import Image from "next/image";
 import Icon from "@/util/Icon";
+import Image from "next/image";
+import { do_si } from "@/components/Register/location";
 
 const SelectForm = () => {
   const theme = useTheme();

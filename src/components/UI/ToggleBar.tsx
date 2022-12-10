@@ -1,7 +1,8 @@
-import Image from "next/image";
 import React, { FC, useState } from "react";
-import Toggle_on from "@/public/assets/toggle_on.png";
+
+import Image from "next/image";
 import Toggle_off from "@/public/assets/toggle_off.png";
+import Toggle_on from "@/public/assets/toggle_on.png";
 
 interface IToggleProps {
   isActive: boolean;

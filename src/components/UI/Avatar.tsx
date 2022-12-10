@@ -1,6 +1,7 @@
-import styled from "@emotion/styled";
-import Image from "next/image";
 import React, { FC } from "react";
+
+import Image from "next/image";
+import styled from "@emotion/styled";
 
 interface IAvatarProps {
   src: string;

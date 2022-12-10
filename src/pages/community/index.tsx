@@ -1,15 +1,16 @@
-import Button from "@/components/Button";
-import PostCard from "@/components/Card/PostCard";
-import PostBottom from "@/components/Card/PostCard/PostBottom";
-import Layout from "@/components/Layout";
-import Header from "@/components/Layout/Header";
-import Float from "@/components/UI/Float";
-import useDirection from "@/hooks/useDirection";
-import { posts } from "@/mock/posts";
-import { useTheme } from "@emotion/react";
-import styled from "@emotion/styled";
-import Link from "next/link";
 import React, { useState } from "react";
+
+import Button from "@/components/Button";
+import Float from "@/components/UI/Float";
+import Header from "@/components/Layout/Header";
+import Layout from "@/components/Layout";
+import Link from "next/link";
+import PostBottom from "@/components/Card/PostCard/PostBottom";
+import PostCard from "@/components/Card/PostCard";
+import { posts } from "@/mock/posts";
+import styled from "@emotion/styled";
+import useDirection from "@/hooks/useDirection";
+import { useTheme } from "@emotion/react";
 
 const Tablist = ["전체보기", "치료후기만 보기", "질문/상담만 보기"];
 

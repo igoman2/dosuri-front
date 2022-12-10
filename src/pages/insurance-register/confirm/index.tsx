@@ -1,10 +1,10 @@
 import Button from "@/components/Button";
-import Layout from "@/components/Layout";
 import HeaderInsurance from "@/components/Layout/Header/Depth/HeaderInsurance";
-import styled from "@emotion/styled";
-import React from "react";
-import { useTheme } from "@emotion/react";
+import Layout from "@/components/Layout";
 import Link from "next/link";
+import React from "react";
+import styled from "@emotion/styled";
+import { useTheme } from "@emotion/react";
 
 const Confirm = () => {
   const theme = useTheme();

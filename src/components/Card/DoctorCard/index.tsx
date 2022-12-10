@@ -1,8 +1,9 @@
-import { Doctor } from "@/mock/doctors";
-import theme from "@/styles/theme";
-import styled from "@emotion/styled";
-import Image from "next/image";
 import React, { FC } from "react";
+
+import { Doctor } from "@/mock/doctors";
+import Image from "next/image";
+import styled from "@emotion/styled";
+import theme from "@/styles/theme";
 
 export interface IDoctorCardProps {
   doctor: Doctor;

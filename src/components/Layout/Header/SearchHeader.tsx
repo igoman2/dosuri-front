@@ -1,8 +1,9 @@
-import SearchBar from "@/components/SearchBar";
+import React, { ChangeEvent, FC } from "react";
+
 import Icon from "@/util/Icon";
+import SearchBar from "@/components/SearchBar";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
-import React, { ChangeEvent, FC } from "react";
 
 interface ISearchHeaderProps {
   inputText?: string;

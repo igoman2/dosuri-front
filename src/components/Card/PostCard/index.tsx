@@ -1,8 +1,9 @@
-import DoSwiper from "@/components/DoSwiper";
+import React, { FC, ReactElement, useEffect, useRef, useState } from "react";
+
 import Divider from "@/components/UI/Divider";
+import DoSwiper from "@/components/DoSwiper";
 import { Post } from "@/mock/posts";
 import styled from "@emotion/styled";
-import React, { FC, ReactElement, useEffect, useRef, useState } from "react";
 
 interface IPostCardProps {
   post: Post;

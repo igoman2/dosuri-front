@@ -1,10 +1,11 @@
-import { useRouter } from "next/router";
 import React, { FC, ReactElement, useEffect } from "react";
+
 import Footer from "./Footer";
-import { useSetRecoilState } from "recoil";
+import ModalBase from "../Modal/ModalBase";
 import { menuState } from "./store";
 import { menus } from "./menu";
-import ModalBase from "../Modal/ModalBase";
+import { useRouter } from "next/router";
+import { useSetRecoilState } from "recoil";
 
 interface ILayoutProps {
   header?: ReactElement;

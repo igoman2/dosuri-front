@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import styled from "@emotion/styled";
-import { css } from "@emotion/react";
+
 import ModalContent from "./ModalContent";
-import { useRecoilState } from "recoil";
+import { css } from "@emotion/react";
 import { modalState } from "./store";
+import styled from "@emotion/styled";
+import { useRecoilState } from "recoil";
 
 const ModalBase = () => {
   const [closed, setClosed] = useState(true);

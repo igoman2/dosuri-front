@@ -1,7 +1,8 @@
+import React, { FC } from "react";
+
+import Button from "../Button";
 import { DIRECTION } from "@/pages/mypage/review";
 import styled from "@emotion/styled";
-import React, { FC } from "react";
-import Button from "../Button";
 
 interface IFloatProps {
   scrollDir: DIRECTION | undefined;

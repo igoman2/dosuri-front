@@ -1,25 +1,26 @@
-import styled from "@emotion/styled";
+import { CSSObject, useTheme } from "@emotion/react";
 import {
+  Field,
+  FieldProps,
+  Form,
   Formik,
   FormikHelpers,
   FormikProps,
-  Form,
-  Field,
-  FieldProps,
 } from "formik";
-import Button from "@/components/Button";
-import { CSSObject, useTheme } from "@emotion/react";
+import { LOCATIONS, Location, do_si, gu_dong } from "./location";
 import Select, {
   DropdownIndicatorProps,
   ValueContainerProps,
   components,
 } from "react-select";
-import { do_si, gu_dong, LOCATIONS, Location } from "./location";
-import { useId, useState } from "react";
-import Chevron from "@/public/assets/Chevron.svg";
-import Image from "next/image";
-import Icon from "@/util/Icon";
 import { Symtom, Symtoms } from "@/mock/symtoms";
+import { useId, useState } from "react";
+
+import Button from "@/components/Button";
+import Chevron from "@/public/assets/Chevron.svg";
+import Icon from "@/util/Icon";
+import Image from "next/image";
+import styled from "@emotion/styled";
 
 interface MyFormValues {
   firstName: string;

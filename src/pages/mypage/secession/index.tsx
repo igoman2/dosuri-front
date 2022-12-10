@@ -1,10 +1,11 @@
-import Button from "@/components/Button";
-import Layout from "@/components/Layout";
-import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
-import Checkbox from "@/components/UI/Checkbox";
-import styled from "@emotion/styled";
 import { Field, Form, Formik } from "formik";
+
+import Button from "@/components/Button";
+import Checkbox from "@/components/UI/Checkbox";
+import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
+import Layout from "@/components/Layout";
 import React from "react";
+import styled from "@emotion/styled";
 
 interface MyFormValues {
   firstName: string;

@@ -1,6 +1,6 @@
+import { GetUserAuth } from "./types";
 import { IHospitalInfoResponse } from "@/mock/hospitals";
 import api from "./axiosConfig";
-import { GetUserAuth } from "./types";
 
 // export const apis = {
 //   getPosts: () => api.get("/api/posts"),

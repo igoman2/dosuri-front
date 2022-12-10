@@ -1,7 +1,7 @@
-import { useTheme } from "@emotion/react";
-import styled from "@emotion/styled";
-import React from "react";
 import BeatLoader from "react-spinners/BeatLoader";
+import React from "react";
+import styled from "@emotion/styled";
+import { useTheme } from "@emotion/react";
 
 const Spinner = () => {
   const theme = useTheme();

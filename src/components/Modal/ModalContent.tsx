@@ -1,9 +1,10 @@
-import React from "react";
-import Button from "@/components/Button";
 import { css, useTheme } from "@emotion/react";
-import { useRecoilState } from "recoil";
-import styled from "@emotion/styled";
 import { modalContentState, modalState } from "./store";
+
+import Button from "@/components/Button";
+import React from "react";
+import styled from "@emotion/styled";
+import { useRecoilState } from "recoil";
 
 const ModalContent = () => {
   const theme = useTheme();

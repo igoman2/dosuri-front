@@ -1,9 +1,9 @@
-import Image from "next/image";
-import React from "react";
 import Button from "../Button";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 import kakaoIcon from "@/public/assets/kakao.png";
 import { useTheme } from "@emotion/react";
-import Link from "next/link";
 
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&response_type=code`;
 

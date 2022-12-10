@@ -1,8 +1,9 @@
 import React, { FC, ReactNode, useEffect, useState } from "react";
-import styled from "@emotion/styled";
+
+import Icon from "@/util/Icon";
 import { ModalBaseContainer } from "./ModalBase";
 import WritePostContent from "../Write/Question";
-import Icon from "@/util/Icon";
+import styled from "@emotion/styled";
 
 interface IFullModalBase {
   isActive: boolean;

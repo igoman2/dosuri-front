@@ -1,5 +1,5 @@
+import { Field, Form, Formik } from "formik";
 import React, { FC } from "react";
-import { Formik, Form, Field } from "formik";
 
 interface MyFormValues {
   firstName: string;

@@ -1,8 +1,8 @@
-import Layout from "@/components/Layout";
 import Header from "@/components/Layout/Header";
-import styled from "@emotion/styled";
+import Layout from "@/components/Layout";
 import React from "react";
 import RegisterForm from "@/components/Register";
+import styled from "@emotion/styled";
 
 const Register = () => {
   return (

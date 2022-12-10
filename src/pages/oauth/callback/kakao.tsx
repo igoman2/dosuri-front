@@ -1,10 +1,12 @@
-import Spinner from "@/components/UI/Spinner";
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import { GetServerSideProps } from "next";
-import axios from "axios";
 import * as Sentry from "@sentry/nextjs";
+
+import React, { useEffect } from "react";
+
+import { GetServerSideProps } from "next";
+import Spinner from "@/components/UI/Spinner";
 import { apis } from "@/service/apis";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 interface IKakaoProps {
   accessToken: string;

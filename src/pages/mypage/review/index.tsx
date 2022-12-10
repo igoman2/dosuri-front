@@ -1,12 +1,13 @@
-import PostCard from "@/components/Card/PostCard";
-import Layout from "@/components/Layout";
-import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
-import styled from "@emotion/styled";
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import { Post, posts } from "@/mock/posts";
-import Icon from "@/util/Icon";
+import React, { useEffect, useState } from "react";
+
 import Float from "@/components/UI/Float";
+import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
+import Icon from "@/util/Icon";
+import Layout from "@/components/Layout";
+import Link from "next/link";
+import PostCard from "@/components/Card/PostCard";
+import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
 
 export const DIRECTION = {

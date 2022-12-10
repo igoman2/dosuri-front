@@ -1,7 +1,8 @@
-import { Post } from "@/mock/posts";
-import Icon from "@/util/Icon";
-import styled from "@emotion/styled";
 import React, { FC } from "react";
+
+import Icon from "@/util/Icon";
+import { Post } from "@/mock/posts";
+import styled from "@emotion/styled";
 
 interface IPostBottomProps {
   post: Post;

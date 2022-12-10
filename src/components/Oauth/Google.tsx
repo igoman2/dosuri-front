@@ -5,16 +5,17 @@ export const ClientID =
 
 export const ClientPassword = "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";
 
-import { useTheme } from "@emotion/react";
-import Image from "next/image";
-import React from "react";
-import Button from "../Button";
-import googleIcon from "@/public/assets/google.png";
 import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
   useGoogleLogin,
 } from "react-google-login";
+
+import Button from "../Button";
+import Image from "next/image";
+import React from "react";
+import googleIcon from "@/public/assets/google.png";
+import { useTheme } from "@emotion/react";
 
 const Google = () => {
   const theme = useTheme();

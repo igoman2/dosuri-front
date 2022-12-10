@@ -1,9 +1,10 @@
-import Icon from "@/util/Icon";
-import { useTheme } from "@emotion/react";
-import Link from "next/link";
 import React, { FC } from "react";
-import { useRecoilValue } from "recoil";
+
+import Icon from "@/util/Icon";
+import Link from "next/link";
 import { menuState } from "../store";
+import { useRecoilValue } from "recoil";
+import { useTheme } from "@emotion/react";
 
 interface IFooterItemProps {
   iconName: string;

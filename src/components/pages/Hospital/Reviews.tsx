@@ -1,10 +1,11 @@
-import PostCard from "@/components/Card/PostCard";
-import PostBottom from "@/components/UI/emotion/PostBottom";
 import { Post, posts } from "@/mock/posts";
+import React, { FC } from "react";
+
 import { IGetHospitalInfo } from "@/service/apis";
 import Icon from "@/util/Icon";
+import PostBottom from "@/components/UI/emotion/PostBottom";
+import PostCard from "@/components/Card/PostCard";
 import styled from "@emotion/styled";
-import React, { FC } from "react";
 
 interface IReviewsProps {
   hospitalData?: IGetHospitalInfo;

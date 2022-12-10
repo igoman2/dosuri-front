@@ -1,8 +1,9 @@
-import { useTheme } from "@emotion/react";
+import { Column, useTable } from "react-table";
+
+import ReactTable from "react-table";
 import styled from "@emotion/styled";
 import { useMemo } from "react";
-import { Column, useTable } from "react-table";
-import ReactTable from "react-table";
+import { useTheme } from "@emotion/react";
 
 const TimeTable = () => {
   const data = useMemo(

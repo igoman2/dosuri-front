@@ -1,28 +1,29 @@
-import PostCard from "@/components/Card/PostCard";
-import PostBottom from "@/components/Card/PostCard/PostBottom";
-import Layout from "@/components/Layout";
-import Tab from "@/components/Tab";
-import { posts } from "@/mock/posts";
-import { TabItem, TabList } from "@/mock/tabList";
-import styled from "@emotion/styled";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
-import HospitalCard from "@/components/Card/HospitalCard";
 import {
   HospitalInfo,
-  hospitalList,
   IHospitalInfo,
   IHospitalInfoResponse,
+  hospitalList,
 } from "@/mock/hospitals";
-import Button from "@/components/Button";
-import { useTheme } from "@emotion/react";
-import Image from "next/image";
+import { TabItem, TabList } from "@/mock/tabList";
+
 import ArrowRight from "@/public/assets/arrow-right-bold.png";
-import SearchHeader from "@/components/Layout/Header/SearchHeader";
-import { getHospitalList } from "@/service/apis";
 import { AxiosError } from "axios";
+import Button from "@/components/Button";
+import HospitalCard from "@/components/Card/HospitalCard";
+import Image from "next/image";
+import Layout from "@/components/Layout";
+import Link from "next/link";
+import PostBottom from "@/components/Card/PostCard/PostBottom";
+import PostCard from "@/components/Card/PostCard";
+import SearchHeader from "@/components/Layout/Header/SearchHeader";
+import Tab from "@/components/Tab";
+import { getHospitalList } from "@/service/apis";
+import { posts } from "@/mock/posts";
+import styled from "@emotion/styled";
 import { useQuery } from "react-query";
+import { useRouter } from "next/router";
+import { useTheme } from "@emotion/react";
 
 const SearchResult = () => {
   const [inputText, setInputText] = useState("");

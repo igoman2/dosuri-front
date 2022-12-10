@@ -1,8 +1,10 @@
-import React, { FC } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Scrollbar, A11y } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
+
+import { A11y, Scrollbar } from "swiper";
+import React, { FC } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+
 import Image from "next/image";
 
 interface DoSwiperProps {

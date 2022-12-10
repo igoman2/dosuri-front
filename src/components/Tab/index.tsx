@@ -1,6 +1,7 @@
+import React, { FC } from "react";
+
 import { TabItem } from "@/mock/tabList";
 import styled from "@emotion/styled";
-import React, { FC } from "react";
 
 interface ITabProps {
   tabList: TabItem[];

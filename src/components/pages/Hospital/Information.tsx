@@ -1,10 +1,11 @@
-import Button from "@/components/Button";
-import TimeTable from "@/components/TimeTable";
-import { useTheme } from "@emotion/react";
-import styled from "@emotion/styled";
-import Link from "next/link";
 import React, { FC } from "react";
+
+import Button from "@/components/Button";
 import { IGetHospitalInfo } from "@/service/apis";
+import Link from "next/link";
+import TimeTable from "@/components/TimeTable";
+import styled from "@emotion/styled";
+import { useTheme } from "@emotion/react";
 
 interface IInformationProps {
   hospitalData?: IGetHospitalInfo;

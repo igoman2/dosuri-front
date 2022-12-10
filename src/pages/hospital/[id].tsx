@@ -1,23 +1,24 @@
+import React, { FC, useEffect, useState } from "react";
+
+import { AppContext } from "next/app";
 import Button from "@/components/Button";
 import CustomImage from "@/components/CustomImage";
-import Layout from "@/components/Layout";
-import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Doctors from "@/components/pages/Hospital/Doctors";
+import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
+import Icon from "@/util/Icon";
+import ImageTextView from "@/components/UI/ImageTextView";
 import Information from "@/components/pages/Hospital/Information";
+import Layout from "@/components/Layout";
+import Link from "next/link";
+import { NextPageContext } from "next";
 import Price from "@/components/pages/Hospital/Price";
 import Reviews from "@/components/pages/Hospital/Reviews";
 import Tab from "@/components/Tab";
-import ImageTextView from "@/components/UI/ImageTextView";
 import { getHospitalInfo } from "@/service/apis";
-import theme from "@/styles/theme";
-import Icon from "@/util/Icon";
 import styled from "@emotion/styled";
-import { NextPageContext } from "next";
-import { AppContext } from "next/app";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React, { FC, useEffect, useState } from "react";
+import theme from "@/styles/theme";
 import { useQuery } from "react-query";
+import { useRouter } from "next/router";
 
 interface TabItem {
   title: string;

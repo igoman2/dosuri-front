@@ -1,20 +1,22 @@
-import HospitalCard from "@/components/Card/HospitalCard";
-import Layout from "@/components/Layout";
-import Header from "@/components/Layout/Header";
-import { useTheme } from "@emotion/react";
-import React, { useEffect, useState } from "react";
-import styled from "@emotion/styled";
-import ImageTextView from "@/components/UI/ImageTextView";
-import Image from "next/image";
-import ChevronDowm from "@/public/assets/chevron-down.png";
-import { BottomSheet } from "react-spring-bottom-sheet";
 import "react-spring-bottom-sheet/dist/style.css";
-import Divider from "@/components/UI/Divider";
-import { ListItem, SELECT_LIST } from "@/mock/searchCategory";
+
 import { IHospitalInfo, IHospitalInfoResponse } from "@/mock/hospitals";
-import { useQuery } from "react-query";
-import { getHospitalList } from "@/service/apis";
+import { ListItem, SELECT_LIST } from "@/mock/searchCategory";
+import React, { useEffect, useState } from "react";
+
+import { BottomSheet } from "react-spring-bottom-sheet";
+import ChevronDowm from "@/public/assets/chevron-down.png";
+import Divider from "@/components/UI/Divider";
+import Header from "@/components/Layout/Header";
+import HospitalCard from "@/components/Card/HospitalCard";
+import Image from "next/image";
+import ImageTextView from "@/components/UI/ImageTextView";
+import Layout from "@/components/Layout";
 import Link from "next/link";
+import { getHospitalList } from "@/service/apis";
+import styled from "@emotion/styled";
+import { useQuery } from "react-query";
+import { useTheme } from "@emotion/react";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
@@ -26,24 +28,21 @@ const Home = () => {
   const [hospitals, setHospitals] =
     useState<IHospitalInfoResponse | null>(null);
 
-  const {
-    isLoading: getHispitalListIsLoading,
-    data: getHispitalListData,
-    refetch,
-  } = useQuery({
-    queryKey: ["getHospitalList-search", category],
-    queryFn: async () => {
-      const data = await getHospitalList({ ordering: category.key });
-      return data;
-    },
-    retry: 0,
-    onSuccess: (res) => {
-      setHospitals(res);
-    },
-    onError: (err: any) => {
-      setHospitals(err.response.data);
-    },
-  });
+  const { isLoading: getHispitalListIsLoading, data: getHispitalListData } =
+    useQuery({
+      queryKey: ["getHospitalList-search", category],
+      queryFn: async () => {
+        const data = await getHospitalList({ ordering: category.key });
+        return data;
+      },
+      retry: 0,
+      onSuccess: (res) => {
+        setHospitals(res);
+      },
+      onError: (err: any) => {
+        setHospitals(err.response.data);
+      },
+    });
 
   const onListClick = (item: ListItem) => {
     setCategory(item);

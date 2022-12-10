@@ -1,12 +1,12 @@
-import Layout from "@/components/Layout";
-import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
-import React from "react";
-import PostCard from "@/components/Card/PostCard";
 import Comment from "@/components/Comment";
-import { comment } from "@/mock/comment";
-import styled from "@emotion/styled";
+import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Icon from "@/util/Icon";
+import Layout from "@/components/Layout";
+import PostCard from "@/components/Card/PostCard";
+import React from "react";
+import { comment } from "@/mock/comment";
 import { posts } from "@/mock/posts";
+import styled from "@emotion/styled";
 
 const Post = () => {
   const renderPostBottom = () => {

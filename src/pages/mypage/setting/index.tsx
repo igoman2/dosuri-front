@@ -1,15 +1,15 @@
-import Layout from "@/components/Layout";
-import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
+import ArrowRight from "@/public/assets/arrow-right.png";
 import Divider from "@/components/UI/Divider";
+import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
+import Image from "next/image";
+import Layout from "@/components/Layout";
+import Link from "next/link";
+import ListTab from "@/components/UI/ListTab";
+import React from "react";
 import ToggleBar from "@/components/UI/ToggleBar";
+import { logout } from "@/pages/withauth";
 import { settings } from "@/mock/setting";
 import styled from "@emotion/styled";
-import Image from "next/image";
-import ArrowRight from "@/public/assets/arrow-right.png";
-import React from "react";
-import ListTab from "@/components/UI/ListTab";
-import Link from "next/link";
-import { logout } from "@/pages/withauth";
 
 const Setting = () => {
   return (

@@ -1,9 +1,9 @@
-import Layout from "@/components/Layout";
-import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Divider from "@/components/UI/Divider";
+import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
+import Layout from "@/components/Layout";
+import React from "react";
 import { pointHistory } from "@/mock/pointHistory";
 import styled from "@emotion/styled";
-import React from "react";
 
 const Point = () => {
   return (

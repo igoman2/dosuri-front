@@ -1,16 +1,17 @@
-import Layout from "@/components/Layout";
-import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
-import React from "react";
 import { Post, posts } from "@/mock/posts";
-import PostCard from "@/components/Card/PostCard";
-import Comment from "@/components/Comment";
-import { comment } from "@/mock/comment";
-import Button from "@/components/Button";
-import { useTheme } from "@emotion/react";
-import { useRecoilState } from "recoil";
-import styled from "@emotion/styled";
-import Icon from "@/util/Icon";
 import { modalContentState, modalState } from "@/components/Modal/store";
+
+import Button from "@/components/Button";
+import Comment from "@/components/Comment";
+import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
+import Icon from "@/util/Icon";
+import Layout from "@/components/Layout";
+import PostCard from "@/components/Card/PostCard";
+import React from "react";
+import { comment } from "@/mock/comment";
+import styled from "@emotion/styled";
+import { useRecoilState } from "recoil";
+import { useTheme } from "@emotion/react";
 
 const ReviewDetail = () => {
   const theme = useTheme();

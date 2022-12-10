@@ -1,7 +1,8 @@
+import React, { FC } from "react";
+
+import Description from "../Description";
 import { IHospitalInfo } from "@/mock/hospitals";
 import Image from "next/image";
-import React, { FC } from "react";
-import Description from "../Description";
 import SampleImage from "@/public/assets/sample.png";
 
 export interface IHospitalCardProps {

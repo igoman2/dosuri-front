@@ -1,7 +1,8 @@
-import Image from "next/image";
 import React, { ChangeEvent, FC, FormEvent, useEffect, useRef } from "react";
-import magnifier_grey from "@/public/assets/magnifier_grey.png";
 import { css, useTheme } from "@emotion/react";
+
+import Image from "next/image";
+import magnifier_grey from "@/public/assets/magnifier_grey.png";
 import { useRouter } from "next/router";
 
 interface ISearchBarProps {

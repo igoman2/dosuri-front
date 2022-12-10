@@ -1,7 +1,8 @@
+import React, { FC } from "react";
+
 import { IHospitalInfo } from "@/mock/hospitals";
 import Icon from "@/util/Icon";
 import { useTheme } from "@emotion/react";
-import React, { FC } from "react";
 
 export interface IDescriptionProps {
   hospitalInfo: IHospitalInfo;

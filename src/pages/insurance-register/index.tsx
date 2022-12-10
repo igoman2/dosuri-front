@@ -1,14 +1,14 @@
+import ArrowBottomIcon from "@/public/assets/bordered-arrow-bottom.png";
 import Button from "@/components/Button";
-import Layout from "@/components/Layout";
 import HeaderInsurance from "@/components/Layout/Header/Depth/HeaderInsurance";
-import styled from "@emotion/styled";
+import Image from "next/image";
+import Layout from "@/components/Layout";
+import Link from "next/link";
 import React from "react";
 import WithInsuranceImage from "@/public/assets/with-insurance.png";
 import WithoutInsuranceImage from "@/public/assets/without-insurance.png";
-import ArrowBottomIcon from "@/public/assets/bordered-arrow-bottom.png";
-import Image from "next/image";
+import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
-import Link from "next/link";
 
 const InsuranceRegister = () => {
   const theme = useTheme();

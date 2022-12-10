@@ -1,7 +1,8 @@
+import { FC, ReactElement } from "react";
+
+import Divider from "./Divider";
 import { Theme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { FC, ReactElement } from "react";
-import Divider from "./Divider";
 
 interface IListTabProps {
   text: string;

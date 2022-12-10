@@ -1,24 +1,25 @@
 import HospitalCard, {
   IHospitalCardProps,
 } from "@/components/Card/HospitalCard";
-import Layout from "@/components/Layout";
-import Header from "@/components/Layout/Header";
-import { useTheme } from "@emotion/react";
-import React, { useEffect, useState } from "react";
-import Icon from "@/util/Icon";
-import { Post, posts } from "@/mock/posts";
-import PostCard from "@/components/Card/PostCard";
-import styled from "@emotion/styled";
 import {
   HospitalInfo,
-  hospitalList,
   IHospitalInfo,
   IHospitalInfoResponse,
+  hospitalList,
 } from "@/mock/hospitals";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { Post, posts } from "@/mock/posts";
+import React, { useEffect, useState } from "react";
 import { apis, getHospitalList } from "@/service/apis";
-import Link from "next/link";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+
 import { AxiosError } from "axios";
+import Header from "@/components/Layout/Header";
+import Icon from "@/util/Icon";
+import Layout from "@/components/Layout";
+import Link from "next/link";
+import PostCard from "@/components/Card/PostCard";
+import styled from "@emotion/styled";
+import { useTheme } from "@emotion/react";
 
 const Home = () => {
   const theme = useTheme();

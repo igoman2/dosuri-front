@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+
 import DeleteIcon from "@/public/assets/close.png";
 import Image from "next/image";
 import styled from "@emotion/styled";

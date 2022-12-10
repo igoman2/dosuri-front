@@ -1,11 +1,12 @@
-import { global } from "@/styles/global";
-import theme from "@/styles/theme";
 import { Global, ThemeProvider } from "@emotion/react";
+import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
+import { Suspense, useState } from "react";
+
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { Suspense, useState } from "react";
-import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { RecoilRoot } from "recoil";
+import { global } from "@/styles/global";
+import theme from "@/styles/theme";
 import withAuth from "./withauth";
 
 function Progress() {

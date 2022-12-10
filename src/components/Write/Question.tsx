@@ -1,12 +1,13 @@
-import theme from "@/styles/theme";
-import styled from "@emotion/styled";
-import Image from "next/image";
 import React, { FC, useRef } from "react";
+
 import Button from "../Button";
 import Content from "./Form/Content";
+import FullModalBase from "../Modal/FullModalBase";
+import Image from "next/image";
 import InputForm from "./Form/InputForm";
 import UploadFileImage from "@/public/assets/upload-file.png";
-import FullModalBase from "../Modal/FullModalBase";
+import styled from "@emotion/styled";
+import theme from "@/styles/theme";
 
 interface IWriteQeustionProps {
   isActive: boolean;

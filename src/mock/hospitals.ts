@@ -1,6 +1,6 @@
+import { ReactNode } from "react";
 import SampleImage from "@/public/assets/sample.png";
 import { StaticImageData } from "next/image";
-import { ReactNode } from "react";
 
 export const hospitalList: HospitalInfo[] = [
   {

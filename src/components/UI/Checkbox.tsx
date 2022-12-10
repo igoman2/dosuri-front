@@ -1,6 +1,7 @@
+import React, { FC, useState } from "react";
+
 import Icon from "@/util/Icon";
 import styled from "@emotion/styled";
-import React, { FC, useState } from "react";
 
 interface ICheckboxProps {
   text: string;

@@ -1,5 +1,6 @@
-import styled from "@emotion/styled";
 import React, { FC, ReactElement } from "react";
+
+import styled from "@emotion/styled";
 
 interface ICommentBoxProps {
   nickname: string;

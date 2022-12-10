@@ -1,10 +1,11 @@
-import Image from "next/image";
-import React from "react";
-import Logo from "@/public/assets/logo2.png";
 import { css, useTheme } from "@emotion/react";
+
 import AppleLogin from "@/util/apple";
-import Kakao from "@/components/Oauth/Kakao";
 import Google from "@/components/Oauth/Google";
+import Image from "next/image";
+import Kakao from "@/components/Oauth/Kakao";
+import Logo from "@/public/assets/logo2.png";
+import React from "react";
 
 const Login = () => {
   const theme = useTheme();
