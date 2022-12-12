@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCookie } from "cookies-next";
+import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -69,6 +69,9 @@ api.interceptors.response.use(
 
       axios.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
       originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
+      deleteCookie("accessToken");
+      setCookie("accessToken", newAccessToken);
 
       // 401로 요청 실패했던 요청 새로운 accessToken으로 재요청
       return axios(originalRequest);
