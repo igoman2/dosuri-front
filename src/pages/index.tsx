@@ -19,10 +19,14 @@ import Layout from "@/components/Layout";
 import Link from "next/link";
 import PostCard from "@/components/Card/PostCard";
 import styled from "@emotion/styled";
+import useGeolocation from "@/hooks/useGeolocation";
 import { useTheme } from "@emotion/react";
 
 const Home = () => {
   const theme = useTheme();
+  const location = useGeolocation();
+  console.log(location);
+
   const [hospitals, setHospitals] =
     useState<IHospitalInfoResponse | null>(null);
 
