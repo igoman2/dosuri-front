@@ -18,14 +18,22 @@ import Icon from "@/util/Icon";
 import Layout from "@/components/Layout";
 import Link from "next/link";
 import PostCard from "@/components/Card/PostCard";
+import { locationState } from "@/store/location";
 import styled from "@emotion/styled";
 import useGeolocation from "@/hooks/useGeolocation";
+import { useSetRecoilState } from "recoil";
 import { useTheme } from "@emotion/react";
 
 const Home = () => {
   const theme = useTheme();
   const location = useGeolocation();
-  console.log(location);
+  const setLocaton = useSetRecoilState(locationState);
+  useEffect(() => {
+    setLocaton({
+      lat: location.coordinates?.lat ?? 0,
+      lng: location.coordinates?.lng ?? 0,
+    });
+  }, [location]);
 
   const [hospitals, setHospitals] =
     useState<IHospitalInfoResponse | null>(null);
