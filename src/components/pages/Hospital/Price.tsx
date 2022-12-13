@@ -1,4 +1,9 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Column, useTable } from "react-table";
+<<<<<<< HEAD
+=======
+import { IGetHospitalInfo } from "@/service/apis";
+>>>>>>> 5865ce9 (feat: 병원 상세 가격정보 api)
 import React, { FC, useMemo } from "react";
 
 import { IGetHospitalInfo } from "@/service/apis";
@@ -6,6 +11,7 @@ import ReactTable from "react-table";
 import styled from "@emotion/styled";
 
 interface IPriceProps {
+<<<<<<< HEAD
   hospitalData?: IGetHospitalInfo;
 }
 
@@ -51,6 +57,29 @@ const Price: FC<IPriceProps> = ({ hospitalData }) => {
   //   ],
   //   []
   // );
+=======
+  hospitalData: IGetHospitalInfo;
+  hospitalTreatmentsData: [
+    {
+      uuid: string;
+      name: string;
+      hospital: string;
+      price: number | string;
+      price_per_hour: number;
+      description: string;
+      created_at: string;
+    }
+  ];
+}
+
+const Price: FC<IPriceProps> = ({ hospitalData, hospitalTreatmentsData }) => {
+  const data = useMemo(() => {
+    return hospitalTreatmentsData.map((data) => {
+      return { ...data, price: data.price.toLocaleString() };
+    });
+  }, [hospitalTreatmentsData]);
+
+>>>>>>> 5865ce9 (feat: 병원 상세 가격정보 api)
   const columns: ReadonlyArray<Column> = useMemo(
     () => [
       {
@@ -202,7 +231,7 @@ const PriceWrapper = styled.div`
           width: calc(100% / 3);
           text-align: start;
 
-          &:nth-child(1) {
+          &:nth-of-type(1) {
             width: 30%;
           }
         }

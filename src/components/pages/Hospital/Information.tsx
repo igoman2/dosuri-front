@@ -6,6 +6,7 @@ import Link from "next/link";
 import TimeTable from "@/components/TimeTable";
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
+import { formatPhoneNumber } from "@/util/format";
 
 interface IInformationProps {
   hospitalData?: IGetHospitalInfo;
@@ -73,11 +74,13 @@ const Information: FC<IInformationProps> = ({ hospitalData }) => {
           </div>
           <div className="list">
             <div className="list-title">주소</div>
-            <div>서울특별시 강남구 도산대로1길 4</div>
+            <div>{hospitalData.address}</div>
           </div>
           <div className="list">
             <div className="list-title">전화번호</div>
-            <div className="phone-number">02-585-2231</div>
+            <div className="phone-number">
+              {formatPhoneNumber(hospitalData.phone_no)}
+            </div>
           </div>
         </Content>
       </div>

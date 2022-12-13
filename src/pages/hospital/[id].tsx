@@ -120,7 +120,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
     return <div>Loading</div>;
   }
 
-  if (!data) {
+  if (!data || !hospitalTreatmentsData) {
     return <div>bug</div>;
   }
 
@@ -165,6 +165,14 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
           )}
           {currentTab.value === "price" && (
             <Price hospitalData={hospitalData} />
+          )}
+          {currentTab.value === "doctors" && <Doctors hospitalData={data} />}
+          {currentTab.value === "reviews" && <Reviews hospitalData={data} />}
+          {currentTab.value === "price" && (
+            <Price
+              hospitalData={data}
+              hospitalTreatmentsData={hospitalTreatmentsData}
+            />
           )}
 
           <SaleButtonWrapper>
