@@ -39,26 +39,32 @@ const Home = () => {
     );
   };
 
-  const { isLoading: getHispitalListIsLoading, data: getHispitalListData } =
-    useQuery<IHospitalInfoResponse, AxiosError>({
-      queryKey: ["getHospitalList-home"],
-      queryFn: async () => {
-        const data = await getHospitalList();
-        return data;
-      },
-      retry: 0,
-      onSuccess: (res) => {
-        setHospitals(res);
-        console.log(res.results);
-      },
-      onError: (err: any) => {
-        setHospitals(err.response.data);
-      },
-    });
+  // const { isLoading: getHispitalListIsLoading, data: getHispitalListData } =
+  //   useQuery<IHospitalInfoResponse, AxiosError>(
+  //     "getHospitalList-home",
+  //     getHospitalList,
+  //     {
+  //       retry: 0,
+  //       onSuccess: (res) => {
+  //         setHospitals(res);
+  //         console.log(res.results);
+  //       },
+  //       onError: (err: any) => {
+  //         setHospitals(err.response.data);
+  //       },
+  //     }
+  //   );
 
-  // const { mutate } = useMutation(apis.updateToken, {
-  //   onSuccess: () => {
-  //     console.log("@@");
+  // const {
+  //   isLoading: getHospitalKeywordIsLoading,
+  //   data: getHospitalKeywordData,
+  // } = useQuery("all2", apis.getHospitalKeyword, {
+  //   retry: 0,
+  //   onSuccess: (resp) => {
+  //     console.log(resp.data);
+  //   },
+  //   onError: (error) => {
+  //     console.log(error);
   //   },
   // });
 

@@ -33,22 +33,21 @@ const SearchResult = () => {
   const [hospitals, setHospitals] =
     useState<IHospitalInfoResponse | null>(null);
 
-  const { isLoading: getHispitalListIsLoading, data: getHispitalListData } =
-    useQuery<IHospitalInfoResponse, AxiosError>({
-      queryKey: ["getHospitalList-keyword"],
-      queryFn: async () => {
-        const data = await getHospitalList();
-        return data;
-      },
-      retry: 0,
-      onSuccess: (res) => {
-        setHospitals(res);
-        console.log(res.results);
-      },
-      onError: (err: any) => {
-        setHospitals(err.response.data);
-      },
-    });
+  // const { isLoading: getHispitalListIsLoading, data: getHispitalListData } =
+  //   useQuery<IHospitalInfoResponse, AxiosError>(
+  //     "getHospitalList-keyword",
+  //     getHospitalList,
+  //     {
+  //       retry: 0,
+  //       onSuccess: (res) => {
+  //         setHospitals(res);
+  //       },
+  //       onError: (err: any) => {
+  //         setHospitals(err.response.data);
+  //       },
+  //     }
+  //   );
+
   const onTabClickHander = (tab: TabItem) => {
     setCurrentTab(tab);
     router.replace({

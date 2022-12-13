@@ -97,19 +97,14 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
 
   const uuid = data?.uuid;
 
-  const {
-    data: hospitalTreatmentsData,
-    isLoading: hospitalTreatmentsIsLoading,
-  } = useQuery({
+  const { data: hospitalTreatmentsData } = useQuery({
     queryKey: "hospital-treatments",
     queryFn: async () => {
       const resp = await getHospitalTreatments(uuid!);
       return resp.results;
     },
     enabled: !!uuid,
-    onSuccess: (res) => {
-      console.log(res);
-    },
+    onSuccess: (res) => {},
   });
 
   if (error) {
