@@ -1,15 +1,16 @@
 import React, { FC } from "react";
 
 import Button from "@/components/Button";
-import { IGetHospitalInfo } from "@/service/apis";
+import { getHospitalOperationTime, IGetHospitalInfo } from "@/service/apis";
 import Link from "next/link";
 import TimeTable from "@/components/TimeTable";
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
 import { formatPhoneNumber } from "@/util/format";
+import { useQuery } from "react-query";
 
 interface IInformationProps {
-  hospitalData?: IGetHospitalInfo;
+  hospitalData: IGetHospitalInfo;
 }
 
 const Information: FC<IInformationProps> = ({ hospitalData }) => {

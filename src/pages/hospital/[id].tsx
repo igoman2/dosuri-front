@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
 
-import { AppContext } from "next/app";
 import Button from "@/components/Button";
 import CustomImage from "@/components/CustomImage";
 import Doctors from "@/components/pages/Hospital/Doctors";
@@ -14,7 +13,7 @@ import { NextPageContext } from "next";
 import Price from "@/components/pages/Hospital/Price";
 import Reviews from "@/components/pages/Hospital/Reviews";
 import Tab from "@/components/Tab";
-import { getHospitalInfo } from "@/service/apis";
+import { getHospitalInfo, getHospitalTreatments } from "@/service/apis";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";
 import { useQuery } from "react-query";
@@ -56,20 +55,6 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
   const router = useRouter();
   const isRecommended = false;
 
-  const { isLoading: getHispitalListIsLoading, data: hospitalData } = useQuery({
-    queryKey: ["getHospitalInfo"],
-    queryFn: async () => {
-      const data = await getHospitalInfo(id);
-      return data;
-    },
-    staleTime: 3000,
-    retry: 0,
-    onSuccess: (res) => {
-      console.log(res);
-    },
-    onError: (err: any) => {},
-  });
-
   useEffect(() => {
     router.replace({
       pathname: `/hospital/${id}`,
@@ -85,7 +70,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
     });
   };
 
-  const { isLoading, data, error } = useQuery({
+  const { data: hospitalInfoData } = useQuery({
     queryKey: ["getHospitalInfo"],
     queryFn: async () => {
       const data = await getHospitalInfo(id);
@@ -95,7 +80,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
     retry: 0,
   });
 
-  const uuid = data?.uuid;
+  const uuid = hospitalInfoData?.uuid;
 
   const { data: hospitalTreatmentsData } = useQuery({
     queryKey: "hospital-treatments",
@@ -107,15 +92,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
     onSuccess: (res) => {},
   });
 
-  if (error) {
-    return <div>Error</div>;
-  }
-
-  if (isLoading) {
-    return <div>Loading</div>;
-  }
-
-  if (!data || !hospitalTreatmentsData) {
+  if (!hospitalInfoData || !hospitalTreatmentsData) {
     return <div>bug</div>;
   }
 
@@ -129,7 +106,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
         />
         <div className="hospital-content">
           <div className="head">
-            <div className="hospital-name">{hospitalData?.name}</div>
+            <div className="hospital-name">{hospitalInfoData.name}</div>
             <ImageTextView
               text={"추천"}
               color={isRecommended ? theme.colors.green : theme.colors.grey}
@@ -150,22 +127,17 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
             />
           </div>
           {currentTab.value === "information" && (
-            <Information hospitalData={hospitalData} />
+            <Information hospitalData={hospitalInfoData} />
           )}
           {currentTab.value === "doctors" && (
-            <Doctors hospitalData={hospitalData} />
+            <Doctors hospitalData={hospitalInfoData} />
           )}
           {currentTab.value === "reviews" && (
-            <Reviews hospitalData={hospitalData} />
+            <Reviews hospitalData={hospitalInfoData} />
           )}
-          {currentTab.value === "price" && (
-            <Price hospitalData={hospitalData} />
-          )}
-          {currentTab.value === "doctors" && <Doctors hospitalData={data} />}
-          {currentTab.value === "reviews" && <Reviews hospitalData={data} />}
           {currentTab.value === "price" && (
             <Price
-              hospitalData={data}
+              hospitalData={hospitalInfoData}
               hospitalTreatmentsData={hospitalTreatmentsData}
             />
           )}

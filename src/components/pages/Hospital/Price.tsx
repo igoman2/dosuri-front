@@ -1,63 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Column, useTable } from "react-table";
-<<<<<<< HEAD
-=======
 import { IGetHospitalInfo } from "@/service/apis";
->>>>>>> 5865ce9 (feat: 병원 상세 가격정보 api)
 import React, { FC, useMemo } from "react";
 
-import { IGetHospitalInfo } from "@/service/apis";
-import ReactTable from "react-table";
 import styled from "@emotion/styled";
 
 interface IPriceProps {
-<<<<<<< HEAD
-  hospitalData?: IGetHospitalInfo;
-}
-
-const Price: FC<IPriceProps> = ({ hospitalData }) => {
-  const data = useMemo(
-    () => [
-      {
-        type: "도수치료 A (30분당)",
-        note: "물리치료사,요추또는경추,개인보험없을시",
-        price: "1,000,000원",
-      },
-      {
-        type: "도수치료 B (30분당)",
-        note: "원장이 직접 실시",
-        price: "100,000원",
-      },
-      {
-        type: "도수치료 A (30분당)",
-        note: "원장이 직접 실시",
-        price: "250,000원",
-      },
-    ],
-    []
-  );
-
-  // const data = useMemo(
-  //   () => [
-  //     {
-  //       name: "도수치료 A (30분당)",
-  //       description: "물리치료사,요추또는경추,개인보험없을시",
-  //       price: "1,000,000원",
-  //     },
-  //     {
-  //       name: "도수치료 B (30분당)",
-  //       description: "원장이 직접 실시",
-  //       price: "100,000원",
-  //     },
-  //     {
-  //       name: "도수치료 A (30분당)",
-  //       description: "원장이 직접 실시",
-  //       price: "250,000원",
-  //     },
-  //   ],
-  //   []
-  // );
-=======
   hospitalData: IGetHospitalInfo;
   hospitalTreatmentsData: [
     {
@@ -79,7 +27,6 @@ const Price: FC<IPriceProps> = ({ hospitalData, hospitalTreatmentsData }) => {
     });
   }, [hospitalTreatmentsData]);
 
->>>>>>> 5865ce9 (feat: 병원 상세 가격정보 api)
   const columns: ReadonlyArray<Column> = useMemo(
     () => [
       {
@@ -190,7 +137,7 @@ const PriceWrapper = styled.div`
 
       .line {
         position: absolute;
-        border: 0.2rem solid ${(props) => props.theme.colors.purple};
+        border: 0.3rem solid ${(props) => props.theme.colors.purple};
         border-radius: 0.3rem;
         width: 100%;
       }

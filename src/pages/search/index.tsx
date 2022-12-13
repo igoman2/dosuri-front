@@ -1,35 +1,20 @@
-import "react-spring-bottom-sheet/dist/style.css";
-
-import { IHospitalInfo, IHospitalInfoResponse } from "@/mock/hospitals";
-import { ListItem, SELECT_LIST } from "@/mock/searchCategory";
-import React, { useEffect, useState } from "react";
-
-import { BottomSheet } from "react-spring-bottom-sheet";
-import ChevronDowm from "@/public/assets/chevron-down.png";
-import Divider from "@/components/UI/Divider";
-import Header from "@/components/Layout/Header";
-import "react-spring-bottom-sheet/dist/style.css";
-
-import { IHospitalInfo, IHospitalInfoResponse } from "@/mock/hospitals";
-import { ListItem, SELECT_LIST } from "@/mock/searchCategory";
-import React, { useEffect, useState } from "react";
-import { getHospitalImages, getHospitalList } from "@/service/apis";
-
-import { BottomSheet } from "react-spring-bottom-sheet";
-import ChevronDowm from "@/public/assets/chevron-down.png";
-import Divider from "@/components/UI/Divider";
-import Header from "@/components/Layout/Header";
 import HospitalCard from "@/components/Card/HospitalCard";
-import Image from "next/image";
-import ImageTextView from "@/components/UI/ImageTextView";
-import Image from "next/image";
-import ImageTextView from "@/components/UI/ImageTextView";
 import Layout from "@/components/Layout";
-import Link from "next/link";
-import { getHospitalList } from "@/service/apis";
-import styled from "@emotion/styled";
-import { useQuery } from "react-query";
+import Header from "@/components/Layout/Header";
+import Divider from "@/components/UI/Divider";
+import ImageTextView from "@/components/UI/ImageTextView";
+import { IHospitalInfoResponse, IHospitalInfo } from "@/mock/hospitals";
+import { SELECT_LIST, ListItem } from "@/mock/searchCategory";
+import { getHospitalImages, getHospitalList } from "@/service/apis";
 import { useTheme } from "@emotion/react";
+import styled from "@emotion/styled";
+import Link from "next/link";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import { BottomSheet } from "react-spring-bottom-sheet";
+import "react-spring-bottom-sheet/dist/style.css";
+import ChevronDowm from "@/public/assets/chevron-down.png";
+import Image from "next/image";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
