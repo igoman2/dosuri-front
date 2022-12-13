@@ -38,7 +38,7 @@ const HeaderDepth: FC<IHeaderDepthProps> = ({ left }) => {
           width="24"
           height="24"
           stroke="black"
-          stroke-width="2"
+          strokeWidth="2"
         />
       </BackButton>
 

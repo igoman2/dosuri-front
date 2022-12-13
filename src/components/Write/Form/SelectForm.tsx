@@ -71,7 +71,7 @@ const SelectForm = () => {
         width="24"
         height="24"
         stroke={theme.colors.grey}
-        stroke-width="2"
+        strokeWidth="2"
         css={{
           transform: "rotate(180deg)",
         }}

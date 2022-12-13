@@ -491,7 +491,7 @@ const WriteReview: FC<IWriteReviewProps> = ({ isActive, onChangeActive }) => {
                         width="14"
                         height="14"
                         stroke="black"
-                        stroke-width="4"
+                        strokeWidth="4"
                         css={{
                           transform: isWarnVisible
                             ? "rotate(-90deg)"

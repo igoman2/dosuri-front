@@ -21,6 +21,7 @@ import Thumb from "@/public/assets/thumb.svg";
 interface IIconProps {
   name: string;
   stroke?: string;
+  strokeWidth?: string;
   fill?: string;
   width?: string;
   height?: string;
