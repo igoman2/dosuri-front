@@ -6,6 +6,7 @@ import type { AppProps } from "next/app";
 import { ErrorBoundary } from "@sentry/react";
 import Fallback from "./fallback";
 import Head from "next/head";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { RecoilRoot } from "recoil";
 import { global } from "@/styles/global";
 import theme from "@/styles/theme";
@@ -63,6 +64,7 @@ function MyApp({
               </div>
             </ThemeProvider>
           </Hydrate>
+          <ReactQueryDevtools initialIsOpen={true} />
         </QueryClientProvider>
       </RecoilRoot>
     </>
