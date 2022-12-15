@@ -27,6 +27,7 @@ function MyApp({
       new QueryClient({
         defaultOptions: {
           queries: {
+            suspense: true,
             refetchOnWindowFocus: false,
           },
         },
