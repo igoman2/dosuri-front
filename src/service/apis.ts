@@ -1,24 +1,26 @@
-import { GetUserAuth } from "./types";
+import {
+  GetUserAuthParams,
+  GetUserAuthResponse,
+  IGetDoctorList,
+  IGetHospitalInfo,
+  IGetHospitalListParams,
+  IHospitalTreatmentsResponse,
+  IToggleHospitalThumbup,
+} from "./types";
+
 import { IHospitalInfoResponse } from "@/mock/hospitals";
 import api from "./axiosConfig";
 
-export const apis = {
-  getMyInfo: () => api.get("/user/v1/users/me"),
-  getHospitalList: () => api.get("/hospital/v1/hospitals"),
-  getHospitalKeyword: () => api.get("/hospital/v1/keywords"),
-  getUserAuth: ({ token, type }: GetUserAuth) =>
-    api.post("/user/v1/auth", {
-      token,
-      type,
-    }),
+export const getUserAuth = async (params: GetUserAuthParams) => {
+  const response = await api.get<GetUserAuthResponse>("/user/v1/auth", {
+    params: {
+      token: params.token,
+      type: params.type,
+    },
+  });
+  return response.data;
 };
 
-interface IGetHospitalListParams {
-  hospital_address_assoc__address?: string;
-  ordering?: string;
-  page?: number;
-  search?: string;
-}
 export const getHospitalList = async (params?: IGetHospitalListParams) => {
   const response = await api.get<IHospitalInfoResponse>(
     "/hospital/v1/hospitals",
@@ -29,97 +31,12 @@ export const getHospitalList = async (params?: IGetHospitalListParams) => {
   return response.data;
 };
 
-export interface IGetHospitalInfo {
-  uuid: string;
-  address: string;
-  name: string;
-  introduction: string;
-  area: string;
-  phone_no: string;
-  up_count: number;
-  view_count: number;
-  article_count: string;
-  latest_article: string;
-  is_partner: true;
-  opened_at: string;
-  created_at: string;
-  code: string;
-  latitude: number;
-  longitude: number;
-}
-export const getHospitalInfo = async (uuid: number) => {
+export const getHospitalInfo = async (uuid: string) => {
   const response = await api.get<IGetHospitalInfo>(
     `hospital/v1/hospitals/${uuid}`
   );
   return response.data;
 };
-
-interface IGetHospitalImagesParam {
-  uuid: string;
-}
-export const getHospitalImages = async () => {
-  const response = await api.get<IHospitalInfoResponse>(
-    "/hospital/v1/hospitals",
-    {
-      params: {
-        hospital: [
-          "56aa2a71e0df41b3a7abbe2114b043ac",
-          "fab6e7eafddc494b97b14925a4cd7c69",
-        ],
-      },
-    }
-  );
-  return response.data;
-};
-
-export interface IHospitalOperationTimeResponse {
-  count: number;
-  next: string;
-  previous: string;
-  results: [
-    {
-      uuid: string;
-      hospital: string;
-      monday: string;
-      tuesday: string;
-      wednesday: string;
-      thursday: string;
-      friday: string;
-      saturday: string;
-      sunday: string;
-      created_at: string;
-    }
-  ];
-}
-
-export const getHospitalOperationTime = async (uuid: string) => {
-  const response = await api.get<IHospitalOperationTimeResponse>(
-    "/hospital/v1/hospital-calendars",
-    {
-      params: {
-        hospital: uuid,
-      },
-    }
-  );
-  return response.data;
-};
-
-interface IHospitalTreatmentsResponse {
-  count: number;
-  next: string;
-  previous: string;
-  results: [
-    {
-      uuid: string;
-      name: string;
-      hospital: string;
-      price: number;
-      price_per_hour: number;
-      description: string;
-      created_at: string;
-    }
-  ];
-}
 
 export const getHospitalTreatments = async (uuid: string) => {
   const response = await api.get<IHospitalTreatmentsResponse>(
@@ -130,5 +47,23 @@ export const getHospitalTreatments = async (uuid: string) => {
       },
     }
   );
+  return response.data;
+};
+
+export const getDoctorList = async (uuid: string) => {
+  const response = await api.get<IGetDoctorList>("/hospital/v1/doctors", {
+    params: {
+      hospital: uuid,
+    },
+  });
+  return response.data;
+};
+
+export const toggleHospitalThumbup = async (data: { hospital?: string }) => {
+  const response = await api.post<IToggleHospitalThumbup>(
+    "/hospital/v1/hospital-user-assocs",
+    data
+  );
+
   return response.data;
 };

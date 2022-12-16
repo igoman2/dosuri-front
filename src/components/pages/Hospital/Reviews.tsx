@@ -1,7 +1,7 @@
 import { Post, posts } from "@/mock/posts";
 import React, { FC } from "react";
 
-import { IGetHospitalInfo } from "@/service/apis";
+import { IGetHospitalInfo } from "@/service/types";
 import Icon from "@/util/Icon";
 import PostBottom from "@/components/UI/emotion/PostBottom";
 import PostCard from "@/components/Card/PostCard";

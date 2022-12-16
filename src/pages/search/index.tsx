@@ -1,20 +1,22 @@
-import HospitalCard from "@/components/Card/HospitalCard";
-import Layout from "@/components/Layout";
-import Header from "@/components/Layout/Header";
-import Divider from "@/components/UI/Divider";
-import ImageTextView from "@/components/UI/ImageTextView";
-import { IHospitalInfoResponse, IHospitalInfo } from "@/mock/hospitals";
-import { SELECT_LIST, ListItem } from "@/mock/searchCategory";
-import { getHospitalImages, getHospitalList } from "@/service/apis";
-import { useTheme } from "@emotion/react";
-import styled from "@emotion/styled";
-import Link from "next/link";
-import { useState } from "react";
-import { useQuery } from "react-query";
-import { BottomSheet } from "react-spring-bottom-sheet";
 import "react-spring-bottom-sheet/dist/style.css";
+
+import { IHospitalInfo, IHospitalInfoResponse } from "@/mock/hospitals";
+import { ListItem, SELECT_LIST } from "@/mock/searchCategory";
+
+import { BottomSheet } from "react-spring-bottom-sheet";
 import ChevronDowm from "@/public/assets/chevron-down.png";
+import Divider from "@/components/UI/Divider";
+import Header from "@/components/Layout/Header";
+import HospitalCard from "@/components/Card/HospitalCard";
 import Image from "next/image";
+import ImageTextView from "@/components/UI/ImageTextView";
+import Layout from "@/components/Layout";
+import Link from "next/link";
+import { getHospitalList } from "@/service/apis";
+import styled from "@emotion/styled";
+import { useQuery } from "react-query";
+import { useState } from "react";
+import { useTheme } from "@emotion/react";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
@@ -36,21 +38,6 @@ const Home = () => {
     useState<IHospitalInfoResponse | null>(null);
   const [hospitalsImages3, setHospitalsImages13] =
     useState<IHospitalInfoResponse | null>(null);
-
-  const { isLoading: asd, data: qwe } = useQuery({
-    queryKey: ["getHospitalList-image", category],
-    queryFn: async () => {
-      const data = await getHospitalImages();
-      return data;
-    },
-    retry: 0,
-    onSuccess: (res) => {
-      setHospitals1(res);
-    },
-    onError: (err: any) => {
-      setHospitals1(err.response.data);
-    },
-  });
 
   const { isLoading: getHispitalListIsLoading1, data: getHispitalListData1 } =
     useQuery({

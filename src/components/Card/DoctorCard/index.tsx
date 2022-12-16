@@ -1,12 +1,12 @@
 import React, { FC } from "react";
 
-import { Doctor } from "@/mock/doctors";
+import { IGetDoctorListResult } from "@/service/types";
 import Image from "next/image";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";
 
 export interface IDoctorCardProps {
-  doctor: Doctor;
+  doctor: IGetDoctorListResult;
 }
 
 const DoctorCard: FC<IDoctorCardProps> = ({ doctor }) => {
@@ -17,7 +17,7 @@ const DoctorCard: FC<IDoctorCardProps> = ({ doctor }) => {
           style={{
             borderRadius: "50%",
           }}
-          src={doctor.profileImage}
+          src={doctor.thumbnail_url}
           width={90}
           height={90}
           alt="hospitalImage"
@@ -25,11 +25,11 @@ const DoctorCard: FC<IDoctorCardProps> = ({ doctor }) => {
         <div className="detail">
           <div className="name">{`${doctor.name} ${doctor.title}`}</div>
           <div className="major">
-            <div>{doctor.major}</div>
+            <div>{doctor.subtitle}</div>
           </div>
           <div className="tags">
-            {doctor.tags.map((tag, i) => {
-              return <div key={i}>#{tag}</div>;
+            {doctor.descriptions.map((el, i) => {
+              return <div key={i}>{`#${el.description}`}</div>;
             })}
           </div>
         </div>
@@ -41,8 +41,8 @@ const DoctorCard: FC<IDoctorCardProps> = ({ doctor }) => {
           lineHeight: theme.lineHeights.md,
         }}
       >
-        {doctor.description.map((e, i) => (
-          <li key={i}>- {e}</li>
+        {doctor.keywords.map((e, i) => (
+          <li key={i}>{`- ${e.keyword}`}</li>
         ))}
       </div>
     </DoctorCardWrapper>

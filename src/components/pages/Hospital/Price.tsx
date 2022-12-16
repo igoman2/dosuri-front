@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Column, useTable } from "react-table";
-import { IGetHospitalInfo } from "@/service/apis";
 import React, { FC, useMemo } from "react";
 
+import { IGetHospitalInfo } from "@/service/types";
 import styled from "@emotion/styled";
 
 interface IPriceProps {

@@ -1,4 +1,10 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
+import {
+  getHospitalInfo,
+  getHospitalTreatments,
+  toggleHospitalThumbup,
+} from "@/service/apis";
+import { useMutation, useQuery } from "react-query";
 
 import Button from "@/components/Button";
 import CustomImage from "@/components/CustomImage";
@@ -13,10 +19,8 @@ import { NextPageContext } from "next";
 import Price from "@/components/pages/Hospital/Price";
 import Reviews from "@/components/pages/Hospital/Reviews";
 import Tab from "@/components/Tab";
-import { getHospitalInfo, getHospitalTreatments } from "@/service/apis";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";
-import { useQuery } from "react-query";
 import { useRouter } from "next/router";
 
 interface TabItem {
@@ -44,7 +48,7 @@ const TabList: TabItem[] = [
 ];
 
 interface IHospitalInformationProps {
-  id: number;
+  id: string;
   tab: string;
 }
 
@@ -53,7 +57,6 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
     TabList.find((t) => t.value === tab) ?? TabList[0]
   );
   const router = useRouter();
-  const isRecommended = false;
 
   useEffect(() => {
     router.replace({
@@ -76,6 +79,9 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
       const data = await getHospitalInfo(id);
       return data;
     },
+    onSuccess: (res) => {
+      console.log(res);
+    },
     staleTime: 3000,
     retry: 0,
   });
@@ -88,13 +94,28 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
       const resp = await getHospitalTreatments(uuid!);
       return resp.results;
     },
+
     enabled: !!uuid,
-    onSuccess: (res) => {},
+  });
+
+  /**
+   * TODO: 바디에 uuid가 안담기나??
+   */
+  const mutate = useMutation({
+    mutationFn: () => {
+      return toggleHospitalThumbup({
+        hospital: uuid,
+      });
+    },
   });
 
   if (!hospitalInfoData || !hospitalTreatmentsData) {
     return <div>bug</div>;
   }
+
+  const onThumbUp = () => {
+    mutate.mutate();
+  };
 
   return (
     <Layout header={<HeaderDepth />} footer={false}>
@@ -107,17 +128,27 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
         <div className="hospital-content">
           <div className="head">
             <div className="hospital-name">{hospitalInfoData.name}</div>
-            <ImageTextView
-              text={"추천"}
-              color={isRecommended ? theme.colors.green : theme.colors.grey}
-              image={
-                <Icon
-                  name="thumb"
-                  fill={isRecommended ? theme.colors.green : theme.colors.grey}
-                />
-              }
-              reverse
-            />
+            <div onClick={onThumbUp}>
+              <ImageTextView
+                text={"추천"}
+                color={
+                  hospitalInfoData.is_up
+                    ? theme.colors.green
+                    : theme.colors.grey
+                }
+                image={
+                  <Icon
+                    name="thumb"
+                    fill={
+                      hospitalInfoData.is_up
+                        ? theme.colors.green
+                        : theme.colors.grey
+                    }
+                  />
+                }
+                reverse
+              />
+            </div>
           </div>
           <div className="tab-wrapper">
             <Tab

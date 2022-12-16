@@ -1,29 +1,56 @@
-import React, { FC } from "react";
-import { doctors, subDoctors } from "@/mock/doctors";
+import React, { FC, useMemo } from "react";
 
 import DoctorCard from "@/components/Card/DoctorCard";
-import { IGetHospitalInfo } from "@/service/apis";
+import { IGetHospitalInfo } from "@/service/types";
+import { getDoctorList } from "@/service/apis";
 import styled from "@emotion/styled";
+import { useQuery } from "react-query";
 
 interface IDoctorsProps {
-  hospitalData?: IGetHospitalInfo;
+  hospitalData: IGetHospitalInfo;
 }
 
 const Doctors: FC<IDoctorsProps> = ({ hospitalData }) => {
+  const { data } = useQuery({
+    queryKey: ["getDoctorList"],
+    queryFn: async () => {
+      const data = await getDoctorList(hospitalData.uuid);
+
+      return data.results;
+    },
+    staleTime: 3000,
+    retry: 0,
+  });
+
+  const doctors = useMemo(() => {
+    return data?.filter((doctor) => doctor.title !== "치료사");
+  }, [data]);
+  const subDoctors = useMemo(() => {
+    return data?.filter((doctor) => doctor.title === "치료사");
+  }, [data]);
+
+  if (!data) {
+    return <div>loading</div>;
+  }
+
   return (
     <DoctorsWrapper>
       <div>
         <div className="title-doctor">의사</div>
-        {doctors.map((doctor) => (
-          <DoctorCard doctor={doctor} key={doctor.id} />
-        ))}
+        {doctors
+          ?.filter((doctor) => doctor.title !== "치료사")
+          .map((doctor) => (
+            <DoctorCard doctor={doctor} key={doctor.uuid} />
+          ))}
       </div>
 
       <div>
         <div className="title-doctor sub">치료사</div>
-        {subDoctors.map((doctor) => (
-          <DoctorCard doctor={doctor} key={doctor.id} />
-        ))}
+        {subDoctors
+          ?.filter((doctor) => doctor.title === "치료사")
+          .map((doctor) => (
+            <DoctorCard doctor={doctor} key={doctor.uuid} />
+          ))}
       </div>
     </DoctorsWrapper>
   );
