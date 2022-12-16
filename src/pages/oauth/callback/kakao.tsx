@@ -4,8 +4,7 @@ import React, { useEffect } from "react";
 
 import { GetServerSideProps } from "next";
 import Spinner from "@/components/UI/Spinner";
-import { apis } from "@/service/apis";
-import axios from "axios";
+import { getUserAuth } from "@/service/apis";
 import { useRouter } from "next/router";
 
 interface IKakaoProps {
@@ -34,14 +33,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   } = context;
 
   try {
-    const resp = await apis.getUserAuth({
+    const resp = await getUserAuth({
       token: code as string,
       type: "kakao",
     });
 
-    const {
-      data: { access_token: accessToken, refresh_token: refreshToken },
-    } = resp;
+    const { access_token: accessToken, refresh_token: refreshToken } = resp;
 
     return {
       props: {

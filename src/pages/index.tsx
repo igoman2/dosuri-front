@@ -1,19 +1,9 @@
-import HospitalCard, {
-  IHospitalCardProps,
-} from "@/components/Card/HospitalCard";
-import {
-  HospitalInfo,
-  IHospitalInfo,
-  IHospitalInfoResponse,
-  hospitalList,
-} from "@/mock/hospitals";
+import { IHospitalInfo, IHospitalInfoResponse } from "@/mock/hospitals";
 import { Post, posts } from "@/mock/posts";
 import React, { useEffect, useState } from "react";
-import { apis, getHospitalList } from "@/service/apis";
-import { useMutation, useQuery, useQueryClient } from "react-query";
 
-import { AxiosError } from "axios";
 import Header from "@/components/Layout/Header";
+import HospitalCard from "@/components/Card/HospitalCard";
 import Icon from "@/util/Icon";
 import Layout from "@/components/Layout";
 import Link from "next/link";
