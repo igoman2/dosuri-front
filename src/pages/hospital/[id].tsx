@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC, Suspense, useEffect, useState } from "react";
 import {
   getHospitalInfo,
   getHospitalTreatments,
@@ -18,6 +18,7 @@ import Link from "next/link";
 import { NextPageContext } from "next";
 import Price from "@/components/pages/Hospital/Price";
 import Reviews from "@/components/pages/Hospital/Reviews";
+import Spinner from "@/components/UI/Spinner";
 import Tab from "@/components/Tab";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";
@@ -56,6 +57,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
   const [currentTab, setCurrentTab] = useState<TabItem>(
     TabList.find((t) => t.value === tab) ?? TabList[0]
   );
+  const [isUp, setIsUp] = useState<boolean>();
   const router = useRouter();
 
   useEffect(() => {
@@ -79,9 +81,6 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
       const data = await getHospitalInfo(id);
       return data;
     },
-    onSuccess: (res) => {
-      console.log(res);
-    },
     staleTime: 3000,
     retry: 0,
   });
@@ -98,13 +97,17 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
     enabled: !!uuid,
   });
 
-  /**
-   * TODO: 바디에 uuid가 안담기나??
-   */
+  useEffect(() => {
+    if (hospitalInfoData) {
+      setIsUp(hospitalInfoData.is_up);
+    }
+  }, [hospitalInfoData]);
+
   const mutate = useMutation({
     mutationFn: () => {
       return toggleHospitalThumbup({
         hospital: uuid,
+        is_up: !isUp,
       });
     },
   });
@@ -115,6 +118,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
 
   const onThumbUp = () => {
     mutate.mutate();
+    setIsUp((prev) => !prev);
   };
 
   return (
@@ -131,19 +135,11 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
             <div onClick={onThumbUp}>
               <ImageTextView
                 text={"추천"}
-                color={
-                  hospitalInfoData.is_up
-                    ? theme.colors.green
-                    : theme.colors.grey
-                }
+                color={isUp ? theme.colors.green : theme.colors.grey}
                 image={
                   <Icon
                     name="thumb"
-                    fill={
-                      hospitalInfoData.is_up
-                        ? theme.colors.green
-                        : theme.colors.grey
-                    }
+                    fill={isUp ? theme.colors.green : theme.colors.grey}
                   />
                 }
                 reverse
@@ -157,21 +153,23 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
               onTabClickHander={onTabClickHander}
             />
           </div>
-          {currentTab.value === "information" && (
-            <Information hospitalData={hospitalInfoData} />
-          )}
-          {currentTab.value === "doctors" && (
-            <Doctors hospitalData={hospitalInfoData} />
-          )}
-          {currentTab.value === "reviews" && (
-            <Reviews hospitalData={hospitalInfoData} />
-          )}
-          {currentTab.value === "price" && (
-            <Price
-              hospitalData={hospitalInfoData}
-              hospitalTreatmentsData={hospitalTreatmentsData}
-            />
-          )}
+          <Suspense fallback={<Spinner />}>
+            {currentTab.value === "information" && (
+              <Information hospitalData={hospitalInfoData} />
+            )}
+            {currentTab.value === "doctors" && (
+              <Doctors hospitalData={hospitalInfoData} />
+            )}
+            {currentTab.value === "reviews" && (
+              <Reviews hospitalData={hospitalInfoData} />
+            )}
+            {currentTab.value === "price" && (
+              <Price
+                hospitalData={hospitalInfoData}
+                hospitalTreatmentsData={hospitalTreatmentsData}
+              />
+            )}
+          </Suspense>
 
           <SaleButtonWrapper>
             <Link href="/insurance-register">

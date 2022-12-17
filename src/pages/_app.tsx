@@ -8,13 +8,10 @@ import Fallback from "./fallback";
 import Head from "next/head";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { RecoilRoot } from "recoil";
+import Spinner from "@/components/UI/Spinner";
 import { global } from "@/styles/global";
 import theme from "@/styles/theme";
 import withAuth from "./withauth";
-
-function Progress() {
-  return <h1>Loading...</h1>;
-}
 
 function MyApp({
   Component,
@@ -57,7 +54,7 @@ function MyApp({
                 }}
               >
                 <ErrorBoundary fallback={Fallback}>
-                  <Suspense fallback={<Progress />}>
+                  <Suspense fallback={<Spinner />}>
                     <Component {...pageProps} />
                   </Suspense>
                 </ErrorBoundary>

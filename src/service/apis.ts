@@ -57,7 +57,10 @@ export const getDoctorList = async (uuid: string) => {
   return response.data;
 };
 
-export const toggleHospitalThumbup = async (data: { hospital?: string }) => {
+export const toggleHospitalThumbup = async (data: {
+  hospital?: string;
+  is_up?: boolean;
+}) => {
   const response = await api.post<IToggleHospitalThumbup>(
     "/hospital/v1/hospital-user-assocs",
     data

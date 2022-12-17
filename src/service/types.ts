@@ -31,11 +31,9 @@ export interface IGetHospitalInfo {
     saturday: string | null;
     sunday: string | null;
   };
-  keywords: [
-    {
-      keyword: string;
-    }
-  ];
+  keywords: {
+    keyword: string;
+  }[];
   is_up: boolean;
 }
 

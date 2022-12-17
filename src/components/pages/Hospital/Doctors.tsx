@@ -1,6 +1,7 @@
 import React, { FC, useMemo } from "react";
 
 import DoctorCard from "@/components/Card/DoctorCard";
+import { EmptyText } from "@/components/UI/emotion/EmptyText";
 import { IGetHospitalInfo } from "@/service/types";
 import { getDoctorList } from "@/service/apis";
 import styled from "@emotion/styled";
@@ -29,28 +30,36 @@ const Doctors: FC<IDoctorsProps> = ({ hospitalData }) => {
     return data?.filter((doctor) => doctor.title === "치료사");
   }, [data]);
 
-  if (!data) {
-    return <div>loading</div>;
-  }
-
   return (
     <DoctorsWrapper>
       <div>
         <div className="title-doctor">의사</div>
-        {doctors
-          ?.filter((doctor) => doctor.title !== "치료사")
-          .map((doctor) => (
-            <DoctorCard doctor={doctor} key={doctor.uuid} />
-          ))}
+        {doctors?.length !== 0 ? (
+          <div>
+            {doctors
+              ?.filter((doctor) => doctor.title !== "치료사")
+              .map((doctor) => (
+                <DoctorCard doctor={doctor} key={doctor.uuid} />
+              ))}
+          </div>
+        ) : (
+          <EmptyText>등록된 의사 프로필이 없습니다.</EmptyText>
+        )}
       </div>
 
       <div>
         <div className="title-doctor sub">치료사</div>
-        {subDoctors
-          ?.filter((doctor) => doctor.title === "치료사")
-          .map((doctor) => (
-            <DoctorCard doctor={doctor} key={doctor.uuid} />
-          ))}
+        {subDoctors?.length !== 0 ? (
+          <div>
+            {subDoctors
+              ?.filter((subDoctor) => subDoctor.title === "치료사")
+              .map((subDoctor) => (
+                <DoctorCard doctor={subDoctor} key={subDoctor.uuid} />
+              ))}
+          </div>
+        ) : (
+          <EmptyText>등록된 치료사 프로필이 없습니다.</EmptyText>
+        )}
       </div>
     </DoctorsWrapper>
   );

@@ -2,6 +2,7 @@
 import { Column, useTable } from "react-table";
 import React, { FC, useMemo } from "react";
 
+import { EmptyText } from "@/components/UI/emotion/EmptyText";
 import { IGetHospitalInfo } from "@/service/types";
 import styled from "@emotion/styled";
 
@@ -23,7 +24,7 @@ interface IPriceProps {
 const Price: FC<IPriceProps> = ({ hospitalData, hospitalTreatmentsData }) => {
   const data = useMemo(() => {
     return hospitalTreatmentsData.map((data) => {
-      return { ...data, price: data.price.toLocaleString() };
+      return { ...data, price: `${data.price.toLocaleString()}원` };
     });
   }, [hospitalTreatmentsData]);
 
@@ -51,54 +52,63 @@ const Price: FC<IPriceProps> = ({ hospitalData, hospitalTreatmentsData }) => {
 
   return (
     <PriceWrapper>
-      <div className="price-head">
-        <div className="left">60분 치료 시</div>
-        <div className="center">
-          <span>80,000원</span>
-          <div className="line"></div>
-        </div>
-        <div className="right">.</div>
-      </div>
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map((headerGroup, i) => (
-            <tr {...headerGroup.getHeaderGroupProps()} key={i}>
-              {headerGroup.headers.map((column, j) => (
-                <th {...column.getHeaderProps()} key={j}>
-                  <span
-                    className={j === 6 ? "red" : j === 5 ? "purple" : "black"}
-                  >
-                    {column.render("Header")}
-                  </span>
-                </th>
+      {data.length === 0 ? (
+        <EmptyText>등록된 가격 정보가 없습니다.</EmptyText>
+      ) : (
+        <>
+          {/* TODO: 예외처리 필요 */}
+          <div className="price-head">
+            <div className="left">60분 치료 시</div>
+            <div className="center">
+              <span>80,000원</span>
+              <div className="line"></div>
+            </div>
+            <div className="right">.</div>
+          </div>
+          <table {...getTableProps()}>
+            <thead>
+              {headerGroups.map((headerGroup, i) => (
+                <tr {...headerGroup.getHeaderGroupProps()} key={i}>
+                  {headerGroup.headers.map((column, j) => (
+                    <th {...column.getHeaderProps()} key={j}>
+                      <span
+                        className={
+                          j === 6 ? "red" : j === 5 ? "purple" : "black"
+                        }
+                      >
+                        {column.render("Header")}
+                      </span>
+                    </th>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()} key={i}>
-                {row.cells.map((cell, j) => {
-                  return (
-                    <td {...cell.getCellProps()} key={j}>
-                      {cell.render("Cell")}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <ul className="etc">
-        <li>
-          비급여 진료비용 공개제도에 의해 병원이 직접 건강보험심사평가원에
-          제출한 가격정보입니다.
-        </li>
-        <li>진료시 상황 등에 따라 실제 치료비와는 다를 수 있습니다.</li>
-      </ul>
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row, i) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()} key={i}>
+                    {row.cells.map((cell, j) => {
+                      return (
+                        <td {...cell.getCellProps()} key={j}>
+                          {cell.render("Cell")}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <ul className="etc">
+            <li>
+              비급여 진료비용 공개제도에 의해 병원이 직접 건강보험심사평가원에
+              제출한 가격정보입니다.
+            </li>
+            <li>진료시 상황 등에 따라 실제 치료비와는 다를 수 있습니다.</li>
+          </ul>
+        </>
+      )}
     </PriceWrapper>
   );
 };
