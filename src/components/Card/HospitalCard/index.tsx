@@ -19,11 +19,10 @@ const HospitalCard: FC<IHospitalCardProps> = ({ hospitalInfo }) => {
       }}
     >
       <Image
-        src={SampleImage}
-        // src={hospitalInfo.hospitalImage}
+        src={hospitalInfo.images[0]?.url ?? SampleImage}
         width={90}
         height={90}
-        alt="hospitalImage"
+        alt="hospital-image"
       />
       <Description hospitalInfo={hospitalInfo} size="md" />
     </div>

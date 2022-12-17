@@ -1,0 +1,48 @@
+import HospitalCard from "@/components/Card/HospitalCard";
+import { IHospitalInfo } from "@/mock/hospitals";
+import Link from "next/link";
+import React from "react";
+import { getHospitalList } from "@/service/apis";
+import { useQuery } from "react-query";
+import { useTheme } from "@emotion/react";
+
+const NewReviewSection = () => {
+  const theme = useTheme();
+  const { data: getHospitalListData1 } = useQuery({
+    queryKey: "getHospitalList-search-1",
+    queryFn: async () => {
+      const data = await getHospitalList({
+        ordering: "-latest_article_created_at",
+      });
+      return data.results;
+    },
+    retry: 0,
+  });
+
+  return (
+    <div
+      css={{
+        marginBottom: "2.5rem",
+      }}
+    >
+      <div
+        css={{
+          fontSize: theme.fontSizes.xl,
+          fontWeight: 700,
+        }}
+      >
+        따끈한 후기가 새로 등록됐어요!
+      </div>
+
+      {getHospitalListData1?.map((hospital: IHospitalInfo, i) => (
+        <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+          <a>
+            <HospitalCard hospitalInfo={hospital} />
+          </a>
+        </Link>
+      ))}
+    </div>
+  );
+};
+
+export default NewReviewSection;

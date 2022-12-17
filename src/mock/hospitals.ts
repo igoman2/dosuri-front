@@ -50,18 +50,18 @@ export interface IHospitalInfoResponse {
 }
 
 export interface IHospitalInfo {
-  uuid: "string";
-  address: "string";
-  name: "string";
+  uuid: string;
+  address: string;
+  name: string;
   area: string;
-  introduction: "string";
-  phone_no: "string";
-  up_count: 0;
-  view_count: 0;
-  is_partner: true;
-  opened_at: "2022-12-07T13:04:47.154Z";
-  created_at: "2022-12-07T13:04:47.154Z";
-  code: "string";
-  latitude: 0;
-  longitude: 0;
+  up_count: number;
+  view_count: number;
+  article_count: number;
+  latest_article: string;
+  latest_article_created_at: string;
+  opened_at: string;
+  distance: number;
+  images: {
+    url: string;
+  }[];
 }
