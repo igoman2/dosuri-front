@@ -12,11 +12,9 @@ import { IHospitalInfoResponse } from "@/mock/hospitals";
 import api from "./axiosConfig";
 
 export const getUserAuth = async (params: GetUserAuthParams) => {
-  const response = await api.get<GetUserAuthResponse>("/user/v1/auth", {
-    params: {
-      token: params.token,
-      type: params.type,
-    },
+  const response = await api.post<GetUserAuthResponse>("/user/v1/auth", {
+    token: params.token,
+    type: params.type,
   });
   return response.data;
 };
