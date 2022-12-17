@@ -34,7 +34,7 @@ const ManyReviewSection = () => {
         후기는 다다익선! 치료 후기 많은 곳
       </div>
 
-      {getHospitalListData2?.map((hospital: IHospitalInfo, i) => (
+      {getHospitalListData2?.map((hospital, i) => (
         <Link
           href={{
             pathname: `hospital/${hospital.uuid}`,

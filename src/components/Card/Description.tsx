@@ -31,7 +31,6 @@ const Description: FC<IDescriptionProps> = ({ hospitalInfo, size }) => {
       >
         {hospitalInfo.name}
       </div>
-
       <div
         css={{
           display: "flex",
@@ -42,11 +41,11 @@ const Description: FC<IDescriptionProps> = ({ hospitalInfo, size }) => {
         }}
       >
         <div>{hospitalInfo.area}</div>
-        <div>{`후기 ${hospitalInfo.view_count}개`}</div>
+        <div>{`후기 ${hospitalInfo.article_count}개`}</div>
         <div>{`추천 ${hospitalInfo.up_count}명`}</div>
       </div>
       <div>
-        {hospitalInfo.introduction ? (
+        {hospitalInfo.latest_article ? (
           <span
             css={{
               color: theme.colors.purple,
@@ -63,7 +62,7 @@ const Description: FC<IDescriptionProps> = ({ hospitalInfo, size }) => {
               height="15"
               fill={theme.colors.purple}
             />
-            {hospitalInfo.introduction}
+            {hospitalInfo.latest_article}
           </span>
         ) : (
           <span

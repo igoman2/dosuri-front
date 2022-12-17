@@ -71,7 +71,7 @@ const AllFilterSection = () => {
           />
         </ImageTextViewWrapper>
 
-        {getHospitalListData3?.map((hospital: IHospitalInfo, i) => (
+        {getHospitalListData3?.map((hospital, i) => (
           <HospitalCard hospitalInfo={hospital} key={i} />
         ))}
       </div>

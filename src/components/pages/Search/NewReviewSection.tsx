@@ -34,7 +34,7 @@ const NewReviewSection = () => {
         따끈한 후기가 새로 등록됐어요!
       </div>
 
-      {getHospitalListData1?.map((hospital: IHospitalInfo, i) => (
+      {getHospitalListData1?.map((hospital, i) => (
         <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
           <a>
             <HospitalCard hospitalInfo={hospital} />
