@@ -26,6 +26,7 @@ function MyApp({
         defaultOptions: {
           queries: {
             suspense: true,
+            useErrorBoundary: true,
             refetchOnWindowFocus: false,
           },
         },
