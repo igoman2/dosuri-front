@@ -5,7 +5,6 @@ import { BottomSheet } from "react-spring-bottom-sheet";
 import ChevronDowm from "@/public/assets/chevron-down.png";
 import Divider from "@/components/UI/Divider";
 import HospitalCard from "@/components/Card/HospitalCard";
-import { IHospitalInfo } from "@/mock/hospitals";
 import Image from "next/image";
 import ImageTextView from "@/components/UI/ImageTextView";
 import { getHospitalList } from "@/service/apis";
@@ -26,7 +25,7 @@ const AllFilterSection = () => {
     onDismiss();
     setTimeout(() => {
       setCategory(item);
-    }, 10);
+    }, 100);
   };
 
   const { data: getHospitalListData3 } = useQuery({
@@ -75,24 +74,24 @@ const AllFilterSection = () => {
           <HospitalCard hospitalInfo={hospital} key={i} />
         ))}
       </div>
-
-      <BottomSheet
-        open={open}
-        onDismiss={onDismiss}
-        snapPoints={({ minHeight }) => [minHeight + 65]}
-      >
-        <button onClick={onDismiss}>asd</button>
-        {SELECT_LIST.map((item, i) => {
-          {
-            return (
-              <SelectList key={i} onClick={() => onListClick(item)}>
-                <span className="list-title">{item.title}</span>
-                <Divider height={1} />
-              </SelectList>
-            );
-          }
-        })}
-      </BottomSheet>
+      {open && (
+        <BottomSheet
+          open={open}
+          onDismiss={onDismiss}
+          snapPoints={({ minHeight }) => [minHeight + 65]}
+        >
+          {SELECT_LIST.map((item, i) => {
+            {
+              return (
+                <SelectList key={i} onClick={() => onListClick(item)}>
+                  <span className="list-title">{item.title}</span>
+                  <Divider height={1} />
+                </SelectList>
+              );
+            }
+          })}
+        </BottomSheet>
+      )}
     </>
   );
 };
