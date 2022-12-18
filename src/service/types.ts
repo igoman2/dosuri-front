@@ -13,6 +13,8 @@ export interface IGetHospitalListParams {
   ordering?: string;
   page?: number;
   search?: string;
+  latitude?: number;
+  longitude?: number;
 }
 
 export interface IGetHospitalInfo {

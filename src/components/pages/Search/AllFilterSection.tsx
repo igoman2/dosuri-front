@@ -11,11 +11,14 @@ import { getHospitalList } from "@/service/apis";
 import styled from "@emotion/styled";
 import { useQuery } from "react-query";
 import { useTheme } from "@emotion/react";
+import { useRecoilValue } from "recoil";
+import { locationState } from "@/store/location";
 
 const AllFilterSection = () => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [category, setCategory] = useState(SELECT_LIST[0]);
+  const location = useRecoilValue(locationState);
 
   function onDismiss() {
     setOpen(false);
@@ -31,10 +34,20 @@ const AllFilterSection = () => {
   const { data: getHospitalListData3 } = useQuery({
     queryKey: ["getHospitalList-search-3", category],
     queryFn: async () => {
-      const data = await getHospitalList({
-        ordering: category.key,
-      });
-      return data.results;
+      console.log("@@@");
+      if (category.key === "distance") {
+        const data = await getHospitalList({
+          latitude: location.lat,
+          longitude: location.lng,
+        });
+
+        return data.results;
+      } else {
+        const data = await getHospitalList({
+          ordering: category.key,
+        });
+        return data.results;
+      }
     },
     retry: 0,
   });
@@ -74,6 +87,11 @@ const AllFilterSection = () => {
           <HospitalCard hospitalInfo={hospital} key={i} />
         ))}
       </div>
+
+      {/* 
+      TODO: 필터 사용 후 바텀 슬라이더가 먹통 되는 이슈가 있음. open에 따라 아예 재렌더링 시켜서 회피
+
+      */}
       {open && (
         <BottomSheet
           open={open}
