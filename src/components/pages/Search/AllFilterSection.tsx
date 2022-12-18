@@ -34,7 +34,6 @@ const AllFilterSection = () => {
   const { data: getHospitalListData3 } = useQuery({
     queryKey: ["getHospitalList-search-3", category],
     queryFn: async () => {
-      console.log("@@@");
       if (category.key === "distance") {
         const data = await getHospitalList({
           latitude: location.lat,

@@ -12,6 +12,7 @@ export interface IGetHospitalListParams {
   hospital_address_assoc__address?: string;
   ordering?: string;
   page?: number;
+  page_size?: number;
   search?: string;
   latitude?: number;
   longitude?: number;

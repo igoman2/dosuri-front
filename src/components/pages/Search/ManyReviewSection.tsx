@@ -6,6 +6,8 @@ import { getHospitalList } from "@/service/apis";
 import { useQuery } from "react-query";
 import { useTheme } from "@emotion/react";
 
+const LIST_COUNT_LIMIT = 3;
+
 const ManyReviewSection = () => {
   const theme = useTheme();
 
@@ -14,6 +16,7 @@ const ManyReviewSection = () => {
     queryFn: async () => {
       const data = await getHospitalList({
         ordering: "-article_count",
+        page_size: LIST_COUNT_LIMIT,
       });
       return data.results;
     },
