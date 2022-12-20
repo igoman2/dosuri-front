@@ -102,7 +102,7 @@ const AllFilterSection = () => {
               return (
                 <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
                   <a>
-                    <HospitalCard hospitalInfo={hospital} />;
+                    <HospitalCard hospitalInfo={hospital} />
                   </a>
                 </Link>
               );
