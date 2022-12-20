@@ -1,18 +1,23 @@
 import { ListItem, SELECT_LIST } from "@/mock/searchCategory";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { BottomSheet } from "react-spring-bottom-sheet";
 import ChevronDowm from "@/public/assets/chevron-down.png";
 import Divider from "@/components/UI/Divider";
 import HospitalCard from "@/components/Card/HospitalCard";
+import { IHospitalInfoResponse } from "@/mock/hospitals";
 import Image from "next/image";
 import ImageTextView from "@/components/UI/ImageTextView";
-import { getHospitalList } from "@/service/apis";
-import styled from "@emotion/styled";
-import { useQuery } from "react-query";
-import { useTheme } from "@emotion/react";
-import { useRecoilValue } from "recoil";
+import InfiniteScroll from "react-infinite-scroller";
+import Link from "next/link";
+import api from "@/service/axiosConfig";
 import { locationState } from "@/store/location";
+import styled from "@emotion/styled";
+import { useInfiniteQuery } from "react-query";
+import { useRecoilValue } from "recoil";
+import { useTheme } from "@emotion/react";
+
+type LoadMore = (page: number) => void;
 
 const AllFilterSection = () => {
   const theme = useTheme();
@@ -31,25 +36,32 @@ const AllFilterSection = () => {
     }, 100);
   };
 
-  const { data: getHospitalListData3 } = useQuery({
-    queryKey: ["getHospitalList-search-3", category],
-    queryFn: async () => {
-      if (category.key === "distance") {
-        const data = await getHospitalList({
-          latitude: location.lat,
-          longitude: location.lng,
-        });
+  const initialUrl = useMemo(() => {
+    if (category.key === "distance") {
+      return `/hospital/v1/hospitals?latitude=${location.lat}&longitude=${location.lng}`;
+    } else {
+      return `/hospital/v1/hospitals?ordering=${category.key}`;
+    }
+  }, [category, location]);
 
-        return data.results;
-      } else {
-        const data = await getHospitalList({
-          ordering: category.key,
-        });
-        return data.results;
-      }
-    },
-    retry: 0,
-  });
+  const fetchUrl = async (url: string) => {
+    const response = await api.get<IHospitalInfoResponse>(url);
+    return response.data;
+  };
+
+  const {
+    data: hospitalListByDistance,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery(
+    ["hospital-by-distance", category],
+    ({ pageParam = initialUrl }) => fetchUrl(pageParam),
+    {
+      getNextPageParam: (lastPage) => {
+        return lastPage.next || undefined;
+      },
+    }
+  );
 
   return (
     <>
@@ -66,7 +78,6 @@ const AllFilterSection = () => {
         >
           모든 병원 보기
         </div>
-
         <ImageTextViewWrapper onClick={() => setOpen(true)}>
           <ImageTextView
             text={category.title}
@@ -82,9 +93,22 @@ const AllFilterSection = () => {
           />
         </ImageTextViewWrapper>
 
-        {getHospitalListData3?.map((hospital, i) => (
-          <HospitalCard hospitalInfo={hospital} key={i} />
-        ))}
+        <InfiniteScroll
+          loadMore={fetchNextPage as LoadMore}
+          hasMore={hasNextPage}
+        >
+          {hospitalListByDistance?.pages.map((pageData) => {
+            return pageData.results.map((hospital, i) => {
+              return (
+                <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+                  <a>
+                    <HospitalCard hospitalInfo={hospital} />;
+                  </a>
+                </Link>
+              );
+            });
+          })}
+        </InfiniteScroll>
       </div>
 
       {/* 
