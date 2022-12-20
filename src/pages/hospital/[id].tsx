@@ -1,4 +1,6 @@
+import { A11y, Scrollbar } from "swiper";
 import React, { FC, Suspense, useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import {
   getHospitalInfo,
   getHospitalTreatments,
@@ -7,10 +9,10 @@ import {
 import { useMutation, useQuery } from "react-query";
 
 import Button from "@/components/Button";
-import CustomImage from "@/components/CustomImage";
 import Doctors from "@/components/pages/Hospital/Doctors";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Icon from "@/util/Icon";
+import Image from "next/image";
 import ImageTextView from "@/components/UI/ImageTextView";
 import Information from "@/components/pages/Hospital/Information";
 import Layout from "@/components/Layout";
@@ -122,14 +124,60 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
     setIsUp((prev) => !prev);
   };
 
+  const imageSource = hospitalInfoData.images.map((image) => image.url);
+
   return (
     <Layout header={<HeaderDepth />} footer={false}>
       <Hospital>
-        <CustomImage
-          src={
-            "https://dosuri-images.s3.ap-northeast-2.amazonaws.com/hospitalThumbnail.png"
-          }
-        />
+        <div className="swiper-layout">
+          {/* 
+          TODO: DoSwiper로 컴포넌트화 시킬 것
+          */}
+          {imageSource.length === 0 ? (
+            <div
+              css={{
+                width: "100%",
+                height: "21.2rem",
+                backgroundColor: theme.colors.grey,
+              }}
+            ></div>
+          ) : (
+            <Swiper
+              style={{
+                width: "100%",
+              }}
+              modules={[Scrollbar, A11y]}
+              scrollbar={{ draggable: true }}
+              initialSlide={0}
+              slidesPerView={1}
+              pagination={{
+                clickable: true,
+              }}
+              autoplay={{ delay: 3000 }}
+            >
+              {imageSource.map((src, i) => (
+                <SwiperSlide key={i} style={{ width: "50%" }}>
+                  <div
+                    style={{
+                      position: "relative",
+                      width: "100%",
+                      height: "21.2rem",
+                      backgroundColor: "black",
+                    }}
+                  >
+                    <Image
+                      alt={src}
+                      src={src}
+                      layout="fill"
+                      objectFit="contain"
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
+        </div>
+
         <div className="hospital-content">
           <div className="head">
             <div className="hospital-name">{hospitalInfoData.name}</div>

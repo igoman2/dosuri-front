@@ -25,6 +25,7 @@ export interface IGetHospitalInfo {
   introduction: string;
   area: string;
   phone_no: string;
+  images: { url: string }[];
   calendar: {
     monday: string | null;
     tuesday: string | null;
