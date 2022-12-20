@@ -75,13 +75,14 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
     });
   };
 
+  // 단순 정보 조회라서 useQuery를 사용하였지만 서버 내부적으로는 해당 병원에 대한 조회수를 올리는 POST api로 개발되어있기 때문에 POST 요청이 캐시되는 것을 방지하기 위해 cacheTime을 0으로 설정
   const { data: hospitalInfoData } = useQuery({
     queryKey: ["getHospitalInfo"],
     queryFn: async () => {
       const data = await getHospitalInfo(id);
       return data;
     },
-    staleTime: 3000,
+    cacheTime: 0,
     retry: 0,
   });
 
