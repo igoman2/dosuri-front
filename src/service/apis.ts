@@ -30,7 +30,7 @@ export const getHospitalList = async (params?: IGetHospitalListParams) => {
 };
 
 export const getHospitalInfo = async (uuid: string) => {
-  const response = await api.get<IGetHospitalInfo>(
+  const response = await api.post<IGetHospitalInfo>(
     `hospital/v1/hospitals/${uuid}`
   );
   return response.data;
