@@ -1,29 +1,19 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Column, useTable } from "react-table";
+import { IGetHospitalInfo, IHospitalTreatmentsResponse } from "@/service/types";
 import React, { FC, useMemo } from "react";
 
 import { EmptyText } from "@/components/UI/emotion/EmptyText";
-import { IGetHospitalInfo } from "@/service/types";
 import styled from "@emotion/styled";
 
 interface IPriceProps {
   hospitalData: IGetHospitalInfo;
-  hospitalTreatmentsData: [
-    {
-      uuid: string;
-      name: string;
-      hospital: string;
-      price: number | string;
-      price_per_hour: number;
-      description: string;
-      created_at: string;
-    }
-  ];
+  hospitalTreatmentsData: IHospitalTreatmentsResponse;
 }
 
 const Price: FC<IPriceProps> = ({ hospitalData, hospitalTreatmentsData }) => {
   const data = useMemo(() => {
-    return hospitalTreatmentsData.map((data) => {
+    return hospitalTreatmentsData.results.map((data) => {
       return { ...data, price: `${data.price.toLocaleString()}원` };
     });
   }, [hospitalTreatmentsData]);
@@ -56,15 +46,19 @@ const Price: FC<IPriceProps> = ({ hospitalData, hospitalTreatmentsData }) => {
         <EmptyText>등록된 가격 정보가 없습니다.</EmptyText>
       ) : (
         <>
-          {/* TODO: 예외처리 필요 */}
-          <div className="price-head">
-            <div className="left">60분 치료 시</div>
-            <div className="center">
-              <span>80,000원</span>
-              <div className="line"></div>
+          {hospitalTreatmentsData.price_per_hour ? (
+            <div className="price-head">
+              <div className="left">60분 치료 시</div>
+              <div className="center">
+                <span>
+                  {Math.floor(hospitalTreatmentsData.price_per_hour)}원
+                </span>
+                <div className="line"></div>
+              </div>
+              <div className="right">.</div>
             </div>
-            <div className="right">.</div>
-          </div>
+          ) : null}
+
           <table {...getTableProps()}>
             <thead>
               {headerGroups.map((headerGroup, i) => (

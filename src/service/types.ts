@@ -41,21 +41,22 @@ export interface IGetHospitalInfo {
   is_up: boolean;
 }
 
+export interface IHospitalTreatmentResult {
+  uuid: string;
+  name: string;
+  hospital: string;
+  price: number | string;
+  price_per_hour: number;
+  description: string;
+  created_at: string;
+}
+
 export interface IHospitalTreatmentsResponse {
   count: number;
   next: string;
   previous: string;
-  results: [
-    {
-      uuid: string;
-      name: string;
-      hospital: string;
-      price: number;
-      price_per_hour: number;
-      description: string;
-      created_at: string;
-    }
-  ];
+  price_per_hour: number;
+  results: IHospitalTreatmentResult[];
 }
 
 export interface IGetDoctorListResult {

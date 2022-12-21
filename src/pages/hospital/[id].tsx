@@ -94,7 +94,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
     queryKey: "hospital-treatments",
     queryFn: async () => {
       const resp = await getHospitalTreatments(uuid!);
-      return resp.results;
+      return resp;
     },
 
     enabled: !!uuid,
