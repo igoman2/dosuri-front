@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import Description from "../Description";
 import { IHospitalInfo } from "@/mock/hospitals";
 import Image from "next/image";
-import SampleImage from "@/public/assets/sample.png";
+import ImageFallback from "@/components/UI/ImageFallback";
 
 export interface IHospitalCardProps {
   hospitalInfo: IHospitalInfo;
@@ -18,12 +18,17 @@ const HospitalCard: FC<IHospitalCardProps> = ({ hospitalInfo }) => {
         marginTop: "1rem",
       }}
     >
-      <Image
-        src={hospitalInfo.images[0]?.url ?? SampleImage}
-        width={90}
-        height={90}
-        alt="hospital-image"
-      />
+      {hospitalInfo.images.length === 0 ? (
+        <ImageFallback width="9rem" height="9rem" />
+      ) : (
+        <Image
+          src={hospitalInfo.images[0]?.url}
+          width={90}
+          height={90}
+          alt="hospital-image"
+        />
+      )}
+
       <Description hospitalInfo={hospitalInfo} size="md" />
     </div>
   );
