@@ -1,13 +1,14 @@
-import Image from "next/image";
 import React, { FC, useState } from "react";
-import logo from "@/public/assets/logo1.png";
-import note from "@/public/assets/note.png";
-import SearchBar from "@/components/SearchBar";
+import { modalContentState, modalState } from "@/components/Modal/store";
+
+import Icon from "@/util/Icon";
+import Image from "next/image";
 import Link from "next/link";
+import SearchBar from "@/components/SearchBar";
 import WriteQuesiton from "@/components/Write/Question";
 import WriteReview from "@/components/Write/Review";
+import note from "@/public/assets/note.png";
 import { useSetRecoilState } from "recoil";
-import { modalContentState, modalState } from "@/components/Modal/store";
 
 interface IHeaderProps {
   left?: boolean;
@@ -74,7 +75,7 @@ const Header: FC<IHeaderProps> = ({ left, center, right }) => {
       }}
     >
       <Link href="/">
-        <a>{left && <Image src={logo} alt="logo" width={82} height={22} />}</a>
+        <a>{left && <Icon name="logo1" width="82" height="22" />}</a>
       </Link>
       <div className="center">
         {center && (

@@ -10,6 +10,9 @@ import CrossClicked from "@/public/assets/cross_clicked.svg";
 import Heart from "@/public/assets/heart.svg";
 import Home from "@/public/assets/home.svg";
 import HomeClicked from "@/public/assets/home_clicked.svg";
+import Logo1 from "@/public/assets/logo1.svg";
+import Logo2 from "@/public/assets/logo2.svg";
+import Logo3 from "@/public/assets/logo3.svg";
 import Pen from "@/public/assets/pen.svg";
 import Profile from "@/public/assets/profile.svg";
 import ProfileClicked from "@/public/assets/profile_clicked.svg";
@@ -45,6 +48,9 @@ export const iconTypes: any = {
   pen: Pen,
   thumb: Thumb,
   close: Close,
+  logo1: Logo1,
+  logo2: Logo2,
+  logo3: Logo3,
 };
 
 const Icon: FC<IIconProps> = ({ name, ...props }) => {

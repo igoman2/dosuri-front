@@ -2,9 +2,9 @@ import { css, useTheme } from "@emotion/react";
 
 import AppleLogin from "@/util/apple";
 import Google from "@/components/Oauth/Google";
+import Icon from "@/util/Icon";
 import Image from "next/image";
 import Kakao from "@/components/Oauth/Kakao";
-import Logo from "@/public/assets/logo2.png";
 import React from "react";
 
 const Login = () => {
@@ -44,8 +44,7 @@ const Login = () => {
   return (
     <main css={mainLayout}>
       {/* <AppleLogin /> */}
-      <Image src={Logo} alt="로고" width={110} height={140} />
-
+      <Icon name="logo2" width="110" height="140" />
       <p css={logoTitle}>
         <span>도수 통증치료 병원정보는</span>
         <span>도수리</span>
