@@ -25,9 +25,9 @@ const Post = () => {
   return (
     <Layout header={<HeaderDepth />} footer={false}>
       <>
-        {[posts[0]].map((post, i) => (
+        {/* {[posts[0]].map((post, i) => (
           <PostCard post={post} key={i} bottom={renderPostBottom()} />
-        ))}
+        ))} */}
         <Comment comment={comment} />
       </>
     </Layout>

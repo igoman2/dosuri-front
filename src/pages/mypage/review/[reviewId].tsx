@@ -81,10 +81,10 @@ const ReviewDetail = () => {
       footer={false}
     >
       <>
-        {[posts[0]].map((post, i) => (
+        {/* {[posts[0]].map((post, i) => (
           <PostCard post={post} key={i} bottom={renderPostBottom(post)} />
         ))}
-        <Comment comment={comment} />
+        <Comment comment={comment} /> */}
       </>
     </Layout>
   );

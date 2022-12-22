@@ -86,13 +86,13 @@ const SearchResult = () => {
           도수톡
           <span className="list-length"> 30</span>건
         </div>
-        {posts.map((post, i) => (
+        {/* {posts.map((post, i) => (
           <Link href={`community/${post.id}`} key={i}>
             <a>
               <PostCard post={post} bottom={<PostBottom post={post} />} />
             </a>
           </Link>
-        ))}
+        ))} */}
       </div>
     </ResultWrapper>
   );

@@ -42,13 +42,13 @@ const Review = () => {
         <ReviewWrapper>
           <div className="sub-title">내 후기 총 2개</div>
 
-          {posts.map((post, i) => (
+          {/* {posts.map((post, i) => (
             <Link href={`review/${post.id}`} key={i}>
               <a>
                 <PostCard post={post} bottom={renderPostBottom(post)} />
               </a>
             </Link>
-          ))}
+          ))} */}
         </ReviewWrapper>
 
         <Float scrollDir={scrollDir} distance="1.5rem" />

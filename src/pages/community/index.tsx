@@ -48,13 +48,13 @@ const Community = () => {
           </ButtonWrapper>
         </div>
 
-        {posts.map((post, i) => (
+        {/* {posts.map((post, i) => (
           <Link href={`community/${post.id}`} key={i}>
             <a>
               <PostCard post={post} bottom={<PostBottom post={post} />} />
             </a>
           </Link>
-        ))}
+        ))} */}
 
         <Float scrollDir={scrollDir} distance="8.5rem" />
       </>
