@@ -51,7 +51,10 @@ const Price: FC<IPriceProps> = ({ hospitalData, hospitalTreatmentsData }) => {
               <div className="left">60분 치료 시</div>
               <div className="center">
                 <span>
-                  {Math.floor(hospitalTreatmentsData.price_per_hour)}원
+                  {Math.floor(
+                    hospitalTreatmentsData.price_per_hour
+                  ).toLocaleString()}
+                  원
                 </span>
                 <div className="line"></div>
               </div>
