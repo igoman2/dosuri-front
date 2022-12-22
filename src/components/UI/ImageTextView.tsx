@@ -56,5 +56,10 @@ const ImageTextViewWrapper = styled.div<ImageTextViewWrapperProps>`
     line-height: ${(props) => props.theme.lineHeights.sm};
     cursor: pointer;
     color: ${(props) => props.color};
+
+    .image {
+      display: flex;
+      align-items: center;
+    }
   }
 `;

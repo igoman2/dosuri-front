@@ -6,6 +6,7 @@ import ChevronDowm from "@/public/assets/chevron-down.png";
 import Divider from "@/components/UI/Divider";
 import HospitalCard from "@/components/Card/HospitalCard";
 import { IHospitalInfoResponse } from "@/mock/hospitals";
+import Icon from "@/util/Icon";
 import Image from "next/image";
 import ImageTextView from "@/components/UI/ImageTextView";
 import InfiniteScroll from "react-infinite-scroller";
@@ -82,14 +83,7 @@ const AllFilterSection = () => {
           <ImageTextView
             text={category.title}
             border
-            image={
-              <Image
-                src={ChevronDowm}
-                height={12}
-                width={12}
-                alt="chevron-down"
-              />
-            }
+            image={<Icon name={`chevron`} height="12" width="12" />}
           />
         </ImageTextViewWrapper>
 
