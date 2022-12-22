@@ -181,10 +181,6 @@ const PriceWrapper = styled.div`
         th {
           width: calc(100% / 3);
           text-align: start;
-
-          &:nth-of-type(1) {
-            width: 30%;
-          }
         }
       }
     }
