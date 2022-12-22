@@ -66,9 +66,7 @@ const PostCard: FC<IPostCardProps> = ({ review, bottom }) => {
         </div>
         <div className="hospital-name">{review.hospital}</div>
         <div className="swiper-layout">
-          {/* <DoSwiper
-            source={review.article_attach.map((article) => article.path)}
-          /> */}
+          <DoSwiper source={[]} />
         </div>
         <div className="post-comment">
           <div

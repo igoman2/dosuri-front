@@ -9,37 +9,30 @@ import Image from "next/image";
 
 interface DoSwiperProps {
   source: string[];
+  slidesPerView?: number;
+  spaceBetween?: number;
 }
 
-const DoSwiper: FC<DoSwiperProps> = ({ source }) => {
+const DoSwiper: FC<DoSwiperProps> = ({
+  source,
+  slidesPerView,
+  spaceBetween,
+}) => {
   return (
     <Swiper
-      style={{
-        width: "100%",
-      }}
       modules={[Scrollbar, A11y]}
       scrollbar={{ draggable: true }}
-      spaceBetween={6}
+      spaceBetween={spaceBetween}
       initialSlide={0}
-      slidesPerView={2}
+      slidesPerView={slidesPerView}
       pagination={{
         clickable: true,
       }}
       autoplay={{ delay: 3000 }}
     >
       {source.map((src, i) => (
-        <SwiperSlide key={i} style={{ width: "50%" }}>
-          <div
-            style={{
-              position: "relative",
-              width: "100%",
-              height: "12rem",
-              backgroundColor: "black",
-              borderRadius: "0.5rem",
-            }}
-          >
-            <Image alt={src} src={src} layout="fill" objectFit="contain" />
-          </div>
+        <SwiperSlide key={i}>
+          <Image alt={src} src={src} layout="fill" objectFit="contain" />
         </SwiperSlide>
       ))}
     </Swiper>
