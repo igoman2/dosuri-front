@@ -33,6 +33,18 @@ const TabWrapper = styled.div`
   font-size: ${(props) => props.theme.fontSizes.xl};
   line-height: ${(props) => props.theme.lineHeights.xl};
   cursor: pointer;
+  overflow: scroll;
+
+  div {
+    /* 
+    = flex: none
+     */
+    flex: 0 0 auto;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   .current {
     font-weight: 700;
