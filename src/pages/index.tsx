@@ -154,9 +154,9 @@ const Home = () => {
         >
           HOT 도수톡
         </div>
-        {posts.map((post, i) => (
+        {/* {posts.map((post, i) => (
           <PostCard post={post} key={i} bottom={renderPostBottom(post)} />
-        ))}
+        ))} */}
       </div>
     </Layout>
   );

@@ -59,6 +59,28 @@ export interface IHospitalTreatmentsResponse {
   results: IHospitalTreatmentResult[];
 }
 
+export interface IHospitalReviewsResult {
+  uuid: string;
+  user: string;
+  article_type: string;
+  up_count: number;
+  view_count: number;
+  created_at: string;
+  hospital: string;
+  content: string;
+  article_attach: {
+    uuid: string;
+    path: string;
+    created_at: string;
+  }[];
+}
+export interface IHospitalReviewsResponse {
+  count: number;
+  next: string;
+  previous: string;
+  results: IHospitalReviewsResult[];
+}
+
 export interface IGetDoctorListResult {
   uuid: string;
   hospital: string;

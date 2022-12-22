@@ -4,6 +4,7 @@ import {
   IGetDoctorList,
   IGetHospitalInfo,
   IGetHospitalListParams,
+  IHospitalReviewsResponse,
   IHospitalTreatmentsResponse,
   IToggleHospitalThumbup,
 } from "./types";
@@ -39,6 +40,18 @@ export const getHospitalInfo = async (uuid: string) => {
 export const getHospitalTreatments = async (uuid: string) => {
   const response = await api.get<IHospitalTreatmentsResponse>(
     "/hospital/v1/hospital-treatments",
+    {
+      params: {
+        hospital: uuid,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const getHospitalReviews = async (uuid: string) => {
+  const response = await api.get<IHospitalReviewsResponse>(
+    "/community/v1/community/articles",
     {
       params: {
         hospital: uuid,

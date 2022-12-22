@@ -2,15 +2,15 @@ import React, { FC, ReactElement, useEffect, useRef, useState } from "react";
 
 import Divider from "@/components/UI/Divider";
 import DoSwiper from "@/components/DoSwiper";
-import { Post } from "@/mock/posts";
+import { IHospitalReviewsResult } from "@/service/types";
 import styled from "@emotion/styled";
 
 interface IPostCardProps {
-  post: Post;
+  review: IHospitalReviewsResult;
   bottom: ReactElement;
 }
 
-const PostCard: FC<IPostCardProps> = ({ post, bottom }) => {
+const PostCard: FC<IPostCardProps> = ({ review, bottom }) => {
   const [isCommentOver3Line, setIsCommentOver3Line] = useState<boolean>();
   const [isShowMoreClicked, setIsShowMoreClicked] = useState<boolean>(false);
   const commentRef = useRef<HTMLDivElement>(null);
@@ -61,19 +61,21 @@ const PostCard: FC<IPostCardProps> = ({ post, bottom }) => {
     <>
       <PostCardWrapper>
         <div className="post-head">
-          <div className="nickname">{post.nickname}</div>
-          <div className="register-time">{post.registered}</div>
+          <div className="nickname">{review.user}</div>
+          <div className="register-time">{review.created_at}</div>
         </div>
-        <div className="hospital-name">{post.hospitalName}</div>
+        <div className="hospital-name">{review.hospital}</div>
         <div className="swiper-layout">
-          <DoSwiper source={post.images} />
+          {/* <DoSwiper
+            source={review.article_attach.map((article) => article.path)}
+          /> */}
         </div>
         <div className="post-comment">
           <div
             className={!isShowMoreClicked && isCommentOver3Line ? "hide" : ""}
             ref={commentRef}
           >
-            {post.review}
+            {review.content}
           </div>
           {showMoreRender()}
         </div>

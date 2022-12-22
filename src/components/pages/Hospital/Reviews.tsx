@@ -1,42 +1,68 @@
+import { IGetHospitalInfo, IHospitalReviewsResult } from "@/service/types";
 import { Post, posts } from "@/mock/posts";
 import React, { FC } from "react";
 
-import { IGetHospitalInfo } from "@/service/types";
+import { EmptyText } from "@/components/UI/emotion/EmptyText";
 import Icon from "@/util/Icon";
 import PostBottom from "@/components/UI/emotion/PostBottom";
 import PostCard from "@/components/Card/PostCard";
+import { getHospitalReviews } from "@/service/apis";
 import styled from "@emotion/styled";
+import { useQuery } from "react-query";
 
 interface IReviewsProps {
-  hospitalData?: IGetHospitalInfo;
+  hospitalData: IGetHospitalInfo;
 }
 
 const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
-  const renderPostBottom = (post: Post) => {
+  const { data } = useQuery({
+    queryKey: ["getHospitalReviews"],
+    queryFn: async () => {
+      const data = await getHospitalReviews(hospitalData.uuid);
+      return data!;
+    },
+  });
+
+  if (!data) {
+    return null;
+  }
+
+  const renderPostBottom = (review: IHospitalReviewsResult) => {
     return (
       <PostBottom>
         <div className="post-bottom">
           <div className="heart">
             <Icon name="heart" width="17" height="17" />
-            <span>{post.heart}</span>
+            <span>{review.up_count}</span>
           </div>
           <div className="comment">
             <Icon name="comment" />
-            <span>{post.comment}</span>
+            <span>{review.article_attach.length}</span>
           </div>
         </div>
       </PostBottom>
     );
   };
+
   return (
     <ReviewsWrapper>
-      <div className="title">
-        후기
-        <span className="list-length"> 30</span>건
-      </div>
-      {posts.map((post, i) => (
-        <PostCard post={post} key={i} bottom={renderPostBottom(post)} />
-      ))}
+      {data.results.length === 0 ? (
+        <EmptyText>등록된 후기가 없습니다.</EmptyText>
+      ) : (
+        <>
+          <div className="title">
+            후기
+            <span className="list-length"> {data.count}</span>건
+          </div>
+          {data.results.map((review, i) => (
+            <PostCard
+              review={review}
+              key={i}
+              bottom={renderPostBottom(review)}
+            />
+          ))}
+        </>
+      )}
     </ReviewsWrapper>
   );
 };
