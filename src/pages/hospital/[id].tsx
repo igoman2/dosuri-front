@@ -193,6 +193,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
                   width="100%"
                   borderRadius="0.3rem"
                   backgroundColor={theme.colors.purple_light}
+                  bold
                 />
               </a>
             </Link>
