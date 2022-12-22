@@ -42,38 +42,48 @@ const Setting = () => {
               isLast={false}
               right={<Version>v 1.6.1 (24)</Version>}
             />
-            <ListTab
-              text="이용 약관"
-              key="이용 약관"
-              subText=""
-              isLast={false}
-              right={
-                <div>
-                  <Image
-                    src={ArrowRight}
-                    width={25}
-                    height={25}
-                    alt="arrow-right"
-                  />
-                </div>
-              }
-            />
-            <ListTab
-              text="개인정보 처리방침"
-              key="개인정보 처리방침"
-              subText=""
-              isLast={false}
-              right={
-                <div>
-                  <Image
-                    src={ArrowRight}
-                    width={25}
-                    height={25}
-                    alt="arrow-right"
-                  />
-                </div>
-              }
-            />
+            <Link href="https://jade-grill-d5b.notion.site/2022-10-d9fbe2e7bb934b759df98242274af094">
+              <a target="_blank" rel="noopener noreferrer">
+                <ListTab
+                  text="이용 약관"
+                  key="이용 약관"
+                  subText=""
+                  isLast={false}
+                  right={
+                    <div>
+                      <Image
+                        src={ArrowRight}
+                        width={25}
+                        height={25}
+                        alt="arrow-right"
+                      />
+                    </div>
+                  }
+                />
+              </a>
+            </Link>
+
+            <Link href="https://jade-grill-d5b.notion.site/2022-10-3b9b6c4354e1413eb18af3987cc58d10">
+              <a target="_blank" rel="noopener noreferrer">
+                <ListTab
+                  text="개인정보 처리방침"
+                  key="개인정보 처리방침"
+                  subText=""
+                  isLast={false}
+                  right={
+                    <div>
+                      <Image
+                        src={ArrowRight}
+                        width={25}
+                        height={25}
+                        alt="arrow-right"
+                      />
+                    </div>
+                  }
+                />
+              </a>
+            </Link>
+
             <ListTab
               onClick={() => logout()}
               text="로그아웃"
@@ -92,6 +102,7 @@ const Setting = () => {
                 </div>
               }
             />
+
             <Link href="/mypage/secession">
               <a>
                 <ListTab
