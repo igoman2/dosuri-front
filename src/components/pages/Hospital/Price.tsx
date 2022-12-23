@@ -182,8 +182,17 @@ const PriceWrapper = styled.div`
         gap: 2rem;
 
         th {
-          width: calc(100% / 3);
+          /* width: calc(100% / 3); */
           text-align: start;
+          width: 40%;
+
+          &:first-child {
+            width: 29%;
+          }
+
+          &:last-child {
+            width: 31%;
+          }
         }
       }
     }
@@ -198,8 +207,16 @@ const PriceWrapper = styled.div`
 
         td {
           display: flex;
-          width: calc(100% / 3);
+          width: 40%;
           padding-top: 1.5rem;
+
+          &:first-child {
+            width: 29%;
+          }
+
+          &:last-child {
+            width: 31%;
+          }
         }
       }
     }
