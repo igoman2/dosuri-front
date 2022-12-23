@@ -1,16 +1,22 @@
-import { IHospitalInfo, IHospitalInfoResponse } from "@/mock/hospitals";
-import { Post, posts } from "@/mock/posts";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
+import Button from "@/components/Button";
+import { GetServerSideProps } from "next";
 import Header from "@/components/Layout/Header";
 import HospitalCard from "@/components/Card/HospitalCard";
+import { IHospitalInfoResult } from "@/service/types";
 import Icon from "@/util/Icon";
 import Layout from "@/components/Layout";
 import Link from "next/link";
+import { Post } from "@/mock/posts";
 import PostCard from "@/components/Card/PostCard";
+import { getCookie } from "cookies-next";
+import { getHospitalInfoHome } from "@/service/apis";
 import { locationState } from "@/store/location";
 import styled from "@emotion/styled";
+import useAuth from "@/hooks/useAuth";
 import useGeolocation from "@/hooks/useGeolocation";
+import { useQuery } from "react-query";
 import { useSetRecoilState } from "recoil";
 import { useTheme } from "@emotion/react";
 
@@ -18,15 +24,14 @@ const Home = () => {
   const theme = useTheme();
   const location = useGeolocation();
   const setLocaton = useSetRecoilState(locationState);
+  const { isLoggedIn } = useAuth();
+
   useEffect(() => {
     setLocaton({
       lat: location.coordinates?.lat ?? 0,
       lng: location.coordinates?.lng ?? 0,
     });
   }, [location]);
-
-  const [hospitals, setHospitals] =
-    useState<IHospitalInfoResponse | null>(null);
 
   const renderPostBottom = (post: Post) => {
     return (
@@ -41,34 +46,11 @@ const Home = () => {
     );
   };
 
-  // const { isLoading: getHispitalListIsLoading, data: getHispitalListData } =
-  //   useQuery<IHospitalInfoResponse, AxiosError>(
-  //     "getHospitalList-home",
-  //     getHospitalList,
-  //     {
-  //       retry: 0,
-  //       onSuccess: (res) => {
-  //         setHospitals(res);
-  //         console.log(res.results);
-  //       },
-  //       onError: (err: any) => {
-  //         setHospitals(err.response.data);
-  //       },
-  //     }
-  //   );
-
-  // const {
-  //   isLoading: getHospitalKeywordIsLoading,
-  //   data: getHospitalKeywordData,
-  // } = useQuery("all2", apis.getHospitalKeyword, {
-  //   retry: 0,
-  //   onSuccess: (resp) => {
-  //     console.log(resp.data);
-  //   },
-  //   onError: (error) => {
-  //     console.log(error);
-  //   },
-  // });
+  const { data } = useQuery("getHospitalList-home", getHospitalInfoHome);
+  console.log(data);
+  if (!data) {
+    return;
+  }
 
   return (
     <Layout header={<Header left={true} center={true} right={true} />}>
@@ -83,10 +65,48 @@ const Home = () => {
             fontWeight: 700,
           }}
         >
-          내 주변 TOP 병원
+          {isLoggedIn ? "내 주변 TOP 병원" : "도수리 TOP 병원"}
         </div>
 
-        {hospitals?.results.map((hospital: IHospitalInfo, i) => (
+        {data.top_hospitals.map((hospital: IHospitalInfoResult, i) => (
+          <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+            <a>
+              <HospitalCard hospitalInfo={hospital} />
+            </a>
+          </Link>
+        ))}
+      </div>
+      <LogginBanner>
+        {isLoggedIn && (
+          <Link href="/login">
+            <a>
+              <Button
+                text="로그인하고 내 주변 TOP 병원 보기"
+                backgroundColor={theme.colors.purple_light}
+                borderRadius="3"
+                bold
+                width="100%"
+              />
+            </a>
+          </Link>
+        )}
+      </LogginBanner>
+
+      <div
+        css={{
+          marginBottom: "2.5rem",
+        }}
+      >
+        <div
+          css={{
+            fontSize: theme.fontSizes.xl,
+            fontWeight: 700,
+          }}
+        >
+          새로 생긴 병원
+        </div>
+
+        {data.new_hospitals.map((hospital: IHospitalInfoResult, i) => (
           <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
             <a>
               <HospitalCard hospitalInfo={hospital} />
@@ -106,10 +126,10 @@ const Home = () => {
             fontWeight: 700,
           }}
         >
-          새로 생긴 병원
+          가격이 착한 병원
         </div>
 
-        {hospitals?.results.map((hospital: IHospitalInfo, i) => (
+        {data.good_price_hospitals.map((hospital: IHospitalInfoResult, i) => (
           <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
             <a>
               <HospitalCard hospitalInfo={hospital} />
@@ -132,7 +152,7 @@ const Home = () => {
           후기가 좋은 병원
         </div>
 
-        {hospitals?.results.map((hospital: IHospitalInfo, i) => (
+        {data.good_review_hospitals.map((hospital: IHospitalInfoResult, i) => (
           <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
             <a>
               <HospitalCard hospitalInfo={hospital} />
@@ -178,4 +198,8 @@ const PostBottom = styled.div`
       align-items: center;
     }
   }
+`;
+
+const LogginBanner = styled.div`
+  margin-bottom: 2rem;
 `;

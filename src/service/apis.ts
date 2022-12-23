@@ -4,12 +4,13 @@ import {
   IGetDoctorList,
   IGetHospitalInfo,
   IGetHospitalListParams,
+  IHospitalInfoHomeResponse,
+  IHospitalInfoResponse,
   IHospitalReviewsResponse,
   IHospitalTreatmentsResponse,
   IToggleHospitalThumbup,
 } from "./types";
 
-import { IHospitalInfoResponse } from "@/mock/hospitals";
 import api from "./axiosConfig";
 
 export const getUserAuth = async (params: GetUserAuthParams) => {
@@ -79,5 +80,12 @@ export const toggleHospitalThumbup = async (data: {
     data
   );
 
+  return response.data;
+};
+
+export const getHospitalInfoHome = async () => {
+  const response = await api.get<IHospitalInfoHomeResponse>(
+    `hospital/v1/hospitals/home`
+  );
   return response.data;
 };

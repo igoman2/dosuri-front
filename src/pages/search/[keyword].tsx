@@ -1,27 +1,16 @@
 import { ChangeEvent, useState } from "react";
-import {
-  HospitalInfo,
-  IHospitalInfo,
-  IHospitalInfoResponse,
-  hospitalList,
-} from "@/mock/hospitals";
+import { IHospitalInfoResponse, IHospitalInfoResult } from "@/service/types";
 import { TabItem, TabList } from "@/mock/tabList";
 
 import ArrowRight from "@/public/assets/arrow-right-bold.png";
-import { AxiosError } from "axios";
 import Button from "@/components/Button";
 import HospitalCard from "@/components/Card/HospitalCard";
 import Image from "next/image";
 import Layout from "@/components/Layout";
 import Link from "next/link";
-import PostBottom from "@/components/Card/PostCard/PostBottom";
-import PostCard from "@/components/Card/PostCard";
 import SearchHeader from "@/components/Layout/Header/SearchHeader";
 import Tab from "@/components/Tab";
-import { getHospitalList } from "@/service/apis";
-import { posts } from "@/mock/posts";
 import styled from "@emotion/styled";
-import { useQuery } from "react-query";
 import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
 
@@ -68,7 +57,7 @@ const SearchResult = () => {
           <span className="list-length"> 10</span>건
         </div>
 
-        {hospitals?.results.map((hospital: IHospitalInfo, i) => (
+        {hospitals?.results.map((hospital: IHospitalInfoResult, i) => (
           <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
             <a>
               <HospitalCard hospitalInfo={hospital} />

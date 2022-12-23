@@ -5,7 +5,7 @@ import { BottomSheet } from "react-spring-bottom-sheet";
 import ChevronDowm from "@/public/assets/chevron-down.png";
 import Divider from "@/components/UI/Divider";
 import HospitalCard from "@/components/Card/HospitalCard";
-import { IHospitalInfoResponse } from "@/mock/hospitals";
+import { IHospitalInfoResponse } from "@/service/types";
 import Icon from "@/util/Icon";
 import Image from "next/image";
 import ImageTextView from "@/components/UI/ImageTextView";

@@ -1,5 +1,4 @@
 import HospitalCard from "@/components/Card/HospitalCard";
-import { IHospitalInfo } from "@/mock/hospitals";
 import Link from "next/link";
 import React from "react";
 import { getHospitalList } from "@/service/apis";

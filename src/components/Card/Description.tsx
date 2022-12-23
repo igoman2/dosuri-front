@@ -1,11 +1,11 @@
 import React, { FC } from "react";
 
-import { IHospitalInfo } from "@/mock/hospitals";
+import { IHospitalInfoResult } from "@/service/types";
 import Icon from "@/util/Icon";
 import { useTheme } from "@emotion/react";
 
 export interface IDescriptionProps {
-  hospitalInfo: IHospitalInfo;
+  hospitalInfo: IHospitalInfoResult;
   size: "xxxl" | "xxl" | "xl" | "lg" | "md" | "sm" | "xs";
 }
 

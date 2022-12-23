@@ -1,12 +1,12 @@
 import React, { FC } from "react";
 
 import Description from "../Description";
-import { IHospitalInfo } from "@/mock/hospitals";
+import { IHospitalInfoResult } from "@/service/types";
 import Image from "next/image";
 import ImageFallback from "@/components/UI/ImageFallback";
 
 export interface IHospitalCardProps {
-  hospitalInfo: IHospitalInfo;
+  hospitalInfo: IHospitalInfoResult;
 }
 
 const HospitalCard: FC<IHospitalCardProps> = ({ hospitalInfo }) => {

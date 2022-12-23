@@ -112,3 +112,34 @@ export interface IToggleHospitalThumbup {
   is_up: boolean;
   uuid: string;
 }
+
+export interface IHospitalInfoResult {
+  uuid: string;
+  address: string;
+  name: string;
+  area: string;
+  up_count: number;
+  view_count: number;
+  article_count: number;
+  latest_article: string;
+  latest_article_created_at: string;
+  opened_at: string;
+  distance: null;
+  images: {
+    url: string;
+  }[];
+}
+
+export interface IHospitalInfoHomeResponse {
+  top_hospitals: IHospitalInfoResult[];
+  new_hospitals: IHospitalInfoResult[];
+  good_price_hospitals: IHospitalInfoResult[];
+  good_review_hospitals: IHospitalInfoResult[];
+}
+
+export interface IHospitalInfoResponse {
+  count: number;
+  next: string;
+  previous: string;
+  results: IHospitalInfoResult[];
+}
