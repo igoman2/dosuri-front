@@ -47,7 +47,6 @@ const Home = () => {
   };
 
   const { data } = useQuery("getHospitalList-home", getHospitalInfoHome);
-  console.log(data);
   if (!data) {
     return;
   }
