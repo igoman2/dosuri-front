@@ -5,6 +5,7 @@ import { EmptyText } from "@/components/UI/emotion/EmptyText";
 import { IGetHospitalInfo } from "@/service/types";
 import TimeTable from "@/components/TimeTable";
 import { formatPhoneNumber } from "@/util/format";
+import { phoneCall } from "@/util/phoneCall";
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
 
@@ -74,7 +75,10 @@ const Information: FC<IInformationProps> = ({ hospitalData }) => {
           <div className="list">
             <div className="list-title">전화번호</div>
             {hospitalData.phone_no ? (
-              <div className="phone-number">
+              <div
+                className="phone-number"
+                onClick={() => phoneCall(hospitalData.phone_no)}
+              >
                 {formatPhoneNumber(hospitalData.phone_no)}
               </div>
             ) : (
