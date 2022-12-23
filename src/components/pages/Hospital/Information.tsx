@@ -47,7 +47,7 @@ const Information: FC<IInformationProps> = ({ hospitalData }) => {
             )}
           </div>
           <div className="list">
-            <div className="list-title">진료 시간</div>
+            <div className="list-title">진료시간</div>
             {hospitalData.calendar ? (
               <TimeTable
                 times={{
