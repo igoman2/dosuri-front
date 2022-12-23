@@ -1,6 +1,6 @@
 export const SELECT_LIST = [
   {
-    title: "인기 순",
+    title: "인기순",
     key: "-view_count",
   },
   {
