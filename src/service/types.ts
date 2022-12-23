@@ -61,7 +61,10 @@ export interface IHospitalTreatmentsResponse {
 
 export interface IHospitalReviewsResult {
   uuid: string;
-  user: string;
+  user: {
+    nickname: string;
+    uuid: string;
+  };
   article_type: string;
   up_count: number;
   view_count: number;

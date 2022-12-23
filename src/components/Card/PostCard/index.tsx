@@ -61,7 +61,7 @@ const PostCard: FC<IPostCardProps> = ({ review, bottom }) => {
     <>
       <PostCardWrapper>
         <div className="post-head">
-          <div className="nickname">{review.user}</div>
+          <div className="nickname">{review.user.nickname}</div>
           <div className="register-time">{review.created_at}</div>
         </div>
         <div className="hospital-name">{review.hospital}</div>
