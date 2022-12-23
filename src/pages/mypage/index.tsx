@@ -10,26 +10,46 @@ import styled from "@emotion/styled";
 import withAuth from "../withauth";
 
 const tabList = [
-  { text: "내 치료후기", subtext: "", link: "mypage/review", hasNoti: false },
+  {
+    text: "내 치료후기",
+    subtext: "",
+    link: "mypage/review",
+    hasNoti: false,
+    isExternalURL: false,
+  },
   {
     text: "내 포인트",
     subtext: "2,000P",
     link: "mypage/point",
     hasNoti: false,
   },
-  { text: "공지사항", subtext: "", link: "mypage/notification", hasNoti: true },
-  { text: "설정", subtext: "", link: "mypage/setting", hasNoti: false },
+  {
+    text: "공지사항",
+    subtext: "",
+    link: "https://jade-grill-d5b.notion.site/5f996c9048314c699fac080cd2f22509",
+    hasNoti: true,
+    isExternalURL: true,
+  },
+  {
+    text: "설정",
+    subtext: "",
+    link: "mypage/setting",
+    hasNoti: false,
+    isExternalURL: false,
+  },
   {
     text: "도수리 팀에게 의견 보내기",
     subtext: "",
     link: "mypage/claim",
     hasNoti: false,
+    isExternalURL: false,
   },
   {
     text: "병원 입점 문의",
     subtext: "",
     link: "mypage/inquiry",
     hasNoti: false,
+    isExternalURL: false,
   },
 ];
 
@@ -60,7 +80,10 @@ const Mypage = () => {
       <div className="list-section">
         {tabList.map((tab, i) => (
           <Link href={tab.link} key={`${tab.text}-${i}`}>
-            <a>
+            <a
+              target={tab.isExternalURL ? "_blank" : ""}
+              rel={tab.isExternalURL ? "noopener noreferrer" : ""}
+            >
               <ListTab
                 text={tab.text}
                 subText={tab.subtext}

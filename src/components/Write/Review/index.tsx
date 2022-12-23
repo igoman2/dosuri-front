@@ -1,21 +1,23 @@
-import theme from "@/styles/theme";
-import styled from "@emotion/styled";
-import Image from "next/image";
 import React, { FC, useRef, useState } from "react";
-import UploadFileImage from "@/public/assets/upload-file.png";
-import Content from "../Form/Content";
-import InputForm from "../Form/InputForm";
-import Button from "@/components/Button";
-import FullModalBase from "@/components/Modal/FullModalBase";
-import SelectForm from "../Form/SelectForm";
-import HappyFaceIcon from "@/public/assets/happy-face.png";
-import NeutralFaceIcon from "@/public/assets/neutral-face.png";
-import SadFaceIcon from "@/public/assets/sad-face.png";
-import CoinPurpleIcon from "@/public/assets/coin-purple.png";
-import QuestionMarkIcon from "@/public/assets/question-mark.png";
+
 import BillExamplesImage from "@/public/assets/bill-examples.png";
-import Icon from "@/util/Icon";
+import Button from "@/components/Button";
 import Checkbox from "@/components/UI/Checkbox";
+import CoinPurpleIcon from "@/public/assets/coin-purple.png";
+import Content from "../Form/Content";
+import FullModalBase from "@/components/Modal/FullModalBase";
+import HappyFaceIcon from "@/public/assets/happy-face.png";
+import Icon from "@/util/Icon";
+import Image from "next/image";
+import InputForm from "../Form/InputForm";
+import Link from "next/link";
+import NeutralFaceIcon from "@/public/assets/neutral-face.png";
+import QuestionMarkIcon from "@/public/assets/question-mark.png";
+import SadFaceIcon from "@/public/assets/sad-face.png";
+import SelectForm from "../Form/SelectForm";
+import UploadFileImage from "@/public/assets/upload-file.png";
+import styled from "@emotion/styled";
+import theme from "@/styles/theme";
 
 interface IWriteReviewProps {
   isActive: boolean;
@@ -456,9 +458,13 @@ const WriteReview: FC<IWriteReviewProps> = ({ isActive, onChangeActive }) => {
                       </div>
                     </div>
 
-                    <QuestionIconWrapper css={{ marginLeft: "0.4rem" }}>
-                      <Image src={QuestionMarkIcon} alt="도움말" />
-                    </QuestionIconWrapper>
+                    <Link href="https://jade-grill-d5b.notion.site/4e50154c10c841b5a1eb9a8aac1355aa">
+                      <a target="_blank" rel="noopener noreferrer">
+                        <QuestionIconWrapper css={{ marginLeft: "0.4rem" }}>
+                          <Image src={QuestionMarkIcon} alt="도움말" />
+                        </QuestionIconWrapper>
+                      </a>
+                    </Link>
                   </div>
 
                   <input
