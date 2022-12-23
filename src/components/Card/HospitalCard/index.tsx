@@ -22,6 +22,9 @@ const HospitalCard: FC<IHospitalCardProps> = ({ hospitalInfo }) => {
         <ImageFallback width="9rem" height="9rem" />
       ) : (
         <Image
+          style={{
+            borderRadius: "0.5rem",
+          }}
           src={hospitalInfo.images[0]?.url}
           width={90}
           height={90}

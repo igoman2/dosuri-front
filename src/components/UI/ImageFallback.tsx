@@ -15,6 +15,7 @@ const ImageFallback: FC<IImageFallbackProps> = ({ width, height }) => {
         width,
         height,
         backgroundColor: theme.colors.grey_light,
+        borderRadius: "0.5rem",
       }}
     ></div>
   );
