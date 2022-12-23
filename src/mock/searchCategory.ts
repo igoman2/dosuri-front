@@ -4,11 +4,11 @@ export const SELECT_LIST = [
     key: "-view_count",
   },
   {
-    title: "후기 많은 순",
+    title: "후기 많은순",
     key: "-article_count",
   },
   {
-    title: "추천 많은 순",
+    title: "추천 많은순",
     key: "-up_count",
   },
   {
