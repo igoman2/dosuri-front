@@ -77,7 +77,6 @@ const DoctorCardWrapper = styled.div`
 
   .major {
     display: flex;
-    color: ${(props) => props.theme.colors.grey};
     gap: 10;
     font-size: ${(props) => props.theme.fontSizes.lg};
     line-height: ${(props) => props.theme.lineHeights.lg};
