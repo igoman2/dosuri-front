@@ -57,6 +57,8 @@ const PostCard: FC<IPostCardProps> = ({ review, bottom }) => {
     }
   };
 
+  const imageSource = review.article_attach.map((image) => image.path);
+
   return (
     <>
       <PostCardWrapper>
@@ -66,7 +68,9 @@ const PostCard: FC<IPostCardProps> = ({ review, bottom }) => {
         </div>
         <div className="hospital-name">{review.hospital}</div>
         <div className="swiper-layout">
-          <DoSwiper source={[]} />
+          <SwiperWrapper>
+            <DoSwiper source={imageSource} spaceBetween={6} slidesPerView={2} />
+          </SwiperWrapper>
         </div>
         <div className="post-comment">
           <div
@@ -137,5 +141,17 @@ const PostCardWrapper = styled.div`
     color: ${(props) => props.theme.colors.grey};
     font-size: ${(props) => props.theme.fontSizes.lg};
     line-height: ${(props) => props.theme.lineHeights.lg};
+  }
+`;
+
+const SwiperWrapper = styled.div`
+  div {
+    position: relative;
+    width: 100%;
+    height: 11rem;
+  }
+
+  .swiper-slide {
+    width: 15rem !important;
   }
 `;

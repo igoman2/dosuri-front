@@ -17,7 +17,7 @@ const PostBottom: FC<IPostBottomProps> = ({ post }) => {
           <span>{post.heart}</span>
         </div>
         <div className="comment">
-          <Icon name="comment" />
+          <Icon name="comment" width="17" height="17" />
           <span>{post.comment}</span>
         </div>
       </div>

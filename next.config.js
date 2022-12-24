@@ -9,7 +9,13 @@ const nextConfig = {
     emotion: true,
   },
   images: {
-    domains: ["dosuri-images.s3.ap-northeast-2.amazonaws.com"],
+    domains: [
+      "diskall.co.kr",
+      "dosuri-images.s3.ap-northeast-2.amazonaws.com",
+      "img.hankyung.com",
+      "img.freepik.com",
+      "www.medigatenews.com",
+    ],
   },
 
   // async rewrites() {

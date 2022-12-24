@@ -62,9 +62,10 @@ export interface IHospitalTreatmentsResponse {
 export interface IHospitalReviewsResult {
   uuid: string;
   user: {
-    nickname: string;
     uuid: string;
+    nickname: string;
   };
+  comment_count: number;
   article_type: string;
   up_count: number;
   view_count: number;
@@ -77,6 +78,7 @@ export interface IHospitalReviewsResult {
     created_at: string;
   }[];
 }
+
 export interface IHospitalReviewsResponse {
   count: number;
   next: string;
@@ -145,4 +147,11 @@ export interface IHospitalInfoResponse {
   next: string;
   previous: string;
   results: IHospitalInfoResult[];
+}
+
+export interface IHotCommunityResponse {
+  count: number;
+  next: string;
+  previous: string;
+  results: IHospitalReviewsResult[];
 }

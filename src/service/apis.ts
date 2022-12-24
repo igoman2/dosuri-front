@@ -8,6 +8,7 @@ import {
   IHospitalInfoResponse,
   IHospitalReviewsResponse,
   IHospitalTreatmentsResponse,
+  IHotCommunityResponse,
   IToggleHospitalThumbup,
 } from "./types";
 
@@ -86,6 +87,13 @@ export const toggleHospitalThumbup = async (data: {
 export const getHospitalInfoHome = async () => {
   const response = await api.get<IHospitalInfoHomeResponse>(
     `hospital/v1/hospitals/home`
+  );
+  return response.data;
+};
+
+export const getHotCommunity = async () => {
+  const response = await api.get<IHotCommunityResponse>(
+    `community/v1/community/hot-articles`
   );
   return response.data;
 };

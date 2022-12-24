@@ -1,17 +1,17 @@
+import { IHospitalInfoResult, IHospitalReviewsResult } from "@/service/types";
 import React, { useEffect } from "react";
+import { getHospitalInfoHome, getHotCommunity } from "@/service/apis";
 
 import Button from "@/components/Button";
 import { GetServerSideProps } from "next";
 import Header from "@/components/Layout/Header";
 import HospitalCard from "@/components/Card/HospitalCard";
-import { IHospitalInfoResult } from "@/service/types";
 import Icon from "@/util/Icon";
 import Layout from "@/components/Layout";
 import Link from "next/link";
 import { Post } from "@/mock/posts";
 import PostCard from "@/components/Card/PostCard";
 import { getCookie } from "cookies-next";
-import { getHospitalInfoHome } from "@/service/apis";
 import { locationState } from "@/store/location";
 import styled from "@emotion/styled";
 import useAuth from "@/hooks/useAuth";
@@ -33,21 +33,31 @@ const Home = () => {
     });
   }, [location]);
 
-  const renderPostBottom = (post: Post) => {
+  const renderPostBottom = (review: IHospitalReviewsResult) => {
     return (
       <PostBottom>
         <div className="post-bottom">
           <div className="heart">
             <Icon name="heart" width="20" height="20" />
-            <span>좋아요</span>
+            <span>{review.up_count}</span>
+          </div>
+
+          <div className="comment">
+            <Icon name="comment" width="20" height="20" />
+            <span>{review.article_attach.length}</span>
           </div>
         </div>
       </PostBottom>
     );
   };
 
-  const { data } = useQuery("getHospitalList-home", getHospitalInfoHome);
-  if (!data) {
+  const { data: hospitalList } = useQuery(
+    "getHospitalList",
+    getHospitalInfoHome
+  );
+  const { data: hotCommunity } = useQuery("getHotCommunity", getHotCommunity);
+
+  if (!hospitalList || !hotCommunity) {
     return;
   }
 
@@ -67,7 +77,7 @@ const Home = () => {
           {isLoggedIn ? "내 주변 TOP 병원" : "도수리 TOP 병원"}
         </div>
 
-        {data.top_hospitals.map((hospital: IHospitalInfoResult, i) => (
+        {hospitalList.top_hospitals.map((hospital: IHospitalInfoResult, i) => (
           <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
             <a>
               <HospitalCard hospitalInfo={hospital} />
@@ -105,7 +115,7 @@ const Home = () => {
           새로 생긴 병원
         </div>
 
-        {data.new_hospitals.map((hospital: IHospitalInfoResult, i) => (
+        {hospitalList.new_hospitals.map((hospital: IHospitalInfoResult, i) => (
           <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
             <a>
               <HospitalCard hospitalInfo={hospital} />
@@ -128,13 +138,15 @@ const Home = () => {
           가격이 착한 병원
         </div>
 
-        {data.good_price_hospitals.map((hospital: IHospitalInfoResult, i) => (
-          <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
-            <a>
-              <HospitalCard hospitalInfo={hospital} />
-            </a>
-          </Link>
-        ))}
+        {hospitalList.good_price_hospitals.map(
+          (hospital: IHospitalInfoResult, i) => (
+            <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+              <a>
+                <HospitalCard hospitalInfo={hospital} />
+              </a>
+            </Link>
+          )
+        )}
       </div>
 
       <div
@@ -151,13 +163,15 @@ const Home = () => {
           후기가 좋은 병원
         </div>
 
-        {data.good_review_hospitals.map((hospital: IHospitalInfoResult, i) => (
-          <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
-            <a>
-              <HospitalCard hospitalInfo={hospital} />
-            </a>
-          </Link>
-        ))}
+        {hospitalList.good_review_hospitals.map(
+          (hospital: IHospitalInfoResult, i) => (
+            <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+              <a>
+                <HospitalCard hospitalInfo={hospital} />
+              </a>
+            </Link>
+          )
+        )}
       </div>
 
       <div
@@ -173,9 +187,9 @@ const Home = () => {
         >
           HOT 도수톡
         </div>
-        {/* {posts.map((post, i) => (
-          <PostCard post={post} key={i} bottom={renderPostBottom(post)} />
-        ))} */}
+        {hotCommunity.results.map((review, i) => (
+          <PostCard review={review} key={i} bottom={renderPostBottom(review)} />
+        ))}
       </div>
     </Layout>
   );
@@ -189,11 +203,16 @@ const PostBottom = styled.div`
     gap: 1rem;
     font-size: ${(props) => props.theme.fontSizes.md};
     line-height: ${(props) => props.theme.lineHeights.md};
-    color: ${(props) => props.theme.colors.grey};
 
     .heart {
       display: flex;
-      gap: 0.6rem;
+      gap: 0.3rem;
+      align-items: center;
+    }
+
+    .comment {
+      display: flex;
+      gap: 0.3rem;
       align-items: center;
     }
   }
