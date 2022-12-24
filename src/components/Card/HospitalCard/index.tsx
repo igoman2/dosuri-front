@@ -13,24 +13,29 @@ const HospitalCard: FC<IHospitalCardProps> = ({ hospitalInfo }) => {
   return (
     <div
       css={{
-        minWidth: "9rem",
         display: "flex",
         marginTop: "1rem",
       }}
     >
-      {hospitalInfo.images.length === 0 ? (
-        <ImageFallback width="9rem" height="9rem" />
-      ) : (
-        <Image
-          style={{
-            borderRadius: "0.5rem",
-          }}
-          src={hospitalInfo.images[0]?.url}
-          width={90}
-          height={90}
-          alt="hospital-image"
-        />
-      )}
+      <div
+        css={{
+          minWidth: "9rem",
+        }}
+      >
+        {hospitalInfo.images.length === 0 ? (
+          <ImageFallback width="9rem" height="9rem" />
+        ) : (
+          <Image
+            style={{
+              borderRadius: "0.5rem",
+            }}
+            src={hospitalInfo.images[0]?.url}
+            width={90}
+            height={90}
+            alt="hospital-image"
+          />
+        )}
+      </div>
 
       <Description hospitalInfo={hospitalInfo} size="md" />
     </div>

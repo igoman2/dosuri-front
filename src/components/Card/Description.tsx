@@ -20,7 +20,7 @@ const Description: FC<IDescriptionProps> = ({ hospitalInfo, size }) => {
         justifyContent: "center",
         gap: "0.5rem",
         marginLeft: "1rem",
-        width: "100%",
+        minWidth: 0,
       }}
     >
       <div
@@ -31,7 +31,6 @@ const Description: FC<IDescriptionProps> = ({ hospitalInfo, size }) => {
           whiteSpace: "nowrap",
           overflow: "hidden",
           textOverflow: "ellipsis",
-          width: "100%",
         }}
       >
         {hospitalInfo.name}
