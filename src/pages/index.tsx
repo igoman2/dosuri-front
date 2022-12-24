@@ -52,7 +52,7 @@ const Home = () => {
   }
 
   return (
-    <Layout header={<Header left={true} center={true} right={true} />}>
+    <Layout header={<Header left={true} center={true} />}>
       <div
         css={{
           marginBottom: "2.5rem",

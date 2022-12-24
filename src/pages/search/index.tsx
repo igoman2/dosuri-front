@@ -10,7 +10,7 @@ import { Suspense } from "react";
 
 const Home = () => {
   return (
-    <Layout header={<Header left={true} center={true} right={true} />}>
+    <Layout header={<Header left={true} center={true} />}>
       <NewReviewSection />
       <ManyReviewSection />
       <Suspense fallback={<Spinner />}>

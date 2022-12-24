@@ -7,7 +7,6 @@ import Link from "next/link";
 import ListTab from "@/components/UI/ListTab";
 import React from "react";
 import styled from "@emotion/styled";
-import withAuth from "../withauth";
 
 const tabList = [
   {
@@ -55,7 +54,7 @@ const tabList = [
 
 const Mypage = () => {
   return (
-    <Layout header={<Header left={true} center={true} right={true} />}>
+    <Layout header={<Header left={true} center={true} />}>
       <ProfileSectionWrapper>
         <div className="nickname">닉네임최대열글자이하</div>
         <div className="edit-profile">
