@@ -184,21 +184,21 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
               />
             )}
           </Suspense>
-
-          <SaleButtonWrapper>
-            <Link href="/insurance-register">
-              <a>
-                <Button
-                  text="도수리에서 최대 70% 싸게 도수치료 받기"
-                  width="100%"
-                  borderRadius="0.3rem"
-                  backgroundColor={theme.colors.purple_light}
-                  bold
-                />
-              </a>
-            </Link>
-          </SaleButtonWrapper>
         </div>
+        <SaleButtonWrapper>
+          <Link href="/insurance-register">
+            <a>
+              <Button
+                text="도수리에서 최대 70% 싸게 도수치료 받기"
+                width="100%"
+                height="5.2rem"
+                borderRadius="0.3rem"
+                backgroundColor={theme.colors.purple_light}
+                bold
+              />
+            </a>
+          </Link>
+        </SaleButtonWrapper>
       </Hospital>
     </Layout>
   );
@@ -215,6 +215,7 @@ const Hospital = styled.div`
 
   .hospital-content {
     padding: 0 2rem;
+    margin-bottom: 8.7rem;
   }
 
   .head {
@@ -237,7 +238,13 @@ const Hospital = styled.div`
 `;
 
 const SaleButtonWrapper = styled.div`
-  margin-top: 2rem;
+  position: fixed;
+  bottom: 0;
+  margin: 0 2rem;
+  width: calc(100% - 4rem);
+  margin: 0 auto;
+  left: 0;
+  right: 0;
   padding: 1rem 0;
 `;
 

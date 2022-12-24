@@ -109,6 +109,10 @@ const Content = styled.div`
     font-size: ${(props) => props.theme.fontSizes.lg};
     line-height: ${(props) => props.theme.lineHeights.lg};
 
+    &:last-child {
+      margin-bottom: 0;
+    }
+
     &-title {
       color: ${(props) => props.theme.colors.purple};
       font-weight: 700;

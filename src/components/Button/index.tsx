@@ -11,6 +11,7 @@ interface IButtonProps {
   border?: string;
   borderRadius?: string;
   width?: string;
+  height?: string;
   onClick?: () => void;
   type?: "button" | "submit" | "reset" | undefined;
   disabled?: boolean;
@@ -29,6 +30,7 @@ const Button: FC<IButtonProps> = ({
   onClick,
   type,
   width,
+  height,
   disabled,
   iconName,
   bold,
@@ -61,6 +63,7 @@ const Button: FC<IButtonProps> = ({
       : "0.5rem"};
     border: ${border ? border : 0};
     width: ${width ? width : "auto"};
+    height: ${height ? height : "auto"};
     outline: 0;
     cursor: pointer;
     font-weight: ${bold ? 700 : 400};
