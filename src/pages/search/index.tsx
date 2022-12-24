@@ -8,7 +8,7 @@ import Layout from "@/components/Layout";
 import ManyReviewSection from "@/components/pages/Search/ManyReviewSection";
 import NewReviewSection from "@/components/pages/Search/NewReviewSection";
 import Spinner from "@/components/UI/Spinner";
-import { scrollState } from "@/store/scroll";
+import { scrollState } from "@/store/searchOption";
 import { useRecoilState } from "recoil";
 
 const Home = () => {

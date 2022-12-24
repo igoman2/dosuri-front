@@ -1,21 +1,20 @@
 import { ListItem, SELECT_LIST } from "@/mock/searchCategory";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 import { BottomSheet } from "react-spring-bottom-sheet";
-import ChevronDowm from "@/public/assets/chevron-down.png";
 import Divider from "@/components/UI/Divider";
 import HospitalCard from "@/components/Card/HospitalCard";
 import { IHospitalInfoResponse } from "@/service/types";
 import Icon from "@/util/Icon";
-import Image from "next/image";
 import ImageTextView from "@/components/UI/ImageTextView";
 import InfiniteScroll from "react-infinite-scroller";
 import Link from "next/link";
 import api from "@/service/axiosConfig";
 import { locationState } from "@/store/location";
+import { searchFilterState } from "@/store/searchOption";
 import styled from "@emotion/styled";
 import { useInfiniteQuery } from "react-query";
-import { useRecoilValue } from "recoil";
 import { useTheme } from "@emotion/react";
 
 type LoadMore = (page: number) => void;
@@ -23,7 +22,8 @@ type LoadMore = (page: number) => void;
 const AllFilterSection = () => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [category, setCategory] = useState(SELECT_LIST[0]);
+  const [searchFilter, setSearchFilter] = useRecoilState(searchFilterState);
+  const [category, setCategory] = useState(searchFilter);
   const location = useRecoilValue(locationState);
 
   function onDismiss() {
@@ -36,6 +36,10 @@ const AllFilterSection = () => {
       setCategory(item);
     }, 100);
   };
+
+  useEffect(() => {
+    setSearchFilter(category);
+  }, [category]);
 
   const initialUrl = useMemo(() => {
     if (category.key === "distance") {
