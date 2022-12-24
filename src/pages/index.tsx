@@ -76,7 +76,7 @@ const Home = () => {
         ))}
       </div>
       <LogginBanner>
-        {isLoggedIn && (
+        {!isLoggedIn && (
           <Link href="/login">
             <a>
               <Button
