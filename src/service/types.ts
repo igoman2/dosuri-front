@@ -1,3 +1,5 @@
+import { Attach, Comments, User } from "@/types/community";
+
 export interface GetUserAuthParams {
   token: string;
   type: string;
@@ -154,4 +156,17 @@ export interface IHotCommunityResponse {
   next: string;
   previous: string;
   results: IHospitalReviewsResult[];
+}
+
+export interface ICommunityPostDetailResponse {
+  uuid: string;
+  user: User;
+  article_type: string;
+  up_count: number;
+  view_count: number;
+  created_at: string;
+  hospital: string;
+  content: string;
+  article_attach: Attach[];
+  article_comment: Comments[];
 }

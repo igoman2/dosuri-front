@@ -1,32 +1,34 @@
-import { Comment } from "@/mock/comment";
-import styled from "@emotion/styled";
 import React, { FC } from "react";
+
 import CommentBox from "./CommentBox";
+import { Comments } from "@/types/community";
+import styled from "@emotion/styled";
+import { Comment as type } from "@/mock/comment";
 
 interface ICommentProps {
-  comment: Comment;
+  comments: Comments[];
 }
 
-const Comment: FC<ICommentProps> = ({ comment }) => {
+const Comment: FC<ICommentProps> = ({ comments }) => {
   return (
     <CommentCardWrapper>
       <>
-        {comment.replyList.map((reply, i) => {
+        {comments.map((comment, i) => {
           return (
             <div key={i}>
               <CommentBox
-                nickname={reply.nickname}
-                registered={reply.registered}
-                content={reply.content}
+                nickname={comment.user.nickname}
+                registered={comment.created_at}
+                content={comment.content}
               >
                 <div className="content">
-                  {reply.comments.map((comment, i) => {
+                  {comment.article_thread.map((thread, i) => {
                     return (
                       <div className="reply-wrapper" key={i}>
                         <CommentBox
-                          nickname={comment.writer}
-                          registered={comment.registered}
-                          content={comment.content}
+                          nickname={thread.user.nickname}
+                          registered={thread.created_at}
+                          content={thread.content}
                         />
                       </div>
                     );

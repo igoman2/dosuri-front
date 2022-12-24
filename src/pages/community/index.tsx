@@ -3,13 +3,16 @@ import React, { useState } from "react";
 import Button from "@/components/Button";
 import Float from "@/components/UI/Float";
 import Header from "@/components/Layout/Header";
+import { IHospitalReviewsResult } from "@/service/types";
+import Icon from "@/util/Icon";
 import Layout from "@/components/Layout";
 import Link from "next/link";
-import PostBottom from "@/components/Card/PostCard/PostBottom";
+import PostBottom from "@/components/UI/emotion/PostBottom";
 import PostCard from "@/components/Card/PostCard";
-import { posts } from "@/mock/posts";
+import { getCommunityList } from "@/service/apis";
 import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
+import { useQuery } from "react-query";
 import { useTheme } from "@emotion/react";
 
 const Tablist = ["전체보기", "치료후기만 보기", "질문/상담만 보기"];
@@ -21,6 +24,30 @@ const Community = () => {
 
   const onTabClick = (tab: string) => {
     setCurrentTab(tab);
+  };
+
+  const { data } = useQuery("getCommunityList", getCommunityList);
+
+  if (!data) {
+    return;
+  }
+
+  const renderPostBottom = (review: IHospitalReviewsResult) => {
+    return (
+      <PostBottom>
+        <div className="post-bottom">
+          <div className="heart">
+            <Icon name="heart" width="20" height="20" />
+            <span>{review.up_count}</span>
+          </div>
+
+          <div className="comment">
+            <Icon name="comment" width="20" height="20" />
+            <span>{review.article_attach.length}</span>
+          </div>
+        </div>
+      </PostBottom>
+    );
   };
 
   return (
@@ -48,13 +75,13 @@ const Community = () => {
           </ButtonWrapper>
         </div>
 
-        {/* {posts.map((post, i) => (
-          <Link href={`community/${post.id}`} key={i}>
+        {data.results.map((review, i) => (
+          <Link href={`community/${review.uuid}`} key={i}>
             <a>
-              <PostCard post={post} bottom={<PostBottom post={post} />} />
+              <PostCard review={review} bottom={renderPostBottom(review)} />
             </a>
           </Link>
-        ))} */}
+        ))}
 
         <Float scrollDir={scrollDir} distance="8.5rem" />
       </>

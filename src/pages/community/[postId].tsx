@@ -1,14 +1,28 @@
+import React, { FC } from "react";
+
 import Comment from "@/components/Comment";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Icon from "@/util/Icon";
 import Layout from "@/components/Layout";
+import { NextPageContext } from "next";
 import PostCard from "@/components/Card/PostCard";
-import React from "react";
-import { comment } from "@/mock/comment";
-import { posts } from "@/mock/posts";
+import { getCommunityPostDetail } from "@/service/apis";
 import styled from "@emotion/styled";
+import { useQuery } from "react-query";
 
-const Post = () => {
+interface IPostProps {
+  postId: string;
+}
+
+const Post: FC<IPostProps> = ({ postId }) => {
+  const { data } = useQuery("getCommunityPostDetail", () =>
+    getCommunityPostDetail(postId)
+  );
+
+  if (!data) {
+    return null;
+  }
+
   const renderPostBottom = () => {
     return (
       <PostBottom>
@@ -25,10 +39,8 @@ const Post = () => {
   return (
     <Layout header={<HeaderDepth />} footer={false}>
       <>
-        {/* {[posts[0]].map((post, i) => (
-          <PostCard post={post} key={i} bottom={renderPostBottom()} />
-        ))} */}
-        <Comment comment={comment} />
+        <PostCard review={data} bottom={renderPostBottom()} />
+        <Comment comments={data.article_comment} />
       </>
     </Layout>
   );
@@ -51,3 +63,13 @@ const PostBottom = styled.div`
     }
   }
 `;
+
+export const getServerSideProps = async (context: NextPageContext) => {
+  const { query } = context;
+  const { postId } = query;
+  return {
+    props: {
+      postId,
+    },
+  };
+};

@@ -3,15 +3,12 @@ import React, { useEffect } from "react";
 import { getHospitalInfoHome, getHotCommunity } from "@/service/apis";
 
 import Button from "@/components/Button";
-import { GetServerSideProps } from "next";
 import Header from "@/components/Layout/Header";
 import HospitalCard from "@/components/Card/HospitalCard";
 import Icon from "@/util/Icon";
 import Layout from "@/components/Layout";
 import Link from "next/link";
-import { Post } from "@/mock/posts";
 import PostCard from "@/components/Card/PostCard";
-import { getCookie } from "cookies-next";
 import { locationState } from "@/store/location";
 import styled from "@emotion/styled";
 import useAuth from "@/hooks/useAuth";

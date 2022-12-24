@@ -1,12 +1,15 @@
+import {
+  ICommunityPostDetailResponse,
+  IHospitalReviewsResult,
+} from "@/service/types";
 import React, { FC, ReactElement, useEffect, useRef, useState } from "react";
 
 import Divider from "@/components/UI/Divider";
 import DoSwiper from "@/components/DoSwiper";
-import { IHospitalReviewsResult } from "@/service/types";
 import styled from "@emotion/styled";
 
 interface IPostCardProps {
-  review: IHospitalReviewsResult;
+  review: IHospitalReviewsResult | ICommunityPostDetailResponse;
   bottom: ReactElement;
 }
 
