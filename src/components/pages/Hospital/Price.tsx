@@ -186,7 +186,7 @@ const PriceWrapper = styled.div`
           text-align: start;
           width: 40%;
 
-          &:first-child {
+          &:first-of-type {
             width: 29%;
           }
 
@@ -210,7 +210,7 @@ const PriceWrapper = styled.div`
           width: 40%;
           padding-top: 1.5rem;
 
-          &:first-child {
+          &:first-of-type {
             width: 29%;
           }
 
