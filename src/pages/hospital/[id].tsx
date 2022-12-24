@@ -242,6 +242,7 @@ const SaleButtonWrapper = styled.div`
   bottom: 0;
   margin: 0 2rem;
   width: calc(100% - 4rem);
+  max-width: 40rem;
   margin: 0 auto;
   left: 0;
   right: 0;
