@@ -116,7 +116,7 @@ const RegisterForm: React.FC<{}> = () => {
   const CustomIcon = () => {
     return (
       <div css={{ cursor: "pointer" }}>
-        <Icon name={`chevron`} />
+        <Icon name={`chevron`} width="1.6rem" height="1.6rem" />
       </div>
     );
   };

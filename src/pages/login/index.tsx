@@ -1,9 +1,6 @@
 import { css, useTheme } from "@emotion/react";
 
-import AppleLogin from "@/util/apple";
-import Google from "@/components/Oauth/Google";
 import Icon from "@/util/Icon";
-import Image from "next/image";
 import Kakao from "@/components/Oauth/Kakao";
 import React from "react";
 
