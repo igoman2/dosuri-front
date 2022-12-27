@@ -13,9 +13,14 @@ export const getHotCommunity = async () => {
   return response.data;
 };
 
-export const getCommunityList = async () => {
+export const getCommunityList = async (articleType?: string) => {
   const response = await api.get<IHotCommunityResponse>(
-    `/community/v1/community/articles`
+    `/community/v1/community/articles`,
+    {
+      params: {
+        article_type: articleType,
+      },
+    }
   );
   return response.data;
 };

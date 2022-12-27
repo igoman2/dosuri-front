@@ -15,18 +15,42 @@ import useDirection from "@/hooks/useDirection";
 import { useQuery } from "react-query";
 import { useTheme } from "@emotion/react";
 
-const Tablist = ["전체보기", "치료후기만 보기", "질문/상담만 보기"];
+const Tablist: Tab[] = [
+  {
+    title: "전체보기",
+    value: "all",
+  },
+  {
+    title: "치료후기만 보기",
+    value: "review",
+  },
+  {
+    title: "질문/상담만 보기",
+    value: "question",
+  },
+];
+
+type Tab = {
+  title: "전체보기" | "치료후기만 보기" | "질문/상담만 보기";
+  value: "all" | "review" | "question";
+};
 
 const Community = () => {
   const theme = useTheme();
-  const [currentTab, setCurrentTab] = useState<string>("전체보기");
+  const [currentTab, setCurrentTab] = useState<Tab>(Tablist[0]);
   const [scrollDir] = useDirection();
 
-  const onTabClick = (tab: string) => {
+  const onTabClick = (tab: Tab) => {
     setCurrentTab(tab);
   };
 
-  const { data } = useQuery("getCommunityList", getCommunityList);
+  const { data } = useQuery(["getCommunityList", currentTab], () => {
+    if (currentTab.value === "all") {
+      return getCommunityList();
+    } else {
+      return getCommunityList(currentTab.value);
+    }
+  });
 
   if (!data) {
     return;
@@ -58,13 +82,15 @@ const Community = () => {
             {Tablist.map((tab, i) => (
               <Button
                 key={i}
-                text={tab}
+                text={tab.title}
                 backgroundColor={theme.colors.white}
                 color={
-                  tab === currentTab ? theme.colors.purple : theme.colors.grey
+                  tab.title === currentTab.title
+                    ? theme.colors.purple
+                    : theme.colors.grey
                 }
                 border={
-                  tab === currentTab
+                  tab.title === currentTab.title
                     ? `0.1rem solid ${theme.colors.purple}`
                     : `0.1rem solid ${theme.colors.grey}`
                 }
