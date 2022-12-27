@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { IHospitalInfoResponse, IHospitalInfoResult } from "@/service/types";
 import { TabItem, TabList } from "@/mock/tabList";
 
@@ -13,9 +13,14 @@ import Tab from "@/components/Tab";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
+import { NextPageContext } from "next";
 
-const SearchResult = () => {
-  const [inputText, setInputText] = useState("");
+interface ISearchResultProps {
+  keyword: string;
+}
+
+const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
+  const [inputText, setInputText] = useState(keyword);
   const [currentTab, setCurrentTab] = useState<TabItem>(TabList[0]);
   const router = useRouter();
   const theme = useTheme();
@@ -185,3 +190,13 @@ const MoreButton = styled.div`
   align-items: center;
   gap: 0.5rem;
 `;
+
+export const getServerSideProps = async (context: NextPageContext) => {
+  const { query } = context;
+  const { keyword } = query;
+  return {
+    props: {
+      keyword,
+    },
+  };
+};
