@@ -9,7 +9,7 @@ import Layout from "@/components/Layout";
 import Link from "next/link";
 import PostBottom from "@/components/UI/emotion/PostBottom";
 import PostCard from "@/components/Card/PostCard";
-import { getCommunityList } from "@/service/apis";
+import { getCommunityList } from "@/service/apis/community";
 import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
 import { useQuery } from "react-query";

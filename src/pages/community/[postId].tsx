@@ -6,7 +6,7 @@ import Icon from "@/util/Icon";
 import Layout from "@/components/Layout";
 import { NextPageContext } from "next";
 import PostCard from "@/components/Card/PostCard";
-import { getCommunityPostDetail } from "@/service/apis";
+import { getCommunityPostDetail } from "@/service/apis/community";
 import styled from "@emotion/styled";
 import { useQuery } from "react-query";
 

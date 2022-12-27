@@ -3,7 +3,7 @@ import {
   getHospitalInfo,
   getHospitalTreatments,
   toggleHospitalThumbup,
-} from "@/service/apis";
+} from "@/service/apis/hospital";
 import { useMutation, useQuery } from "react-query";
 
 import Button from "@/components/Button";

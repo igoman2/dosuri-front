@@ -1,6 +1,5 @@
 import { IHospitalInfoResult, IHospitalReviewsResult } from "@/service/types";
 import React, { useEffect } from "react";
-import { getHospitalInfoHome, getHotCommunity } from "@/service/apis";
 
 import Button from "@/components/Button";
 import Header from "@/components/Layout/Header";
@@ -9,6 +8,8 @@ import Icon from "@/util/Icon";
 import Layout from "@/components/Layout";
 import Link from "next/link";
 import PostCard from "@/components/Card/PostCard";
+import { getHospitalInfoHome } from "@/service/apis/hospital";
+import { getHotCommunity } from "@/service/apis/community";
 import { locationState } from "@/store/location";
 import styled from "@emotion/styled";
 import useAuth from "@/hooks/useAuth";

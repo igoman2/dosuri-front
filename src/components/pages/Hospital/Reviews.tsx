@@ -1,12 +1,11 @@
 import { IGetHospitalInfo, IHospitalReviewsResult } from "@/service/types";
-import { Post, posts } from "@/mock/posts";
 import React, { FC } from "react";
 
 import { EmptyText } from "@/components/UI/emotion/EmptyText";
 import Icon from "@/util/Icon";
 import PostBottom from "@/components/UI/emotion/PostBottom";
 import PostCard from "@/components/Card/PostCard";
-import { getHospitalReviews } from "@/service/apis";
+import { getHospitalReviews } from "@/service/apis/community";
 import styled from "@emotion/styled";
 import { useQuery } from "react-query";
 

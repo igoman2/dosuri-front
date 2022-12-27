@@ -32,7 +32,8 @@
     "react-table": "^7.8.0",
     "recoil": "^0.7.5",
     "swiper": "^8.4.3",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",

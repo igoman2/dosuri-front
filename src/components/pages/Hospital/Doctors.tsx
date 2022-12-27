@@ -3,7 +3,7 @@ import React, { FC, useMemo } from "react";
 import DoctorCard from "@/components/Card/DoctorCard";
 import { EmptyText } from "@/components/UI/emotion/EmptyText";
 import { IGetHospitalInfo } from "@/service/types";
-import { getDoctorList } from "@/service/apis";
+import { getDoctorList } from "@/service/apis/hospital";
 import styled from "@emotion/styled";
 import { useQuery } from "react-query";
 

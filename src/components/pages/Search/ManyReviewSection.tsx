@@ -1,7 +1,7 @@
 import HospitalCard from "@/components/Card/HospitalCard";
 import Link from "next/link";
 import React from "react";
-import { getHospitalList } from "@/service/apis";
+import { getHospitalList } from "@/service/apis/hospital";
 import { useQuery } from "react-query";
 import { useTheme } from "@emotion/react";
 

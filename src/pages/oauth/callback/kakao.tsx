@@ -4,22 +4,27 @@ import React, { useEffect } from "react";
 
 import { GetServerSideProps } from "next";
 import Spinner from "@/components/UI/Spinner";
-import { getUserAuth } from "@/service/apis";
+import { getUserAuth } from "@/service/apis/user";
 import { useRouter } from "next/router";
 
 interface IKakaoProps {
   accessToken: string;
   refreshToken: string;
+  isNew: boolean;
 }
 
-const Kakao = ({ accessToken, refreshToken }: IKakaoProps) => {
+const Kakao = ({ accessToken, refreshToken, isNew }: IKakaoProps) => {
   const router = useRouter();
 
   useEffect(() => {
     document.cookie = `accessToken=${accessToken}; path=/;`;
     document.cookie = `refreshToken=${refreshToken}; path=/;`;
 
-    router.push("/");
+    if (isNew) {
+      router.push("register");
+    } else {
+      router.push("/");
+    }
   }, []);
 
   return <Spinner />;
@@ -38,12 +43,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       type: "kakao",
     });
 
-    const { access_token: accessToken, refresh_token: refreshToken } = resp;
+    const {
+      access_token: accessToken,
+      refresh_token: refreshToken,
+      is_new: isNew,
+    } = resp;
 
     return {
       props: {
         accessToken,
         refreshToken,
+        isNew,
       },
     };
   } catch (e) {

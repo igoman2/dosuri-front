@@ -1,27 +1,14 @@
 import {
-  GetUserAuthParams,
-  GetUserAuthResponse,
-  ICommunityPostDetailResponse,
   IGetDoctorList,
   IGetHospitalInfo,
   IGetHospitalListParams,
   IHospitalInfoHomeResponse,
   IHospitalInfoResponse,
-  IHospitalReviewsResponse,
   IHospitalTreatmentsResponse,
-  IHotCommunityResponse,
   IToggleHospitalThumbup,
-} from "./types";
+} from "../types";
 
-import api from "./axiosConfig";
-
-export const getUserAuth = async (params: GetUserAuthParams) => {
-  const response = await api.post<GetUserAuthResponse>("/user/v1/auth", {
-    token: params.token,
-    type: params.type,
-  });
-  return response.data;
-};
+import api from "../axiosConfig";
 
 export const getHospitalList = async (params?: IGetHospitalListParams) => {
   const response = await api.get<IHospitalInfoResponse>(
@@ -35,7 +22,7 @@ export const getHospitalList = async (params?: IGetHospitalListParams) => {
 
 export const getHospitalInfo = async (uuid: string) => {
   const response = await api.post<IGetHospitalInfo>(
-    `hospital/v1/hospitals/${uuid}`
+    `/hospital/v1/hospitals/${uuid}`
   );
   return response.data;
 };
@@ -43,18 +30,6 @@ export const getHospitalInfo = async (uuid: string) => {
 export const getHospitalTreatments = async (uuid: string) => {
   const response = await api.get<IHospitalTreatmentsResponse>(
     "/hospital/v1/hospital-treatments",
-    {
-      params: {
-        hospital: uuid,
-      },
-    }
-  );
-  return response.data;
-};
-
-export const getHospitalReviews = async (uuid: string) => {
-  const response = await api.get<IHospitalReviewsResponse>(
-    "/community/v1/community/articles",
     {
       params: {
         hospital: uuid,
@@ -88,27 +63,6 @@ export const toggleHospitalThumbup = async (data: {
 export const getHospitalInfoHome = async () => {
   const response = await api.get<IHospitalInfoHomeResponse>(
     `hospital/v1/hospitals/home`
-  );
-  return response.data;
-};
-
-export const getHotCommunity = async () => {
-  const response = await api.get<IHotCommunityResponse>(
-    `community/v1/community/hot-articles`
-  );
-  return response.data;
-};
-
-export const getCommunityList = async () => {
-  const response = await api.get<IHotCommunityResponse>(
-    `community/v1/community/articles`
-  );
-  return response.data;
-};
-
-export const getCommunityPostDetail = async (uuid: string) => {
-  const response = await api.get<ICommunityPostDetailResponse>(
-    `community/v1/community/articles/${uuid}`
   );
   return response.data;
 };
