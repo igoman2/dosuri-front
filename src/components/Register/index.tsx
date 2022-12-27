@@ -1,33 +1,42 @@
+import * as Yup from "yup";
+
 import { CSSObject, useTheme } from "@emotion/react";
-import {
-  Field,
-  FieldProps,
-  Form,
-  Formik,
-  FormikHelpers,
-  FormikProps,
-} from "formik";
-import { LOCATIONS, Location, do_si, gu_dong } from "./location";
+import { Field, useFormik, FormikProvider } from "formik";
+import { LOCATIONS, do_si } from "./location";
 import Select, {
   DropdownIndicatorProps,
   ValueContainerProps,
   components,
 } from "react-select";
 import { Symtom, Symtoms } from "@/mock/symtoms";
-import { useId, useState } from "react";
+import { FormEvent, useId, useState } from "react";
 
 import Button from "@/components/Button";
-import Chevron from "@/public/assets/Chevron.svg";
 import Icon from "@/util/Icon";
-import Image from "next/image";
+import { checkNicknameDuplication } from "@/service/apis/user";
 import styled from "@emotion/styled";
+import { useQuery } from "react-query";
 
 interface MyFormValues {
-  firstName: string;
+  nickname: string;
+  birthday: string;
+  phone: string;
+  gender: string;
+  location1: string;
+  location2: string;
+  symtoms: string[];
 }
 
 const RegisterForm: React.FC<{}> = () => {
-  const initialValues: MyFormValues = { firstName: "" };
+  const initialValues: MyFormValues = {
+    nickname: "",
+    birthday: "",
+    phone: "",
+    gender: "",
+    location1: "",
+    location2: "",
+    symtoms: [],
+  };
   const theme = useTheme();
   const [symtoms, setSymtoms] = useState<Symtom[]>(Symtoms);
   const [dosi, setDosi] = useState<string>();
@@ -35,14 +44,49 @@ const RegisterForm: React.FC<{}> = () => {
   const [isNicknameValid, setIsNicknameValid] = useState(false);
   const [didNicknameValidCheck, setDidNicknameValidCheck] = useState(false);
 
+  const formik = useFormik({
+    initialValues,
+    validationSchema: Yup.object({
+      nickname: Yup.string().min(2).max(15).required(),
+      phone: Yup.string().length(8).required(),
+      birthday: Yup.string().length(8).required(),
+      gender: Yup.string().required(),
+      location1: Yup.string().required(),
+      location2: Yup.string().required(),
+      symtoms: Yup.array().required(),
+    }),
+    onSubmit: () => {},
+  });
+
+  console.log(formik.values);
+
+  const { refetch } = useQuery(
+    ["nicknameDuplication", formik.values.nickname],
+    () => checkNicknameDuplication(formik.values.nickname),
+    {
+      enabled: false,
+      suspense: false,
+      onSuccess: (resp) => {
+        if (resp.status === 200) {
+          setIsNicknameValid(true);
+        } else {
+          setIsNicknameValid(false);
+        }
+        setDidNicknameValidCheck(true);
+      },
+    }
+  );
+
+  const onNicknameValidation = () => {
+    refetch();
+  };
+
+  const id1 = useId();
+  const id2 = useId();
   /**
    * ts 적용
    * https://stackoverflow.com/questions/66546842/add-typescript-types-to-react-select-onchange-function
    */
-
-  const onNicknameValidation = () => {
-    setDidNicknameValidCheck(true);
-  };
 
   const onDoSiSelect = (selectedValue: any) => {
     setDosi(selectedValue.value);
@@ -52,7 +96,11 @@ const RegisterForm: React.FC<{}> = () => {
     setGudong(selectedValue.value);
   };
 
-  const onSymtomClick = (symtom: Symtom) => {
+  const onSymtomClick = (symtom: Symtom, formikState: typeof formik) => {
+    formikState.setFieldValue("symtoms", [
+      ...formik.values.symtoms,
+      symtom.title,
+    ]);
     setSymtoms((prev) => {
       const selectedIndex = prev.findIndex((s) => s.title === symtom.title);
       const currentStatus = prev[selectedIndex].selected;
@@ -135,16 +183,14 @@ const RegisterForm: React.FC<{}> = () => {
     );
   };
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
     <FormWrapper>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values, actions) => {
-          console.log({ values, actions });
-          actions.setSubmitting(false);
-        }}
-      >
-        <Form>
+      <FormikProvider value={formik}>
+        <form onSubmit={handleSubmit}>
           <div className="form-section">
             <div className="divider nickname">
               <label className="label" htmlFor="nickname">
@@ -152,24 +198,35 @@ const RegisterForm: React.FC<{}> = () => {
               </label>
               <div className="input-section">
                 <Field
-                  className="field"
+                  className={
+                    "field" +
+                    (formik.errors.nickname && formik.touched.nickname
+                      ? " is-invalid"
+                      : "")
+                  }
                   id="nickname"
                   name="nickname"
                   placeholder="2글자 이상 10글자 이하"
+                  onChange={formik.handleChange}
+                  value={formik.values.nickname}
                 />
                 <Button
                   text="중복확인"
                   backgroundColor={theme.colors.purple_light2}
-                  type="submit"
+                  disabled={
+                    formik.values.nickname.length === 0 ||
+                    !!formik.errors.nickname
+                  }
                   onClick={onNicknameValidation}
                 />
               </div>
+
               <div className="noti">
                 {didNicknameValidCheck ? (
                   isNicknameValid ? (
-                    <div className=" valid">사용 가능한 닉네임입니다.</div>
+                    <div className="valid">사용 가능한 닉네임입니다.</div>
                   ) : (
-                    <div className=" invalid">사용 불가능한 닉네임입니다.</div>
+                    <div className="invalid">사용 불가능한 닉네임입니다.</div>
                   )
                 ) : (
                   <div className="invisible">dd</div>
@@ -181,13 +238,21 @@ const RegisterForm: React.FC<{}> = () => {
               <label className="label" htmlFor="phone">
                 핸드폰 번호
               </label>
+
               <div className="input-section phone">
                 <div className="phone-prefix">010</div>
                 <Field
-                  className="field"
+                  className={
+                    "field" +
+                    (formik.errors.phone && formik.touched.phone
+                      ? " is-invalid"
+                      : "")
+                  }
                   id="phone"
                   name="phone"
                   placeholder="숫자만 입력"
+                  onChange={formik.handleChange}
+                  value={formik.values.phone}
                 />
               </div>
             </div>
@@ -197,10 +262,17 @@ const RegisterForm: React.FC<{}> = () => {
                 생년월일
               </label>
               <Field
-                className="field"
+                className={
+                  "field" +
+                  (formik.errors.birthday && formik.touched.birthday
+                    ? " is-invalid"
+                    : "")
+                }
                 id="birthday"
                 name="birthday"
                 placeholder="예: 19901230"
+                onChange={formik.handleChange}
+                value={formik.values.birthday}
               />
             </div>
 
@@ -212,11 +284,21 @@ const RegisterForm: React.FC<{}> = () => {
                 aria-labelledby="my-radio-group"
               >
                 <label>
-                  <Field type="radio" name="picked" value="male" />
+                  <Field
+                    type="radio"
+                    name="gender"
+                    onChange={formik.handleChange}
+                    value="male"
+                  />
                   <span>남자</span>
                 </label>
                 <label>
-                  <Field type="radio" name="picked" value="female" />
+                  <Field
+                    type="radio"
+                    name="gender"
+                    onChange={formik.handleChange}
+                    value="female"
+                  />
                   <span>여자</span>
                 </label>
               </div>
@@ -227,7 +309,7 @@ const RegisterForm: React.FC<{}> = () => {
               <div className="select-section">
                 <Select
                   options={do_si.sort((a, b) => (a.label > b.label ? 1 : -1))}
-                  instanceId={useId()}
+                  instanceId={id1}
                   components={{
                     ValueContainer,
                     DropdownIndicator,
@@ -235,7 +317,10 @@ const RegisterForm: React.FC<{}> = () => {
                   }}
                   styles={colourStyles}
                   placeholder="시/도 선택"
-                  onChange={onDoSiSelect}
+                  onChange={(selectedOption: any) => {
+                    onDoSiSelect(selectedOption);
+                    formik.setFieldValue("location1", selectedOption.value);
+                  }}
                 />
                 <Select
                   isDisabled={!dosi}
@@ -249,7 +334,7 @@ const RegisterForm: React.FC<{}> = () => {
                         label: lo.label.replace(dosi as string, "").trim(),
                       };
                     })}
-                  instanceId={useId()}
+                  instanceId={id2}
                   components={{
                     ValueContainer,
                     DropdownIndicator,
@@ -257,7 +342,10 @@ const RegisterForm: React.FC<{}> = () => {
                   }}
                   styles={colourStyles}
                   placeholder="시/군/구 선택"
-                  onChange={onGuDongSelect}
+                  onChange={(selectedOption: any) => {
+                    onGuDongSelect(selectedOption);
+                    formik.setFieldValue("location2", selectedOption.value);
+                  }}
                 />
               </div>
             </div>
@@ -273,7 +361,7 @@ const RegisterForm: React.FC<{}> = () => {
                       backgroundColor={theme.colors.white}
                       color={theme.colors.purple}
                       border={`0.1rem solid ${theme.colors.purple}`}
-                      onClick={() => onSymtomClick(symtom)}
+                      onClick={() => onSymtomClick(symtom, formik)}
                     />
                   ) : (
                     <Button
@@ -282,18 +370,18 @@ const RegisterForm: React.FC<{}> = () => {
                       backgroundColor={theme.colors.white}
                       color={theme.colors.grey}
                       border={`0.1rem solid ${theme.colors.grey}`}
-                      onClick={() => onSymtomClick(symtom)}
+                      onClick={() => onSymtomClick(symtom, formik)}
                     />
                   )
                 )}
               </ButtonWrapper>
             </div>
             <div className="save-button-wrapper">
-              <Button text="도수리 시작하기" width="100%" disabled={true} />
+              <Button text="도수리 시작하기" width="100%" />
             </div>
           </div>
-        </Form>
-      </Formik>
+        </form>
+      </FormikProvider>
     </FormWrapper>
   );
 };
@@ -413,6 +501,10 @@ const FormWrapper = styled.div`
   .save-button-wrapper {
     padding: 1rem 0;
     width: 100%;
+  }
+
+  .is-invalid {
+    border: 1px solid red;
   }
 `;
 
