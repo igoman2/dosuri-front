@@ -3,15 +3,54 @@ import Button from "@/components/Button";
 import HeaderInsurance from "@/components/Layout/Header/Depth/HeaderInsurance";
 import Image from "next/image";
 import Layout from "@/components/Layout";
-import Link from "next/link";
 import React from "react";
 import WithInsuranceImage from "@/public/assets/with-insurance.png";
 import WithoutInsuranceImage from "@/public/assets/without-insurance.png";
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
+import { useMutation } from "react-query";
+import { applyInsurance } from "@/service/apis/user";
+import { useRouter } from "next/router";
+import { modalContentState, modalState } from "@/components/Modal/store";
+import { useSetRecoilState } from "recoil";
 
 const InsuranceRegister = () => {
   const theme = useTheme();
+  const router = useRouter();
+  const setModalContent = useSetRecoilState(modalContentState);
+  const setModalIsActive = useSetRecoilState(modalState);
+
+  const { mutate } = useMutation({
+    mutationFn: () => {
+      return applyInsurance();
+    },
+    onSuccess: () => {
+      router.push("/insurance-register/confirm");
+    },
+    onError: (e) => {
+      setModalIsActive({ isActive: true });
+
+      setModalContent({
+        title: "회원가입 페이지로 이동합니다.",
+        content: `보험 신청을 위해선 추가 회원 정보가 필요해요`,
+        actionLeft: {
+          text: "",
+          action: () => {},
+        },
+        actionRight: {
+          text: "확인",
+          action: () => {
+            setModalIsActive({ isActive: false });
+            router.push("/register");
+          },
+        },
+      });
+    },
+  });
+
+  const applyInsuranceHandler = () => {
+    mutate();
+  };
   return (
     <Layout header={<HeaderInsurance />} footer={false}>
       <Content>
@@ -57,15 +96,14 @@ const InsuranceRegister = () => {
         </div>
 
         <ButtonWrapper>
-          <Link href="/insurance-register">
-            <a>
-              <Button
-                text="터치 한번으로 실손보험 상담 신청하기"
-                width="100%"
-                backgroundColor={theme.colors.purple_light}
-              />
-            </a>
-          </Link>
+          <Button
+            text="터치 한번으로 실손보험 상담 신청하기"
+            width="100%"
+            borderRadius="3"
+            backgroundColor={theme.colors.purple_light}
+            bold
+            onClick={applyInsuranceHandler}
+          />
         </ButtonWrapper>
       </Content>
     </Layout>

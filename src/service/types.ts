@@ -171,3 +171,9 @@ export interface ICommunityPostDetailResponse {
   article_attach: Attach[];
   article_comment: Comments[];
 }
+
+export interface IApplyInsuranceResponse {
+  uuid: string;
+  insurance: string;
+  user: string;
+}

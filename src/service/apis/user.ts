@@ -1,9 +1,8 @@
 import {
   GetUserAuthParams,
   GetUserAuthResponse,
-  ICommunityPostDetailResponse,
+  IApplyInsuranceResponse,
 } from "../types";
-
 import api from "../axiosConfig";
 import { UserInfo } from "@/types/user";
 
@@ -21,6 +20,14 @@ export const checkNicknameDuplication = async (nickname: string) => {
       nickname,
     },
   });
+  return response;
+};
+
+export const applyInsurance = async () => {
+  const response = await api.post<IApplyInsuranceResponse>(
+    `/user/v1/insurance-user-assocs`,
+    {}
+  );
   return response;
 };
 
