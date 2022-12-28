@@ -1,4 +1,5 @@
-import { Attach, Comments, User } from "@/types/community";
+import { Attach, Comments } from "@/types/community";
+import { User } from "@/types/user";
 
 export interface GetUserAuthParams {
   token: string;
