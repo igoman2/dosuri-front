@@ -6,17 +6,24 @@ import { GetServerSideProps } from "next";
 import Spinner from "@/components/UI/Spinner";
 import { getUserAuth } from "@/service/apis/user";
 import { useRouter } from "next/router";
+import { userInfoState } from "@/store/user";
+import { useRecoilState } from "recoil";
 
 interface IKakaoProps {
+  uuid: string;
   accessToken: string;
   refreshToken: string;
   isNew: boolean;
 }
 
-const Kakao = ({ accessToken, refreshToken, isNew }: IKakaoProps) => {
+const Kakao = ({ uuid, accessToken, refreshToken, isNew }: IKakaoProps) => {
   const router = useRouter();
+  const [_, setUserInfo] = useRecoilState(userInfoState);
 
   useEffect(() => {
+    setUserInfo((prev) => {
+      return { ...prev, uuid };
+    });
     document.cookie = `accessToken=${accessToken}; path=/;`;
     document.cookie = `refreshToken=${refreshToken}; path=/;`;
 
@@ -43,7 +50,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       type: "kakao",
     });
 
+    console.log(resp);
     const {
+      user_uuid: uuid,
       access_token: accessToken,
       refresh_token: refreshToken,
       is_new: isNew,
@@ -51,6 +60,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     return {
       props: {
+        uuid,
         accessToken,
         refreshToken,
         isNew,

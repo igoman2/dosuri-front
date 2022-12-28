@@ -9,22 +9,27 @@ import Select, {
   components,
 } from "react-select";
 import { Symtom, Symtoms } from "@/mock/symtoms";
-import { FormEvent, useId, useState } from "react";
+import { useId, useState } from "react";
 
 import Button from "@/components/Button";
 import Icon from "@/util/Icon";
-import { checkNicknameDuplication } from "@/service/apis/user";
+import { checkNicknameDuplication, registerUser } from "@/service/apis/user";
 import styled from "@emotion/styled";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
+import { useRecoilState } from "recoil";
+import { userInfoState } from "@/store/user";
+import { useRouter } from "next/router";
+import { UserInfo } from "@/types/user";
+import { AxiosError } from "axios";
 
 interface MyFormValues {
   nickname: string;
   birthday: string;
   phone: string;
-  gender: string;
-  location1: string;
-  location2: string;
-  symtoms: string[];
+  sex: string;
+  largeArea: string;
+  smallArea: string;
+  symtoms: Symtom[];
 }
 
 const RegisterForm: React.FC<{}> = () => {
@@ -32,33 +37,78 @@ const RegisterForm: React.FC<{}> = () => {
     nickname: "",
     birthday: "",
     phone: "",
-    gender: "",
-    location1: "",
-    location2: "",
+    sex: "",
+    largeArea: "",
+    smallArea: "",
     symtoms: [],
   };
+  const router = useRouter();
   const theme = useTheme();
   const [symtoms, setSymtoms] = useState<Symtom[]>(Symtoms);
   const [dosi, setDosi] = useState<string>();
   const [gudong, setGudong] = useState<string>();
   const [isNicknameValid, setIsNicknameValid] = useState(false);
   const [didNicknameValidCheck, setDidNicknameValidCheck] = useState(false);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
+  const { mutate } = useMutation<UserInfo, AxiosError, UserInfo, unknown>(
+    (data) => registerUser(data),
+    {
+      onSuccess: (resp) => {
+        setUserInfo((prev) => {
+          return { ...resp, uuid: prev.uuid };
+        });
+        router.push("/");
+      },
+    }
+  );
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues,
     validationSchema: Yup.object({
       nickname: Yup.string().min(2).max(15).required(),
       phone: Yup.string().length(8).required(),
       birthday: Yup.string().length(8).required(),
-      gender: Yup.string().required(),
-      location1: Yup.string().required(),
-      location2: Yup.string().required(),
-      symtoms: Yup.array().required(),
+      sex: Yup.string().required(),
+      largeArea: Yup.string().required(),
+      smallArea: Yup.string().required(),
+      symtoms: Yup.array().min(1).required(),
     }),
-    onSubmit: () => {},
+    onSubmit: () => {
+      const registerUserData: UserInfo = {
+        uuid: userInfo.uuid,
+        nickname: formik.values.nickname,
+        birthday: parseBirthday(formik.values.birthday),
+        phone_no: parsePhoneNumber(formik.values.phone),
+        address: {
+          large_area: formik.values.largeArea,
+          small_area: formik.values.smallArea,
+        },
+        sex: formik.values.sex,
+        pain_areas: formik.values.symtoms.map((symtom) => {
+          return {
+            name: symtom.title,
+          };
+        }),
+      };
+      mutate(registerUserData);
+    },
   });
 
-  console.log(formik.values);
+  const parseBirthday = (dateStr: string) => {
+    return `${dateStr.substring(0, 4)}-${dateStr.substring(
+      4,
+      6
+    )}-${dateStr.substring(6, 8)}`;
+  };
+
+  const parsePhoneNumber = (phoneNumberStr: string) => {
+    return `010-${phoneNumberStr.substring(0, 4)}-${phoneNumberStr.substring(
+      4,
+      8
+    )}`;
+  };
 
   const { refetch } = useQuery(
     ["nicknameDuplication", formik.values.nickname],
@@ -66,12 +116,16 @@ const RegisterForm: React.FC<{}> = () => {
     {
       enabled: false,
       suspense: false,
+      retry: false,
+      useErrorBoundary: false,
       onSuccess: (resp) => {
         if (resp.status === 200) {
           setIsNicknameValid(true);
-        } else {
-          setIsNicknameValid(false);
         }
+        setDidNicknameValidCheck(true);
+      },
+      onError: () => {
+        setIsNicknameValid(false);
         setDidNicknameValidCheck(true);
       },
     }
@@ -83,11 +137,11 @@ const RegisterForm: React.FC<{}> = () => {
 
   const id1 = useId();
   const id2 = useId();
+
   /**
    * ts 적용
    * https://stackoverflow.com/questions/66546842/add-typescript-types-to-react-select-onchange-function
    */
-
   const onDoSiSelect = (selectedValue: any) => {
     setDosi(selectedValue.value);
   };
@@ -97,15 +151,15 @@ const RegisterForm: React.FC<{}> = () => {
   };
 
   const onSymtomClick = (symtom: Symtom, formikState: typeof formik) => {
-    formikState.setFieldValue("symtoms", [
-      ...formik.values.symtoms,
-      symtom.title,
-    ]);
     setSymtoms((prev) => {
       const selectedIndex = prev.findIndex((s) => s.title === symtom.title);
       const currentStatus = prev[selectedIndex].selected;
       prev[selectedIndex].selected = !currentStatus;
 
+      formikState.setFieldValue(
+        "symtoms",
+        [...prev].filter((s) => s.selected === true)
+      );
       return [...prev];
     });
   };
@@ -183,14 +237,10 @@ const RegisterForm: React.FC<{}> = () => {
     );
   };
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-  };
-
   return (
     <FormWrapper>
       <FormikProvider value={formik}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={formik.handleSubmit}>
           <div className="form-section">
             <div className="divider nickname">
               <label className="label" htmlFor="nickname">
@@ -207,10 +257,14 @@ const RegisterForm: React.FC<{}> = () => {
                   id="nickname"
                   name="nickname"
                   placeholder="2글자 이상 10글자 이하"
-                  onChange={formik.handleChange}
+                  onChange={(e: InputEvent) => {
+                    setDidNicknameValidCheck(false);
+                    formik.handleChange(e);
+                  }}
                   value={formik.values.nickname}
                 />
                 <Button
+                  type="button"
                   text="중복확인"
                   backgroundColor={theme.colors.purple_light2}
                   disabled={
@@ -226,7 +280,7 @@ const RegisterForm: React.FC<{}> = () => {
                   isNicknameValid ? (
                     <div className="valid">사용 가능한 닉네임입니다.</div>
                   ) : (
-                    <div className="invalid">사용 불가능한 닉네임입니다.</div>
+                    <div className="invalid">중복된 닉네임이 있습니다.</div>
                   )
                 ) : (
                   <div className="invisible">dd</div>
@@ -286,18 +340,18 @@ const RegisterForm: React.FC<{}> = () => {
                 <label>
                   <Field
                     type="radio"
-                    name="gender"
+                    name="sex"
                     onChange={formik.handleChange}
-                    value="male"
+                    value="남자"
                   />
                   <span>남자</span>
                 </label>
                 <label>
                   <Field
                     type="radio"
-                    name="gender"
+                    name="sex"
                     onChange={formik.handleChange}
-                    value="female"
+                    value="여자"
                   />
                   <span>여자</span>
                 </label>
@@ -319,7 +373,7 @@ const RegisterForm: React.FC<{}> = () => {
                   placeholder="시/도 선택"
                   onChange={(selectedOption: any) => {
                     onDoSiSelect(selectedOption);
-                    formik.setFieldValue("location1", selectedOption.value);
+                    formik.setFieldValue("largeArea", selectedOption.value);
                   }}
                 />
                 <Select
@@ -344,7 +398,7 @@ const RegisterForm: React.FC<{}> = () => {
                   placeholder="시/군/구 선택"
                   onChange={(selectedOption: any) => {
                     onGuDongSelect(selectedOption);
-                    formik.setFieldValue("location2", selectedOption.value);
+                    formik.setFieldValue("smallArea", selectedOption.value);
                   }}
                 />
               </div>
@@ -356,6 +410,7 @@ const RegisterForm: React.FC<{}> = () => {
                 {Symtoms.map((symtom, i) =>
                   symtom.selected ? (
                     <Button
+                      type="button"
                       key={i}
                       text={symtom.title}
                       backgroundColor={theme.colors.white}
@@ -365,6 +420,7 @@ const RegisterForm: React.FC<{}> = () => {
                     />
                   ) : (
                     <Button
+                      type="button"
                       key={i}
                       text={symtom.title}
                       backgroundColor={theme.colors.white}
@@ -377,7 +433,21 @@ const RegisterForm: React.FC<{}> = () => {
               </ButtonWrapper>
             </div>
             <div className="save-button-wrapper">
-              <Button text="도수리 시작하기" width="100%" />
+              <Button
+                type="submit"
+                text="도수리 시작하기"
+                width="100%"
+                borderRadius="0.3rem"
+                backgroundColor={theme.colors.purple}
+                disabled={
+                  !(
+                    formik.isValid &&
+                    formik.dirty &&
+                    didNicknameValidCheck &&
+                    isNicknameValid
+                  )
+                }
+              />
             </div>
           </div>
         </form>
@@ -483,6 +553,7 @@ const FormWrapper = styled.div`
     line-height: ${(props) => props.theme.lineHeights.lg};
     flex-grow: 1;
     padding: 1rem;
+    outline-color: ${(props) => props.theme.colors.purple};
 
     &::placeholder {
       color: ${(props) => props.theme.colors.grey};

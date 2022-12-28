@@ -31,6 +31,7 @@
     "react-spring-bottom-sheet": "3.5.0-alpha.0",
     "react-table": "^7.8.0",
     "recoil": "^0.7.5",
+    "recoil-persist": "^4.2.0",
     "swiper": "^8.4.3",
     "uuid": "^9.0.0",
     "yup": "^0.32.11"

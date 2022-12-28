@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export type Comments = {
   uuid: string;
   user: User;
@@ -6,11 +8,6 @@ export type Comments = {
   content: string;
   article_thread: Thread[];
   created_at: string;
-};
-
-export type User = {
-  uuid: string;
-  nickname: string;
 };
 
 export type Thread = {
