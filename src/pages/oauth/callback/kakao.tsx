@@ -21,7 +21,7 @@ const Kakao = ({ accessToken, refreshToken, isNew }: IKakaoProps) => {
     document.cookie = `refreshToken=${refreshToken}; path=/;`;
 
     if (isNew) {
-      router.push("register");
+      router.push("/register");
     } else {
       router.push("/");
     }
