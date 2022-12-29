@@ -2,7 +2,8 @@ import {
   GetUserAuthParams,
   GetUserAuthResponse,
   IApplyInsuranceResponse,
-} from "../types";
+} from "./../types";
+
 import api from "../axiosConfig";
 import { UserInfo } from "@/types/user";
 
@@ -34,4 +35,16 @@ export const applyInsurance = async () => {
 export const registerUser = async (data: UserInfo) => {
   const response = await api.post<UserInfo>(`/user/v1/users`, data);
   return response.data;
+};
+
+export const getUser = async (
+  accessToken?: string
+): Promise<UserInfo | null> => {
+  const { data } = await api.get<UserInfo>(`/user/v1/users/me`, {
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
+  });
+
+  return data;
 };

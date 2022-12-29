@@ -8,6 +8,7 @@ import { getUserAuth } from "@/service/apis/user";
 import { useRouter } from "next/router";
 import { userInfoState } from "@/store/user";
 import { useRecoilState } from "recoil";
+import { useUser } from "@/hooks/service/useUser";
 
 interface IKakaoProps {
   uuid: string;
@@ -20,10 +21,10 @@ const Kakao = ({ uuid, accessToken, refreshToken, isNew }: IKakaoProps) => {
   const router = useRouter();
   const [_, setUserInfo] = useRecoilState(userInfoState);
 
+  const { user } = useUser(accessToken);
+
   useEffect(() => {
-    setUserInfo((prev) => {
-      return { ...prev, uuid };
-    });
+    setUserInfo({ ...user, uuid });
     document.cookie = `accessToken=${accessToken}; path=/;`;
     document.cookie = `refreshToken=${refreshToken}; path=/;`;
 
@@ -50,7 +51,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       type: "kakao",
     });
 
-    console.log(resp);
     const {
       user_uuid: uuid,
       access_token: accessToken,

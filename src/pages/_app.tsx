@@ -1,6 +1,6 @@
 import { Global, ThemeProvider } from "@emotion/react";
-import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
-import { Suspense, useState } from "react";
+import { Hydrate, QueryClientProvider } from "react-query";
+import { Suspense } from "react";
 
 import type { AppProps } from "next/app";
 import { ErrorBoundary } from "@sentry/react";
@@ -12,6 +12,7 @@ import Spinner from "@/components/UI/Spinner";
 import { global } from "@/styles/global";
 import theme from "@/styles/theme";
 import withAuth from "./withauth";
+import { queryClient } from "@/service/react-query/queryClient";
 
 function MyApp({
   Component,
@@ -20,19 +21,6 @@ function MyApp({
   dehydratedState: unknown;
   session: any;
 }>) {
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            suspense: true,
-            useErrorBoundary: true,
-            refetchOnWindowFocus: false,
-          },
-        },
-      })
-  );
-
   return (
     <>
       <Head>
