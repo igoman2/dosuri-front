@@ -3,7 +3,8 @@ import { Hydrate, QueryClientProvider } from "react-query";
 import { Suspense } from "react";
 
 import type { AppProps } from "next/app";
-import { ErrorBoundary } from "@sentry/react";
+// import { ErrorBoundary } from "@sentry/react";
+import { ErrorBoundary } from "react-error-boundary";
 import Fallback from "./fallback";
 import Head from "next/head";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -42,7 +43,7 @@ function MyApp({
                   flexDirection: "column",
                 }}
               >
-                <ErrorBoundary fallback={Fallback}>
+                <ErrorBoundary FallbackComponent={Fallback}>
                   <Suspense fallback={<Spinner />}>
                     <Component {...pageProps} />
                   </Suspense>

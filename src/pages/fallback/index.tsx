@@ -2,10 +2,15 @@ import ErrorIcon from "@/public/assets/error-icon.png";
 import Header from "@/components/Layout/Header";
 import Image from "next/image";
 import Layout from "@/components/Layout";
-import React from "react";
+import React, { FC } from "react";
 import styled from "@emotion/styled";
 
-const Fallback = () => {
+interface IFallbackProps {
+  error: any;
+  resetErrorBoundary: (...args: Array<unknown>) => void;
+}
+
+const Fallback: FC<IFallbackProps> = ({ error, resetErrorBoundary }) => {
   return (
     <Layout header={<Header left={true} />}>
       <FallbackWrapper>
@@ -17,6 +22,7 @@ const Fallback = () => {
           <div>페이지를 새로고침 해주세요.</div>
 
           <div>불편을 드려 죄송합니다.</div>
+          {/* <button onClick={() => resetErrorBoundary()}> 다시 시도 </button> */}
         </div>
       </FallbackWrapper>
     </Layout>
