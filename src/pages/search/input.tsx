@@ -8,6 +8,7 @@ import { useRecentHospitalSearchList } from "@/hooks/service/useRecentHospitalSe
 import { useBoolean, useDebounce } from "usehooks-ts";
 import { useSearchHospital } from "@/hooks/service/useSearchHospital";
 import HospitalQueryList from "@/components/Search/HospitalQueryList";
+import Link from "next/link";
 
 const SearchInput = () => {
   const [inputText, setInputText] = useState("");
@@ -36,11 +37,17 @@ const SearchInput = () => {
         {inputText.length > 0 ? (
           <div>
             {searchedHospitalList.map((searchedHospital) => (
-              <HospitalQueryList
-                text={searchedHospital.name}
-                inputText={inputText}
+              <Link
+                href={`/hospital/${searchedHospital.uuid}`}
                 key={searchedHospital.uuid}
-              ></HospitalQueryList>
+              >
+                <a>
+                  <HospitalQueryList
+                    text={searchedHospital.name}
+                    inputText={inputText}
+                  ></HospitalQueryList>
+                </a>
+              </Link>
             ))}
           </div>
         ) : (
