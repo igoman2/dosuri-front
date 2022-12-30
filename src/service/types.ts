@@ -28,7 +28,7 @@ export interface IGetHospitalInfo {
   introduction: string;
   area: string;
   phone_no: string;
-  images: { url: string }[];
+  attachments: { signed_path: string }[];
   calendar: {
     monday: string | null;
     tuesday: string | null;
@@ -88,7 +88,9 @@ export interface IHospitalReviewsResponse {
 export interface IGetDoctorListResult {
   uuid: string;
   hospital: string;
-  thumbnail_url: string;
+  attachments: {
+    signed_path: string;
+  }[];
   name: string;
   title: string;
   subtitle: string;
@@ -129,8 +131,8 @@ export interface IHospitalInfoResult {
   latest_article_created_at: string;
   opened_at: string;
   distance: null;
-  images: {
-    url: string;
+  attachments: {
+    signed_path: string;
   }[];
 }
 

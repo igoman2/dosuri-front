@@ -22,14 +22,14 @@ const HospitalCard: FC<IHospitalCardProps> = ({ hospitalInfo }) => {
           minWidth: "9rem",
         }}
       >
-        {hospitalInfo.images.length === 0 ? (
+        {hospitalInfo.attachments.length === 0 ? (
           <ImageFallback width="9rem" height="9rem" />
         ) : (
           <Image
             style={{
               borderRadius: "0.5rem",
             }}
-            src={hospitalInfo.images[0]?.url}
+            src={hospitalInfo.attachments[0]?.signed_path}
             width={90}
             height={90}
             alt="hospital-image"

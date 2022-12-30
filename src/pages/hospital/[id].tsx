@@ -122,7 +122,9 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
     setIsUp((prev) => !prev);
   };
 
-  const imageSource = hospitalInfoData.images.map((image) => image.url);
+  const imageSource = hospitalInfoData.attachments.map(
+    (image) => image.signed_path
+  );
 
   return (
     <Layout header={<HeaderDepth />} footer={false}>
