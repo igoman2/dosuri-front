@@ -11,10 +11,11 @@ const nextConfig = {
   images: {
     domains: [
       "diskall.co.kr",
-      "dosuri-images.s3.ap-northeast-2.amazonaws.com",
       "img.hankyung.com",
       "img.freepik.com",
       "www.medigatenews.com",
+      "dosuri-image.s3.amazonaws.com",
+      "dosuri-images.s3.ap-northeast-2.amazonaws.com",
     ],
   },
 

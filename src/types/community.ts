@@ -21,6 +21,9 @@ export type Thread = {
 
 export type Attach = {
   uuid: string;
-  path: string;
+  attachment: {
+    signed_path: string;
+    uuid: string;
+  };
   created_at: string;
 };

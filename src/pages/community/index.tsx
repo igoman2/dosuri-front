@@ -67,7 +67,7 @@ const Community = () => {
 
           <div className="comment">
             <Icon name="comment" width="20" height="20" />
-            <span>{review.article_attach.length}</span>
+            <span>{review.article_attachment_assoc.length}</span>
           </div>
         </div>
       </PostBottom>

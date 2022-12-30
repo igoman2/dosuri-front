@@ -75,11 +75,7 @@ export interface IHospitalReviewsResult {
   created_at: string;
   hospital: string;
   content: string;
-  article_attach: {
-    uuid: string;
-    path: string;
-    created_at: string;
-  }[];
+  article_attachment_assoc: Attach[];
 }
 
 export interface IHospitalReviewsResponse {
@@ -168,7 +164,7 @@ export interface ICommunityPostDetailResponse {
   created_at: string;
   hospital: string;
   content: string;
-  article_attach: Attach[];
+  article_attachment_assoc: Attach[];
   article_comment: Comments[];
 }
 

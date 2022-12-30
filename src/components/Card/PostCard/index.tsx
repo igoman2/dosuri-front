@@ -60,7 +60,9 @@ const PostCard: FC<IPostCardProps> = ({ review, bottom }) => {
     }
   };
 
-  const imageSource = review.article_attach.map((image) => image.path);
+  const imageSource = review.article_attachment_assoc.map(
+    (attachment) => attachment.attachment.signed_path
+  );
 
   return (
     <>
