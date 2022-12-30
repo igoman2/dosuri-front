@@ -2,9 +2,11 @@ import {
   IGetDoctorList,
   IGetHospitalInfo,
   IGetHospitalListParams,
+  IGetRecentHospitalSearchListParams,
   IHospitalInfoHomeResponse,
   IHospitalInfoResponse,
   IHospitalTreatmentsResponse,
+  IRecentHospitalSearchListResponse,
   IToggleHospitalThumbup,
 } from "../types";
 
@@ -13,6 +15,18 @@ import api from "../axiosConfig";
 export const getHospitalList = async (params?: IGetHospitalListParams) => {
   const response = await api.get<IHospitalInfoResponse>(
     "/hospital/v1/hospitals",
+    {
+      params,
+    }
+  );
+  return response.data;
+};
+
+export const getRecentHospitalSearchList = async (
+  params?: IGetRecentHospitalSearchListParams
+) => {
+  const response = await api.get<IRecentHospitalSearchListResponse>(
+    "hospital/v1/hospital-searches",
     {
       params,
     }

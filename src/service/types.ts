@@ -21,6 +21,12 @@ export interface IGetHospitalListParams {
   longitude?: number;
 }
 
+export interface IGetRecentHospitalSearchListParams {
+  ordering?: string;
+  page?: number;
+  page_size?: number;
+}
+
 export interface IGetHospitalInfo {
   uuid: string;
   address: string;
@@ -148,6 +154,18 @@ export interface IHospitalInfoResponse {
   next: string;
   previous: string;
   results: IHospitalInfoResult[];
+}
+
+export interface IRecentHospitalSearchListResult {
+  uuid: string;
+  word: string;
+}
+
+export interface IRecentHospitalSearchListResponse {
+  count: number;
+  next: string;
+  previous: string;
+  results: IRecentHospitalSearchListResult[];
 }
 
 export interface IHotCommunityResponse {
