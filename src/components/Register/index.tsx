@@ -1,55 +1,86 @@
-import * as Yup from "yup";
-
-import { CSSObject, useTheme } from "@emotion/react";
-import { Field, useFormik, FormikProvider } from "formik";
-import { LOCATIONS, do_si } from "./location";
-import Select, {
-  DropdownIndicatorProps,
-  ValueContainerProps,
-  components,
-} from "react-select";
-import { Symtom, Symtoms } from "@/mock/symtoms";
-import { useId, useState } from "react";
-
-import Button from "@/components/Button";
-import Icon from "@/util/Icon";
+import { DropdownIndicator, ValueContainer, colourStyles } from "./style";
+import { FC, useEffect, useId, useMemo, useState } from "react";
+import { Field, FormikProvider, useFormik } from "formik";
+import { LOCATIONS, Location, do_si } from "./location";
 import { checkNicknameDuplication, registerUser } from "@/service/apis/user";
-import styled from "@emotion/styled";
+import {
+  formatPartialPhoneNumberToComplete,
+  parseBirthday,
+} from "@/util/format";
 import { useMutation, useQuery } from "react-query";
-import { useRecoilState } from "recoil";
-import { userInfoState } from "@/store/user";
-import { useRouter } from "next/router";
-import { UserInfo } from "@/types/user";
-import { AxiosError } from "axios";
 
-interface MyFormValues {
-  nickname: string;
-  birthday: string;
-  phone: string;
-  sex: string;
-  largeArea: string;
-  smallArea: string;
-  symtoms: Symtom[];
+import { AxiosError } from "axios";
+import Button from "@/components/Button";
+import Select from "react-select";
+import { Symtom } from "@/types/hospital";
+import { UserInfo } from "@/types/user";
+import _ from "lodash";
+import styled from "@emotion/styled";
+import useFormikFactory from "@/hooks/useFormikFactory";
+import { useRecoilState } from "recoil";
+import { useRouter } from "next/router";
+import { useTheme } from "@emotion/react";
+import { userInfoState } from "@/store/user";
+
+export const Symtoms: Symtom[] = [
+  {
+    title: "머리",
+    selected: false,
+  },
+  {
+    title: "목",
+    selected: false,
+  },
+  {
+    title: "허리",
+    selected: false,
+  },
+  {
+    title: "어깨",
+    selected: false,
+  },
+  {
+    title: "골반",
+    selected: false,
+  },
+  {
+    title: "무릎",
+    selected: false,
+  },
+  {
+    title: "손목",
+    selected: false,
+  },
+  {
+    title: "발목",
+    selected: false,
+  },
+  {
+    title: "관절",
+    selected: false,
+  },
+  {
+    title: "그외",
+    selected: false,
+  },
+];
+
+interface IRegisterForm {
+  formType: "register" | "edit";
 }
 
-const RegisterForm: React.FC<{}> = () => {
-  const initialValues: MyFormValues = {
-    nickname: "",
-    birthday: "",
-    phone: "",
-    sex: "",
-    largeArea: "",
-    smallArea: "",
-    symtoms: [],
-  };
+const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
   const router = useRouter();
   const theme = useTheme();
   const [symtoms, setSymtoms] = useState<Symtom[]>(Symtoms);
-  const [dosi, setDosi] = useState<string>();
-  const [gudong, setGudong] = useState<string>();
+  const [largeArea, setLargeArea] = useState<string>();
+  const [smallArea, setSmallArea] = useState<Location | null>();
   const [isNicknameValid, setIsNicknameValid] = useState(false);
   const [didNicknameValidCheck, setDidNicknameValidCheck] = useState(false);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [isSmallAreaDisabled, setIsSmallAreaDisabled] = useState(false);
+  const id1 = useId();
+  const id2 = useId();
 
   const { mutate } = useMutation<UserInfo, AxiosError, UserInfo, unknown>(
     (data) => registerUser(data),
@@ -63,32 +94,31 @@ const RegisterForm: React.FC<{}> = () => {
     }
   );
 
+  const { initialValues, validationSchema } = useFormikFactory(formType);
+
+  const sortedLargeArea = useMemo(
+    () => do_si.sort((a, b) => (a.label > b.label ? 1 : -1)),
+    []
+  );
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues,
-    validationSchema: Yup.object({
-      nickname: Yup.string().min(2).max(15).required(),
-      phone: Yup.string().length(8).required(),
-      birthday: Yup.string().length(8).required(),
-      sex: Yup.string().required(),
-      largeArea: Yup.string().required(),
-      smallArea: Yup.string().required(),
-      symtoms: Yup.array().min(1).required(),
-    }),
+    validationSchema,
     onSubmit: () => {
       const registerUserData: UserInfo = {
         uuid: userInfo.uuid,
         nickname: formik.values.nickname,
         birthday: parseBirthday(formik.values.birthday),
-        phone_no: parsePhoneNumber(formik.values.phone),
+        phone_no: formatPartialPhoneNumberToComplete(formik.values.phone),
         address: {
           large_area: formik.values.largeArea,
           small_area: formik.values.smallArea,
         },
         sex: formik.values.sex,
-        pain_areas: formik.values.symtoms.map((symtom) => {
+        pain_areas: formik.values.pain_areas.map((symtom) => {
           return {
-            name: symtom.title,
+            name: symtom.name,
           };
         }),
       };
@@ -96,19 +126,87 @@ const RegisterForm: React.FC<{}> = () => {
     },
   });
 
-  const parseBirthday = (dateStr: string) => {
-    return `${dateStr.substring(0, 4)}-${dateStr.substring(
-      4,
-      6
-    )}-${dateStr.substring(6, 8)}`;
-  };
+  const sortedSmallArea = useMemo(() => {
+    const parsedArea = LOCATIONS.filter((location) =>
+      location.label.includes(largeArea as string)
+    )
+      .sort((a, b) => (a.label > b.label ? 1 : -1))
+      .map((loc) => {
+        let returnArea;
+        if (
+          loc.label.includes("서울특별시") ||
+          loc.label.includes("부산광역시") ||
+          loc.label.includes("대구광역시") ||
+          loc.label.includes("인천광역시") ||
+          loc.label.includes("광주광역시") ||
+          loc.label.includes("대전광역시") ||
+          loc.label.includes("울산광역시")
+        ) {
+          returnArea = loc.label.replace(largeArea as string, "").split(" ")[1];
+        } else if (loc.label.includes("세종특별자치시")) {
+          returnArea = "세종특별자치시";
+          setIsSmallAreaDisabled(true);
+          setSmallArea(null);
+          formik.setFieldValue("smallArea", null);
+        } else {
+          const 구제외한주소 = loc.label
+            .replace(largeArea as string, "")
+            .split(" ");
+          if (구제외한주소.length > 3) {
+            returnArea = 구제외한주소.slice(1, 3).join(" ");
+          } else {
+            returnArea = 구제외한주소.slice(1, 2).join("");
+          }
+        }
+        return { value: returnArea, label: returnArea };
+      });
 
-  const parsePhoneNumber = (phoneNumberStr: string) => {
-    return `010-${phoneNumberStr.substring(0, 4)}-${phoneNumberStr.substring(
-      4,
-      8
-    )}`;
-  };
+    return _.uniqBy(parsedArea, "label");
+  }, [largeArea]);
+
+  const userLargeArea = sortedLargeArea.find(
+    (largeArea) => largeArea.label === initialValues.largeArea
+  );
+
+  const userSmallArea = sortedSmallArea.find(
+    (smallArea) => smallArea.label === initialValues.smallArea
+  );
+
+  useEffect(() => {
+    if (userLargeArea) {
+      setLargeArea(userLargeArea.label);
+    }
+
+    if (userSmallArea) {
+      setSmallArea(userSmallArea);
+    } else {
+      setSmallArea({
+        label: formik.initialValues.smallArea,
+        value: formik.initialValues.smallArea,
+      });
+    }
+  }, [formik.initialValues, userLargeArea, userSmallArea]);
+
+  useEffect(() => {
+    const userSymtoms = Symtoms.map((symtom) => {
+      if (
+        initialValues.pain_areas.find(
+          (pain) => pain.name.toLowerCase() === symtom.title.toLowerCase()
+        )
+      ) {
+        return { ...symtom, selected: true };
+      }
+      return { ...symtom, selected: false };
+    });
+    setSymtoms(userSymtoms);
+  }, []);
+
+  useEffect(() => {
+    if (formType === "edit") {
+      setDidNicknameValidCheck(true);
+      setIsNicknameValid(true);
+    }
+  }, [formType]);
 
   const { refetch } = useQuery(
     ["nicknameDuplication", formik.values.nickname],
@@ -135,106 +233,32 @@ const RegisterForm: React.FC<{}> = () => {
     refetch();
   };
 
-  const id1 = useId();
-  const id2 = useId();
-
   /**
    * ts 적용
    * https://stackoverflow.com/questions/66546842/add-typescript-types-to-react-select-onchange-function
    */
-  const onDoSiSelect = (selectedValue: any) => {
-    setDosi(selectedValue.value);
+  const onLargeAreaSelect = (selectedValue: any) => {
+    setLargeArea(selectedValue.value);
+    setSmallArea(null);
   };
 
-  const onGuDongSelect = (selectedValue: any) => {
-    setGudong(selectedValue.value);
+  const onSmallAreaSelect = (selectedValue: Location) => {
+    setSmallArea(selectedValue);
   };
 
   const onSymtomClick = (symtom: Symtom, formikState: typeof formik) => {
+    console.log(symtom);
     setSymtoms((prev) => {
       const selectedIndex = prev.findIndex((s) => s.title === symtom.title);
       const currentStatus = prev[selectedIndex].selected;
       prev[selectedIndex].selected = !currentStatus;
 
       formikState.setFieldValue(
-        "symtoms",
+        "pain_areas",
         [...prev].filter((s) => s.selected === true)
       );
       return [...prev];
     });
-  };
-
-  const colourStyles: any = {
-    container: (styles: CSSObject) => ({
-      ...styles,
-      flexGrow: 1,
-      width: "calc(50% - 2rem)",
-    }),
-    control: (styles: CSSObject) => ({
-      ...styles,
-      borderRadius: "0.5rem",
-      border: `0.1rem solid ${theme.colors.grey}`,
-      boxShadow: "none",
-      "&:hover": {
-        border: `0.1rem solid ${theme.colors.grey}`,
-      },
-      cursor: "text",
-      height: "4.2rem",
-      padding: "0 1rem",
-    }),
-    menu: (styles: CSSObject) => ({
-      border: `0.1rem solid ${theme.colors.purple}`,
-      borderRadius: "0.5rem",
-    }),
-    option: (styles: CSSObject, { isDisabled }: any) => ({
-      ...styles,
-      color: `${theme.colors["black"]}`,
-      backgroundColor: `${theme.colors.white}`,
-      fontSize: theme.fontSizes.lg,
-      lineHeight: theme.lineHeights.lg,
-      ":active": {
-        ...styles[":active"],
-        backgroundColor: `${theme.colors.white}`,
-      },
-      ":hover": {
-        backgroundColor: "rgba(152, 143, 255, 0.2)",
-      },
-      cursor: isDisabled ? "not-allowed" : "pointer",
-    }),
-    placeholder: (styles: CSSObject) => ({
-      ...styles,
-      fontSize: theme.fontSizes.lg,
-      lineHeight: theme.lineHeights.lg,
-    }),
-    valueContainer: (styles: CSSObject) => ({
-      ...styles,
-      fontSize: theme.fontSizes.lg,
-      lineHeight: theme.lineHeights.lg,
-      padding: 0,
-      margin: 0,
-    }),
-  };
-
-  const CustomIcon = () => {
-    return (
-      <div css={{ cursor: "pointer" }}>
-        <Icon name={`chevron`} width="1.6rem" height="1.6rem" />
-      </div>
-    );
-  };
-  const DropdownIndicator = (props: DropdownIndicatorProps) => {
-    return (
-      <components.DropdownIndicator {...props}>
-        <CustomIcon />
-      </components.DropdownIndicator>
-    );
-  };
-  const ValueContainer = (props: ValueContainerProps) => {
-    return (
-      <components.ValueContainer {...props}>
-        {props.children}
-      </components.ValueContainer>
-    );
   };
 
   return (
@@ -242,6 +266,35 @@ const RegisterForm: React.FC<{}> = () => {
       <FormikProvider value={formik}>
         <form onSubmit={formik.handleSubmit}>
           <div className="form-section">
+            {formType === "edit" ? (
+              <>
+                <div className="divider">
+                  <label className="label" htmlFor="name">
+                    이름
+                  </label>
+                  <Field
+                    className={"field"}
+                    id="name"
+                    name="name"
+                    value={formik.values.name}
+                    disabled
+                  />
+                </div>
+                <div className="divider">
+                  <label className="label" htmlFor="email">
+                    이메일
+                  </label>
+                  <Field
+                    className={"field"}
+                    id="email"
+                    name="email"
+                    value={formik.values.email}
+                    disabled
+                  />
+                </div>
+              </>
+            ) : null}
+
             <div className="divider nickname">
               <label className="label" htmlFor="nickname">
                 닉네임
@@ -362,7 +415,7 @@ const RegisterForm: React.FC<{}> = () => {
               <label className="label">지역</label>
               <div className="select-section">
                 <Select
-                  options={do_si.sort((a, b) => (a.label > b.label ? 1 : -1))}
+                  options={sortedLargeArea}
                   instanceId={id1}
                   components={{
                     ValueContainer,
@@ -372,22 +425,16 @@ const RegisterForm: React.FC<{}> = () => {
                   styles={colourStyles}
                   placeholder="시/도 선택"
                   onChange={(selectedOption: any) => {
-                    onDoSiSelect(selectedOption);
+                    onLargeAreaSelect(selectedOption);
                     formik.setFieldValue("largeArea", selectedOption.value);
                   }}
+                  defaultValue={sortedLargeArea.find(
+                    (largeArea) => largeArea.label === initialValues.largeArea
+                  )}
                 />
                 <Select
-                  isDisabled={!dosi}
-                  options={LOCATIONS.filter((location) =>
-                    location.label.includes(dosi as string)
-                  )
-                    .sort((a, b) => (a.label > b.label ? 1 : -1))
-                    .map((lo) => {
-                      return {
-                        value: lo.label.replace(dosi as string, "").trim(),
-                        label: lo.label.replace(dosi as string, "").trim(),
-                      };
-                    })}
+                  isDisabled={!largeArea || isSmallAreaDisabled}
+                  options={sortedSmallArea}
                   instanceId={id2}
                   components={{
                     ValueContainer,
@@ -397,9 +444,11 @@ const RegisterForm: React.FC<{}> = () => {
                   styles={colourStyles}
                   placeholder="시/군/구 선택"
                   onChange={(selectedOption: any) => {
-                    onGuDongSelect(selectedOption);
+                    onSmallAreaSelect(selectedOption);
                     formik.setFieldValue("smallArea", selectedOption.value);
                   }}
+                  // defaultValue={userSmallArea}
+                  value={smallArea}
                 />
               </div>
             </div>
@@ -407,7 +456,7 @@ const RegisterForm: React.FC<{}> = () => {
             <div className="divider">
               <label className="label">통증 부위</label>
               <ButtonWrapper>
-                {Symtoms.map((symtom, i) =>
+                {symtoms.map((symtom, i) =>
                   symtom.selected ? (
                     <Button
                       type="button"

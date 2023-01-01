@@ -67,5 +67,6 @@ export default withAuth;
 export const logout = () => {
   deleteCookie("accessToken");
   deleteCookie("refreshToken");
+  window.localStorage.removeItem("recoil-persist");
   window.location.replace("/");
 };

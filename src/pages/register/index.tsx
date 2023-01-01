@@ -13,7 +13,7 @@ const Register = () => {
           <div className="subtitle">가입을 위해 추가정보를 입력해주세요</div>
         </div>
       </RegisterWrapper>
-      <RegisterForm />
+      <RegisterForm formType="register" />
     </Layout>
   );
 };

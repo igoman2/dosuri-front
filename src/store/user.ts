@@ -1,6 +1,6 @@
+import { UserInfo } from "@/types/user";
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
-import { UserInfo } from "@/types/user";
 
 const { persistAtom } = recoilPersist();
 
@@ -9,6 +9,7 @@ export const userInfoState = atom<UserInfo>({
   default: {
     uuid: "",
     nickname: "",
+    name: "",
     birthday: "",
     phone_no: "",
     address: {

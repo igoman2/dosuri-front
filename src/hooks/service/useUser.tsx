@@ -1,6 +1,6 @@
+import { UserInfo } from "@/types/user";
 import { getUser } from "@/service/apis/user";
 import { queryKeys } from "@/service/react-query/constants";
-import { UserInfo } from "@/types/user";
 import { useQuery } from "react-query";
 
 interface UseUser {
@@ -11,6 +11,7 @@ export function useUser(accessToken?: string): UseUser {
   const fallback: UserInfo = {
     uuid: "",
     nickname: "",
+    name: "",
     birthday: "",
     phone_no: "",
     address: {

@@ -4,8 +4,8 @@ import {
   IApplyInsuranceResponse,
 } from "./../types";
 
-import api from "../axiosConfig";
 import { UserInfo } from "@/types/user";
+import api from "../axiosConfig";
 
 export const getUserAuth = async (params: GetUserAuthParams) => {
   const response = await api.post<GetUserAuthResponse>("/user/v1/auth", {

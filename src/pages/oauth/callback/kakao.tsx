@@ -5,10 +5,10 @@ import React, { useEffect } from "react";
 import { GetServerSideProps } from "next";
 import Spinner from "@/components/UI/Spinner";
 import { getUserAuth } from "@/service/apis/user";
-import { useRouter } from "next/router";
-import { userInfoState } from "@/store/user";
 import { useRecoilState } from "recoil";
+import { useRouter } from "next/router";
 import { useUser } from "@/hooks/service/useUser";
+import { userInfoState } from "@/store/user";
 
 interface IKakaoProps {
   uuid: string;

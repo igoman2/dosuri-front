@@ -6,6 +6,8 @@ export type User = {
 export type UserInfo = {
   uuid: string;
   nickname: string;
+  name?: string;
+  username?: string;
   birthday: string;
   phone_no: string;
   address: {
