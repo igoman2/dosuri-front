@@ -1,11 +1,13 @@
 import React, { FC } from "react";
 
 import Comment from "@/components/Comment";
+import CommentProvider from "@/store/context/Comment";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Icon from "@/util/Icon";
 import Layout from "@/components/Layout";
 import { NextPageContext } from "next";
 import PostCard from "@/components/Card/PostCard";
+import Reply from "@/components/Community/Reply";
 import { getCommunityPostDetail } from "@/service/apis/community";
 import styled from "@emotion/styled";
 import { useQuery } from "react-query";
@@ -38,10 +40,11 @@ const Post: FC<IPostProps> = ({ postId }) => {
 
   return (
     <Layout header={<HeaderDepth />} footer={false}>
-      <>
+      <CommentProvider>
         <PostCard review={data} bottom={renderPostBottom()} />
         <Comment comments={data.article_comment} />
-      </>
+        <Reply postId={postId} />
+      </CommentProvider>
     </Layout>
   );
 };

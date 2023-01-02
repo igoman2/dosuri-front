@@ -1,4 +1,5 @@
-import { Attach, Comments } from "@/types/community";
+import { ArticleThread, Attach, Comments } from "@/types/community";
+
 import { User } from "@/types/user";
 
 export interface GetUserAuthParams {
@@ -192,4 +193,17 @@ export interface IApplyInsuranceResponse {
   uuid: string;
   insurance: string;
   user: string;
+}
+
+export interface IRegisterCommentResult {
+  uuid: string;
+  user: {
+    uuid: string;
+    nickname: string;
+  };
+  up_count: number;
+  view_count: number;
+  content: string;
+  article_thread: ArticleThread[];
+  created_at: string;
 }

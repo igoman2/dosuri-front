@@ -2,6 +2,7 @@ import {
   ICommunityPostDetailResponse,
   IHospitalReviewsResponse,
   IHotCommunityResponse,
+  IRegisterCommentResult,
 } from "../types";
 
 import api from "../axiosConfig";
@@ -41,5 +42,32 @@ export const getHospitalReviews = async (uuid: string) => {
       },
     }
   );
+  return response.data;
+};
+
+export const registerComment = async (data: {
+  content: string;
+  article: string;
+}) => {
+  const response = await api.post<IRegisterCommentResult>(
+    "community/v1/community/article-comment",
+    data
+  );
+
+  return response.data;
+};
+
+export const registerThreadComment = async ({
+  content,
+  article,
+}: {
+  content: string;
+  article: string;
+}) => {
+  const response = await api.post<IRegisterCommentResult>(
+    "community/v1/community/article_thread",
+    { content: content, article_comment: article }
+  );
+
   return response.data;
 };

@@ -1,11 +1,15 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, useContext } from "react";
 
+import Button from "../Button";
+import { CommentStore } from "@/store/context/Comment";
 import styled from "@emotion/styled";
+import { useTheme } from "@emotion/react";
 
 interface ICommentBoxProps {
   nickname: string;
   registered: string;
   content: string;
+  id?: string;
   children?: ReactElement;
 }
 
@@ -14,7 +18,17 @@ const CommentBox: FC<ICommentBoxProps> = ({
   registered,
   content,
   children,
+  id,
 }) => {
+  const theme = useTheme();
+  const value = useContext(CommentStore);
+  const handleThreadReply = () => {
+    value.setTo(nickname);
+    value.setIsThread(true);
+    value.setThreadId(id!);
+  };
+
+  console.log(id);
   return (
     <CommentBoxWrapper>
       <div className="layout">
@@ -25,7 +39,17 @@ const CommentBox: FC<ICommentBoxProps> = ({
         <div className="content">
           <div>{content}</div>
         </div>
-        <div className="reply">답글달기</div>
+        <Button
+          css={{
+            display: "flex",
+            padding: 0,
+          }}
+          onClick={handleThreadReply}
+          text="답글달기"
+          backgroundColor="white"
+          fontSize="sm"
+          color={theme.colors.grey}
+        />
       </div>
 
       {children}
@@ -65,11 +89,5 @@ const CommentBoxWrapper = styled.div`
   .content {
     font-size: ${(props) => props.theme.fontSizes.lg};
     line-height: ${(props) => props.theme.lineHeights.lg};
-  }
-
-  .reply {
-    font-size: ${(props) => props.theme.fontSizes.sm};
-    line-height: ${(props) => props.theme.lineHeights.sm};
-    color: ${(props) => props.theme.colors.grey};
   }
 `;

@@ -1,6 +1,5 @@
 import { Global, ThemeProvider } from "@emotion/react";
 import { Hydrate, QueryClientProvider } from "react-query";
-import { Suspense } from "react";
 
 import type { AppProps } from "next/app";
 // import { ErrorBoundary } from "@sentry/react";
@@ -10,10 +9,11 @@ import Head from "next/head";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { RecoilRoot } from "recoil";
 import Spinner from "@/components/UI/Spinner";
+import { Suspense } from "react";
 import { global } from "@/styles/global";
+import { queryClient } from "@/service/react-query/queryClient";
 import theme from "@/styles/theme";
 import withAuth from "./withauth";
-import { queryClient } from "@/service/react-query/queryClient";
 
 function MyApp({
   Component,

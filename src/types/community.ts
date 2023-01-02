@@ -27,3 +27,12 @@ export type Attach = {
   };
   created_at: string;
 };
+
+export type ArticleThread = {
+  uuid: string;
+  user: User;
+  up_count: number;
+  view_count: number;
+  content: string;
+  created_at: string;
+};

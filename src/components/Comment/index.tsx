@@ -3,7 +3,6 @@ import React, { FC } from "react";
 import CommentBox from "./CommentBox";
 import { Comments } from "@/types/community";
 import styled from "@emotion/styled";
-import { Comment as type } from "@/mock/comment";
 
 interface ICommentProps {
   comments: Comments[];
@@ -13,22 +12,24 @@ const Comment: FC<ICommentProps> = ({ comments }) => {
   return (
     <CommentCardWrapper>
       <>
-        {comments.map((comment, i) => {
+        {comments.reverse().map((comment) => {
           return (
-            <div key={i}>
+            <div key={comment.uuid}>
               <CommentBox
                 nickname={comment.user.nickname}
                 registered={comment.created_at}
                 content={comment.content}
+                id={comment.uuid}
               >
                 <div className="content">
-                  {comment.article_thread.map((thread, i) => {
+                  {comment.article_thread.reverse().map((thread, i) => {
                     return (
-                      <div className="reply-wrapper" key={i}>
+                      <div className="reply-wrapper" key={thread.uuid}>
                         <CommentBox
                           nickname={thread.user.nickname}
                           registered={thread.created_at}
                           content={thread.content}
+                          id={comment.uuid}
                         />
                       </div>
                     );
@@ -46,7 +47,7 @@ const Comment: FC<ICommentProps> = ({ comments }) => {
 export default Comment;
 
 const CommentCardWrapper = styled.div`
-  margin: 1rem 0;
+  margin: 1rem 0 5rem 0;
 
   .reply-wrapper {
     margin-left: 1rem;
