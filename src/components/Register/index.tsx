@@ -247,7 +247,6 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
   };
 
   const onSymtomClick = (symtom: Symtom, formikState: typeof formik) => {
-    console.log(symtom);
     setSymtoms((prev) => {
       const selectedIndex = prev.findIndex((s) => s.title === symtom.title);
       const currentStatus = prev[selectedIndex].selected;

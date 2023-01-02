@@ -10,6 +10,8 @@ interface ICommentBoxProps {
   registered: string;
   content: string;
   id?: string;
+  inner?: boolean;
+  threadOwner?: string;
   children?: ReactElement;
 }
 
@@ -19,6 +21,8 @@ const CommentBox: FC<ICommentBoxProps> = ({
   content,
   children,
   id,
+  threadOwner,
+  inner,
 }) => {
   const theme = useTheme();
   const value = useContext(CommentStore);
@@ -28,7 +32,6 @@ const CommentBox: FC<ICommentBoxProps> = ({
     value.setThreadId(id!);
   };
 
-  console.log(id);
   return (
     <CommentBoxWrapper>
       <div className="layout">
@@ -36,8 +39,13 @@ const CommentBox: FC<ICommentBoxProps> = ({
           <div className="nickname">{nickname}</div>
           <div className="register-time">{registered}</div>
         </div>
+
         <div className="content">
-          <div>{content}</div>
+          <div className={inner ? "inner" : ""}>
+            {inner ? <div className="tagged">{`@${threadOwner}`}</div> : null}
+
+            <div>{content}</div>
+          </div>
         </div>
         <Button
           css={{
@@ -84,6 +92,17 @@ const CommentBoxWrapper = styled.div`
       font-size: ${(props) => props.theme.fontSizes.sm};
       line-height: ${(props) => props.theme.lineHeights.sm};
     }
+  }
+
+  .tagged {
+    font-size: ${(props) => props.theme.fontSizes.lg};
+    line-height: ${(props) => props.theme.lineHeights.lg};
+    color: ${(props) => props.theme.colors.purple};
+    margin-right: 0.4rem;
+  }
+
+  .inner {
+    display: flex;
   }
 
   .content {

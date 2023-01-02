@@ -1,14 +1,14 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { useBoolean, useDebounce } from "usehooks-ts";
 
+import HospitalQueryList from "@/components/Search/HospitalQueryList";
 import Layout from "@/components/Layout";
+import Link from "next/link";
 import RecentSearchList from "@/components/UI/RecentSearchList";
 import SearchHeader from "@/components/Layout/Header/SearchHeader";
 import styled from "@emotion/styled";
 import { useRecentHospitalSearchList } from "@/hooks/service/useRecentHospitalSearchList";
-import { useBoolean, useDebounce } from "usehooks-ts";
 import { useSearchHospital } from "@/hooks/service/useSearchHospital";
-import HospitalQueryList from "@/components/Search/HospitalQueryList";
-import Link from "next/link";
 
 const SearchInput = () => {
   const [inputText, setInputText] = useState("");
@@ -21,7 +21,6 @@ const SearchInput = () => {
   });
 
   const { recentSearchedHospitalList } = useRecentHospitalSearchList();
-  console.log(searchedHospitalList);
   const onInput = (e: ChangeEvent<HTMLInputElement>) => {
     setTrue();
     setInputText(e.target.value);

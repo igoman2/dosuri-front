@@ -26,10 +26,12 @@ const Comment: FC<ICommentProps> = ({ comments }) => {
                     return (
                       <div className="reply-wrapper" key={thread.uuid}>
                         <CommentBox
+                          threadOwner={comment.user.nickname}
                           nickname={thread.user.nickname}
                           registered={thread.created_at}
                           content={thread.content}
                           id={comment.uuid}
+                          inner={true}
                         />
                       </div>
                     );
