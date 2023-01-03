@@ -9,24 +9,8 @@ const nextConfig = {
     emotion: true,
   },
   images: {
-    domains: [
-      "diskall.co.kr",
-      "img.hankyung.com",
-      "img.freepik.com",
-      "www.medigatenews.com",
-      "dosuri-image.s3.amazonaws.com",
-      "dosuri-images.s3.ap-northeast-2.amazonaws.com",
-    ],
+    domains: ["dosuri-image.dosuri.site", "dosuri-image.s3.amazonaws.com"],
   },
-
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: "/api/:path*",
-  //       destination: `${process.env.NEXT_PUBLIC_API_URL}/:path*`,
-  //     },
-  //   ];
-  // },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,

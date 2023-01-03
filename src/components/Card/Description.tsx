@@ -60,13 +60,24 @@ const Description: FC<IDescriptionProps> = ({ hospitalInfo, size }) => {
               gap: 4,
             }}
           >
-            <Icon
-              name="talk_square"
-              width="16"
-              height="15"
-              fill={theme.colors.purple}
-            />
-            {hospitalInfo.latest_article}
+            <span>
+              <Icon
+                name="talk_square"
+                width="16"
+                height="15"
+                fill={theme.colors.purple}
+              />
+            </span>
+            <span
+              css={{
+                overflow: "hidden",
+                display: "-webkit-box",
+                WebkitLineClamp: 1,
+                WebkitBoxOrient: "vertical",
+              }}
+            >
+              {hospitalInfo.latest_article}
+            </span>
           </span>
         ) : (
           <span
