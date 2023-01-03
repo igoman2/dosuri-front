@@ -2,6 +2,7 @@ import React, { FC } from "react";
 
 import DeleteIcon from "@/public/assets/close.png";
 import Image from "next/image";
+import Link from "next/link";
 import styled from "@emotion/styled";
 
 interface IRecentSearchListProps {
@@ -41,12 +42,20 @@ const RecentSearchList: FC<IRecentSearchListProps> = ({
 
   return (
     <RecentSearchListWrapper>
-      <div className="item">
-        <span className="word">{highlightIncludedText(text, inputText)}</span>
-      </div>
-      <span className="delete-icon" onClick={onDelete}>
-        <Image src={DeleteIcon} width={10.5} height={10.5} alt="delete" />
-      </span>
+      <>
+        <Link href={`/search/${text}?keyword=${text}&tab=all`}>
+          <a>
+            <div className="item">
+              <span className="word">
+                {highlightIncludedText(text, inputText)}
+              </span>
+            </div>
+          </a>
+        </Link>
+        <span className="delete-icon" onClick={onDelete}>
+          <Image src={DeleteIcon} width={10.5} height={10.5} alt="delete" />
+        </span>
+      </>
     </RecentSearchListWrapper>
   );
 };
@@ -58,6 +67,9 @@ const RecentSearchListWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
 
+  a {
+    flex-grow: 1;
+  }
   .item {
     padding: 0.5rem 0;
 

@@ -1,5 +1,5 @@
-import { getRecentHospitalSearchList } from "@/service/apis/hospital";
 import { IRecentHospitalSearchListResult } from "@/service/types";
+import { getRecentHospitalSearchList } from "@/service/apis/hospital";
 import { useQuery } from "react-query";
 
 interface UseRecentHospitalSearchList {
@@ -18,5 +18,7 @@ export function useRecentHospitalSearchList(): UseRecentHospitalSearchList {
       return data.results;
     },
   });
-  return { recentSearchedHospitalList: recentSearchedHospitalList ?? fallback };
+  return {
+    recentSearchedHospitalList: recentSearchedHospitalList ?? fallback,
+  };
 }

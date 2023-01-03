@@ -39,6 +39,13 @@ export const deleteSearchHistory = async (uuid: string) => {
   return response;
 };
 
+export const createSearchHistory = async (word: string) => {
+  const response = await api.post(`hospital/v1/hospital-searches`, {
+    word,
+  });
+  return response;
+};
+
 export const getHospitalInfo = async (uuid: string) => {
   const response = await api.post<IGetHospitalInfo>(
     `/hospital/v1/hospitals/${uuid}`

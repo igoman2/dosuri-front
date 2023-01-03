@@ -32,11 +32,10 @@ const SearchInput = () => {
     setFalse();
   }, [debouncedValue]);
 
-  const handleDelete = (deletedHospitalId: string) => {
+  const handleDeleteSearchHistory = (deletedHospitalId: string) => {
     mutate(deletedHospitalId);
   };
 
-  console.log("rerender");
   return (
     <Layout header={<SearchHeader onInput={onInput} inputText={inputText} />}>
       <Main>
@@ -64,10 +63,12 @@ const SearchInput = () => {
             </div>
             {recentSearchedHospitalList.map((recentSearchedHospital) => (
               <RecentSearchList
+                key={recentSearchedHospital.uuid}
                 text={recentSearchedHospital.word}
                 inputText={inputText}
-                key={recentSearchedHospital.uuid}
-                onDelete={() => handleDelete(recentSearchedHospital.uuid)}
+                onDelete={() =>
+                  handleDeleteSearchHistory(recentSearchedHospital.uuid)
+                }
               />
             ))}
           </div>
