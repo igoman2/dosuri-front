@@ -7,6 +7,7 @@ import Link from "next/link";
 import RecentSearchList from "@/components/UI/RecentSearchList";
 import SearchHeader from "@/components/Layout/Header/SearchHeader";
 import styled from "@emotion/styled";
+import { useDeleteSearchHistory } from "@/hooks/service/useDeleteSearchHistory";
 import { useRecentHospitalSearchList } from "@/hooks/service/useRecentHospitalSearchList";
 import { useSearchHospital } from "@/hooks/service/useSearchHospital";
 
@@ -19,6 +20,7 @@ const SearchInput = () => {
     query: inputText,
     isInput: value,
   });
+  const { mutate } = useDeleteSearchHistory();
 
   const { recentSearchedHospitalList } = useRecentHospitalSearchList();
   const onInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +32,11 @@ const SearchInput = () => {
     setFalse();
   }, [debouncedValue]);
 
+  const handleDelete = (deletedHospitalId: string) => {
+    mutate(deletedHospitalId);
+  };
+
+  console.log("rerender");
   return (
     <Layout header={<SearchHeader onInput={onInput} inputText={inputText} />}>
       <Main>
@@ -60,6 +67,7 @@ const SearchInput = () => {
                 text={recentSearchedHospital.word}
                 inputText={inputText}
                 key={recentSearchedHospital.uuid}
+                onDelete={() => handleDelete(recentSearchedHospital.uuid)}
               />
             ))}
           </div>

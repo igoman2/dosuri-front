@@ -34,6 +34,11 @@ export const getRecentHospitalSearchList = async (
   return response.data;
 };
 
+export const deleteSearchHistory = async (uuid: string) => {
+  const response = await api.delete(`hospital/v1/hospital-searches/${uuid}`);
+  return response;
+};
+
 export const getHospitalInfo = async (uuid: string) => {
   const response = await api.post<IGetHospitalInfo>(
     `/hospital/v1/hospitals/${uuid}`

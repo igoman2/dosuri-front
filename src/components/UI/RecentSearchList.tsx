@@ -7,9 +7,14 @@ import styled from "@emotion/styled";
 interface IRecentSearchListProps {
   text: string;
   inputText: string;
+  onDelete: () => void;
 }
 
-const RecentSearchList: FC<IRecentSearchListProps> = ({ text, inputText }) => {
+const RecentSearchList: FC<IRecentSearchListProps> = ({
+  text,
+  inputText,
+  onDelete,
+}) => {
   const highlightIncludedText = (text: string, value: string) => {
     const title = text.toLowerCase();
     const searchValue = value.toLowerCase();
@@ -39,7 +44,7 @@ const RecentSearchList: FC<IRecentSearchListProps> = ({ text, inputText }) => {
       <div className="item">
         <span className="word">{highlightIncludedText(text, inputText)}</span>
       </div>
-      <span className="delete-icon">
+      <span className="delete-icon" onClick={onDelete}>
         <Image src={DeleteIcon} width={10.5} height={10.5} alt="delete" />
       </span>
     </RecentSearchListWrapper>
@@ -64,6 +69,7 @@ const RecentSearchListWrapper = styled.div`
 
   .delete-icon {
     padding-right: 0.7rem;
+    cursor: pointer;
   }
 
   .highlight {

@@ -1,5 +1,5 @@
-import { getHospitalList } from "@/service/apis/hospital";
 import { IHospitalInfoResult } from "@/service/types";
+import { getHospitalList } from "@/service/apis/hospital";
 import { useQuery } from "react-query";
 
 interface UseSearchHospital {
@@ -18,7 +18,7 @@ export function useSearchHospital({
   const fallback: IHospitalInfoResult[] = [];
 
   const { data: searchedHospitalList } = useQuery({
-    queryKey: ["searchHospital", query],
+    queryKey: ["searchedHospital", query],
     queryFn: async () => {
       const data = await getHospitalList({
         search: query,
