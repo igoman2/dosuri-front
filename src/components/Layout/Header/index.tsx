@@ -8,6 +8,8 @@ import SearchBar from "@/components/SearchBar";
 import WriteQuesiton from "@/components/Write/Question";
 import WriteReview from "@/components/Write/Review";
 import note from "@/public/assets/note.png";
+import styled from "@emotion/styled";
+import useGeolocation from "@/hooks/useGeolocation";
 import { useSetRecoilState } from "recoil";
 
 interface IHeaderProps {
@@ -21,6 +23,7 @@ const Header: FC<IHeaderProps> = ({ left, center, right }) => {
   const [modalType, setModalType] = useState("");
   const setModalIsActive = useSetRecoilState(modalState);
   const setModalContent = useSetRecoilState(modalContentState);
+  const { coordinates } = useGeolocation();
 
   const onWriteHandler = () => {
     setModalType("question");
@@ -74,6 +77,10 @@ const Header: FC<IHeaderProps> = ({ left, center, right }) => {
         padding: "0 1rem",
       }}
     >
+      <LocationBox>
+        <div>lat {coordinates?.lat}</div>
+        <div>lng {coordinates?.lng}</div>
+      </LocationBox>
       <Link href="/">
         <a>{left && <Icon name="logo1" width="82" height="22" />}</a>
       </Link>
@@ -112,3 +119,10 @@ const Header: FC<IHeaderProps> = ({ left, center, right }) => {
 };
 
 export default Header;
+
+const LocationBox = styled.div`
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+`;
