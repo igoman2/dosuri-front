@@ -1,19 +1,29 @@
 import { ChangeEvent, FC, useState } from "react";
-import { IHospitalInfoResponse, IHospitalInfoResult } from "@/service/types";
+import {
+  IGetHospitalListParams,
+  IHospitalInfoResult,
+  IHospitalReviewsResult,
+} from "@/service/types";
 import { TabItem, TabList } from "@/mock/tabList";
 
 import ArrowRight from "@/public/assets/arrow-right-bold.png";
 import Button from "@/components/Button";
 import HospitalCard from "@/components/Card/HospitalCard";
+import Icon from "@/util/Icon";
 import Image from "next/image";
+import KeywordCommunity from "@/components/pages/Search/KeywordCommunity";
+import KeywordHospitals from "@/components/pages/Search/KeywordHospitals";
 import Layout from "@/components/Layout";
 import Link from "next/link";
+import { NextPageContext } from "next";
+import PostCard from "@/components/Card/PostCard";
 import SearchHeader from "@/components/Layout/Header/SearchHeader";
 import Tab from "@/components/Tab";
 import styled from "@emotion/styled";
+import { useGetCommunity } from "@/hooks/service/usegetCommunityList";
+import { useHospital } from "@/hooks/service/useHospital";
 import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
-import { NextPageContext } from "next";
 
 interface ISearchResultProps {
   keyword: string;
@@ -24,23 +34,19 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
   const [currentTab, setCurrentTab] = useState<TabItem>(TabList[0]);
   const router = useRouter();
   const theme = useTheme();
-  const [hospitals, setHospitals] =
-    useState<IHospitalInfoResponse | null>(null);
 
-  // const { isLoading: getHispitalListIsLoading, data: getHispitalListData } =
-  //   useQuery<IHospitalInfoResponse, AxiosError>(
-  //     "getHospitalList-keyword",
-  //     getHospitalList,
-  //     {
-  //       retry: 0,
-  //       onSuccess: (res) => {
-  //         setHospitals(res);
-  //       },
-  //       onError: (err: any) => {
-  //         setHospitals(err.response.data);
-  //       },
-  //     }
-  //   );
+  const params: IGetHospitalListParams = {
+    search: router.query.keyword as string,
+    page_size: 3,
+  };
+  const { hospitals: hospitalsInAllTab } = useHospital(
+    params,
+    currentTab.value
+  );
+
+  const { communityList } = useGetCommunity({
+    page_size: 3,
+  });
 
   const onTabClickHander = (tab: TabItem) => {
     setCurrentTab(tab);
@@ -54,15 +60,37 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
     setInputText(e.target.value);
   };
 
+  const handleToAllHospitals = () => {
+    setCurrentTab({
+      title: "병원",
+      value: "hospital",
+    });
+    router.replace({
+      pathname: `/search/${router.query.keyword}`,
+      query: { keyword: router.query.keyword, tab: "hospital" },
+    });
+  };
+
+  const handleToAllCommunity = () => {
+    setCurrentTab({
+      title: "도수톡",
+      value: "talk",
+    });
+    router.replace({
+      pathname: `/search/${router.query.keyword}`,
+      query: { keyword: router.query.keyword, tab: "talk" },
+    });
+  };
+
   const HospitalResult = (
     <ResultWrapper>
       <div className="hospital-section">
         <div className="title">
           병원
-          <span className="list-length"> 10</span>건
+          <span className="list-length"> {hospitalsInAllTab?.count}</span>건
         </div>
 
-        {hospitals?.results.map((hospital: IHospitalInfoResult, i) => (
+        {hospitalsInAllTab?.results.map((hospital: IHospitalInfoResult, i) => (
           <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
             <a>
               <HospitalCard hospitalInfo={hospital} />
@@ -73,6 +101,24 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
     </ResultWrapper>
   );
 
+  const renderPostBottom = (review: IHospitalReviewsResult) => {
+    return (
+      <PostBottom>
+        <div className="post-bottom">
+          <div className="heart">
+            <Icon name="heart" width="20" height="20" />
+            <span>{review.up_count}</span>
+          </div>
+
+          <div className="comment">
+            <Icon name="comment" width="20" height="20" />
+            <span>{review.article_attachment_assoc.length}</span>
+          </div>
+        </div>
+      </PostBottom>
+    );
+  };
+
   const TalkResult = (
     <ResultWrapper>
       <div className="community-section">
@@ -80,13 +126,13 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
           도수톡
           <span className="list-length"> 30</span>건
         </div>
-        {/* {posts.map((post, i) => (
-          <Link href={`community/${post.id}`} key={i}>
+        {communityList.results.map((post) => (
+          <Link href={`community/${post.uuid}`} key={post.uuid}>
             <a>
-              <PostCard post={post} bottom={<PostBottom post={post} />} />
+              <PostCard review={post} bottom={renderPostBottom(post)} />
             </a>
           </Link>
-        ))} */}
+        ))}
       </div>
     </ResultWrapper>
   );
@@ -96,6 +142,7 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
         {HospitalResult}
         <MoreButtonWrapper>
           <Button
+            onClick={handleToAllHospitals}
             text={
               <MoreButton>
                 <div className="text">병원 검색결과 전체보기</div>
@@ -120,6 +167,7 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
         {TalkResult}
         <MoreButtonWrapper>
           <Button
+            onClick={handleToAllCommunity}
             text={
               <MoreButton>
                 <div className="text">도수톡 검색결과 전체보기</div>
@@ -150,9 +198,10 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
           currentTab={currentTab}
           onTabClickHander={onTabClickHander}
         />
+
         {currentTab.value === "all" && AllResult}
-        {currentTab.value === "hospital" && HospitalResult}
-        {currentTab.value === "talk" && TalkResult}
+        {currentTab.value === "hospital" && <KeywordHospitals />}
+        {currentTab.value === "talk" && <KeywordCommunity />}
       </>
     </Layout>
   );
@@ -189,6 +238,27 @@ const MoreButton = styled.div`
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+`;
+
+const PostBottom = styled.div`
+  .post-bottom {
+    display: flex;
+    gap: 1rem;
+    font-size: ${(props) => props.theme.fontSizes.md};
+    line-height: ${(props) => props.theme.lineHeights.md};
+
+    .heart {
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+    }
+
+    .comment {
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+    }
+  }
 `;
 
 export const getServerSideProps = async (context: NextPageContext) => {

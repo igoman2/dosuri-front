@@ -1,5 +1,6 @@
 import {
   ICommunityPostDetailResponse,
+  IGetCommunityListParams,
   IHospitalReviewsResponse,
   IHotCommunityResponse,
   IRegisterCommentResult,
@@ -14,14 +15,10 @@ export const getHotCommunity = async () => {
   return response.data;
 };
 
-export const getCommunityList = async (articleType?: string) => {
+export const getCommunityList = async (params?: IGetCommunityListParams) => {
   const response = await api.get<IHotCommunityResponse>(
     `/community/v1/community/articles`,
-    {
-      params: {
-        article_type: articleType,
-      },
-    }
+    { params: { ...params } }
   );
   return response.data;
 };

@@ -23,6 +23,7 @@ export type Attach = {
   uuid: string;
   attachment: {
     signed_path: string;
+    created_at: string;
     uuid: string;
   };
   created_at: string;
