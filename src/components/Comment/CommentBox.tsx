@@ -7,6 +7,7 @@ import { useTheme } from "@emotion/react";
 
 interface ICommentBoxProps {
   nickname: string;
+  registerId: string;
   registered: string;
   content: string;
   id?: string;
@@ -17,6 +18,7 @@ interface ICommentBoxProps {
 
 const CommentBox: FC<ICommentBoxProps> = ({
   nickname,
+  registerId,
   registered,
   content,
   children,
@@ -27,7 +29,7 @@ const CommentBox: FC<ICommentBoxProps> = ({
   const theme = useTheme();
   const value = useContext(CommentStore);
   const handleThreadReply = () => {
-    value.setTo(nickname);
+    value.setTo({ nickname, uuid: registerId });
     value.setIsThread(true);
     value.setThreadId(id!);
   };

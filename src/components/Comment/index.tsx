@@ -12,21 +12,23 @@ const Comment: FC<ICommentProps> = ({ comments }) => {
   return (
     <CommentCardWrapper>
       <>
-        {comments.reverse().map((comment) => {
+        {comments.map((comment) => {
           return (
             <div key={comment.uuid}>
               <CommentBox
                 nickname={comment.user.nickname}
+                registerId={comment.user.uuid}
                 registered={comment.created_at}
                 content={comment.content}
                 id={comment.uuid}
               >
                 <div className="content">
-                  {comment.article_thread.reverse().map((thread, i) => {
+                  {comment.article_thread.map((thread) => {
                     return (
                       <div className="reply-wrapper" key={thread.uuid}>
                         <CommentBox
                           threadOwner={comment.user.nickname}
+                          registerId={comment.user.uuid}
                           nickname={thread.user.nickname}
                           registered={thread.created_at}
                           content={thread.content}

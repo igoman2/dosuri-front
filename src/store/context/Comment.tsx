@@ -1,15 +1,20 @@
 import { FC, ReactNode, createContext, useMemo, useState } from "react";
 
+import { User } from "@/types/user";
+
 interface ICommentProvider {
   children: ReactNode;
 }
 
 export const CommentStore = createContext({
-  to: "",
+  to: {
+    nickname: "",
+    uuid: "",
+  },
   content: "",
   isThread: false,
   threadId: "",
-  setTo: (to: string) => {},
+  setTo: (to: User) => {},
   setContent: (content: string) => {},
   setIsThread: (val: boolean) => {},
   setThreadId: (id: string) => {},
@@ -17,12 +22,15 @@ export const CommentStore = createContext({
 });
 
 const CommentProvider: FC<ICommentProvider> = ({ children }) => {
-  const [to, setTo] = useState("");
+  const [to, setTo] = useState<User>({ nickname: "", uuid: "" });
   const [content, setContent] = useState("");
   const [isThread, setIsThread] = useState(false);
   const [threadId, setThreadId] = useState("");
   const clearStore = () => {
-    setTo("");
+    setTo({
+      nickname: "",
+      uuid: "",
+    });
     setContent("");
     setIsThread(false);
     setThreadId("");

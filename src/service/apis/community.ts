@@ -60,13 +60,15 @@ export const registerComment = async (data: {
 export const registerThreadComment = async ({
   content,
   article,
+  mention_user,
 }: {
   content: string;
   article: string;
+  mention_user: string;
 }) => {
   const response = await api.post<IRegisterCommentResult>(
     "community/v1/community/article_thread",
-    { content: content, article_comment: article }
+    { content: content, article_comment: article, mention_user }
   );
 
   return response.data;

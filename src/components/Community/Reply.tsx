@@ -38,6 +38,7 @@ const Reply: FC<IReplyProps> = ({ postId }) => {
       {
         content: value.content,
         article: value.isThread ? value.threadId : postId,
+        mention_user: value.to.uuid,
       },
       {
         onSuccess: () => {
@@ -59,7 +60,9 @@ const Reply: FC<IReplyProps> = ({ postId }) => {
   return (
     <ReplyWrapper>
       <div className="reply-input">
-        {value.to ? <div className="tagged">{`@${value.to}`}</div> : null}
+        {value.to ? (
+          <div className="tagged">{`@${value.to.nickname}`}</div>
+        ) : null}
 
         <input
           type="text"
@@ -104,6 +107,7 @@ const ReplyWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: ${(props) => props.theme.colors.white};
   }
 
   input {
