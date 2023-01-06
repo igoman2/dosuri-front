@@ -53,10 +53,10 @@ const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
             후기
             <span className="list-length"> {data.count}</span>건
           </div>
-          {data.results.map((review, i) => (
+          {data.results.map((review) => (
             <PostCard
               review={review}
-              key={i}
+              key={review.uuid}
               bottom={renderPostBottom(review)}
             />
           ))}

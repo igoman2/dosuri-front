@@ -55,10 +55,22 @@ export const parseBirthday = (dateStr: string) => {
  * @param dayString
  * @example 2020-02-06T13:39:45.148Z(ISOString) => 20220206
  */
-export const formatDate_YYYY_MM_DD = (dayString: string) => {
+export const formatDate_YYYYMMDD = (dayString: string) => {
   if (!dayString) {
     return "";
   }
 
   return dayjs(dayString).format("YYYYMMDD");
+};
+
+/**
+ * @param dayString
+ * @example 2020-02-06T13:39:45.148Z(ISOString) => 2022.02.06.
+ */
+export const formatDate_YYYY_MM_DD = (dayString: string) => {
+  if (!dayString) {
+    return "";
+  }
+
+  return dayjs(dayString).format("YYYY.MM.DD.");
 };

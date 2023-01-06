@@ -1,14 +1,17 @@
-import { Post, posts } from "@/mock/posts";
-import React, { useEffect, useState } from "react";
-
+import { EmptyText } from "@/components/UI/emotion/EmptyText";
 import Float from "@/components/UI/Float";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
+import { IHospitalReviewsResult } from "@/service/types";
 import Icon from "@/util/Icon";
 import Layout from "@/components/Layout";
 import Link from "next/link";
 import PostCard from "@/components/Card/PostCard";
+import React from "react";
 import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
+import { useGetCommunity } from "@/hooks/service/usegetCommunityList";
+import { useRecoilValue } from "recoil";
+import { userInfoState } from "@/store/user";
 
 export const DIRECTION = {
   Up: "UP",
@@ -19,17 +22,22 @@ export type DIRECTION = typeof DIRECTION[keyof typeof DIRECTION]; // 'UP' | DOWN
 const Review = () => {
   const [scrollDir] = useDirection();
 
-  const renderPostBottom = (post: Post) => {
+  const user = useRecoilValue(userInfoState);
+  const { communityList } = useGetCommunity({
+    user: user.uuid,
+  });
+
+  const renderPostBottom = (review: IHospitalReviewsResult) => {
     return (
       <PostBottom>
         <div className="post-bottom">
           <div className="heart">
             <Icon name="heart" width="17" height="17" />
-            <span>{post.heart}</span>
+            <span>{review.up_count}</span>
           </div>
           <div className="comment">
-            <Icon name="comment" />
-            <span>{post.comment}</span>
+            <Icon name="comment" width="17" height="17" />
+            <span>{review.article_attachment_assoc.length}</span>
           </div>
         </div>
       </PostBottom>
@@ -40,15 +48,20 @@ const Review = () => {
     <Layout header={<HeaderDepth />} footer={false}>
       <>
         <ReviewWrapper>
-          <div className="sub-title">내 후기 총 2개</div>
-
-          {/* {posts.map((post, i) => (
-            <Link href={`review/${post.id}`} key={i}>
-              <a>
-                <PostCard post={post} bottom={renderPostBottom(post)} />
-              </a>
-            </Link>
-          ))} */}
+          <div className="sub-title">내 후기 총 {communityList.count}개</div>
+          {communityList.count === 0 ? (
+            <EmptyText>등록된 후기가 없습니다.</EmptyText>
+          ) : (
+            <>
+              {communityList.results.map((post) => (
+                <Link href={`review/${post.uuid}`} key={post.uuid}>
+                  <a>
+                    <PostCard review={post} bottom={renderPostBottom(post)} />
+                  </a>
+                </Link>
+              ))}
+            </>
+          )}
         </ReviewWrapper>
 
         <Float scrollDir={scrollDir} distance="1.5rem" />

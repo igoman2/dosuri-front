@@ -204,6 +204,20 @@ export interface IApplyInsuranceResponse {
   user: string;
 }
 
+export interface IGetMyPointHistoryResponse {
+  count: number;
+  next: string;
+  previous: string;
+  results: IGetMyPointHistoryResult[];
+}
+
+export interface IGetMyPointHistoryResult {
+  modify_point: number;
+  total_point: number;
+  content: string;
+  created_at: string;
+}
+
 export interface IRegisterCommentResult {
   uuid: string;
   user: {

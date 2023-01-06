@@ -2,6 +2,7 @@ import {
   GetUserAuthParams,
   GetUserAuthResponse,
   IApplyInsuranceResponse,
+  IGetMyPointHistoryResponse,
 } from "./../types";
 
 import { UserInfo } from "@/types/user";
@@ -45,6 +46,14 @@ export const getUser = async (
       Authorization: "Bearer " + accessToken,
     },
   });
+
+  return data;
+};
+
+export const getMyPointHistory = async () => {
+  const { data } = await api.get<IGetMyPointHistoryResponse>(
+    `/user/v1/users/me/point-histories`
+  );
 
   return data;
 };

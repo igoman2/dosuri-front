@@ -1,33 +1,40 @@
 import Divider from "@/components/UI/Divider";
+import { EmptyText } from "@/components/UI/emotion/EmptyText";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Layout from "@/components/Layout";
 import React from "react";
-import { pointHistory } from "@/mock/pointHistory";
+import { formatDate_YYYY_MM_DD } from "@/util/format";
 import styled from "@emotion/styled";
+import { usePointHistory } from "@/hooks/service/usePointHistory";
 
 const Point = () => {
+  const { pointHistories } = usePointHistory();
   return (
     <Layout header={<HeaderDepth />} footer={false}>
       <PointWrapper>
         <div className="sub-title">내 포인트 2,000P</div>
-        <ul className="list-section">
-          <Divider height={1} />
+        {pointHistories.count > 0 ? (
+          <ul className="list-section">
+            <Divider height={1} />
 
-          {pointHistory.map((history) => {
-            return (
-              <>
-                <li>
-                  <div>
-                    <div>{history.date}</div>
-                    <div>{history.content}</div>
-                  </div>
-                  <div>{history.point}</div>
-                </li>
-                <Divider height={1} />
-              </>
-            );
-          })}
-        </ul>
+            {pointHistories.results.map((history) => {
+              return (
+                <>
+                  <li>
+                    <div>
+                      <div>{formatDate_YYYY_MM_DD(history.created_at)}</div>
+                      <div>{history.content}</div>
+                    </div>
+                    <div>{history.modify_point}</div>
+                  </li>
+                  <Divider height={1} />
+                </>
+              );
+            })}
+          </ul>
+        ) : (
+          <EmptyText>포인트 내역이 없습니다.</EmptyText>
+        )}
       </PointWrapper>
     </Layout>
   );
