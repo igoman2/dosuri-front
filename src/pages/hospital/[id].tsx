@@ -89,7 +89,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
   const uuid = hospitalInfoData?.uuid;
 
   const { data: hospitalTreatmentsData } = useQuery({
-    queryKey: "hospital-treatments",
+    queryKey: ["hospital-treatments", uuid],
     queryFn: async () => {
       const resp = await getHospitalTreatments(uuid!);
       return resp;
