@@ -54,7 +54,7 @@ const tabList = [
 
 const Mypage = () => {
   return (
-    <Layout header={<Header left={true} center={true} />}>
+    <Layout header={<Header left={true} />}>
       <ProfileSectionWrapper>
         <div className="nickname">닉네임최대열글자이하</div>
         <div className="edit-profile">

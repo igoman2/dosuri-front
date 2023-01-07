@@ -1,8 +1,17 @@
-import React, { ChangeEvent, FC, FormEvent, useEffect, useRef } from "react";
-import { css, useTheme } from "@emotion/react";
+import React, {
+  ChangeEvent,
+  FC,
+  FormEvent,
+  MouseEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import Image from "next/image";
+import { css } from "@emotion/react";
 import magnifier_grey from "@/public/assets/magnifier_grey.png";
+import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
 interface ISearchBarProps {
@@ -20,11 +29,11 @@ const SearchBar: FC<ISearchBarProps> = ({ inputText, onInput }) => {
   };
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const theme = useTheme();
   const router = useRouter();
+  const [isActive, setIsActive] = useState(router.asPath !== "/search/input");
 
   const onClickHandler = () => {
-    if (router.asPath !== "/search/input") {
+    if (isActive) {
       router.push("/search/input");
     }
   };
@@ -46,24 +55,6 @@ const SearchBar: FC<ISearchBarProps> = ({ inputText, onInput }) => {
       inputRef.current.focus();
     }
   }, [router]);
-  const inputWrapper = css`
-    position: relative;
-    color: ${theme.colors.grey};
-  `;
-
-  const input = css`
-    height: 3.4rem;
-    width: 100%;
-    font-size: ${theme.fontSizes.md};
-    line-height: ${theme.lineHeights.md};
-    padding-left: 4rem;
-    border-radius: 5rem;
-    border: 0.1rem solid ${theme.colors.grey};
-
-    ::placeholder {
-      color: ${theme.colors.grey};
-    }
-  `;
 
   const image = css`
     position: absolute;
@@ -72,37 +63,43 @@ const SearchBar: FC<ISearchBarProps> = ({ inputText, onInput }) => {
   `;
 
   return (
-    <div
-      css={{
-        flexGrow: 1,
-      }}
-      onClick={onClickHandler}
-    >
+    <SearchInputWrapper onClick={onClickHandler}>
       <form onSubmit={onSearch}>
-        <div css={inputWrapper}>
-          <span css={image}>
-            <Image
-              src={magnifier_grey}
-              alt="magnifier"
-              width={20}
-              height={20}
-            />
-          </span>
-          <input
-            ref={inputRef}
-            css={input}
-            value={inputText}
-            onChange={onInput}
-            type="text"
-            id="roll"
-            name="roll"
-            required
-            placeholder="병원, 지역, 후기 키워드 검색하기"
-          />
-        </div>
+        <span css={image}>
+          <Image src={magnifier_grey} alt="magnifier" width={20} height={20} />
+        </span>
+        <input
+          ref={inputRef}
+          value={inputText}
+          onChange={onInput}
+          type="text"
+          id="roll"
+          name="roll"
+          required
+          placeholder="병원, 지역, 후기 키워드 검색하기"
+        />
       </form>
-    </div>
+    </SearchInputWrapper>
   );
 };
 
 export default SearchBar;
+
+const SearchInputWrapper = styled.div`
+  flex-grow: 1;
+
+  form {
+    position: relative;
+    color: ${(props) => props.theme.colors.grey};
+  }
+
+  input {
+    height: 3.4rem;
+    width: 100%;
+    font-size: ${(props) => props.theme.fontSizes.md};
+    line-height: ${(props) => props.theme.lineHeights.md};
+    padding-left: 4rem;
+    border-radius: 5rem;
+    border: 0.1rem solid ${(props) => props.theme.colors.grey};
+  }
+`;
