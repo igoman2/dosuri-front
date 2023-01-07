@@ -1,9 +1,6 @@
 import * as Yup from "yup";
 
-import {
-  formatDate_YYYY_MM_DD,
-  formatPhoneNumber_00000000,
-} from "@/util/format";
+import { formatDate_YYYYMMDD, formatPhoneNumber_00000000 } from "@/util/format";
 
 import { UserInfo } from "@/types/user";
 import { useRecoilValue } from "recoil";
@@ -53,7 +50,7 @@ const useFormikFactory = (formType: "register" | "edit") => {
       name: userInfo.name ?? "",
       email: userInfo.username ?? "",
       nickname: userInfo.nickname ?? "",
-      birthday: formatDate_YYYY_MM_DD(userInfo.birthday),
+      birthday: formatDate_YYYYMMDD(userInfo.birthday),
       phone: formatPhoneNumber_00000000(userInfo.phone_no),
       sex: userInfo.sex ?? "",
       largeArea: userInfo.address.large_area ?? "",
