@@ -15,7 +15,7 @@ interface IReviewsProps {
 
 const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
   const { data } = useQuery({
-    queryKey: ["getHospitalReviews"],
+    queryKey: ["getHospitalReviews", hospitalData.uuid],
     queryFn: async () => {
       const data = await getHospitalReviews(hospitalData.uuid);
       return data!;

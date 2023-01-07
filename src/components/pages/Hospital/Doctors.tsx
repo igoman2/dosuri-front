@@ -13,7 +13,7 @@ interface IDoctorsProps {
 
 const Doctors: FC<IDoctorsProps> = ({ hospitalData }) => {
   const { data } = useQuery({
-    queryKey: ["getDoctorList"],
+    queryKey: ["getDoctorList", hospitalData.uuid],
     queryFn: async () => {
       const data = await getDoctorList(hospitalData.uuid);
 
