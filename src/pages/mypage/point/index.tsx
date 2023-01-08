@@ -15,7 +15,7 @@ const Point = () => {
     <Layout header={<HeaderDepth />} footer={false}>
       <PointWrapper>
         <div className="sub-title">
-          내 포인트 {currentPoint?.toLocaleString()}P
+          내 포인트 {currentPoint?.total_point.toLocaleString()}P
         </div>
         {pointHistories.count > 0 ? (
           <ul className="list-section">
