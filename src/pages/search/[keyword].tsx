@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import {
   IGetHospitalListParams,
   IHospitalInfoResult,
@@ -14,7 +14,6 @@ import Image from "next/image";
 import KeywordCommunity from "@/components/pages/Search/KeywordCommunity";
 import KeywordHospitals from "@/components/pages/Search/KeywordHospitals";
 import Layout from "@/components/Layout";
-import Link from "next/link";
 import { NextPageContext } from "next";
 import PostCard from "@/components/Card/PostCard";
 import SearchHeader from "@/components/Layout/Header/SearchHeader";
@@ -34,6 +33,11 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
   const [currentTab, setCurrentTab] = useState<TabItem>(TabList[0]);
   const router = useRouter();
   const theme = useTheme();
+
+  useEffect(() => {
+    const currentTab = TabList.find((tab) => tab.value === router.query.tab);
+    setCurrentTab(currentTab ?? TabList[0]);
+  }, [router]);
 
   const params: IGetHospitalListParams = {
     search: router.query.keyword as string,

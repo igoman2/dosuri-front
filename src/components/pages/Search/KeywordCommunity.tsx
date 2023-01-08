@@ -38,6 +38,12 @@ const KeywordCommunity = () => {
     }
   );
 
+  const postClickHandler = (id: string) => {
+    router.push({
+      pathname: `/community/${id}`,
+    });
+  };
+
   const renderPostBottom = (review: IHospitalReviewsResult) => {
     return (
       <PostBottom>
@@ -71,11 +77,13 @@ const KeywordCommunity = () => {
             {talks?.pages.map((pageData) => {
               return pageData.results.map((talk) => {
                 return (
-                  <Link href={`hospital/${talk.uuid}`} key={talk.uuid}>
-                    <a>
-                      <PostCard review={talk} bottom={renderPostBottom(talk)} />
-                    </a>
-                  </Link>
+                  <div
+                    className="link"
+                    onClick={() => postClickHandler(talk.uuid)}
+                    key={talk.uuid}
+                  >
+                    <PostCard review={talk} bottom={renderPostBottom(talk)} />
+                  </div>
                 );
               });
             })}
@@ -101,6 +109,10 @@ const ResultWrapper = styled.div`
 
   .list-length {
     color: ${(props) => props.theme.colors.purple};
+  }
+
+  .link {
+    cursor: pointer;
   }
 `;
 

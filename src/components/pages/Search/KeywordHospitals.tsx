@@ -36,6 +36,13 @@ const KeywordHospitals = () => {
       },
     }
   );
+
+  const hospitalClickHandler = (id: string) => {
+    router.push({
+      pathname: `/hospital/${id}`,
+    });
+  };
+
   return (
     <div>
       <ResultWrapper>
@@ -51,11 +58,13 @@ const KeywordHospitals = () => {
             {hospitals?.pages.map((pageData) => {
               return pageData.results.map((hospital) => {
                 return (
-                  <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
-                    <a>
-                      <HospitalCard hospitalInfo={hospital} />
-                    </a>
-                  </Link>
+                  <div
+                    className="link"
+                    onClick={() => hospitalClickHandler(hospital.uuid)}
+                    key={hospital.uuid}
+                  >
+                    <HospitalCard hospitalInfo={hospital} />
+                  </div>
                 );
               });
             })}
@@ -80,5 +89,9 @@ const ResultWrapper = styled.div`
 
   .list-length {
     color: ${(props) => props.theme.colors.purple};
+  }
+
+  .link {
+    cursor: pointer;
   }
 `;
