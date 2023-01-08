@@ -17,7 +17,7 @@ interface IPostProps {
 }
 
 const Post: FC<IPostProps> = ({ postId }) => {
-  const { data } = useQuery("getCommunityPostDetail", () =>
+  const { data } = useQuery(["getCommunityPostDetail", postId], () =>
     getCommunityPostDetail(postId)
   );
 

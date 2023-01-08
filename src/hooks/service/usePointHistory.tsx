@@ -10,7 +10,11 @@ export function usePointHistory() {
   };
   const { data: pointHistories } = useQuery(
     "myPointHistory",
-    getMyPointHistory
+    getMyPointHistory,
+    {
+      staleTime: 0,
+      cacheTime: 0,
+    }
   );
 
   return { pointHistories: pointHistories ?? fallback };

@@ -186,7 +186,15 @@ const Home = () => {
           HOT 도수톡
         </div>
         {hotCommunity.results.map((review, i) => (
-          <PostCard review={review} key={i} bottom={renderPostBottom(review)} />
+          <Link href={`community/${review.uuid}`} key={review.uuid}>
+            <a>
+              <PostCard
+                review={review}
+                key={i}
+                bottom={renderPostBottom(review)}
+              />
+            </a>
+          </Link>
         ))}
       </div>
     </Layout>

@@ -21,7 +21,14 @@ export function useUser(accessToken?: string): UseUser {
     sex: "",
     pain_areas: [],
   };
-  const { data: user } = useQuery([queryKeys.user], () => getUser(accessToken));
+  const { data: user } = useQuery(
+    [queryKeys.user],
+    () => getUser(accessToken),
+    {
+      staleTime: 0,
+      cacheTime: 0,
+    }
+  );
 
   return { user: user ?? fallback };
 }

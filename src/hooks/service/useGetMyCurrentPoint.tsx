@@ -4,7 +4,11 @@ import { useQuery } from "react-query";
 export function useGetMyCurrentPoint() {
   const { data: currentPoint } = useQuery(
     "getMyCurrentPoint",
-    getMyCurrentPoint
+    getMyCurrentPoint,
+    {
+      staleTime: 0,
+      cacheTime: 0,
+    }
   );
   return { currentPoint };
 }
