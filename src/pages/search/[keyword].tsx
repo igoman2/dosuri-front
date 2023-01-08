@@ -20,7 +20,7 @@ import PostCard from "@/components/Card/PostCard";
 import SearchHeader from "@/components/Layout/Header/SearchHeader";
 import Tab from "@/components/Tab";
 import styled from "@emotion/styled";
-import { useGetCommunity } from "@/hooks/service/useGetCommunityList";
+import { useGetCommunity } from "@/hooks/service/useGetCommunity";
 import { useHospital } from "@/hooks/service/useHospital";
 import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
