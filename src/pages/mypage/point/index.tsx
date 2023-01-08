@@ -5,14 +5,18 @@ import Layout from "@/components/Layout";
 import React from "react";
 import { formatDate_YYYY_MM_DD } from "@/util/format";
 import styled from "@emotion/styled";
+import { useGetMyCurrentPoint } from "@/hooks/service/useGetMyCurrentPoint";
 import { usePointHistory } from "@/hooks/service/usePointHistory";
 
 const Point = () => {
   const { pointHistories } = usePointHistory();
+  const { currentPoint } = useGetMyCurrentPoint();
   return (
     <Layout header={<HeaderDepth />} footer={false}>
       <PointWrapper>
-        <div className="sub-title">내 포인트 2,000P</div>
+        <div className="sub-title">
+          내 포인트 {currentPoint?.toLocaleString()}P
+        </div>
         {pointHistories.count > 0 ? (
           <ul className="list-section">
             <Divider height={1} />
@@ -25,7 +29,12 @@ const Point = () => {
                       <div>{formatDate_YYYY_MM_DD(history.created_at)}</div>
                       <div>{history.content}</div>
                     </div>
-                    <div>{history.modify_point}</div>
+                    <div>
+                      {history.modify_point < 0
+                        ? history.modify_point.toLocaleString()
+                        : `+${history.modify_point.toLocaleString()}`}
+                      P
+                    </div>
                   </li>
                   <Divider height={1} />
                 </>

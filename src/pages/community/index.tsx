@@ -11,7 +11,7 @@ import PostBottom from "@/components/UI/emotion/PostBottom";
 import PostCard from "@/components/Card/PostCard";
 import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
-import { useGetCommunity } from "@/hooks/service/usegetCommunityList";
+import { useGetCommunity } from "@/hooks/service/useGetCommunityList";
 import { useTheme } from "@emotion/react";
 
 const Tablist: Tab[] = [

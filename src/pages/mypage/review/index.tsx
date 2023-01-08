@@ -9,7 +9,7 @@ import PostCard from "@/components/Card/PostCard";
 import React from "react";
 import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
-import { useGetCommunity } from "@/hooks/service/usegetCommunityList";
+import { useGetCommunity } from "@/hooks/service/useGetCommunityList";
 import { useRecoilValue } from "recoil";
 import { userInfoState } from "@/store/user";
 

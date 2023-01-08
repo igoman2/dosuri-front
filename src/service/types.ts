@@ -230,3 +230,7 @@ export interface IRegisterCommentResult {
   article_thread: ArticleThread[];
   created_at: string;
 }
+
+export interface IGetMyCurrentPointResponse {
+  total_point: number;
+}

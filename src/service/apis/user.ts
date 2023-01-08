@@ -2,6 +2,7 @@ import {
   GetUserAuthParams,
   GetUserAuthResponse,
   IApplyInsuranceResponse,
+  IGetMyCurrentPointResponse,
   IGetMyPointHistoryResponse,
 } from "./../types";
 
@@ -53,6 +54,14 @@ export const getUser = async (
 export const getMyPointHistory = async () => {
   const { data } = await api.get<IGetMyPointHistoryResponse>(
     `/user/v1/users/me/point-histories`
+  );
+
+  return data;
+};
+
+export const getMyCurrentPoint = async () => {
+  const { data } = await api.get<IGetMyCurrentPointResponse>(
+    "/user/v1/users/me/point"
   );
 
   return data;
