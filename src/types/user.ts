@@ -19,3 +19,8 @@ export type UserInfo = {
     name: string;
   }[];
 };
+
+export type UserFullInfo = UserInfo & {
+  refreshToken: string;
+  accessToken: string;
+};

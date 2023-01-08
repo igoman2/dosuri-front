@@ -15,6 +15,7 @@ import Select from "react-select";
 import { Symtom } from "@/types/hospital";
 import { UserInfo } from "@/types/user";
 import _ from "lodash";
+import { setTokenInCookie } from "@/util/setToken";
 import styled from "@emotion/styled";
 import useFormikFactory from "@/hooks/useFormikFactory";
 import { useRecoilState } from "recoil";
@@ -86,8 +87,15 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
     (data) => registerUser(data),
     {
       onSuccess: (resp) => {
+        setTokenInCookie("refresh", userInfo.refreshToken);
+        setTokenInCookie("access", userInfo.accessToken);
         setUserInfo((prev) => {
-          return { ...resp, uuid: prev.uuid };
+          return {
+            ...resp,
+            uuid: prev.uuid,
+            refreshToken: prev.refreshToken,
+            accessToken: prev.accessToken,
+          };
         });
         router.push("/");
       },

@@ -5,6 +5,7 @@ import React, { useEffect } from "react";
 import { GetServerSideProps } from "next";
 import Spinner from "@/components/UI/Spinner";
 import { getUserAuth } from "@/service/apis/user";
+import { setTokenInCookie } from "@/util/setToken";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import { useUser } from "@/hooks/service/useUser";
@@ -24,13 +25,13 @@ const Kakao = ({ uuid, accessToken, refreshToken, isNew }: IKakaoProps) => {
   const { user } = useUser(accessToken);
 
   useEffect(() => {
-    setUserInfo({ ...user, uuid });
-    document.cookie = `accessToken=${accessToken}; path=/;`;
-    document.cookie = `refreshToken=${refreshToken}; path=/;`;
+    setUserInfo({ ...user, uuid, refreshToken, accessToken });
 
     if (isNew) {
       router.push("/register");
     } else {
+      setTokenInCookie("refresh", refreshToken);
+      setTokenInCookie("access", accessToken);
       router.push("/");
     }
   }, []);
