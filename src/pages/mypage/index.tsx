@@ -55,7 +55,7 @@ const Mypage = () => {
   ];
 
   const { currentPoint } = useGetMyCurrentPoint();
-  tabList[1].subtext = currentPoint?.total_point.toLocaleString() ?? "";
+  tabList[1].subtext = currentPoint?.total_point.toLocaleString() + "P" ?? "P";
 
   return (
     <Layout header={<Header left={true} />}>
