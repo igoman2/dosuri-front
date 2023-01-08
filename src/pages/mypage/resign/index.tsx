@@ -1,4 +1,4 @@
-import { Field, Form, Formik } from "formik";
+import { Field, FormikProvider, useFormik } from "formik";
 
 import Button from "@/components/Button";
 import Checkbox from "@/components/UI/Checkbox";
@@ -6,66 +6,84 @@ import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Layout from "@/components/Layout";
 import React from "react";
 import styled from "@emotion/styled";
+import { useResignUser } from "@/hooks/service/useResignUser";
 
 interface MyFormValues {
   firstName: string;
 }
 
-const Secession = () => {
+const Resign = () => {
   const initialValues: MyFormValues = { firstName: "" };
+
+  const { mutate } = useResignUser();
+
+  // TODO: 회원탈퇴 api 연동 마무리 해야함
+  const formik = useFormik({
+    initialValues,
+    onSubmit: () => {
+      mutate({
+        reason: "test",
+      });
+    },
+  });
+
+  const resignHandler = () => {
+    formik.handleSubmit();
+  };
 
   return (
     <Layout header={<HeaderDepth />} footer={false}>
-      <SecessionWrapper>
+      <ResignWrapper>
         <div className="sub-title">회원 탈퇴</div>
         <div className="setting-layout">
-          <div className="section-mid">
-            <div className="information">
-              회원 탈퇴 시, 회원 정보와 포인트, 작성한 글 등 모든 정보가
-              삭제되며 복구할 수 없습니다.
-            </div>
-            <div className="question">탈퇴하시는 이유가 무엇인가요?</div>
-            <CheckboxWrapper>
-              <Checkbox text="서비스가 마음에 들지 않아요." />
-              <Checkbox text="다른 서비스를 주로 사용해요." />
-              <Checkbox text="정보가 충분하지 않아요." />
-              <Checkbox text="다른 계정으로 이용하고 있어요." />
-              <Checkbox text="탈퇴 후 재가입 하고 싶어요." />
-              <Checkbox text="기타" />
-            </CheckboxWrapper>
-            <Formik
-              initialValues={initialValues}
-              onSubmit={(values, actions) => {
-                console.log({ values, actions });
-                actions.setSubmitting(false);
-              }}
-            >
-              <Form>
+          <FormikProvider value={formik}>
+            <form>
+              <div className="section-mid">
+                <div className="information">
+                  회원 탈퇴 시, 회원 정보와 포인트, 작성한 글 등 모든 정보가
+                  삭제되며 복구할 수 없습니다.
+                </div>
+                <div className="question">탈퇴하시는 이유가 무엇인가요?</div>
+                <CheckboxWrapper>
+                  <Checkbox text="서비스가 마음에 들지 않아요." />
+                  <Checkbox text="다른 서비스를 주로 사용해요." />
+                  <Checkbox text="정보가 충분하지 않아요." />
+                  <Checkbox text="다른 계정으로 이용하고 있어요." />
+                  <Checkbox text="탈퇴 후 재가입 하고 싶어요." />
+                  <Checkbox text="기타" />
+                </CheckboxWrapper>
+
                 <Field
                   className="field"
                   component="textarea"
-                  id="secession-reason"
-                  name="secession-reason"
+                  id="resign-reason"
+                  name="resign-reason"
                   placeholder="탈퇴 사유를 적어주세요 (20자 이상)"
                 />
-              </Form>
-            </Formik>
-          </div>
+              </div>
+            </form>
+          </FormikProvider>
+
           <div className="section-bottom">
             <Checkbox text="모든 정보를 삭제하는 것에 동의합니다." />
             <div className="save-button-wrapper">
-              <Button text="탈퇴하기" width="100%" />
+              <Button
+                type="submit"
+                text="탈퇴하기"
+                width="100%"
+                onClick={resignHandler}
+              />
             </div>
           </div>
         </div>
-      </SecessionWrapper>
+      </ResignWrapper>
     </Layout>
   );
 };
 
-export default Secession;
+export default Resign;
 
-const SecessionWrapper = styled.div`
+const ResignWrapper = styled.div`
   height: calc(100vh - 6rem);
   display: flex;
   flex-direction: column;

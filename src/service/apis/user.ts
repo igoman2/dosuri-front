@@ -4,6 +4,7 @@ import {
   IApplyInsuranceResponse,
   IGetMyCurrentPointResponse,
   IGetMyPointHistoryResponse,
+  IResignResponse,
 } from "./../types";
 
 import { UserInfo } from "@/types/user";
@@ -69,4 +70,13 @@ export const getMyCurrentPoint = async () => {
   );
 
   return data;
+};
+
+export const resignUser = async (data: { reason: string }) => {
+  const resp = await api.post<IResignResponse>(
+    "/user/v1/users/me/resign",
+    data
+  );
+
+  return resp.data;
 };

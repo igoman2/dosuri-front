@@ -234,3 +234,9 @@ export interface IRegisterCommentResult {
 export interface IGetMyCurrentPointResponse {
   total_point: number;
 }
+
+export interface IResignResponse {
+  content: string;
+  created_at: string;
+  reason: string;
+}

@@ -103,7 +103,7 @@ const Setting = () => {
               }
             />
 
-            <Link href="/mypage/secession">
+            <Link href="/mypage/resign">
               <a>
                 <ListTab
                   text="회원 탈퇴"
