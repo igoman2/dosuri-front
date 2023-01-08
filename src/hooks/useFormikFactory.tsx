@@ -3,8 +3,6 @@ import * as Yup from "yup";
 import { formatDate_YYYYMMDD, formatPhoneNumber_00000000 } from "@/util/format";
 
 import { UserInfo } from "@/types/user";
-import { useRecoilValue } from "recoil";
-import { userInfoState } from "@/store/user";
 
 interface MyFormValues {
   name?: string;
@@ -20,19 +18,17 @@ interface MyFormValues {
   }[];
 }
 
-const useFormikFactory = () => {
-  const userInfo = useRecoilValue<UserInfo>(userInfoState);
-
+const useFormikFactory = (user: UserInfo) => {
   const initialValues: MyFormValues = {
-    name: userInfo.name ?? "",
-    email: userInfo.username ?? "",
-    nickname: userInfo.nickname ?? "",
-    birthday: formatDate_YYYYMMDD(userInfo.birthday),
-    phone: formatPhoneNumber_00000000(userInfo.phone_no),
-    sex: userInfo.sex ?? "",
-    largeArea: userInfo.address.large_area ?? "",
-    smallArea: userInfo.address.small_area ?? "",
-    pain_areas: userInfo.pain_areas ?? "",
+    name: user.name ?? "",
+    email: user.username ?? "",
+    nickname: user.nickname ?? "",
+    birthday: formatDate_YYYYMMDD(user.birthday),
+    phone: formatPhoneNumber_00000000(user.phone_no),
+    sex: user.sex ?? "",
+    largeArea: user.address.large_area ?? "",
+    smallArea: user.address.small_area ?? "",
+    pain_areas: user.pain_areas ?? "",
   };
   return {
     initialValues,

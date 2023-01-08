@@ -3,7 +3,7 @@ import { deleteCookie, getCookie } from "cookies-next";
 
 import { useRouter } from "next/router";
 
-const freeRoute = ["/login", "oauth"];
+const freeRoute = ["/login", "/register", "oauth"];
 
 const withAuth = (WrappedComponent: React.ComponentType<any>) => {
   // eslint-disable-next-line react/display-name

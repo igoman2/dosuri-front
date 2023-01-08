@@ -1,4 +1,4 @@
 export interface Symtom {
-  title: string;
+  name: string;
   selected: boolean;
 }

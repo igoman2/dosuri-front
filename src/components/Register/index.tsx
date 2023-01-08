@@ -21,47 +21,48 @@ import useFormikFactory from "@/hooks/useFormikFactory";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
+import { useUser } from "@/hooks/service/useUser";
 import { userInfoState } from "@/store/user";
 
 export const Symtoms: Symtom[] = [
   {
-    title: "머리",
+    name: "머리",
     selected: false,
   },
   {
-    title: "목",
+    name: "목",
     selected: false,
   },
   {
-    title: "허리",
+    name: "허리",
     selected: false,
   },
   {
-    title: "어깨",
+    name: "어깨",
     selected: false,
   },
   {
-    title: "골반",
+    name: "골반",
     selected: false,
   },
   {
-    title: "무릎",
+    name: "무릎",
     selected: false,
   },
   {
-    title: "손목",
+    name: "손목",
     selected: false,
   },
   {
-    title: "발목",
+    name: "발목",
     selected: false,
   },
   {
-    title: "관절",
+    name: "관절",
     selected: false,
   },
   {
-    title: "그외",
+    name: "그외",
     selected: false,
   },
 ];
@@ -84,7 +85,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
   const id2 = useId();
 
   const { mutate } = useMutation<UserInfo, AxiosError, UserInfo, unknown>(
-    (data) => registerUser(data),
+    (data) => registerUser(data, userInfo.accessToken),
     {
       onSuccess: (resp) => {
         setTokenInCookie("refresh", userInfo.refreshToken);
@@ -102,7 +103,9 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
     }
   );
 
-  const { initialValues, validationSchema } = useFormikFactory();
+  const { user } = useUser(userInfo.accessToken);
+
+  const { initialValues, validationSchema } = useFormikFactory(user);
 
   const sortedLargeArea = useMemo(
     () => do_si.sort((a, b) => (a.label > b.label ? 1 : -1)),
@@ -116,6 +119,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
     onSubmit: () => {
       const registerUserData: UserInfo = {
         uuid: userInfo.uuid,
+        name: userInfo.name,
         nickname: formik.values.nickname,
         birthday: parseBirthday(formik.values.birthday),
         phone_no: formatPartialPhoneNumberToComplete(formik.values.phone),
@@ -199,7 +203,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
     const userSymtoms = Symtoms.map((symtom) => {
       if (
         initialValues.pain_areas.find(
-          (pain) => pain.name.toLowerCase() === symtom.title.toLowerCase()
+          (pain) => pain.name.toLowerCase() === symtom.name.toLowerCase()
         )
       ) {
         return { ...symtom, selected: true };
@@ -256,7 +260,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
 
   const onSymtomClick = (symtom: Symtom, formikState: typeof formik) => {
     setSymtoms((prev) => {
-      const selectedIndex = prev.findIndex((s) => s.title === symtom.title);
+      const selectedIndex = prev.findIndex((s) => s.name === symtom.name);
       const currentStatus = prev[selectedIndex].selected;
       prev[selectedIndex].selected = !currentStatus;
 
@@ -454,7 +458,6 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                     onSmallAreaSelect(selectedOption);
                     formik.setFieldValue("smallArea", selectedOption.value);
                   }}
-                  // defaultValue={userSmallArea}
                   value={smallArea}
                 />
               </div>
@@ -468,7 +471,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                     <Button
                       type="button"
                       key={i}
-                      text={symtom.title}
+                      text={symtom.name}
                       backgroundColor={theme.colors.white}
                       color={theme.colors.purple}
                       border={`0.1rem solid ${theme.colors.purple}`}
@@ -478,7 +481,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                     <Button
                       type="button"
                       key={i}
-                      text={symtom.title}
+                      text={symtom.name}
                       backgroundColor={theme.colors.white}
                       color={theme.colors.grey}
                       border={`0.1rem solid ${theme.colors.grey}`}
