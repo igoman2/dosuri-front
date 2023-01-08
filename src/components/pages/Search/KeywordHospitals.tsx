@@ -44,28 +44,22 @@ const KeywordHospitals = () => {
             병원
             <span className="list-length"> {hospitals?.pages[0].count}</span>건
           </div>
-
-          {hospitals?.pages.map((pageData) => {
-            return pageData.results.map((hospital) => {
-              return (
-                <>
-                  <InfiniteScroll
-                    loadMore={fetchNextPage as LoadMore}
-                    hasMore={hasNextPage}
-                  >
-                    <Link
-                      href={`hospital/${hospital.uuid}`}
-                      key={hospital.uuid}
-                    >
-                      <a>
-                        <HospitalCard hospitalInfo={hospital} />
-                      </a>
-                    </Link>
-                  </InfiniteScroll>
-                </>
-              );
-            });
-          })}
+          <InfiniteScroll
+            loadMore={fetchNextPage as LoadMore}
+            hasMore={hasNextPage}
+          >
+            {hospitals?.pages.map((pageData) => {
+              return pageData.results.map((hospital) => {
+                return (
+                  <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+                    <a>
+                      <HospitalCard hospitalInfo={hospital} />
+                    </a>
+                  </Link>
+                );
+              });
+            })}
+          </InfiniteScroll>
         </div>
       </ResultWrapper>
     </div>
@@ -75,10 +69,6 @@ const KeywordHospitals = () => {
 export default KeywordHospitals;
 const ResultWrapper = styled.div`
   .hospital-section {
-    margin-top: 2.5rem;
-  }
-
-  .community-section {
     margin-top: 2.5rem;
   }
 

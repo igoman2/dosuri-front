@@ -1,9 +1,10 @@
+import { IHospitalReviewsResult, IHotCommunityResponse } from "@/service/types";
 import React, { useMemo } from "react";
 
-import HospitalCard from "@/components/Card/HospitalCard";
-import { IHospitalInfoResponse } from "@/service/types";
+import Icon from "@/util/Icon";
 import InfiniteScroll from "react-infinite-scroller";
 import Link from "next/link";
+import PostCard from "@/components/Card/PostCard";
 import api from "@/service/axiosConfig";
 import styled from "@emotion/styled";
 import { useInfiniteQuery } from "react-query";
@@ -19,16 +20,16 @@ const KeywordCommunity = () => {
   }, []);
 
   const fetchUrl = async (url: string) => {
-    const response = await api.get<IHospitalInfoResponse>(url);
+    const response = await api.get<IHotCommunityResponse>(url);
     return response.data;
   };
 
   const {
-    data: hospitals,
+    data: talks,
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery(
-    ["hospitalByKeyword", router.query.keyword],
+    ["talksByKeyword", router.query.keyword],
     ({ pageParam = initialUrl }) => fetchUrl(pageParam),
     {
       getNextPageParam: (lastPage) => {
@@ -36,36 +37,49 @@ const KeywordCommunity = () => {
       },
     }
   );
+
+  const renderPostBottom = (review: IHospitalReviewsResult) => {
+    return (
+      <PostBottom>
+        <div className="post-bottom">
+          <div className="heart">
+            <Icon name="heart" width="20" height="20" />
+            <span>{review.up_count}</span>
+          </div>
+
+          <div className="comment">
+            <Icon name="comment" width="20" height="20" />
+            <span>{review.article_attachment_assoc.length}</span>
+          </div>
+        </div>
+      </PostBottom>
+    );
+  };
+
   return (
     <div>
       <ResultWrapper>
-        <div className="hospital-section">
+        <div className="community-section">
           <div className="title">
-            병원
-            <span className="list-length"> {hospitals?.pages[0].count}</span>건
+            도수톡
+            <span className="list-length"> {talks?.pages[0].count}</span>건
           </div>
-
-          {hospitals?.pages.map((pageData) => {
-            return pageData.results.map((hospital) => {
-              return (
-                <>
-                  <InfiniteScroll
-                    loadMore={fetchNextPage as LoadMore}
-                    hasMore={hasNextPage}
-                  >
-                    <Link
-                      href={`hospital/${hospital.uuid}`}
-                      key={hospital.uuid}
-                    >
-                      <a>
-                        <HospitalCard hospitalInfo={hospital} />
-                      </a>
-                    </Link>
-                  </InfiniteScroll>
-                </>
-              );
-            });
-          })}
+          <InfiniteScroll
+            loadMore={fetchNextPage as LoadMore}
+            hasMore={hasNextPage}
+          >
+            {talks?.pages.map((pageData) => {
+              return pageData.results.map((talk) => {
+                return (
+                  <Link href={`hospital/${talk.uuid}`} key={talk.uuid}>
+                    <a>
+                      <PostCard review={talk} bottom={renderPostBottom(talk)} />
+                    </a>
+                  </Link>
+                );
+              });
+            })}
+          </InfiniteScroll>
         </div>
       </ResultWrapper>
     </div>
@@ -75,10 +89,6 @@ const KeywordCommunity = () => {
 export default KeywordCommunity;
 
 const ResultWrapper = styled.div`
-  .hospital-section {
-    margin-top: 2.5rem;
-  }
-
   .community-section {
     margin-top: 2.5rem;
   }
@@ -91,5 +101,26 @@ const ResultWrapper = styled.div`
 
   .list-length {
     color: ${(props) => props.theme.colors.purple};
+  }
+`;
+
+const PostBottom = styled.div`
+  .post-bottom {
+    display: flex;
+    gap: 1rem;
+    font-size: ${(props) => props.theme.fontSizes.md};
+    line-height: ${(props) => props.theme.lineHeights.md};
+
+    .heart {
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+    }
+
+    .comment {
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+    }
   }
 `;

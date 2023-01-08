@@ -44,9 +44,19 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
     currentTab.value
   );
 
-  const { communityList } = useGetCommunity({
-    page_size: 3,
-  });
+  const { communityList } = useGetCommunity(params);
+
+  const postClickHandler = (id: string) => {
+    router.push({
+      pathname: `/community/${id}`,
+    });
+  };
+
+  const hospitalClickHandler = (id: string) => {
+    router.push({
+      pathname: `/hospital/${id}`,
+    });
+  };
 
   const onTabClickHander = (tab: TabItem) => {
     setCurrentTab(tab);
@@ -90,12 +100,14 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
           <span className="list-length"> {hospitalsInAllTab?.count}</span>건
         </div>
 
-        {hospitalsInAllTab?.results.map((hospital: IHospitalInfoResult, i) => (
-          <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
-            <a>
-              <HospitalCard hospitalInfo={hospital} />
-            </a>
-          </Link>
+        {hospitalsInAllTab?.results.map((hospital: IHospitalInfoResult) => (
+          <div
+            className="link"
+            onClick={() => hospitalClickHandler(hospital.uuid)}
+            key={hospital.uuid}
+          >
+            <HospitalCard hospitalInfo={hospital} />
+          </div>
         ))}
       </div>
     </ResultWrapper>
@@ -124,14 +136,16 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
       <div className="community-section">
         <div className="title">
           도수톡
-          <span className="list-length"> 30</span>건
+          <span className="list-length"> {communityList.count}</span>건
         </div>
         {communityList.results.map((post) => (
-          <Link href={`community/${post.uuid}`} key={post.uuid}>
-            <a>
-              <PostCard review={post} bottom={renderPostBottom(post)} />
-            </a>
-          </Link>
+          <div
+            className="link"
+            onClick={() => postClickHandler(post.uuid)}
+            key={post.uuid}
+          >
+            <PostCard review={post} bottom={renderPostBottom(post)} />
+          </div>
         ))}
       </div>
     </ResultWrapper>
@@ -226,6 +240,10 @@ const ResultWrapper = styled.div`
 
   .list-length {
     color: ${(props) => props.theme.colors.purple};
+  }
+
+  .link {
+    cursor: pointer;
   }
 `;
 

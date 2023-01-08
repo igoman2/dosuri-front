@@ -94,7 +94,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
     }
   );
 
-  const { initialValues, validationSchema } = useFormikFactory(formType);
+  const { initialValues, validationSchema } = useFormikFactory();
 
   const sortedLargeArea = useMemo(
     () => do_si.sort((a, b) => (a.label > b.label ? 1 : -1)),
