@@ -9,10 +9,9 @@ import Layout from "@/components/Layout";
 import Link from "next/link";
 import PostBottom from "@/components/UI/emotion/PostBottom";
 import PostCard from "@/components/Card/PostCard";
-import { getCommunityList } from "@/service/apis/community";
 import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
-import { useQuery } from "react-query";
+import { useGetCommunity } from "@/hooks/service/usegetCommunityList";
 import { useTheme } from "@emotion/react";
 
 const Tablist: Tab[] = [
@@ -44,17 +43,9 @@ const Community = () => {
     setCurrentTab(tab);
   };
 
-  const { data } = useQuery(["getCommunityList", currentTab], () => {
-    if (currentTab.value === "all") {
-      return getCommunityList();
-    } else {
-      return getCommunityList(currentTab.value);
-    }
+  const { communityList } = useGetCommunity({
+    article_type: currentTab.value,
   });
-
-  if (!data) {
-    return;
-  }
 
   const renderPostBottom = (review: IHospitalReviewsResult) => {
     return (
@@ -101,7 +92,7 @@ const Community = () => {
           </ButtonWrapper>
         </div>
 
-        {data.results.map((review, i) => (
+        {communityList.results.map((review, i) => (
           <Link href={`community/${review.uuid}`} key={i}>
             <a>
               <PostCard review={review} bottom={renderPostBottom(review)} />
