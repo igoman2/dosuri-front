@@ -183,7 +183,11 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
 
       <div>
         {TalkResult}
-        <MoreButtonWrapper>
+        <MoreButtonWrapper
+          css={{
+            marginBottom: "2rem",
+          }}
+        >
           <Button
             onClick={handleToAllCommunity}
             text={
