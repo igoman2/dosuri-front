@@ -26,7 +26,7 @@ const InsuranceRegister = () => {
       return applyInsurance();
     },
     onSuccess: () => {
-      router.push("/insurance-register/confirm");
+      router.replace("/insurance-register/confirm");
     },
     onError: (e) => {
       setModalIsActive({ isActive: true });

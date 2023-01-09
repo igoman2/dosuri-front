@@ -9,11 +9,13 @@ import Link from "next/link";
 import dayjs from "dayjs";
 import styled from "@emotion/styled";
 import { useRecoilValue } from "recoil";
+import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
 import { userInfoState } from "@/store/user";
 
 const Confirm = () => {
   const theme = useTheme();
+  const router = useRouter();
   const userInfo = useRecoilValue(userInfoState);
 
   const formmatedBirthday = useMemo(() => {
@@ -25,6 +27,10 @@ const Confirm = () => {
       dayjs(userInfo.birthday ?? "").toDate()
     );
   }, [userInfo.birthday]);
+
+  const handleBackClick = () => {
+    router.back();
+  };
 
   return (
     <Layout header={<HeaderInsurance />} footer={false}>
@@ -59,6 +65,7 @@ const Confirm = () => {
           <Link href="/insurance-register/confirm">
             <a>
               <Button
+                onClick={handleBackClick}
                 text="병원 정보 화면으로 돌아가기"
                 bold
                 width="100%"
