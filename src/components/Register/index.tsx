@@ -1,5 +1,5 @@
+import { ChangeEvent, FC, useEffect, useId, useMemo, useState } from "react";
 import { DropdownIndicator, ValueContainer, colourStyles } from "./style";
-import { FC, useEffect, useId, useMemo, useState } from "react";
 import { Field, FormikProvider, useFormik } from "formik";
 import { LOCATIONS, Location, do_si } from "./location";
 import { checkNicknameDuplication, registerUser } from "@/service/apis/user";
@@ -321,7 +321,10 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                   id="nickname"
                   name="nickname"
                   placeholder="2글자 이상 10글자 이하"
-                  onChange={(e: InputEvent) => {
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    if (e.target.value.length > 10) {
+                      return;
+                    }
                     setDidNicknameValidCheck(false);
                     formik.handleChange(e);
                   }}

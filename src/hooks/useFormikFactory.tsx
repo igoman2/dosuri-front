@@ -35,7 +35,7 @@ const useFormikFactory = (user: UserInfo) => {
     validationSchema: Yup.object({
       name: Yup.string(),
       email: Yup.string(),
-      nickname: Yup.string().min(2).max(15).required(),
+      nickname: Yup.string().min(2).max(10).required(),
       phone: Yup.string().length(8).required(),
       birthday: Yup.string().length(8).required(),
       sex: Yup.string().required(),
