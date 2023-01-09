@@ -1,3 +1,5 @@
+import { modalContentState, modalState } from "@/components/Modal/store";
+
 import ArrowBottomIcon from "@/public/assets/bordered-arrow-bottom.png";
 import Button from "@/components/Button";
 import HeaderInsurance from "@/components/Layout/Header/Depth/HeaderInsurance";
@@ -6,13 +8,12 @@ import Layout from "@/components/Layout";
 import React from "react";
 import WithInsuranceImage from "@/public/assets/with-insurance.png";
 import WithoutInsuranceImage from "@/public/assets/without-insurance.png";
-import styled from "@emotion/styled";
-import { useTheme } from "@emotion/react";
-import { useMutation } from "react-query";
 import { applyInsurance } from "@/service/apis/user";
+import styled from "@emotion/styled";
+import { useMutation } from "react-query";
 import { useRouter } from "next/router";
-import { modalContentState, modalState } from "@/components/Modal/store";
 import { useSetRecoilState } from "recoil";
+import { useTheme } from "@emotion/react";
 
 const InsuranceRegister = () => {
   const theme = useTheme();
@@ -99,7 +100,8 @@ const InsuranceRegister = () => {
           <Button
             text="터치 한번으로 실손보험 상담 신청하기"
             width="100%"
-            borderRadius="3"
+            borderRadius="0.3rem"
+            height="5.2rem"
             backgroundColor={theme.colors.purple_light}
             bold
             onClick={applyInsuranceHandler}
