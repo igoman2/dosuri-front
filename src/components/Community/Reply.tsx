@@ -20,8 +20,9 @@ const Reply: FC<IReplyProps> = ({ postId }) => {
   const { mutate } = useRegisterComment(value.isThread);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  console.log(value);
   useEffect(() => {
-    if (value.to) {
+    if (value.to.uuid) {
       if (inputRef.current) {
         inputRef.current.focus();
       }
@@ -60,7 +61,7 @@ const Reply: FC<IReplyProps> = ({ postId }) => {
   return (
     <ReplyWrapper>
       <div className="reply-input">
-        {value.to ? (
+        {value.to.uuid ? (
           <div className="tagged">{`@${value.to.nickname}`}</div>
         ) : null}
 

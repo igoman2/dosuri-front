@@ -51,7 +51,7 @@ function MyApp({
               </div>
             </ThemeProvider>
           </Hydrate>
-          <ReactQueryDevtools initialIsOpen={true} />
+          {/* <ReactQueryDevtools initialIsOpen={true} /> */}
         </QueryClientProvider>
       </RecoilRoot>
     </>
