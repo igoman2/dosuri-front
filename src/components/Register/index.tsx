@@ -637,6 +637,8 @@ const FormWrapper = styled.div`
   }
 
   .save-button-wrapper {
+    position: absolute;
+    bottom: 0;
     padding: 1rem 0;
     width: 100%;
   }
