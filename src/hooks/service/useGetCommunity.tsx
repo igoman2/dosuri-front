@@ -40,8 +40,13 @@ export function useGetCommunity(params?: IGetCommunityListParams) {
       },
     ],
   };
-  const { data: communityList } = useQuery([queryKeys.user], () =>
-    getCommunityList(params)
+  const { data: communityList } = useQuery(
+    "getCommunityListKeyword",
+    () => getCommunityList(params),
+    {
+      staleTime: 0,
+      cacheTime: 0,
+    }
   );
 
   return { communityList: communityList ?? fallback };
