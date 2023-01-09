@@ -3,8 +3,6 @@ import { QueryClient } from "react-query";
 function queryErrorHandler(error: unknown): void {
   const title =
     error instanceof Error ? error.message : "error connecting to server";
-
-  alert(title);
 }
 
 export function generateQueryClient(): QueryClient {
@@ -19,6 +17,7 @@ export function generateQueryClient(): QueryClient {
         refetchOnMount: false,
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
+        retry: false,
       },
       mutations: {
         onError: queryErrorHandler,
