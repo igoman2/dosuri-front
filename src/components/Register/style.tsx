@@ -8,6 +8,7 @@ export const colourStyles: any = {
     ...styles,
     flexGrow: 1,
     width: "calc(50% - 2rem)",
+    cursor: "pointer",
   }),
   control: (styles: CSSObject) => ({
     ...styles,
@@ -17,9 +18,9 @@ export const colourStyles: any = {
     "&:hover": {
       border: `0.1rem solid ${theme.colors.grey}`,
     },
-    cursor: "text",
     height: "4.2rem",
     padding: "0 1rem",
+    cursor: "pointer",
   }),
   menu: (styles: CSSObject) => ({
     ...styles,

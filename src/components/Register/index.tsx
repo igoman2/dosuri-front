@@ -428,6 +428,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                 <Select
                   options={sortedLargeArea}
                   instanceId={id1}
+                  isSearchable={false}
                   components={{
                     ValueContainer,
                     DropdownIndicator,
@@ -447,6 +448,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                   isDisabled={!largeArea || isSmallAreaDisabled}
                   options={sortedSmallArea}
                   instanceId={id2}
+                  isSearchable={false}
                   components={{
                     ValueContainer,
                     DropdownIndicator,
