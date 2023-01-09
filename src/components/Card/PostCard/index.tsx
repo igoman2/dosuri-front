@@ -2,7 +2,14 @@ import {
   ICommunityPostDetailResponse,
   IHospitalReviewsResult,
 } from "@/service/types";
-import React, { FC, ReactElement, useEffect, useRef, useState } from "react";
+import React, {
+  FC,
+  MouseEvent,
+  ReactElement,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import Divider from "@/components/UI/Divider";
 import DoSwiper from "@/components/DoSwiper";
@@ -37,7 +44,8 @@ const PostCard: FC<IPostCardProps> = ({ review, bottom }) => {
     };
   });
 
-  const showCommentMore = () => {
+  const showCommentMore = (e: MouseEvent) => {
+    e.stopPropagation();
     if (showCommentMoreRef.current) {
       setIsShowMoreClicked(true);
     }
