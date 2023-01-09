@@ -60,8 +60,8 @@ const InsuranceRegister = () => {
           <div className="sub-title">
             <div>보험 가입하고 치료 받으면</div>
             <div>
-              <span className="red">최대 70% 까지 </span>
-              치료비가 싸져요!
+              <span className="red">최대 70% </span>
+              까지 치료비가 싸져요!
             </div>
           </div>
 
