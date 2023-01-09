@@ -1,25 +1,30 @@
+import "dayjs/locale/ko";
+
+import React, { useMemo } from "react";
+
 import Button from "@/components/Button";
 import HeaderInsurance from "@/components/Layout/Header/Depth/HeaderInsurance";
 import Layout from "@/components/Layout";
 import Link from "next/link";
-import React, { useMemo } from "react";
+import dayjs from "dayjs";
 import styled from "@emotion/styled";
+import { useRecoilValue } from "recoil";
 import { useTheme } from "@emotion/react";
 import { userInfoState } from "@/store/user";
-import { useRecoilValue } from "recoil";
-import dayjs from "dayjs";
-import "dayjs/locale/ko";
 
 const Confirm = () => {
   const theme = useTheme();
   const userInfo = useRecoilValue(userInfoState);
-  const formmatedBirthday = useMemo(
-    () =>
-      new Intl.DateTimeFormat("ko", { dateStyle: "long" }).format(
-        dayjs(userInfo.birthday).toDate()
-      ),
-    [userInfo.birthday]
-  );
+
+  const formmatedBirthday = useMemo(() => {
+    if (!userInfo.birthday) {
+      return;
+    }
+
+    return new Intl.DateTimeFormat("ko", { dateStyle: "long" }).format(
+      dayjs(userInfo.birthday ?? "").toDate()
+    );
+  }, [userInfo.birthday]);
 
   return (
     <Layout header={<HeaderInsurance />} footer={false}>

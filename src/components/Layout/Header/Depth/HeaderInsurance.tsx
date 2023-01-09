@@ -17,7 +17,13 @@ const HeaderInsurance = () => {
   return (
     <Wrapper>
       <BackButton onClick={onBack}>
-        <Icon name="arrow" width="24" height="24" />
+        <Icon
+          name="arrow"
+          width="24"
+          height="24"
+          stroke="black"
+          strokeWidth="2"
+        />
       </BackButton>
       <LogoWrapper>
         <Image src={Logo} width="82" height="22" alt="logo-horizontal" />
