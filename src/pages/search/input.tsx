@@ -58,8 +58,8 @@ const SearchInput = () => {
         ) : (
           <div>
             <div className="head">
-              <div className="title">최근검색어</div>
-              <div className="delete-all">전체 삭제</div>
+              <div className="title">최근 검색어</div>
+              <div className="delete-all">전체삭제</div>
             </div>
             {recentSearchedHospitalList.map((recentSearchedHospital) => (
               <RecentSearchList
