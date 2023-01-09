@@ -37,7 +37,10 @@ const SearchInput = () => {
   };
 
   return (
-    <Layout header={<SearchHeader onInput={onInput} inputText={inputText} />}>
+    <Layout
+      header={<SearchHeader onInput={onInput} inputText={inputText} />}
+      footer={false}
+    >
       <Main>
         {inputText.length > 0 ? (
           <div>
