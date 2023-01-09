@@ -8,12 +8,14 @@ import PostCard from "@/components/Card/PostCard";
 import { getHospitalReviews } from "@/service/apis/community";
 import styled from "@emotion/styled";
 import { useQuery } from "react-query";
+import { useRouter } from "next/router";
 
 interface IReviewsProps {
   hospitalData: IGetHospitalInfo;
 }
 
 const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
+  const router = useRouter();
   const { data } = useQuery({
     queryKey: ["getHospitalReviews", hospitalData.uuid],
     queryFn: async () => {
@@ -26,6 +28,11 @@ const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
     return null;
   }
 
+  const handleReviewClick = (uuid: string) => {
+    router.push({
+      pathname: `/community/${uuid}`,
+    });
+  };
   const renderPostBottom = (review: IHospitalReviewsResult) => {
     return (
       <PostBottom>
@@ -54,11 +61,13 @@ const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
             <span className="list-length"> {data.count}</span>건
           </div>
           {data.results.map((review) => (
-            <PostCard
-              review={review}
+            <div
+              className="link"
+              onClick={() => handleReviewClick(review.uuid)}
               key={review.uuid}
-              bottom={renderPostBottom(review)}
-            />
+            >
+              <PostCard review={review} bottom={renderPostBottom(review)} />
+            </div>
           ))}
         </>
       )}
@@ -77,5 +86,9 @@ const ReviewsWrapper = styled.div`
 
   .list-length {
     color: ${(props) => props.theme.colors.purple};
+  }
+
+  .link {
+    cursor: pointer;
   }
 `;
