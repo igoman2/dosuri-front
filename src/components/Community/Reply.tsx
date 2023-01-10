@@ -56,7 +56,7 @@ const Reply: FC<IReplyProps> = ({ postId }) => {
     }
   };
 
-  const placeholder = value.to ? "" : "댓글을 입력하세요.";
+  const placeholder = value.to.uuid ? "" : "댓글을 입력하세요.";
 
   return (
     <ReplyWrapper>
