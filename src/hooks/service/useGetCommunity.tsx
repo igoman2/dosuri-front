@@ -4,7 +4,6 @@ import {
 } from "@/service/types";
 
 import { getCommunityList } from "@/service/apis/community";
-import { queryKeys } from "@/service/react-query/constants";
 import { useQuery } from "react-query";
 
 export function useGetCommunity(params?: IGetCommunityListParams) {
@@ -41,7 +40,7 @@ export function useGetCommunity(params?: IGetCommunityListParams) {
     ],
   };
   const { data: communityList } = useQuery(
-    "getCommunityListKeyword",
+    ["getCommunityListKeyword", params],
     () => getCommunityList(params),
     {
       staleTime: 0,
