@@ -32,7 +32,7 @@ const Home = () => {
   }, [scrollY]);
 
   return (
-    <Layout header={<Header left={true} center={true} />} footer={false}>
+    <Layout header={<Header left={true} center={true} />}>
       <NewReviewSection />
       <ManyReviewSection />
       <Suspense fallback={<Spinner />}>

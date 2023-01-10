@@ -77,10 +77,12 @@ const Header: FC<IHeaderProps> = ({ left, center, right }) => {
         padding: "0 1rem",
       }}
     >
-      <LocationBox>
-        <div>lat {coordinates?.lat}</div>
-        <div>lng {coordinates?.lng}</div>
-      </LocationBox>
+      {process.env.NODE_ENV !== "production" && (
+        <LocationBox>
+          <div>lat {coordinates?.lat}</div>
+          <div>lng {coordinates?.lng}</div>
+        </LocationBox>
+      )}
       <Link href="/">
         <a>{left && <Icon name="logo1" width="82" height="22" />}</a>
       </Link>
