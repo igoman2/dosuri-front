@@ -34,7 +34,7 @@ const SearchBar: FC<ISearchBarProps> = ({ inputText, onInput }) => {
 
   const onClickHandler = () => {
     if (isActive) {
-      router.push("/search/input");
+      router.replace("/search/input");
     }
   };
 
