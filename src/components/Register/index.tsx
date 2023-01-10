@@ -501,6 +501,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                 type="submit"
                 text="도수리 시작하기"
                 width="100%"
+                bold
                 height="5.2rem"
                 borderRadius="0.3rem"
                 backgroundColor={theme.colors.purple}
