@@ -213,7 +213,10 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
   );
 
   return (
-    <Layout header={<SearchHeader onInput={onInput} inputText={inputText} />}>
+    <Layout
+      header={<SearchHeader onInput={onInput} inputText={inputText} />}
+      footer={false}
+    >
       <>
         <Tab
           tabList={TabList}
