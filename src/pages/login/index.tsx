@@ -1,6 +1,5 @@
 import { css, useTheme } from "@emotion/react";
 
-import CompanyInfo from "@/components/UI/CompanyInfo";
 import Icon from "@/util/Icon";
 import Kakao from "@/components/Oauth/Kakao";
 import React from "react";
@@ -62,19 +61,6 @@ const Login = () => {
         ></div>
 
         {/* <Google /> */}
-      </div>
-      <div
-        css={{
-          backgroundColor: " rgb(255, 255, 255)",
-          position: "fixed",
-          bottom: "0",
-          minWidth: "32rem",
-          maxWidth: " 40rem",
-          width: "100%",
-          zIndex: 50,
-        }}
-      >
-        <CompanyInfo />
       </div>
     </main>
   );
