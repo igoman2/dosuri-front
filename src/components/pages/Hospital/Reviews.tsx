@@ -43,7 +43,7 @@ const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
           </div>
           <div className="comment">
             <Icon name="comment" width="17" height="17" />
-            <span>{review.article_attachment_assoc.length}</span>
+            <span>{review.comment_count}</span>
           </div>
         </div>
       </PostBottom>
