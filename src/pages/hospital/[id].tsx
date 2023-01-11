@@ -31,20 +31,20 @@ interface TabItem {
 
 const TabList: TabItem[] = [
   {
-    title: "병원정보",
-    value: "information",
-  },
-  {
-    title: "의료진",
-    value: "doctors",
-  },
-  {
     title: "치료후기",
     value: "reviews",
   },
   {
     title: "가격정보",
     value: "price",
+  },
+  {
+    title: "병원정보",
+    value: "information",
+  },
+  {
+    title: "의료진",
+    value: "doctors",
   },
 ];
 
@@ -266,7 +266,7 @@ export const getServerSideProps = async (context: NextPageContext) => {
   return {
     props: {
       id,
-      tab: tab ?? "information",
+      tab: tab ?? "reviews",
     },
   };
 };
