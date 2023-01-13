@@ -31,6 +31,11 @@ export interface IGetCommunityListParams {
   user?: string;
 }
 
+export interface IGetHospitalReviewsParams {
+  uuid: string;
+  ordering: string;
+}
+
 export interface IGetRecentHospitalSearchListParams {
   ordering?: string;
   page?: number;

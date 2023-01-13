@@ -1,6 +1,7 @@
 import {
   ICommunityPostDetailResponse,
   IGetCommunityListParams,
+  IGetHospitalReviewsParams,
   IHospitalReviewsResponse,
   IHotCommunityResponse,
   IRegisterCommentResult,
@@ -30,12 +31,15 @@ export const getCommunityPostDetail = async (uuid: string) => {
   return response.data;
 };
 
-export const getHospitalReviews = async (uuid: string) => {
+export const getHospitalReviews = async (
+  params?: IGetHospitalReviewsParams
+) => {
   const response = await api.get<IHospitalReviewsResponse>(
     "/community/v1/community/articles",
     {
       params: {
-        hospital: uuid,
+        hospital: params?.uuid,
+        ordering: params?.ordering,
       },
     }
   );
