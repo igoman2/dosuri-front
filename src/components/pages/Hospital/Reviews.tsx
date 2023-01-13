@@ -19,7 +19,10 @@ const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
   const { data } = useQuery({
     queryKey: ["getHospitalReviews", hospitalData.uuid],
     queryFn: async () => {
-      const data = await getHospitalReviews(hospitalData.uuid, "-created_at");
+      const data = await getHospitalReviews({
+        uuid: hospitalData.uuid,
+        ordering: "-created_at",
+      });
       return data!;
     },
   });
