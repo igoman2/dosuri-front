@@ -186,7 +186,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
       });
 
     return _.uniqBy(parsedArea, "label");
-  }, [largeArea]);
+  }, [formik.values.largeArea]);
 
   const userLargeArea = sortedLargeArea.find(
     (largeArea) => largeArea.label === initialValues.largeArea

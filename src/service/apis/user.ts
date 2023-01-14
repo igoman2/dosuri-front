@@ -36,7 +36,7 @@ export const applyInsurance = async () => {
 };
 
 export const registerUser = async (data: UserInfo, accessToken?: string) => {
-  const response = await api.post<UserInfo>(`/user/v1/users`, data, {
+  const response = await api.put<UserInfo>(`/user/v1/users/me`, data, {
     headers: {
       Authorization: "Bearer " + accessToken,
     },
