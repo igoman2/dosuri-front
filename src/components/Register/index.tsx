@@ -79,6 +79,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
   const [largeArea, setLargeArea] = useState<string>();
   const [smallArea, setSmallArea] = useState<Location | null>();
   const [isNicknameValid, setIsNicknameValid] = useState(false);
+  const [isNicknameSame, setIsNicknameSame] = useState(false);
   const [didNicknameValidCheck, setDidNicknameValidCheck] = useState(false);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [isSmallAreaDisabled, setIsSmallAreaDisabled] = useState(false);
@@ -197,7 +198,6 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
 
   useEffect(() => {
     if (userLargeArea) {
-      console.log("!@#!@#!@#");
       setLargeArea(userLargeArea.label);
     }
 
@@ -254,7 +254,15 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
   );
 
   const onNicknameValidation = () => {
-    refetch();
+    if (formik.values.nickname === userInfo.nickname) {
+      setIsNicknameSame(true);
+      setDidNicknameValidCheck(true);
+
+      return;
+    } else {
+      setIsNicknameSame(false);
+      refetch();
+    }
   };
 
   /**
@@ -367,7 +375,9 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
 
               <div className="noti">
                 {didNicknameValidCheck ? (
-                  isNicknameValid ? (
+                  isNicknameSame ? (
+                    <div className="invalid">기존과 동일한 닉네임 입니다.</div>
+                  ) : isNicknameValid ? (
                     <div className="valid">사용 가능한 닉네임입니다.</div>
                   ) : (
                     <div className="invalid">중복된 닉네임이 있습니다.</div>
