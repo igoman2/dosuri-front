@@ -1,12 +1,12 @@
-import { IHospitalInfoResult, IHospitalReviewsResult } from "@/service/types";
 import React, { useEffect } from "react";
 
 import Button from "@/components/Button";
 import Header from "@/components/Layout/Header";
 import HospitalCard from "@/components/Card/HospitalCard";
-import Icon from "@/util/Icon";
+import { IHospitalInfoResult } from "@/service/types";
 import Layout from "@/components/Layout";
 import Link from "next/link";
+import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
 import { getHospitalInfoHome } from "@/service/apis/hospital";
 import { getHotCommunity } from "@/service/apis/community";
@@ -30,24 +30,6 @@ const Home = () => {
       lng: location.coordinates?.lng ?? 0,
     });
   }, [location]);
-
-  const renderPostBottom = (review: IHospitalReviewsResult) => {
-    return (
-      <PostBottom>
-        <div className="post-bottom">
-          <div className="heart">
-            <Icon name="heart" width="20" height="20" />
-            <span>{review.up_count}</span>
-          </div>
-
-          <div className="comment">
-            <Icon name="comment" width="20" height="20" />
-            <span>{review.article_attachment_assoc.length}</span>
-          </div>
-        </div>
-      </PostBottom>
-    );
-  };
 
   const { data: hospitalList } = useQuery(
     "getHospitalList",
@@ -191,8 +173,7 @@ const Home = () => {
             <a>
               <PostCard
                 review={review}
-                key={i}
-                bottom={renderPostBottom(review)}
+                bottom={<PostBottom review={review} type="list" />}
               />
             </a>
           </Link>
@@ -203,27 +184,6 @@ const Home = () => {
 };
 
 export default Home;
-
-const PostBottom = styled.div`
-  .post-bottom {
-    display: flex;
-    gap: 1rem;
-    font-size: ${(props) => props.theme.fontSizes.md};
-    line-height: ${(props) => props.theme.lineHeights.md};
-
-    .heart {
-      display: flex;
-      gap: 0.3rem;
-      align-items: center;
-    }
-
-    .comment {
-      display: flex;
-      gap: 0.3rem;
-      align-items: center;
-    }
-  }
-`;
 
 const LogginBanner = styled.div`
   margin-bottom: 2rem;

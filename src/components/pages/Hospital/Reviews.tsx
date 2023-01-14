@@ -1,9 +1,8 @@
-import { IGetHospitalInfo, IHospitalReviewsResult } from "@/service/types";
 import React, { FC } from "react";
 
 import { EmptyText } from "@/components/UI/emotion/EmptyText";
-import Icon from "@/util/Icon";
-import PostBottom from "@/components/UI/emotion/PostBottom";
+import { IGetHospitalInfo } from "@/service/types";
+import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
 import { getHospitalReviews } from "@/service/apis/community";
 import styled from "@emotion/styled";
@@ -36,22 +35,6 @@ const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
       pathname: `/community/${uuid}`,
     });
   };
-  const renderPostBottom = (review: IHospitalReviewsResult) => {
-    return (
-      <PostBottom>
-        <div className="post-bottom">
-          <div className="heart">
-            <Icon name="heart" width="17" height="17" />
-            <span>{review.up_count}</span>
-          </div>
-          <div className="comment">
-            <Icon name="comment" width="17" height="17" />
-            <span>{review.comment_count}</span>
-          </div>
-        </div>
-      </PostBottom>
-    );
-  };
 
   return (
     <ReviewsWrapper>
@@ -69,7 +52,10 @@ const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
               onClick={() => handleReviewClick(review.uuid)}
               key={review.uuid}
             >
-              <PostCard review={review} bottom={renderPostBottom(review)} />
+              <PostCard
+                review={review}
+                bottom={<PostBottom review={review} type="list" />}
+              />
             </div>
           ))}
         </>

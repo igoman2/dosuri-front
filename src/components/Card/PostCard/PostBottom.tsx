@@ -1,26 +1,65 @@
+import {
+  ICommunityPostDetailResponse,
+  IHospitalReviewsResult,
+} from "@/service/types";
 import React, { FC } from "react";
 
 import Icon from "@/util/Icon";
-import { Post } from "@/mock/posts";
 import styled from "@emotion/styled";
+import { useLikePost } from "@/hooks/service/useLikePost";
+import { useTheme } from "@emotion/react";
 
 interface IPostBottomProps {
-  post: Post;
+  review: IHospitalReviewsResult | ICommunityPostDetailResponse;
+  type: "list" | "detail";
 }
 
-const PostBottom: FC<IPostBottomProps> = ({ post }) => {
+const PostBottom: FC<IPostBottomProps> = ({ review, type }) => {
+  const theme = useTheme();
+  const { mutate } = useLikePost();
+  const handleLike = () => {
+    mutate(review.uuid);
+  };
   return (
     <PostBottomWrapper>
-      <div className="post-bottom">
-        <div className="heart">
-          <Icon name="heart" width="17" height="17" />
-          <span>{post.heart}</span>
+      {type === "list" ? (
+        <div className="post-bottom">
+          <div className="heart">
+            {review.is_like ? (
+              <Icon
+                name="heart"
+                width="20"
+                height="20"
+                fill={theme.colors.red}
+              />
+            ) : (
+              <Icon name="heart" width="20" height="20" />
+            )}
+            <span>{review.up_count}</span>
+          </div>
+          <div className="comment">
+            <Icon name="comment" width="17" height="17" />
+            <span>{review.article_attachment_assoc.length}</span>
+          </div>
         </div>
-        <div className="comment">
-          <Icon name="comment" width="17" height="17" />
-          <span>{post.comment}</span>
+      ) : (
+        <div className="post-bottom">
+          <div className="heart" onClick={handleLike}>
+            {review.is_like ? (
+              <Icon
+                name="heart"
+                width="20"
+                height="20"
+                fill={theme.colors.red}
+              />
+            ) : (
+              <Icon name="heart" width="20" height="20" />
+            )}
+
+            <span>좋아요</span>
+          </div>
         </div>
-      </div>
+      )}
     </PostBottomWrapper>
   );
 };

@@ -5,7 +5,7 @@ import {
 import React, {
   FC,
   MouseEvent,
-  ReactElement,
+  ReactNode,
   useEffect,
   useRef,
   useState,
@@ -13,11 +13,12 @@ import React, {
 
 import Divider from "@/components/UI/Divider";
 import DoSwiper from "@/components/DoSwiper";
+import PostBottom from "./PostBottom";
 import styled from "@emotion/styled";
 
 interface IPostCardProps {
   review: IHospitalReviewsResult | ICommunityPostDetailResponse;
-  bottom: ReactElement;
+  bottom: ReactNode;
 }
 
 const PostCard: FC<IPostCardProps> = ({ review, bottom }) => {

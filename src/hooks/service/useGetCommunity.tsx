@@ -25,6 +25,7 @@ export function useGetCommunity(params?: IGetCommunityListParams) {
         created_at: "",
         hospital: "",
         content: "",
+        is_like: false,
         article_attachment_assoc: [
           {
             uuid: "",

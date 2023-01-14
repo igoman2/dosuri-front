@@ -1,20 +1,16 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
-import {
-  IGetHospitalListParams,
-  IHospitalInfoResult,
-  IHospitalReviewsResult,
-} from "@/service/types";
+import { IGetHospitalListParams, IHospitalInfoResult } from "@/service/types";
 import { TabItem, TabList } from "@/mock/tabList";
 
 import ArrowRight from "@/public/assets/arrow-right-bold.png";
 import Button from "@/components/Button";
 import HospitalCard from "@/components/Card/HospitalCard";
-import Icon from "@/util/Icon";
 import Image from "next/image";
 import KeywordCommunity from "@/components/pages/Search/KeywordCommunity";
 import KeywordHospitals from "@/components/pages/Search/KeywordHospitals";
 import Layout from "@/components/Layout";
 import { NextPageContext } from "next";
+import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
 import SearchHeader from "@/components/Layout/Header/SearchHeader";
 import Tab from "@/components/Tab";
@@ -117,24 +113,6 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
     </ResultWrapper>
   );
 
-  const renderPostBottom = (review: IHospitalReviewsResult) => {
-    return (
-      <PostBottom>
-        <div className="post-bottom">
-          <div className="heart">
-            <Icon name="heart" width="20" height="20" />
-            <span>{review.up_count}</span>
-          </div>
-
-          <div className="comment">
-            <Icon name="comment" width="20" height="20" />
-            <span>{review.article_attachment_assoc.length}</span>
-          </div>
-        </div>
-      </PostBottom>
-    );
-  };
-
   const TalkResult = (
     <ResultWrapper>
       <div className="community-section">
@@ -148,7 +126,10 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
             onClick={() => postClickHandler(post.uuid)}
             key={post.uuid}
           >
-            <PostCard review={post} bottom={renderPostBottom(post)} />
+            <PostCard
+              review={post}
+              bottom={<PostBottom review={post} type="list" />}
+            />
           </div>
         ))}
       </div>
@@ -267,27 +248,6 @@ const MoreButton = styled.div`
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-`;
-
-const PostBottom = styled.div`
-  .post-bottom {
-    display: flex;
-    gap: 1rem;
-    font-size: ${(props) => props.theme.fontSizes.md};
-    line-height: ${(props) => props.theme.lineHeights.md};
-
-    .heart {
-      display: flex;
-      gap: 0.3rem;
-      align-items: center;
-    }
-
-    .comment {
-      display: flex;
-      gap: 0.3rem;
-      align-items: center;
-    }
-  }
 `;
 
 export const getServerSideProps = async (context: NextPageContext) => {

@@ -1,10 +1,9 @@
 import { EmptyText } from "@/components/UI/emotion/EmptyText";
 import Float from "@/components/UI/Float";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
-import { IHospitalReviewsResult } from "@/service/types";
-import Icon from "@/util/Icon";
 import Layout from "@/components/Layout";
 import Link from "next/link";
+import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
 import React from "react";
 import styled from "@emotion/styled";
@@ -27,23 +26,6 @@ const Review = () => {
     user: user.uuid,
   });
 
-  const renderPostBottom = (review: IHospitalReviewsResult) => {
-    return (
-      <PostBottom>
-        <div className="post-bottom">
-          <div className="heart">
-            <Icon name="heart" width="17" height="17" />
-            <span>{review.up_count}</span>
-          </div>
-          <div className="comment">
-            <Icon name="comment" width="17" height="17" />
-            <span>{review.article_attachment_assoc.length}</span>
-          </div>
-        </div>
-      </PostBottom>
-    );
-  };
-
   return (
     <Layout header={<HeaderDepth />} footer={false}>
       <>
@@ -56,7 +38,10 @@ const Review = () => {
               {communityList.results.map((post) => (
                 <Link href={`review/${post.uuid}`} key={post.uuid}>
                   <a>
-                    <PostCard review={post} bottom={renderPostBottom(post)} />
+                    <PostCard
+                      review={post}
+                      bottom={<PostBottom review={post} type="list" />}
+                    />
                   </a>
                 </Link>
               ))}
@@ -79,24 +64,5 @@ const ReviewWrapper = styled.div`
     line-height: ${(props) => props.theme.lineHeights.xl};
     font-weight: 700;
     margin-bottom: 0.5rem;
-  }
-`;
-
-const PostBottom = styled.div`
-  .post-bottom {
-    display: flex;
-    gap: 1rem;
-    font-size: ${(props) => props.theme.fontSizes.sm};
-    line-height: ${(props) => props.theme.lineHeights.sm};
-    .heart {
-      display: flex;
-      gap: 0.3rem;
-      align-items: center;
-    }
-    .comment {
-      display: flex;
-      gap: 0.3rem;
-      align-items: center;
-    }
   }
 `;

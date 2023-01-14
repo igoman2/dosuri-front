@@ -94,6 +94,7 @@ export interface IHospitalReviewsResult {
   up_count: number;
   view_count: number;
   created_at: string;
+  is_like: boolean;
   hospital: string;
   content: string;
   article_attachment_assoc: Attach[];
@@ -198,6 +199,7 @@ export interface ICommunityPostDetailResponse {
   view_count: number;
   created_at: string;
   hospital: string;
+  is_like: boolean;
   content: string;
   article_attachment_assoc: Attach[];
   article_comment: Comments[];

@@ -74,3 +74,14 @@ export const registerThreadComment = async ({
 
   return response.data;
 };
+
+export const likePost = async (articleId: string) => {
+  const response = await api.post<IRegisterCommentResult>(
+    "community/v1/community/articles-like",
+    {
+      article: articleId,
+    }
+  );
+
+  return response.data;
+};

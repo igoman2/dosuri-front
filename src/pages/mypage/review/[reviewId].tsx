@@ -1,15 +1,9 @@
-import { Post, posts } from "@/mock/posts";
 import { modalContentState, modalState } from "@/components/Modal/store";
 
 import Button from "@/components/Button";
-import Comment from "@/components/Comment";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
-import Icon from "@/util/Icon";
 import Layout from "@/components/Layout";
-import PostCard from "@/components/Card/PostCard";
 import React from "react";
-import { comment } from "@/mock/comment";
-import styled from "@emotion/styled";
 import { useRecoilState } from "recoil";
 import { useTheme } from "@emotion/react";
 
@@ -18,19 +12,6 @@ const ReviewDetail = () => {
 
   const [_, setIsActive] = useRecoilState(modalState);
   const [__, setModalContent] = useRecoilState(modalContentState);
-
-  const renderPostBottom = (post: Post) => {
-    return (
-      <PostBottom>
-        <div className="post-bottom">
-          <div className="heart">
-            <Icon name="heart" width="20" height="20" />
-            <span>좋아요</span>
-          </div>
-        </div>
-      </PostBottom>
-    );
-  };
 
   const onReviewDelete = () => {
     setModalContent({
@@ -80,30 +61,14 @@ const ReviewDetail = () => {
       }
       footer={false}
     >
-      <>
-        {/* {[posts[0]].map((post, i) => (
-          <PostCard post={post} key={i} bottom={renderPostBottom(post)} />
+      {/* <>
+        {[posts[0]].map((post, i) => (
+          <PostCard post={post} key={post.id} />
         ))}
-        <Comment comment={comment} /> */}
-      </>
+        <Comment comment={comment} />
+      </> */}
     </Layout>
   );
 };
 
 export default ReviewDetail;
-
-const PostBottom = styled.div`
-  .post-bottom {
-    display: flex;
-    gap: 1rem;
-    font-size: ${(props) => props.theme.fontSizes.md};
-    line-height: ${(props) => props.theme.lineHeights.md};
-    color: ${(props) => props.theme.colors.grey};
-
-    .heart {
-      display: flex;
-      gap: 0.6rem;
-      align-items: center;
-    }
-  }
-`;

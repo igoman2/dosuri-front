@@ -1,9 +1,8 @@
-import { IHospitalReviewsResult, IHotCommunityResponse } from "@/service/types";
 import React, { useMemo } from "react";
 
-import Icon from "@/util/Icon";
+import { IHotCommunityResponse } from "@/service/types";
 import InfiniteScroll from "react-infinite-scroller";
-import Link from "next/link";
+import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
 import api from "@/service/axiosConfig";
 import styled from "@emotion/styled";
@@ -44,24 +43,6 @@ const KeywordCommunity = () => {
     });
   };
 
-  const renderPostBottom = (review: IHospitalReviewsResult) => {
-    return (
-      <PostBottom>
-        <div className="post-bottom">
-          <div className="heart">
-            <Icon name="heart" width="20" height="20" />
-            <span>{review.up_count}</span>
-          </div>
-
-          <div className="comment">
-            <Icon name="comment" width="20" height="20" />
-            <span>{review.article_attachment_assoc.length}</span>
-          </div>
-        </div>
-      </PostBottom>
-    );
-  };
-
   return (
     <div>
       <ResultWrapper>
@@ -82,7 +63,10 @@ const KeywordCommunity = () => {
                     onClick={() => postClickHandler(talk.uuid)}
                     key={talk.uuid}
                   >
-                    <PostCard review={talk} bottom={renderPostBottom(talk)} />
+                    <PostCard
+                      review={talk}
+                      bottom={<PostBottom review={talk} type="list" />}
+                    />
                   </div>
                 );
               });
@@ -113,26 +97,5 @@ const ResultWrapper = styled.div`
 
   .link {
     cursor: pointer;
-  }
-`;
-
-const PostBottom = styled.div`
-  .post-bottom {
-    display: flex;
-    gap: 1rem;
-    font-size: ${(props) => props.theme.fontSizes.md};
-    line-height: ${(props) => props.theme.lineHeights.md};
-
-    .heart {
-      display: flex;
-      gap: 0.3rem;
-      align-items: center;
-    }
-
-    .comment {
-      display: flex;
-      gap: 0.3rem;
-      align-items: center;
-    }
   }
 `;

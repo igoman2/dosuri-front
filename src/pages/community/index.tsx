@@ -4,12 +4,10 @@ import { modalContentState, modalState } from "@/components/Modal/store";
 import Button from "@/components/Button";
 import Float from "@/components/UI/Float";
 import Header from "@/components/Layout/Header";
-import { IHospitalReviewsResult } from "@/service/types";
-import Icon from "@/util/Icon";
 import Image from "next/image";
 import Layout from "@/components/Layout";
 import Link from "next/link";
-import PostBottom from "@/components/UI/emotion/PostBottom";
+import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
 import WriteQuesiton from "@/components/Write/Question";
 import WriteReview from "@/components/Write/Review";
@@ -95,24 +93,6 @@ const Community = () => {
     article_type: currentTab.value,
   });
 
-  const renderPostBottom = (review: IHospitalReviewsResult) => {
-    return (
-      <PostBottom>
-        <div className="post-bottom">
-          <div className="heart">
-            <Icon name="heart" width="20" height="20" />
-            <span>{review.up_count}</span>
-          </div>
-
-          <div className="comment">
-            <Icon name="comment" width="20" height="20" />
-            <span>{review.article_attachment_assoc.length}</span>
-          </div>
-        </div>
-      </PostBottom>
-    );
-  };
-
   return (
     <Layout
       header={
@@ -159,7 +139,10 @@ const Community = () => {
         {communityList.results.map((review, i) => (
           <Link href={`community/${review.uuid}`} key={i}>
             <a>
-              <PostCard review={review} bottom={renderPostBottom(review)} />
+              <PostCard
+                review={review}
+                bottom={<PostBottom review={review} type="list" />}
+              />
             </a>
           </Link>
         ))}
