@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useBoolean, useDebounce } from "usehooks-ts";
 
 import HospitalQueryList from "@/components/Search/HospitalQueryList";
@@ -8,6 +8,7 @@ import RecentSearchList from "@/components/UI/RecentSearchList";
 import SearchHeader from "@/components/Layout/Header/SearchHeader";
 import styled from "@emotion/styled";
 import { useDeleteSearchHistory } from "@/hooks/service/useDeleteSearchHistory";
+import { useDeleteSearchHistoryAll } from "@/hooks/service/useDeleteSearchHistoryAll";
 import { useRecentHospitalSearchList } from "@/hooks/service/useRecentHospitalSearchList";
 import { useSearchHospital } from "@/hooks/service/useSearchHospital";
 
@@ -21,6 +22,7 @@ const SearchInput = () => {
     isInput: value,
   });
   const { mutate } = useDeleteSearchHistory();
+  const { mutate: deleteAllHistory } = useDeleteSearchHistoryAll();
 
   const { recentSearchedHospitalList } = useRecentHospitalSearchList();
   const onInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,6 +36,10 @@ const SearchInput = () => {
 
   const handleDeleteSearchHistory = (deletedHospitalId: string) => {
     mutate(deletedHospitalId);
+  };
+
+  const handleDeleteAllHistory = () => {
+    deleteAllHistory();
   };
 
   return (
@@ -62,7 +68,9 @@ const SearchInput = () => {
           <div>
             <div className="head">
               <div className="title">최근 검색어</div>
-              <div className="delete-all">전체삭제</div>
+              <div className="delete-all" onClick={handleDeleteAllHistory}>
+                전체삭제
+              </div>
             </div>
             {recentSearchedHospitalList.map((recentSearchedHospital) => (
               <RecentSearchList
