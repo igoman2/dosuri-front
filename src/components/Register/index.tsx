@@ -333,6 +333,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                 <Button
                   type="button"
                   text="중복확인"
+                  width="8rem"
                   backgroundColor={theme.colors.purple_light2}
                   disabled={
                     formik.values.nickname.length === 0 ||
