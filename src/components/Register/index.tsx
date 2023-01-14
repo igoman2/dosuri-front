@@ -121,7 +121,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
     onSubmit: () => {
       const registerUserData: UserInfo = {
         uuid: userInfo.uuid,
-        name: userInfo.name,
+        name: formik.values.name,
         nickname: formik.values.nickname,
         birthday: parseBirthday(formik.values.birthday),
         phone_no: formatPartialPhoneNumberToComplete(formik.values.phone),
@@ -177,7 +177,6 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
 
     return _.uniqBy(parsedArea, "label");
   }, [formik.values.largeArea]);
-  console.log(sortedSmallArea);
 
   const userLargeArea = sortedLargeArea.find(
     (largeArea) => largeArea.label === initialValues.largeArea
@@ -291,7 +290,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                     id="name"
                     name="name"
                     value={formik.values.name}
-                    disabled
+                    onChange={formik.handleChange}
                   />
                 </div>
                 <div className="divider">
