@@ -497,7 +497,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                 )}
               </ButtonWrapper>
             </div>
-            <div className="save-button-wrapper">
+            <FloatButtonWrapper>
               <Button
                 type="submit"
                 text="도수리 시작하기"
@@ -515,7 +515,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                   )
                 }
               />
-            </div>
+            </FloatButtonWrapper>
           </div>
         </form>
       </FormikProvider>
@@ -560,6 +560,7 @@ const FormWrapper = styled.div`
   .form-section {
     display: flex;
     flex-direction: column;
+    margin-bottom: 7.2rem;
   }
 
   .input-section {
@@ -636,13 +637,6 @@ const FormWrapper = styled.div`
     padding: 1rem 0.5rem;
   }
 
-  .save-button-wrapper {
-    position: absolute;
-    bottom: 0;
-    padding: 1rem 0;
-    width: 100%;
-  }
-
   .is-invalid {
     border: 1px solid red;
   }
@@ -657,4 +651,16 @@ const ButtonWrapper = styled.div`
     flex: 1 0 auto;
     max-width: 6rem;
   }
+`;
+
+const FloatButtonWrapper = styled.div`
+  position: fixed;
+  bottom: 0;
+  margin: 0 2rem;
+  width: calc(100% - 4rem);
+  max-width: 40rem;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  padding: 1rem 0;
 `;
