@@ -502,7 +502,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
             <FloatButtonWrapper>
               <Button
                 type="submit"
-                text="도수리 시작하기"
+                text={formType === "edit" ? "저장하기" : "도수리 시작하기"}
                 width="100%"
                 bold
                 height="5.2rem"
