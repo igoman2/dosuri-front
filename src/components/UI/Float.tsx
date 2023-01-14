@@ -33,6 +33,10 @@ const FloatWrapper = styled.div<FloatProps>`
   right: 0;
   z-index: 10;
   transition: all 0.3s linear;
-  transform: ${(props) =>
-    props.direction === DIRECTION.Up ? "" : "translateY(20rem)"};
+  transform: ${(props) => {
+    if (!props.direction) {
+      return;
+    }
+    return props.direction === DIRECTION.Up ? "" : "translateY(20rem)";
+  }};
 `;
