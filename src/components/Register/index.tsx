@@ -15,6 +15,7 @@ import Select from "react-select";
 import { Symtom } from "@/types/hospital";
 import { UserInfo } from "@/types/user";
 import _ from "lodash";
+import { queryClient } from "@/service/react-query/queryClient";
 import { setTokenInCookie } from "@/util/setToken";
 import styled from "@emotion/styled";
 import useFormikFactory from "@/hooks/useFormikFactory";
@@ -88,6 +89,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
     (data) => registerUser(data, userInfo.accessToken),
     {
       onSuccess: (resp) => {
+        queryClient.invalidateQueries();
         setTokenInCookie("refresh", userInfo.refreshToken);
         setTokenInCookie("access", userInfo.accessToken);
         setUserInfo((prev) => {
