@@ -55,7 +55,7 @@ const InsuranceRegister = () => {
   return (
     <Layout header={<HeaderInsurance />} footer={false}>
       <Content>
-        <div>
+        <div className="inner">
           <div className="title">실손보험 없이 도수치료 받으시려구요?</div>
           <div className="sub-title">
             <div>보험 가입하고 치료 받으면</div>
@@ -95,24 +95,35 @@ const InsuranceRegister = () => {
             </ul>
           </Bottom>
         </div>
-
-        <ButtonWrapper>
-          <Button
-            text="터치 한번으로 실손보험 상담 신청하기"
-            width="100%"
-            borderRadius="0.3rem"
-            height="5.2rem"
-            backgroundColor={theme.colors.purple_light}
-            bold
-            onClick={applyInsuranceHandler}
-          />
-        </ButtonWrapper>
       </Content>
+      <SaleButtonWrapper>
+        <Button
+          text="터치 한번으로 실손보험 상담 신청하기"
+          width="100%"
+          borderRadius="0.3rem"
+          height="5.2rem"
+          backgroundColor={theme.colors.purple_light}
+          bold
+          onClick={applyInsuranceHandler}
+        />
+      </SaleButtonWrapper>
     </Layout>
   );
 };
 
 export default InsuranceRegister;
+
+const SaleButtonWrapper = styled.div`
+  position: fixed;
+  bottom: 0;
+  margin: 0 2rem;
+  width: calc(100% - 4rem);
+  max-width: 40rem;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  padding: 1rem 0;
+`;
 
 const Compare = styled.div`
   display: flex;
@@ -141,6 +152,10 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+
+  .inner {
+    margin-bottom: 10.6rem;
+  }
 
   .title {
     font-size: ${(props) => props.theme.fontSizes.xxl};
@@ -186,9 +201,4 @@ const Bottom = styled.div`
       padding-left: 20px;
     }
   }
-`;
-
-const ButtonWrapper = styled.div`
-  padding: 1rem 0;
-  width: 100%;
 `;

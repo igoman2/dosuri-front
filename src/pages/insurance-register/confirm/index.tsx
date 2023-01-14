@@ -5,7 +5,6 @@ import React, { useMemo } from "react";
 import Button from "@/components/Button";
 import HeaderInsurance from "@/components/Layout/Header/Depth/HeaderInsurance";
 import Layout from "@/components/Layout";
-import Link from "next/link";
 import dayjs from "dayjs";
 import styled from "@emotion/styled";
 import { useRecoilValue } from "recoil";
@@ -35,7 +34,7 @@ const Confirm = () => {
   return (
     <Layout header={<HeaderInsurance />} footer={false}>
       <Content>
-        <div>
+        <div className="inner">
           <div className="title">
             도수리에 가입된 정보로 실손보험 상담 신청이 완료되었습니다.
           </div>
@@ -60,27 +59,34 @@ const Confirm = () => {
             <div className="value">{`${userInfo.address.large_area} ${userInfo.address.small_area}`}</div>
           </ListElement>
         </div>
-
-        <ButtonWrapper>
-          <Link href="/insurance-register/confirm">
-            <a>
-              <Button
-                onClick={handleBackClick}
-                text="병원 정보 화면으로 돌아가기"
-                bold
-                width="100%"
-                color={theme.colors.purple}
-                backgroundColor={theme.colors.white}
-              />
-            </a>
-          </Link>
-        </ButtonWrapper>
       </Content>
+      <SaleButtonWrapper>
+        <Button
+          onClick={handleBackClick}
+          text="병원 정보 화면으로 돌아가기"
+          bold
+          width="100%"
+          color={theme.colors.purple}
+          backgroundColor={theme.colors.white}
+        />
+      </SaleButtonWrapper>
     </Layout>
   );
 };
 
 export default Confirm;
+
+const SaleButtonWrapper = styled.div`
+  position: fixed;
+  bottom: 0;
+  margin: 0 2rem;
+  width: calc(100% - 4rem);
+  max-width: 40rem;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  padding: 1rem 0;
+`;
 
 const ListElement = styled.div`
   display: flex;
@@ -102,6 +108,9 @@ const Content = styled.div`
   justify-content: space-between;
   height: 100%;
 
+  .inner {
+    margin-bottom: 8.7rem;
+  }
   .title {
     font-size: ${(props) => props.theme.fontSizes.xxl};
     line-height: ${(props) => props.theme.lineHeights.xxl};
