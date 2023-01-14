@@ -90,8 +90,10 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
     {
       onSuccess: (resp) => {
         queryClient.invalidateQueries();
-        setTokenInCookie("refresh", userInfo.refreshToken);
-        setTokenInCookie("access", userInfo.accessToken);
+        if (formType === "register") {
+          setTokenInCookie("refresh", userInfo.refreshToken);
+          setTokenInCookie("access", userInfo.accessToken);
+        }
         setUserInfo((prev) => {
           return {
             ...resp,
@@ -100,7 +102,12 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
             accessToken: prev.accessToken,
           };
         });
-        router.push("/");
+
+        if (formType === "register") {
+          router.push("/");
+        } else {
+          router.back();
+        }
       },
     }
   );
@@ -109,6 +116,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
 
   const { initialValues, validationSchema } = useFormikFactory(user);
 
+  console.log(initialValues);
   const sortedLargeArea = useMemo(
     () => do_si.sort((a, b) => (a.label > b.label ? 1 : -1)),
     []
@@ -141,6 +149,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
   });
 
   const sortedSmallArea = useMemo(() => {
+    console.log("cjang");
     const parsedArea = LOCATIONS.filter((location) =>
       location.label.includes(largeArea as string)
     )
@@ -176,7 +185,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
       });
 
     return _.uniqBy(parsedArea, "label");
-  }, [formik.values.largeArea]);
+  }, [largeArea]);
 
   const userLargeArea = sortedLargeArea.find(
     (largeArea) => largeArea.label === initialValues.largeArea
@@ -188,6 +197,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
 
   useEffect(() => {
     if (userLargeArea) {
+      console.log("!@#!@#!@#");
       setLargeArea(userLargeArea.label);
     }
 
@@ -252,6 +262,13 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
    * https://stackoverflow.com/questions/66546842/add-typescript-types-to-react-select-onchange-function
    */
   const onLargeAreaSelect = (selectedValue: any) => {
+    if (largeArea === selectedValue.value) {
+      return;
+    }
+    console.log(largeArea, selectedValue);
+
+    console.log("@@");
+
     setLargeArea(selectedValue.value);
     setSmallArea(null);
   };
@@ -326,6 +343,9 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
                     if (e.target.value.length > 10) {
                       return;
+                    }
+
+                    if (e.target.value === userInfo.nickname) {
                     }
                     setDidNicknameValidCheck(false);
                     formik.handleChange(e);
