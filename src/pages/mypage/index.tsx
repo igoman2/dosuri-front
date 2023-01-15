@@ -8,8 +8,11 @@ import ListTab from "@/components/UI/ListTab";
 import React from "react";
 import styled from "@emotion/styled";
 import { useGetMyCurrentPoint } from "@/hooks/service/useGetMyCurrentPoint";
+import { useRecoilValue } from "recoil";
+import { userInfoState } from "@/store/user";
 
 const Mypage = () => {
+  const userInfo = useRecoilValue(userInfoState);
   const tabList = [
     {
       text: "내 치료후기",
@@ -60,7 +63,7 @@ const Mypage = () => {
   return (
     <Layout header={<Header left={true} />}>
       <ProfileSectionWrapper>
-        <div className="nickname">닉네임최대열글자이하</div>
+        <div className="nickname">{userInfo.nickname}</div>
         <div className="edit-profile">
           <Link href="mypage/edit">
             <a className="text">
