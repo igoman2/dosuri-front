@@ -45,9 +45,9 @@ const Mypage = () => {
     {
       text: "도수리 팀에게 의견 보내기",
       subtext: "",
-      link: "mypage/claim",
+      link: "https://docs.google.com/forms/d/e/1FAIpQLSdUtYb-pT6qp3W5WOjD78Nzu6ylKwblgxcV3pkh4e-bzgxYig/viewform",
       hasNoti: false,
-      isExternalURL: false,
+      isExternalURL: true,
     },
     {
       text: "병원 입점 문의",
