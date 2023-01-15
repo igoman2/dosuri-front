@@ -47,8 +47,8 @@ const Setting = () => {
             <Link href="https://jade-grill-d5b.notion.site/2022-10-d9fbe2e7bb934b759df98242274af094">
               <a target="_blank" rel="noopener noreferrer">
                 <ListTab
-                  text="이용 약관"
-                  key="이용 약관"
+                  text="이용약관"
+                  key="이용약관"
                   subText=""
                   isLast={false}
                   right={
