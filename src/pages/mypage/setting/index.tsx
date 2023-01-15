@@ -11,6 +11,8 @@ import { logout } from "@/pages/withauth";
 import { settings } from "@/mock/setting";
 import styled from "@emotion/styled";
 
+const packageJson = require("/package.json");
+
 const Setting = () => {
   return (
     <Layout header={<HeaderDepth />} footer={false}>
@@ -40,7 +42,7 @@ const Setting = () => {
               subText=""
               key="현재 버전"
               isLast={false}
-              right={<Version>v 1.6.1 (24)</Version>}
+              right={<Version> v {packageJson.version}</Version>}
             />
             <Link href="https://jade-grill-d5b.notion.site/2022-10-d9fbe2e7bb934b759df98242274af094">
               <a target="_blank" rel="noopener noreferrer">
