@@ -71,6 +71,7 @@ const Resign = () => {
                 type="submit"
                 text="탈퇴하기"
                 width="100%"
+                height="5.2rem"
                 onClick={resignHandler}
               />
             </div>
