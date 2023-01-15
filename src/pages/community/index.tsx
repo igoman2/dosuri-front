@@ -5,6 +5,7 @@ import Float from "@/components/UI/Float";
 import Header from "@/components/Layout/Header";
 import { IHospitalReviewsResult } from "@/service/types";
 import Icon from "@/util/Icon";
+import Image from "next/image";
 import Layout from "@/components/Layout";
 import Link from "next/link";
 import PostBottom from "@/components/UI/emotion/PostBottom";
@@ -66,7 +67,15 @@ const Community = () => {
   };
 
   return (
-    <Layout header={<Header left={true} center={true} right={true} />}>
+    <Layout
+      header={
+        <Header
+          left={true}
+          center={true}
+          right={<Icon name="note" width="24" height="24" />}
+        />
+      }
+    >
       <>
         <div className="tab">
           <ButtonWrapper>

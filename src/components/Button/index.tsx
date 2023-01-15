@@ -1,7 +1,7 @@
+import Icon, { IconName } from "@/util/Icon";
 import React, { FC, ReactElement } from "react";
 import { css, useTheme } from "@emotion/react";
 
-import Icon from "@/util/Icon";
 import styled from "@emotion/styled";
 
 interface IButtonProps {
@@ -15,7 +15,7 @@ interface IButtonProps {
   onClick?: () => void;
   type?: "button" | "submit" | "reset" | undefined;
   disabled?: boolean;
-  iconName?: string;
+  iconName?: IconName;
   bold?: boolean;
   fontSize?: "xxxl" | "xxl" | "xl" | "lg" | "md" | "sm" | "xs";
   dense?: boolean;

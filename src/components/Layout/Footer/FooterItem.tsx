@@ -1,13 +1,13 @@
+import Icon, { IconName } from "@/util/Icon";
 import React, { FC } from "react";
 
-import Icon from "@/util/Icon";
 import Link from "next/link";
 import { menuState } from "../store";
 import { useRecoilValue } from "recoil";
 import { useTheme } from "@emotion/react";
 
 interface IFooterItemProps {
-  iconName: string;
+  iconName: "home" | "cross" | "talk" | "profile";
   text: string;
   path: string;
 }

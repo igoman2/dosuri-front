@@ -1,13 +1,11 @@
-import React, { FC, useState } from "react";
+import React, { FC, ReactElement, useState } from "react";
 import { modalContentState, modalState } from "@/components/Modal/store";
 
 import Icon from "@/util/Icon";
-import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "@/components/SearchBar";
 import WriteQuesiton from "@/components/Write/Question";
 import WriteReview from "@/components/Write/Review";
-import note from "@/public/assets/note.png";
 import styled from "@emotion/styled";
 import useGeolocation from "@/hooks/useGeolocation";
 import { useSetRecoilState } from "recoil";
@@ -15,7 +13,7 @@ import { useSetRecoilState } from "recoil";
 interface IHeaderProps {
   left?: boolean;
   center?: boolean;
-  right?: boolean;
+  right?: ReactElement;
 }
 
 const Header: FC<IHeaderProps> = ({ left, center, right }) => {
@@ -95,17 +93,7 @@ const Header: FC<IHeaderProps> = ({ left, center, right }) => {
           </Link>
         )}
       </div>
-      <div>
-        {right && (
-          <Image
-            src={note}
-            alt="register"
-            width={28}
-            height={28}
-            onClick={onWriteHandler}
-          />
-        )}
-      </div>
+      <div>{right}</div>
 
       {modalType === "question" ? (
         <WriteQuesiton

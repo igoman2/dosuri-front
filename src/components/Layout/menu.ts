@@ -1,7 +1,9 @@
+import { IconName } from "@/util/Icon";
+
 export interface Menu {
   title: string;
   path: string;
-  iconName: string;
+  iconName: "home" | "cross" | "talk" | "profile";
 }
 
 export const menus: Menu[] = [

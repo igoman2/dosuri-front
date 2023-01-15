@@ -1,6 +1,7 @@
 import ArrowRight from "@/public/assets/arrow-right.png";
 import Divider from "@/components/UI/Divider";
 import Header from "@/components/Layout/Header";
+import Icon from "@/util/Icon";
 import Image from "next/image";
 import Layout from "@/components/Layout";
 import Link from "next/link";
@@ -61,7 +62,19 @@ const Mypage = () => {
   tabList[1].subtext = currentPoint?.total_point.toLocaleString() + "P" ?? "P";
 
   return (
-    <Layout header={<Header left={true} />}>
+    <Layout
+      header={
+        <Header
+          left={true}
+          right={
+            <HeaderRightSection>
+              <Icon name="notification_off" width="24" height="24" />
+              <Icon name="setting" width="24" height="24" />
+            </HeaderRightSection>
+          }
+        />
+      }
+    >
       <ProfileSectionWrapper>
         <div className="nickname">{userInfo.nickname}</div>
         <div className="edit-profile">
@@ -154,4 +167,9 @@ const ProfileSectionWrapper = styled.div`
   .list-section {
     color: ${(props) => props.theme.colors.red} !important;
   }
+`;
+
+const HeaderRightSection = styled.div`
+  display: flex;
+  gap: 1rem;
 `;
