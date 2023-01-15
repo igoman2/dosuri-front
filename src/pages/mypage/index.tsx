@@ -52,9 +52,9 @@ const Mypage = () => {
     {
       text: "병원 입점 문의",
       subtext: "",
-      link: "mypage/inquiry",
+      link: "https://docs.google.com/forms/d/e/1FAIpQLSfMUUNNMdUKnlVURL85SZiC3FDQssPEcZtbqtcYh7Zl_nSGHQ/viewform",
       hasNoti: false,
-      isExternalURL: false,
+      isExternalURL: true,
     },
   ];
 
