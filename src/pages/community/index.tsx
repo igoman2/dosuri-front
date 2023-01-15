@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { modalContentState, modalState } from "@/components/Modal/store";
 
 import Button from "@/components/Button";
 import Float from "@/components/UI/Float";
@@ -10,9 +11,13 @@ import Layout from "@/components/Layout";
 import Link from "next/link";
 import PostBottom from "@/components/UI/emotion/PostBottom";
 import PostCard from "@/components/Card/PostCard";
+import WriteQuesiton from "@/components/Write/Question";
+import WriteReview from "@/components/Write/Review";
+import note from "@/public/assets/note.png";
 import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
 import { useGetCommunity } from "@/hooks/service/useGetCommunity";
+import { useSetRecoilState } from "recoil";
 import { useTheme } from "@emotion/react";
 
 const Tablist: Tab[] = [
@@ -39,6 +44,48 @@ const Community = () => {
   const theme = useTheme();
   const [currentTab, setCurrentTab] = useState<Tab>(Tablist[0]);
   const [scrollDir] = useDirection();
+  const [isActive, setIsActive] = useState(false);
+  const [modalType, setModalType] = useState("");
+  const setModalIsActive = useSetRecoilState(modalState);
+  const setModalContent = useSetRecoilState(modalContentState);
+
+  const onWriteHandler = () => {
+    setModalType("question");
+    setIsActive(true);
+  };
+
+  const onSwapModalType = () => {
+    setIsActive(false);
+    setModalType("review");
+    setIsActive(true);
+  };
+
+  const changeActiveHandler = () => {
+    setModalContent({
+      title: "후기 작성을 취소하시겠어요?",
+      content: `
+      작성을 취소할 경우 지금까지 입력한 내용이 모두 사라집니다.`,
+      actionLeft: {
+        text: "작성 취소",
+        action: () => {
+          setIsActive(false);
+          setModalIsActive({ isActive: false });
+        },
+      },
+      actionRight: {
+        text: "계속 작성",
+        action: () => {
+          setModalIsActive({ isActive: false });
+        },
+      },
+    });
+    setModalIsActive((prev) => ({
+      action: () => {
+        setModalIsActive((prev) => ({ ...prev, isActive: false }));
+      },
+      isActive: true,
+    }));
+  };
 
   const onTabClick = (tab: Tab) => {
     setCurrentTab(tab);
@@ -72,7 +119,15 @@ const Community = () => {
         <Header
           left={true}
           center={true}
-          right={<Icon name="note" width="24" height="24" />}
+          right={
+            <Image
+              src={note}
+              alt="register"
+              width={28}
+              height={28}
+              onClick={onWriteHandler}
+            />
+          }
         />
       }
     >
@@ -110,6 +165,19 @@ const Community = () => {
         ))}
 
         <Float scrollDir={scrollDir} distance="8.5rem" />
+
+        {modalType === "question" ? (
+          <WriteQuesiton
+            onSwap={onSwapModalType}
+            isActive={isActive}
+            onChangeActive={changeActiveHandler}
+          />
+        ) : (
+          <WriteReview
+            isActive={isActive}
+            onChangeActive={changeActiveHandler}
+          />
+        )}
       </>
     </Layout>
   );

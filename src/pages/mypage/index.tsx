@@ -59,6 +59,7 @@ const Mypage = () => {
   ];
 
   const { currentPoint } = useGetMyCurrentPoint();
+
   tabList[1].subtext = currentPoint?.total_point.toLocaleString() + "P" ?? "P";
 
   return (
@@ -68,8 +69,17 @@ const Mypage = () => {
           left={true}
           right={
             <HeaderRightSection>
-              <Icon name="notification_off" width="24" height="24" />
-              <Icon name="setting" width="24" height="24" />
+              <Link href="/mypage/notification">
+                <a>
+                  <Icon name="notification_off" width="24" height="24" />
+                </a>
+              </Link>
+
+              <Link href="/mypage/setting">
+                <a>
+                  <Icon name="setting" width="24" height="24" />
+                </a>
+              </Link>
             </HeaderRightSection>
           }
         />
