@@ -21,6 +21,11 @@ export function useLikePost() {
         queryKey: ["talksByKeyword"],
         refetchInactive: true,
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["getHospitalReviews"],
+        refetchInactive: true,
+      });
     },
   });
   return { mutate };

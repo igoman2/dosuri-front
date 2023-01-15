@@ -1,20 +1,23 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { modalContentState, modalState } from "@/components/Modal/store";
 
 import Button from "@/components/Button";
 import Float from "@/components/UI/Float";
 import Header from "@/components/Layout/Header";
+import { IHotCommunityResponse } from "@/service/types";
 import Image from "next/image";
+import InfiniteScroll from "react-infinite-scroller";
 import Layout from "@/components/Layout";
-import Link from "next/link";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
 import WriteQuesiton from "@/components/Write/Question";
 import WriteReview from "@/components/Write/Review";
+import api from "@/service/axiosConfig";
 import note from "@/public/assets/note.png";
 import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
-import { useGetCommunity } from "@/hooks/service/useGetCommunity";
+import { useInfiniteQuery } from "react-query";
+import { useRouter } from "next/router";
 import { useSetRecoilState } from "recoil";
 import { useTheme } from "@emotion/react";
 
@@ -38,6 +41,8 @@ type Tab = {
   value: "all" | "review" | "question";
 };
 
+type LoadMore = (page: number) => void;
+
 const Community = () => {
   const theme = useTheme();
   const [currentTab, setCurrentTab] = useState<Tab>(Tablist[0]);
@@ -46,6 +51,32 @@ const Community = () => {
   const [modalType, setModalType] = useState("");
   const setModalIsActive = useSetRecoilState(modalState);
   const setModalContent = useSetRecoilState(modalContentState);
+  const router = useRouter();
+
+  const initialUrl = useMemo(() => {
+    return `/community/v1/community/articles?article_type=${currentTab.value}`;
+  }, [currentTab]);
+
+  const fetchUrl = async (url: string) => {
+    const response = await api.get<IHotCommunityResponse>(url);
+    return response.data;
+  };
+
+  const {
+    data: communityList,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery(
+    ["getCommunityListKeyword", currentTab],
+    ({ pageParam = initialUrl }) => fetchUrl(pageParam),
+    {
+      getNextPageParam: (lastPage) => {
+        return lastPage.next || undefined;
+      },
+      staleTime: 1000,
+      cacheTime: 1000,
+    }
+  );
 
   const onWriteHandler = () => {
     setModalType("question");
@@ -89,9 +120,11 @@ const Community = () => {
     setCurrentTab(tab);
   };
 
-  const { communityList } = useGetCommunity({
-    article_type: currentTab.value,
-  });
+  const postClickHandler = (id: string) => {
+    router.push({
+      pathname: `/community/${id}`,
+    });
+  };
 
   return (
     <Layout
@@ -136,16 +169,27 @@ const Community = () => {
           </ButtonWrapper>
         </div>
 
-        {communityList.results.map((review, i) => (
-          <Link href={`community/${review.uuid}`} key={i}>
-            <a>
-              <PostCard
-                review={review}
-                bottom={<PostBottom review={review} type="list" />}
-              />
-            </a>
-          </Link>
-        ))}
+        <InfiniteScroll
+          loadMore={fetchNextPage as LoadMore}
+          hasMore={hasNextPage}
+        >
+          {communityList?.pages.map((pageData) => {
+            return pageData.results.map((talk) => {
+              return (
+                <div
+                  className="link"
+                  onClick={() => postClickHandler(talk.uuid)}
+                  key={talk.uuid}
+                >
+                  <PostCard
+                    review={talk}
+                    bottom={<PostBottom review={talk} type="list" />}
+                  />
+                </div>
+              );
+            });
+          })}
+        </InfiniteScroll>
 
         <Float scrollDir={scrollDir} distance="8.5rem" />
 

@@ -218,6 +218,7 @@ const Hospital = styled.div`
   .hospital-content {
     padding: 0 2rem;
     margin-bottom: 8.7rem;
+    overflow-x: hidden;
   }
 
   .head {
