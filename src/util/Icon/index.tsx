@@ -60,7 +60,8 @@ interface IIconProps {
   height?: string;
 }
 const Icon: FC<IIconProps> = ({ name, ...props }) => {
-  return <Icon name={name} {...props} />;
+  let Icon: any = iconTypes[name];
+  return <Icon {...props} />;
 };
 
 export default Icon;
