@@ -123,6 +123,8 @@ const SaleButtonWrapper = styled.div`
   left: 0;
   right: 0;
   padding: 1rem 0;
+  background-color: ${(props) => props.theme.colors.white};
+  z-index: 100;
 `;
 
 const Compare = styled.div`
