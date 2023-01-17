@@ -36,13 +36,6 @@ const Mypage = () => {
       isExternalURL: true,
     },
     {
-      text: "설정",
-      subtext: "",
-      link: "mypage/setting",
-      hasNoti: false,
-      isExternalURL: false,
-    },
-    {
       text: "도수리 팀에게 의견 보내기",
       subtext: "",
       link: "https://docs.google.com/forms/d/e/1FAIpQLSdUtYb-pT6qp3W5WOjD78Nzu6ylKwblgxcV3pkh4e-bzgxYig/viewform",
