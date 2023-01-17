@@ -304,36 +304,34 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
       <FormikProvider value={formik}>
         <form onSubmit={formik.handleSubmit}>
           <div className="form-section">
-            {formType === "edit" ? (
-              <>
-                <div className="divider">
-                  <label className="label" htmlFor="name">
-                    이름
-                  </label>
-                  <Field
-                    className={"field"}
-                    id="name"
-                    name="name"
-                    value={formik.values.name}
-                    onChange={formik.handleChange}
-                  />
-                </div>
-                <div className="divider">
-                  <label className="label" htmlFor="email">
-                    이메일
-                  </label>
-                  <Field
-                    className={"field"}
-                    id="email"
-                    name="email"
-                    value={formik.values.email}
-                    disabled
-                  />
-                </div>
-              </>
-            ) : null}
+            <>
+              <div className="divider">
+                <label className="label" htmlFor="name">
+                  이름
+                </label>
+                <Field
+                  className={"field"}
+                  id="name"
+                  name="name"
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
+                />
+              </div>
+              {/* <div className="divider">
+                <label className="label" htmlFor="email">
+                  이메일
+                </label>
+                <Field
+                  className={"field"}
+                  id="email"
+                  name="email"
+                  value={formik.values.email}
+                  disabled
+                />
+              </div> */}
+            </>
 
-            <div className="divider nickname">
+            {/* <div className="divider nickname">
               <label className="label" htmlFor="nickname">
                 닉네임
               </label>
@@ -386,7 +384,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                   <div className="invisible">dd</div>
                 )}
               </div>
-            </div>
+            </div> */}
 
             <div className="divider">
               <label className="label" htmlFor="phone">
