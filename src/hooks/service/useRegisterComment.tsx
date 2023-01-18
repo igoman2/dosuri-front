@@ -12,6 +12,7 @@ export function useRegisterComment(isThread: boolean) {
     {
       onSuccess: () => {
         queryClient.invalidateQueries("getCommunityPostDetail");
+        queryClient.invalidateQueries("getMyReviewDetail");
       },
     }
   );

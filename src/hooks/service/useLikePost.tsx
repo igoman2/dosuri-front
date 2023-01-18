@@ -26,6 +26,11 @@ export function useLikePost() {
         queryKey: ["getHospitalReviews"],
         refetchInactive: true,
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["getMyReviewDetail"],
+        refetchInactive: true,
+      });
     },
   });
   return { mutate };

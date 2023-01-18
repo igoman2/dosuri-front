@@ -1,17 +1,37 @@
+import React, { FC } from "react";
 import { modalContentState, modalState } from "@/components/Modal/store";
 
 import Button from "@/components/Button";
+import Comment from "@/components/Comment";
+import CommentProvider from "@/store/context/Comment";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Layout from "@/components/Layout";
-import React from "react";
+import { NextPageContext } from "next";
+import PostBottom from "@/components/Card/PostCard/PostBottom";
+import PostCard from "@/components/Card/PostCard";
+import Reply from "@/components/Community/Reply";
+import { getCommunityPostDetail } from "@/service/apis/community";
+import { useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import { useTheme } from "@emotion/react";
 
-const ReviewDetail = () => {
+interface IReviewDetailProps {
+  reviewId: string;
+}
+
+const ReviewDetail: FC<IReviewDetailProps> = ({ reviewId }) => {
   const theme = useTheme();
 
   const [_, setIsActive] = useRecoilState(modalState);
   const [__, setModalContent] = useRecoilState(modalContentState);
+
+  const { data } = useQuery(["getMyReviewDetail", reviewId], () =>
+    getCommunityPostDetail(reviewId)
+  );
+
+  if (!data) {
+    return null;
+  }
 
   const onReviewDelete = () => {
     setModalContent({
@@ -61,14 +81,26 @@ const ReviewDetail = () => {
       }
       footer={false}
     >
-      {/* <>
-        {[posts[0]].map((post, i) => (
-          <PostCard post={post} key={post.id} />
-        ))}
-        <Comment comment={comment} />
-      </> */}
+      <CommentProvider>
+        <PostCard
+          review={data}
+          bottom={<PostBottom review={data} type="detail" />}
+        />
+        <Comment comments={data.article_comment} />
+        <Reply postId={reviewId} />
+      </CommentProvider>
     </Layout>
   );
 };
 
 export default ReviewDetail;
+
+export const getServerSideProps = async (context: NextPageContext) => {
+  const { query } = context;
+  const { reviewId } = query;
+  return {
+    props: {
+      reviewId,
+    },
+  };
+};
