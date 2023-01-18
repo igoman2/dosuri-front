@@ -43,7 +43,7 @@ const Header: FC<IHeaderProps> = ({ left, center, right }) => {
         {center && (
           <Link href="/search/input">
             <a>
-              <SearchBar />
+              <SearchBar inputText="" />
             </a>
           </Link>
         )}
