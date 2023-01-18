@@ -10,13 +10,14 @@ interface UseSearchHospital {
 interface IUseSearchHospitalProps {
   isInput: boolean;
   query: string;
+  page_size?: number;
 }
 
 export function useSearchHospital({
   query,
   isInput,
+  page_size,
 }: IUseSearchHospitalProps): UseSearchHospital {
-  const { mutate } = useCreateSearchHistory();
   const fallback: IHospitalInfoResult[] = [];
 
   const { data: searchedHospitalList } = useQuery({
@@ -24,16 +25,12 @@ export function useSearchHospital({
     queryFn: async () => {
       const data = await getHospitalList({
         search: query,
+        page_size,
       });
       return data.results;
     },
     suspense: false,
     enabled: !isInput,
-    onSuccess: () => {
-      if (!!query) {
-        mutate(query);
-      }
-    },
   });
 
   return { searchedHospitalList: searchedHospitalList ?? fallback };

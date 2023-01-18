@@ -12,19 +12,26 @@ import Image from "next/image";
 import { css } from "@emotion/react";
 import magnifier_grey from "@/public/assets/magnifier_grey.png";
 import styled from "@emotion/styled";
+import { useCreateSearchHistory } from "@/hooks/service/useCreateSearchHistory";
 import { useRouter } from "next/router";
 
 interface ISearchBarProps {
-  inputText?: string;
+  inputText: string;
   onInput?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const SearchBar: FC<ISearchBarProps> = ({ inputText, onInput }) => {
+  const { mutate: createSearchHistory } = useCreateSearchHistory();
+
   const onSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.replace({
-      pathname: `/search/${inputText}`,
-      query: { keyword: inputText, tab: "all" },
+    createSearchHistory(inputText, {
+      onSuccess: () => {
+        router.replace({
+          pathname: `/search/${inputText}`,
+          query: { keyword: inputText, tab: "all" },
+        });
+      },
     });
   };
 

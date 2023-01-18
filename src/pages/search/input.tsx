@@ -7,22 +7,27 @@ import Link from "next/link";
 import RecentSearchList from "@/components/UI/RecentSearchList";
 import SearchHeader from "@/components/Layout/Header/SearchHeader";
 import styled from "@emotion/styled";
+import { useCreateSearchHistory } from "@/hooks/service/useCreateSearchHistory";
 import { useDeleteSearchHistory } from "@/hooks/service/useDeleteSearchHistory";
 import { useDeleteSearchHistoryAll } from "@/hooks/service/useDeleteSearchHistoryAll";
 import { useRecentHospitalSearchList } from "@/hooks/service/useRecentHospitalSearchList";
+import { useRouter } from "next/router";
 import { useSearchHospital } from "@/hooks/service/useSearchHospital";
 
 const SearchInput = () => {
   const [inputText, setInputText] = useState("");
   const { value, setTrue, setFalse } = useBoolean(false);
   const debouncedValue = useDebounce<string>(inputText, 300);
+  const router = useRouter();
 
   const { searchedHospitalList } = useSearchHospital({
     query: inputText,
     isInput: value,
+    page_size: 30,
   });
   const { mutate } = useDeleteSearchHistory();
   const { mutate: deleteAllHistory } = useDeleteSearchHistoryAll();
+  const { mutate: createSearchHistory } = useCreateSearchHistory();
 
   const { recentSearchedHospitalList } = useRecentHospitalSearchList();
   const onInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -42,6 +47,14 @@ const SearchInput = () => {
     deleteAllHistory();
   };
 
+  const handleListClick = (id: string) => {
+    createSearchHistory(inputText, {
+      onSuccess: () => {
+        router.push(`/hospital/${id}`);
+      },
+    });
+  };
+
   return (
     <Layout
       header={<SearchHeader onInput={onInput} inputText={inputText} />}
@@ -49,21 +62,20 @@ const SearchInput = () => {
     >
       <Main>
         {inputText.length > 0 ? (
-          <div>
+          <>
             {searchedHospitalList.map((searchedHospital) => (
-              <Link
-                href={`/hospital/${searchedHospital.uuid}`}
+              <div
+                className="link"
                 key={searchedHospital.uuid}
+                onClick={() => handleListClick(searchedHospital.uuid)}
               >
-                <a>
-                  <HospitalQueryList
-                    text={searchedHospital.name}
-                    inputText={inputText}
-                  ></HospitalQueryList>
-                </a>
-              </Link>
+                <HospitalQueryList
+                  text={searchedHospital.name}
+                  inputText={inputText}
+                ></HospitalQueryList>
+              </div>
             ))}
-          </div>
+          </>
         ) : (
           <div>
             <div className="head">
@@ -97,6 +109,10 @@ const Main = styled.div`
   padding: 0 2rem;
   margin-top: 0.5rem;
   height: 100%;
+
+  .link {
+    cursor: pointer;
+  }
 
   .head {
     display: flex;

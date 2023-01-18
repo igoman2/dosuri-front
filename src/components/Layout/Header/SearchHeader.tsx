@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
 interface ISearchHeaderProps {
-  inputText?: string;
+  inputText: string;
   onInput: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
