@@ -130,31 +130,6 @@ const Home = () => {
         )}
       </div>
 
-      <div
-        css={{
-          marginBottom: "2.5rem",
-        }}
-      >
-        <div
-          css={{
-            fontSize: theme.fontSizes.xl,
-            fontWeight: 700,
-          }}
-        >
-          후기가 좋은 병원
-        </div>
-
-        {hospitalList.good_review_hospitals.map(
-          (hospital: IHospitalInfoResult, i) => (
-            <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
-              <a>
-                <HospitalCard hospitalInfo={hospital} />
-              </a>
-            </Link>
-          )
-        )}
-      </div>
-
       <LogginBanner>
         {!isLoggedIn && (
           <Link href="/login">
