@@ -23,6 +23,7 @@ import Talk from "@/public/assets/talk.svg";
 import TalkClicked from "@/public/assets/talk_clicked.svg";
 import TalkSqaure from "@/public/assets/talk_square.svg";
 import Thumb from "@/public/assets/thumb.svg";
+import Write from "@/public/assets/write.svg";
 
 export const iconTypes: any = {
   home: Home,
@@ -48,6 +49,7 @@ export const iconTypes: any = {
   logo1: Logo1,
   logo2: Logo2,
   logo3: Logo3,
+  write: Write,
 } as const;
 export type IconName = keyof typeof iconTypes;
 

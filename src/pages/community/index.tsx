@@ -5,7 +5,7 @@ import Button from "@/components/Button";
 import Float from "@/components/UI/Float";
 import Header from "@/components/Layout/Header";
 import { IHotCommunityResponse } from "@/service/types";
-import Image from "next/image";
+import Icon from "@/util/Icon";
 import InfiniteScroll from "react-infinite-scroller";
 import Layout from "@/components/Layout";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
@@ -13,7 +13,6 @@ import PostCard from "@/components/Card/PostCard";
 import WriteQuesiton from "@/components/Write/Question";
 import WriteReview from "@/components/Write/Review";
 import api from "@/service/axiosConfig";
-import note from "@/public/assets/note.png";
 import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
 import { useInfiniteQuery } from "react-query";
@@ -129,19 +128,7 @@ const Community = () => {
   return (
     <Layout
       header={
-        <Header
-          left={true}
-          center={true}
-          right={
-            <Image
-              src={note}
-              alt="register"
-              width={28}
-              height={28}
-              onClick={onWriteHandler}
-            />
-          }
-        />
+        <Header left={true} center={true} right={<Icon name="write" />} />
       }
     >
       <>
