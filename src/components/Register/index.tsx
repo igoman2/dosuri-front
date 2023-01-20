@@ -537,7 +537,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                 bold
                 height="5.2rem"
                 borderRadius="0.3rem"
-                backgroundColor={theme.colors.purple}
+                backgroundColor={theme.colors.purple_light}
                 disabled={
                   !(
                     formik.isValid &&
