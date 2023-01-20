@@ -128,7 +128,15 @@ const Community = () => {
   return (
     <Layout
       header={
-        <Header left={true} center={true} right={<Icon name="write" />} />
+        <Header
+          left={true}
+          center={true}
+          right={
+            <div onClick={onWriteHandler} css={{ cursor: "pointer" }}>
+              <Icon name="write" />
+            </div>
+          }
+        />
       }
     >
       <>
