@@ -48,22 +48,28 @@ const Home = () => {
           marginBottom: "2.5rem",
         }}
       >
-        <div
-          css={{
-            fontSize: theme.fontSizes.xl,
-            fontWeight: 700,
-          }}
-        >
-          {isLoggedIn ? "내 주변 TOP 병원" : "도수리 TOP 병원"}
-        </div>
+        {hospitalList.top_hospitals.length !== 0 && (
+          <>
+            <div
+              css={{
+                fontSize: theme.fontSizes.xl,
+                fontWeight: 700,
+              }}
+            >
+              {isLoggedIn ? "내 주변 TOP 병원" : "도수리 TOP 병원"}
+            </div>
 
-        {hospitalList.top_hospitals.map((hospital: IHospitalInfoResult, i) => (
-          <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
-            <a>
-              <HospitalCard hospitalInfo={hospital} />
-            </a>
-          </Link>
-        ))}
+            {hospitalList.top_hospitals.map(
+              (hospital: IHospitalInfoResult, i) => (
+                <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+                  <a>
+                    <HospitalCard hospitalInfo={hospital} />
+                  </a>
+                </Link>
+              )
+            )}
+          </>
+        )}
       </div>
       <LogginBanner>
         {!isLoggedIn && (
@@ -87,22 +93,28 @@ const Home = () => {
           marginBottom: "2.5rem",
         }}
       >
-        <div
-          css={{
-            fontSize: theme.fontSizes.xl,
-            fontWeight: 700,
-          }}
-        >
-          새로 생긴 병원
-        </div>
+        {hospitalList.new_hospitals.length !== 0 && (
+          <>
+            <div
+              css={{
+                fontSize: theme.fontSizes.xl,
+                fontWeight: 700,
+              }}
+            >
+              새로 생긴 병원
+            </div>
 
-        {hospitalList.new_hospitals.map((hospital: IHospitalInfoResult, i) => (
-          <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
-            <a>
-              <HospitalCard hospitalInfo={hospital} />
-            </a>
-          </Link>
-        ))}
+            {hospitalList.new_hospitals.map(
+              (hospital: IHospitalInfoResult, i) => (
+                <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+                  <a>
+                    <HospitalCard hospitalInfo={hospital} />
+                  </a>
+                </Link>
+              )
+            )}
+          </>
+        )}
       </div>
 
       <div
@@ -110,23 +122,27 @@ const Home = () => {
           marginBottom: "2.5rem",
         }}
       >
-        <div
-          css={{
-            fontSize: theme.fontSizes.xl,
-            fontWeight: 700,
-          }}
-        >
-          가격이 착한 병원
-        </div>
+        {hospitalList.good_price_hospitals.length !== 0 && (
+          <>
+            <div
+              css={{
+                fontSize: theme.fontSizes.xl,
+                fontWeight: 700,
+              }}
+            >
+              가격이 착한 병원
+            </div>
 
-        {hospitalList.good_price_hospitals.map(
-          (hospital: IHospitalInfoResult, i) => (
-            <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
-              <a>
-                <HospitalCard hospitalInfo={hospital} />
-              </a>
-            </Link>
-          )
+            {hospitalList.good_price_hospitals.map(
+              (hospital: IHospitalInfoResult, i) => (
+                <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+                  <a>
+                    <HospitalCard hospitalInfo={hospital} />
+                  </a>
+                </Link>
+              )
+            )}
+          </>
         )}
       </div>
 
