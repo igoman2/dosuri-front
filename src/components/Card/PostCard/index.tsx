@@ -82,9 +82,15 @@ const PostCard: FC<IPostCardProps> = ({ review, bottom }) => {
         </div>
         <div className="hospital-name">{review.hospital}</div>
         <div className="swiper-layout">
-          <SwiperWrapper>
-            <DoSwiper source={imageSource} spaceBetween={6} slidesPerView={2} />
-          </SwiperWrapper>
+          {imageSource.length !== 0 && (
+            <SwiperWrapper>
+              <DoSwiper
+                source={imageSource}
+                spaceBetween={6}
+                slidesPerView={2}
+              />
+            </SwiperWrapper>
+          )}
         </div>
         <div className="post-comment">
           <div
