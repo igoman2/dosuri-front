@@ -90,7 +90,14 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
     (data) => registerUser(data, userInfo.accessToken),
     {
       onSuccess: (resp) => {
-        queryClient.invalidateQueries();
+        queryClient.invalidateQueries({
+          queryKey: ["getHospitalList"],
+          refetchInactive: true,
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["getHotCommunity"],
+          refetchInactive: true,
+        });
         if (formType === "register") {
           setTokenInCookie("refresh", userInfo.refreshToken);
           setTokenInCookie("access", userInfo.accessToken);
