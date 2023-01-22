@@ -1,15 +1,20 @@
+import { IGoodPriceHospitals, IHospitalInfoResult } from "@/service/types";
 import React, { FC } from "react";
 
 import Description from "../Description";
-import { IHospitalInfoResult } from "@/service/types";
+import DescriptionPrice from "../DescriptionPrice";
 import Image from "next/image";
 import ImageFallback from "@/components/UI/ImageFallback";
 
 export interface IHospitalCardProps {
-  hospitalInfo: IHospitalInfoResult;
+  hospitalInfo: IHospitalInfoResult | IGoodPriceHospitals;
+  type?: "review" | "price";
 }
 
-const HospitalCard: FC<IHospitalCardProps> = ({ hospitalInfo }) => {
+const HospitalCard: FC<IHospitalCardProps> = ({
+  hospitalInfo,
+  type = "review",
+}) => {
   return (
     <div
       css={{
@@ -36,8 +41,17 @@ const HospitalCard: FC<IHospitalCardProps> = ({ hospitalInfo }) => {
           />
         )}
       </div>
-
-      <Description hospitalInfo={hospitalInfo} size="md" />
+      {type === "review" ? (
+        <Description
+          hospitalInfo={hospitalInfo as IHospitalInfoResult}
+          size="md"
+        />
+      ) : (
+        <DescriptionPrice
+          hospitalInfo={hospitalInfo as IGoodPriceHospitals}
+          size="md"
+        />
+      )}
     </div>
   );
 };

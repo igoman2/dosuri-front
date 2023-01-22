@@ -158,16 +158,28 @@ export interface IHospitalInfoResult {
   latest_article: string;
   latest_article_created_at: string;
   opened_at: string;
-  distance: null;
+  distance: number;
   attachments: {
     signed_path: string;
   }[];
 }
 
+export interface IGoodPriceHospitals {
+  area: string;
+  attachments: {
+    signed_path: string;
+  }[];
+  avg_price_per_hour: number;
+  name: string;
+  up_count: number;
+  uuid: string;
+  view_count: number;
+}
+
 export interface IHospitalInfoHomeResponse {
   top_hospitals: IHospitalInfoResult[];
   new_hospitals: IHospitalInfoResult[];
-  good_price_hospitals: IHospitalInfoResult[];
+  good_price_hospitals: IGoodPriceHospitals[];
   good_review_hospitals: IHospitalInfoResult[];
 }
 

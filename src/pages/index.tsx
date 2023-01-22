@@ -1,9 +1,9 @@
+import { IGoodPriceHospitals, IHospitalInfoResult } from "@/service/types";
 import React, { useEffect } from "react";
 
 import Button from "@/components/Button";
 import Header from "@/components/Layout/Header";
 import HospitalCard from "@/components/Card/HospitalCard";
-import { IHospitalInfoResult } from "@/service/types";
 import Layout from "@/components/Layout";
 import Link from "next/link";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
@@ -134,10 +134,10 @@ const Home = () => {
             </div>
 
             {hospitalList.good_price_hospitals.map(
-              (hospital: IHospitalInfoResult, i) => (
+              (hospital: IGoodPriceHospitals, i) => (
                 <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
                   <a>
-                    <HospitalCard hospitalInfo={hospital} />
+                    <HospitalCard hospitalInfo={hospital} type="price" />
                   </a>
                 </Link>
               )
