@@ -1,5 +1,6 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { modalContentState, modalState } from "@/components/Modal/store";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import Button from "@/components/Button";
 import Float from "@/components/UI/Float";
@@ -13,11 +14,11 @@ import PostCard from "@/components/Card/PostCard";
 import WriteQuesiton from "@/components/Write/Question";
 import WriteReview from "@/components/Write/Review";
 import api from "@/service/axiosConfig";
+import { scrollState } from "@/store/searchOption";
 import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
 import { useInfiniteQuery } from "react-query";
 import { useRouter } from "next/router";
-import { useSetRecoilState } from "recoil";
 import { useTheme } from "@emotion/react";
 
 const Tablist: Tab[] = [
@@ -51,6 +52,25 @@ const Community = () => {
   const setModalIsActive = useSetRecoilState(modalState);
   const setModalContent = useSetRecoilState(modalContentState);
   const router = useRouter();
+
+  const [scrollY, setScrollY] = useRecoilState(scrollState);
+
+  const onScroll = useCallback((event: Event) => {
+    setScrollY(window.pageYOffset);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (window) {
+      window.scrollTo(0, scrollY);
+    }
+  }, [scrollY]);
 
   const initialUrl = useMemo(() => {
     return `/community/v1/community/articles?article_type=${currentTab.value}&ordering=-created_at`;
