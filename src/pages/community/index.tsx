@@ -53,7 +53,7 @@ const Community = () => {
   const router = useRouter();
 
   const initialUrl = useMemo(() => {
-    return `/community/v1/community/articles?article_type=${currentTab.value}`;
+    return `/community/v1/community/articles?article_type=${currentTab.value}&ordering=-created_at`;
   }, [currentTab]);
 
   const fetchUrl = async (url: string) => {
