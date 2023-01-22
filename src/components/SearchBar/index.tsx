@@ -77,7 +77,7 @@ const SearchBar: FC<ISearchBarProps> = ({ inputText, onInput }) => {
         </span>
         <input
           ref={inputRef}
-          value={inputText}
+          defaultValue={inputText}
           onChange={onInput}
           type="text"
           id="roll"

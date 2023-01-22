@@ -9,8 +9,6 @@ import styled from "@emotion/styled";
 import { useInfiniteQuery } from "react-query";
 import { useRouter } from "next/router";
 
-type LoadMore = (page: number) => void;
-
 const KeywordCommunity = () => {
   const router = useRouter();
 
@@ -27,6 +25,7 @@ const KeywordCommunity = () => {
     data: talks,
     fetchNextPage,
     hasNextPage,
+    isFetching,
   } = useInfiniteQuery(
     ["talksByKeyword", router.query.keyword],
     ({ pageParam = initialUrl }) => fetchUrl(pageParam),
@@ -43,6 +42,13 @@ const KeywordCommunity = () => {
     });
   };
 
+  const fetchNextList = () => {
+    if (isFetching) {
+      return;
+    }
+    fetchNextPage();
+  };
+
   return (
     <div>
       <ResultWrapper>
@@ -51,10 +57,7 @@ const KeywordCommunity = () => {
             도수톡
             <span className="list-length"> {talks?.pages[0].count}</span>건
           </div>
-          <InfiniteScroll
-            loadMore={fetchNextPage as LoadMore}
-            hasMore={hasNextPage}
-          >
+          <InfiniteScroll loadMore={fetchNextList} hasMore={hasNextPage}>
             {talks?.pages.map((pageData) => {
               return pageData.results.map((talk) => {
                 return (

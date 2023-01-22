@@ -32,6 +32,7 @@ const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
     data: reviews,
     isSuccess,
     fetchNextPage,
+    isFetching,
     hasNextPage,
   } = useInfiniteQuery(
     ["getHospitalReviews", hospitalData.uuid],
@@ -49,7 +50,12 @@ const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
     });
   };
 
-  console.log(reviews);
+  const fetchNextList = () => {
+    if (isFetching) {
+      return;
+    }
+    fetchNextPage();
+  };
 
   return (
     <ReviewsWrapper>
@@ -64,10 +70,7 @@ const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
             </span>
             건
           </div>
-          <InfiniteScroll
-            loadMore={fetchNextPage as LoadMore}
-            hasMore={hasNextPage}
-          >
+          <InfiniteScroll loadMore={fetchNextList} hasMore={hasNextPage}>
             {reviews?.pages.map((pageData) => {
               return pageData.results.map((review) => {
                 return (

@@ -41,8 +41,6 @@ type Tab = {
   value: "all" | "review" | "question";
 };
 
-type LoadMore = (page: number) => void;
-
 const Community = () => {
   const theme = useTheme();
   const [currentTab, setCurrentTab] = useState<Tab>(Tablist[0]);
@@ -85,6 +83,7 @@ const Community = () => {
     data: communityList,
     fetchNextPage,
     hasNextPage,
+    isFetching,
   } = useInfiniteQuery(
     ["getCommunityListKeyword", currentTab],
     ({ pageParam = initialUrl }) => fetchUrl(pageParam),
@@ -145,6 +144,12 @@ const Community = () => {
     });
   };
 
+  const fetchNextList = () => {
+    if (isFetching) {
+      return;
+    }
+    fetchNextPage();
+  };
   return (
     <Layout
       header={
@@ -183,28 +188,26 @@ const Community = () => {
             ))}
           </ButtonWrapper>
         </div>
-
-        <InfiniteScroll
-          loadMore={fetchNextPage as LoadMore}
-          hasMore={hasNextPage}
-        >
-          {communityList?.pages.map((pageData) => {
-            return pageData.results.map((talk) => {
-              return (
-                <div
-                  className="link"
-                  onClick={() => postClickHandler(talk.uuid)}
-                  key={talk.uuid}
-                >
-                  <PostCard
-                    review={talk}
-                    bottom={<PostBottom review={talk} type="list" />}
-                  />
-                </div>
-              );
-            });
-          })}
-        </InfiniteScroll>
+        <div>
+          <InfiniteScroll loadMore={fetchNextList} hasMore={hasNextPage}>
+            {communityList?.pages.map((pageData) => {
+              return pageData.results.map((talk) => {
+                return (
+                  <div
+                    className="link"
+                    onClick={() => postClickHandler(talk.uuid)}
+                    key={talk.uuid}
+                  >
+                    <PostCard
+                      review={talk}
+                      bottom={<PostBottom review={talk} type="list" />}
+                    />
+                  </div>
+                );
+              });
+            })}
+          </InfiniteScroll>
+        </div>
 
         <Float scrollDir={scrollDir} distance="8.5rem" />
 

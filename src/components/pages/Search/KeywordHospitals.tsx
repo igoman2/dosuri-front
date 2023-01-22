@@ -3,13 +3,10 @@ import React, { useMemo } from "react";
 import HospitalCard from "@/components/Card/HospitalCard";
 import { IHospitalInfoResponse } from "@/service/types";
 import InfiniteScroll from "react-infinite-scroller";
-import Link from "next/link";
 import api from "@/service/axiosConfig";
 import styled from "@emotion/styled";
 import { useInfiniteQuery } from "react-query";
 import { useRouter } from "next/router";
-
-type LoadMore = (page: number) => void;
 
 const KeywordHospitals = () => {
   const router = useRouter();
@@ -27,6 +24,7 @@ const KeywordHospitals = () => {
     data: hospitals,
     fetchNextPage,
     hasNextPage,
+    isFetching,
   } = useInfiniteQuery(
     ["hospitalByKeyword", router.query.keyword],
     ({ pageParam = initialUrl }) => fetchUrl(pageParam),
@@ -43,6 +41,13 @@ const KeywordHospitals = () => {
     });
   };
 
+  const fetchNextList = () => {
+    if (isFetching) {
+      return;
+    }
+    fetchNextPage();
+  };
+
   return (
     <div>
       <ResultWrapper>
@@ -51,10 +56,7 @@ const KeywordHospitals = () => {
             병원
             <span className="list-length"> {hospitals?.pages[0].count}</span>건
           </div>
-          <InfiniteScroll
-            loadMore={fetchNextPage as LoadMore}
-            hasMore={hasNextPage}
-          >
+          <InfiniteScroll loadMore={fetchNextList} hasMore={hasNextPage}>
             {hospitals?.pages.map((pageData) => {
               return pageData.results.map((hospital) => {
                 return (

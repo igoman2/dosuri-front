@@ -1,5 +1,5 @@
 import { ListItem, SELECT_LIST } from "@/mock/searchCategory";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 import { BottomSheet } from "react-spring-bottom-sheet";
@@ -16,8 +16,6 @@ import { searchFilterState } from "@/store/searchOption";
 import styled from "@emotion/styled";
 import { useInfiniteQuery } from "react-query";
 import { useTheme } from "@emotion/react";
-
-type LoadMore = (page: number) => void;
 
 const AllFilterSection = () => {
   const theme = useTheme();
@@ -58,6 +56,7 @@ const AllFilterSection = () => {
     data: hospitalListByDistance,
     fetchNextPage,
     hasNextPage,
+    isFetching,
   } = useInfiniteQuery(
     ["hospital-by-distance", category],
     ({ pageParam = initialUrl }) => fetchUrl(pageParam),
@@ -67,6 +66,13 @@ const AllFilterSection = () => {
       },
     }
   );
+
+  const fetchNextList = () => {
+    if (isFetching) {
+      return;
+    }
+    fetchNextPage();
+  };
 
   return (
     <>
@@ -91,10 +97,7 @@ const AllFilterSection = () => {
           />
         </ImageTextViewWrapper>
 
-        <InfiniteScroll
-          loadMore={fetchNextPage as LoadMore}
-          hasMore={hasNextPage}
-        >
+        <InfiniteScroll loadMore={fetchNextList} hasMore={hasNextPage}>
           {hospitalListByDistance?.pages.map((pageData) => {
             return pageData.results.map((hospital, i) => {
               return (
@@ -135,7 +138,7 @@ const AllFilterSection = () => {
   );
 };
 
-export default AllFilterSection;
+export default memo(AllFilterSection);
 
 const ImageTextViewWrapper = styled.div`
   margin-top: 0.5rem;
