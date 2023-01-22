@@ -1,7 +1,7 @@
 import HospitalCard from "@/components/Card/HospitalCard";
 import Link from "next/link";
 import React from "react";
-import { getHospitalList } from "@/service/apis/hospital";
+import { getFilteredHospitalList } from "@/service/apis/hospital";
 import { useQuery } from "react-query";
 import { useTheme } from "@emotion/react";
 
@@ -13,7 +13,7 @@ const ManyReviewSection = () => {
   const { data: getHospitalListData2 } = useQuery({
     queryKey: "getHospitalList-search-2",
     queryFn: async () => {
-      const data = await getHospitalList({
+      const data = await getFilteredHospitalList({
         ordering: "-article_count",
         page_size: LIST_COUNT_LIMIT,
       });

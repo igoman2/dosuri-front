@@ -22,6 +22,12 @@ export interface IGetHospitalListParams {
   longitude?: number;
 }
 
+export interface IGetFilteredHospitalListParams {
+  ordering?: string;
+  page?: number;
+  page_size?: number;
+}
+
 export interface IGetCommunityListParams {
   article_type?: string;
   hospital?: string;
