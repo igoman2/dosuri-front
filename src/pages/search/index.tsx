@@ -19,15 +19,13 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
-
-  useEffect(() => {
     if (window) {
       window.scrollTo(0, scrollY);
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      return () => {
+        window.removeEventListener("scroll", onScroll);
+      };
     }
   }, [scrollY]);
 
