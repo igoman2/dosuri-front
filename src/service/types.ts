@@ -174,6 +174,7 @@ export interface IGoodPriceHospitals {
   up_count: number;
   uuid: string;
   view_count: number;
+  article_count: number;
 }
 
 export interface IHospitalInfoHomeResponse {

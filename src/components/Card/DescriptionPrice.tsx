@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 
 import { IGoodPriceHospitals } from "@/service/types";
-import Icon from "@/util/Icon";
 import { useTheme } from "@emotion/react";
 
 export interface IDescriptionPriceProps {
