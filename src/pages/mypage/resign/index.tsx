@@ -1,34 +1,71 @@
 import { Field, FormikProvider, useFormik } from "formik";
+import React, { useState } from "react";
 
 import Button from "@/components/Button";
 import Checkbox from "@/components/UI/Checkbox";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Layout from "@/components/Layout";
-import React from "react";
+import _ from "lodash";
 import styled from "@emotion/styled";
 import { useResignUser } from "@/hooks/service/useResignUser";
 
-interface MyFormValues {
-  firstName: string;
+interface FormValues {
+  resignReason: string;
 }
 
 const Resign = () => {
-  const initialValues: MyFormValues = { firstName: "" };
+  const initialValues: FormValues = { resignReason: "" };
+
+  const [reason, setReason] = useState([
+    {
+      checked: false,
+      text: "서비스가 마음에 들지 않아요.",
+    },
+    {
+      checked: false,
+      text: "다른 서비스를 주로 사용해요.",
+    },
+    {
+      checked: false,
+      text: "정보가 충분하지 않아요.",
+    },
+    {
+      checked: false,
+      text: "다른 계정으로 이용하고 있어요.",
+    },
+    {
+      checked: false,
+      text: "탈퇴 후 재가입 하고 싶어요.",
+    },
+    {
+      checked: false,
+      text: "기타",
+    },
+  ]);
+  const [agree, setAgree] = useState(false);
 
   const { mutate } = useResignUser();
 
-  // TODO: 회원탈퇴 api 연동 마무리 해야함
   const formik = useFormik({
     initialValues,
     onSubmit: () => {
       mutate({
-        reason: "test",
+        reason:
+          reason.find((re) => re.text)?.text ?? formik.values.resignReason,
       });
     },
   });
 
   const resignHandler = () => {
     formik.handleSubmit();
+  };
+
+  const canSubmit = () => {
+    return (
+      (formik.values.resignReason.length > 0 ||
+        !!reason.find((re) => re.checked)) &&
+      agree
+    );
   };
 
   return (
@@ -45,19 +82,73 @@ const Resign = () => {
                 </div>
                 <div className="question">탈퇴하시는 이유가 무엇인가요?</div>
                 <CheckboxWrapper>
-                  <Checkbox text="서비스가 마음에 들지 않아요." />
-                  <Checkbox text="다른 서비스를 주로 사용해요." />
-                  <Checkbox text="정보가 충분하지 않아요." />
-                  <Checkbox text="다른 계정으로 이용하고 있어요." />
-                  <Checkbox text="탈퇴 후 재가입 하고 싶어요." />
-                  <Checkbox text="기타" />
+                  <Checkbox
+                    text="서비스가 마음에 들지 않아요."
+                    onClick={() =>
+                      setReason((prev) => {
+                        const tmp = [...prev];
+                        tmp[0].checked = !prev[0].checked;
+                        return tmp;
+                      })
+                    }
+                  />
+                  <Checkbox
+                    text="다른 서비스를 주로 사용해요."
+                    onClick={() =>
+                      setReason((prev) => {
+                        const tmp = [...prev];
+                        tmp[1].checked = !prev[1].checked;
+                        return tmp;
+                      })
+                    }
+                  />
+                  <Checkbox
+                    text="정보가 충분하지 않아요."
+                    onClick={() =>
+                      setReason((prev) => {
+                        const tmp = [...prev];
+                        tmp[2].checked = !prev[2].checked;
+                        return tmp;
+                      })
+                    }
+                  />
+                  <Checkbox
+                    text="다른 계정으로 이용하고 있어요."
+                    onClick={() =>
+                      setReason((prev) => {
+                        const tmp = [...prev];
+                        tmp[3].checked = !prev[3].checked;
+                        return tmp;
+                      })
+                    }
+                  />
+                  <Checkbox
+                    text="탈퇴 후 재가입 하고 싶어요."
+                    onClick={() =>
+                      setReason((prev) => {
+                        const tmp = [...prev];
+                        tmp[4].checked = !prev[4].checked;
+                        return tmp;
+                      })
+                    }
+                  />
+                  <Checkbox
+                    text="기타"
+                    onClick={() =>
+                      setReason((prev) => {
+                        const tmp = [...prev];
+                        tmp[5].checked = !prev[5].checked;
+                        return tmp;
+                      })
+                    }
+                  />
                 </CheckboxWrapper>
 
                 <Field
                   className="field"
                   component="textarea"
-                  id="resign-reason"
-                  name="resign-reason"
+                  id="resignReason"
+                  name="resignReason"
                   placeholder="탈퇴 사유를 적어주세요 (20자 이상)"
                 />
               </div>
@@ -65,13 +156,17 @@ const Resign = () => {
           </FormikProvider>
 
           <div className="section-bottom">
-            <Checkbox text="모든 정보를 삭제하는 것에 동의합니다." />
+            <Checkbox
+              text="모든 정보를 삭제하는 것에 동의합니다."
+              onClick={() => setAgree((prev) => !prev)}
+            />
             <div className="save-button-wrapper">
               <Button
                 type="submit"
                 text="탈퇴하기"
                 width="100%"
                 height="5.2rem"
+                disabled={!canSubmit()}
                 onClick={resignHandler}
               />
             </div>

@@ -1,5 +1,7 @@
-import axios from "axios";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
+
+import axios from "axios";
+import { logout } from "@/pages/withauth";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -54,9 +56,13 @@ api.interceptors.response.use(
   async (error) => {
     const {
       config,
-      response: { status },
+      response: { status, data },
     } = error;
     if (status === 401) {
+      if (data.code === "user_not_found") {
+        logout();
+        return;
+      }
       const originalRequest = config;
       originalRequest!.headers = { ...originalRequest!.headers };
 

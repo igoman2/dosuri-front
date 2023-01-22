@@ -5,12 +5,14 @@ import styled from "@emotion/styled";
 
 interface ICheckboxProps {
   text: string;
+  onClick: () => void;
 }
 
-const Checkbox: FC<ICheckboxProps> = ({ text }) => {
+const Checkbox: FC<ICheckboxProps> = ({ text, onClick }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const onCheckToggle = () => {
+    onClick();
     setIsChecked((prev) => !prev);
   };
 
