@@ -169,6 +169,7 @@ const SwiperWrapper = styled.div`
     position: relative;
     width: 100%;
     height: 11rem;
+    background-color: white;
   }
 
   .swiper-slide {
