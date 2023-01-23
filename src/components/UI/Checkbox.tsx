@@ -1,24 +1,22 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 
 import Icon from "@/util/Icon";
 import styled from "@emotion/styled";
 
 interface ICheckboxProps {
   text: string;
+  value: boolean;
   onClick?: () => void;
 }
 
-const Checkbox: FC<ICheckboxProps> = ({ text, onClick }) => {
-  const [isChecked, setIsChecked] = useState(false);
-
+const Checkbox: FC<ICheckboxProps> = ({ value, text, onClick }) => {
   const onCheckToggle = () => {
     onClick && onClick();
-    setIsChecked((prev) => !prev);
   };
 
   return (
     <CheckBoxLayout>
-      <CheckBoxWrapper isChecked={isChecked} onClick={onCheckToggle}>
+      <CheckBoxWrapper isChecked={value} onClick={onCheckToggle}>
         <Icon name="check" />
       </CheckBoxWrapper>
       <div className="checkbox-label">{text}</div>

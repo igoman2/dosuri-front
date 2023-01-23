@@ -51,7 +51,7 @@ const Resign = () => {
     onSubmit: () => {
       mutate({
         reason:
-          reason.find((re) => re.text)?.text ?? formik.values.resignReason,
+          reason.find((re) => re.checked)?.text ?? formik.values.resignReason,
       });
     },
   });
@@ -61,11 +61,11 @@ const Resign = () => {
   };
 
   const canSubmit = () => {
-    return (
-      (formik.values.resignReason.length > 0 ||
-        !!reason.find((re) => re.checked)) &&
-      agree
-    );
+    if (reason[5].checked) {
+      return formik.values.resignReason.length >= 20 && agree;
+    } else {
+      return !!reason.find((re) => re.checked) && agree;
+    }
   };
 
   return (
@@ -84,59 +84,82 @@ const Resign = () => {
                 <CheckboxWrapper>
                   <Checkbox
                     text="서비스가 마음에 들지 않아요."
+                    value={reason[0].checked}
                     onClick={() =>
                       setReason((prev) => {
                         const tmp = [...prev];
                         tmp[0].checked = !prev[0].checked;
+                        tmp[5].checked = false;
+                        tmp[5].text = "";
                         return tmp;
                       })
                     }
                   />
                   <Checkbox
                     text="다른 서비스를 주로 사용해요."
+                    value={reason[1].checked}
                     onClick={() =>
                       setReason((prev) => {
                         const tmp = [...prev];
                         tmp[1].checked = !prev[1].checked;
+                        tmp[5].checked = false;
+                        tmp[5].text = "";
                         return tmp;
                       })
                     }
                   />
                   <Checkbox
                     text="정보가 충분하지 않아요."
+                    value={reason[2].checked}
                     onClick={() =>
                       setReason((prev) => {
                         const tmp = [...prev];
                         tmp[2].checked = !prev[2].checked;
+                        tmp[5].checked = false;
+                        tmp[5].text = "";
                         return tmp;
                       })
                     }
                   />
                   <Checkbox
                     text="다른 계정으로 이용하고 있어요."
+                    value={reason[3].checked}
                     onClick={() =>
                       setReason((prev) => {
                         const tmp = [...prev];
                         tmp[3].checked = !prev[3].checked;
+                        tmp[5].checked = false;
+                        tmp[5].text = "";
                         return tmp;
                       })
                     }
                   />
                   <Checkbox
                     text="탈퇴 후 재가입 하고 싶어요."
+                    value={reason[4].checked}
                     onClick={() =>
                       setReason((prev) => {
                         const tmp = [...prev];
                         tmp[4].checked = !prev[4].checked;
+                        tmp[5].checked = false;
+                        tmp[5].text = "";
                         return tmp;
                       })
                     }
                   />
                   <Checkbox
                     text="기타"
+                    value={reason[5].checked}
                     onClick={() =>
                       setReason((prev) => {
                         const tmp = [...prev];
+                        prev.forEach((val) => {
+                          if (val.text === "기타") {
+                            return;
+                          }
+
+                          return (val.checked = false);
+                        });
                         tmp[5].checked = !prev[5].checked;
                         return tmp;
                       })
@@ -149,6 +172,7 @@ const Resign = () => {
                   component="textarea"
                   id="resignReason"
                   name="resignReason"
+                  disabled={!reason[5].checked}
                   placeholder="탈퇴 사유를 적어주세요 (20자 이상)"
                 />
               </div>
@@ -158,6 +182,7 @@ const Resign = () => {
           <div className="section-bottom">
             <Checkbox
               text="모든 정보를 삭제하는 것에 동의합니다."
+              value={agree}
               onClick={() => setAgree((prev) => !prev)}
             />
             <div className="save-button-wrapper">
