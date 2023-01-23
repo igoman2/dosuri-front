@@ -5,6 +5,7 @@ import Description from "../Description";
 import DescriptionPrice from "../DescriptionPrice";
 import Image from "next/image";
 import ImageFallback from "@/components/UI/ImageFallback";
+import styled from "@emotion/styled";
 
 export interface IHospitalCardProps {
   hospitalInfo: IHospitalInfoResult | IGoodPriceHospitals;
@@ -30,15 +31,17 @@ const HospitalCard: FC<IHospitalCardProps> = ({
         {hospitalInfo.attachments.length === 0 ? (
           <ImageFallback width="9rem" height="9rem" />
         ) : (
-          <Image
-            style={{
-              borderRadius: "0.5rem",
-            }}
-            src={hospitalInfo.attachments[0]?.signed_path}
-            width={90}
-            height={90}
-            alt="hospital-image"
-          />
+          <ImageWrapper>
+            <Image
+              style={{
+                borderRadius: "0.5rem",
+              }}
+              src={hospitalInfo.attachments[0]?.signed_path}
+              layout="fill"
+              objectFit="cover"
+              alt="hospital-image"
+            />
+          </ImageWrapper>
         )}
       </div>
       {type === "review" ? (
@@ -57,3 +60,9 @@ const HospitalCard: FC<IHospitalCardProps> = ({
 };
 
 export default HospitalCard;
+
+const ImageWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 9rem;
+`;
