@@ -521,7 +521,7 @@ const WriteReview: FC<IWriteReviewProps> = ({ isActive, onChangeActive }) => {
                 <Content>
                   <Agreement>
                     <div>
-                      <Checkbox text="개인정보 수집 이용동의 (필수)" />
+                      {/* <Checkbox text="개인정보 수집 이용동의 (필수)" /> */}
                       <QuestionIconWrapper
                         css={{ paddingBottom: "0.2rem", marginLeft: "0.5rem" }}
                       >
@@ -529,7 +529,7 @@ const WriteReview: FC<IWriteReviewProps> = ({ isActive, onChangeActive }) => {
                       </QuestionIconWrapper>
                     </div>
                     <div>
-                      <Checkbox text="민감정보 수집 이용동의 (필수)" />
+                      {/* <Checkbox text="민감정보 수집 이용동의 (필수)" /> */}
                       <QuestionIconWrapper
                         css={{ paddingBottom: "0.2rem", marginLeft: "0.5rem" }}
                       >
