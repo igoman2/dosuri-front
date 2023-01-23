@@ -605,6 +605,7 @@ const FormWrapper = styled.div`
   .input-section {
     display: flex;
     gap: 2rem;
+    width: 100%;
 
     &.phone {
       gap: 1rem;
