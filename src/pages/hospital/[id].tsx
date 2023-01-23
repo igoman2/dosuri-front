@@ -259,7 +259,7 @@ const SwiperWrapper = styled.div`
     position: relative;
     width: 100%;
     height: 21.2rem;
-    background-color: black;
+    background-color: white;
   }
 `;
 

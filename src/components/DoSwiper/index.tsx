@@ -32,7 +32,7 @@ const DoSwiper: FC<DoSwiperProps> = ({
     >
       {source.map((src, i) => (
         <SwiperSlide key={i}>
-          <Image alt={src} src={src} layout="fill" />
+          <Image alt={src} src={src} layout="fill" objectFit="contain" />
         </SwiperSlide>
       ))}
     </Swiper>
