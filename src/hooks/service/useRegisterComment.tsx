@@ -11,8 +11,18 @@ export function useRegisterComment(isThread: boolean) {
     isThread ? registerThreadComment : registerComment,
     {
       onSuccess: () => {
-        queryClient.invalidateQueries("getCommunityPostDetail");
-        queryClient.invalidateQueries("getMyReviewDetail");
+        queryClient.invalidateQueries({
+          queryKey: ["getCommunityPostDetail"],
+          refetchInactive: true,
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["getMyReviewDetail"],
+          refetchInactive: true,
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["getHospitalReviews"],
+          refetchInactive: true,
+        });
       },
     }
   );

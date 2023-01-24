@@ -5,6 +5,7 @@ import {
 import React, { FC } from "react";
 
 import Icon from "@/util/Icon";
+import { isListView } from "@/util/typeGuard";
 import styled from "@emotion/styled";
 import { useLikePost } from "@/hooks/service/useLikePost";
 import { useTheme } from "@emotion/react";
@@ -20,6 +21,7 @@ const PostBottom: FC<IPostBottomProps> = ({ review, type }) => {
   const handleLike = () => {
     mutate(review.uuid);
   };
+
   return (
     <PostBottomWrapper>
       {type === "list" ? (
@@ -39,7 +41,7 @@ const PostBottom: FC<IPostBottomProps> = ({ review, type }) => {
           </div>
           <div className="comment">
             <Icon name="comment" width="17" height="17" />
-            <span>{review.article_attachment_assoc.length}</span>
+            <span>{isListView(review) && review.comment_count}</span>
           </div>
         </div>
       ) : (
