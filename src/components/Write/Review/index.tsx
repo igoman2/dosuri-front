@@ -22,9 +22,14 @@ import theme from "@/styles/theme";
 interface IWriteReviewProps {
   isActive: boolean;
   onChangeActive: () => void;
+  onSwap: () => void;
 }
 
-const WriteReview: FC<IWriteReviewProps> = ({ isActive, onChangeActive }) => {
+const WriteReview: FC<IWriteReviewProps> = ({
+  isActive,
+  onChangeActive,
+  onSwap,
+}) => {
   const [mode, setMode] = useState(0);
   const [isWarnVisible, setIsWarnVisible] = useState(false);
   const [searchType, setSearchType] = useState("");
@@ -51,6 +56,7 @@ const WriteReview: FC<IWriteReviewProps> = ({ isActive, onChangeActive }) => {
           color={theme.colors.purple}
           bold
           css={{ marginBottom: "3.5rem" }}
+          onClick={onSwap}
         />
       </div>
       <div className="bottom">

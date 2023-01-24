@@ -95,13 +95,13 @@ const Community = () => {
   );
 
   const onWriteHandler = () => {
-    setModalType("question");
+    setModalType("review");
     setIsActive(true);
   };
 
   const onSwapModalType = () => {
     setIsActive(false);
-    setModalType("review");
+    setModalType("question");
     setIsActive(true);
   };
 
@@ -211,12 +211,12 @@ const Community = () => {
 
         {modalType === "question" ? (
           <WriteQuesiton
-            onSwap={onSwapModalType}
             isActive={isActive}
             onChangeActive={changeActiveHandler}
           />
         ) : (
           <WriteReview
+            onSwap={onSwapModalType}
             isActive={isActive}
             onChangeActive={changeActiveHandler}
           />

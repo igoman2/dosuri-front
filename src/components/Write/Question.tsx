@@ -11,12 +11,11 @@ import theme from "@/styles/theme";
 
 interface IWriteQeustionProps {
   isActive: boolean;
-  onSwap: () => void;
   onChangeActive: () => void;
 }
 const WriteQuesiton: FC<IWriteQeustionProps> = ({
   isActive,
-  onSwap,
+
   onChangeActive,
 }) => {
   const imageInput = useRef<HTMLInputElement>(null);
@@ -26,7 +25,6 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
   };
 
   const submitHandler = () => {
-    onSwap();
     console.log("질문 등록하기!");
   };
   return (
