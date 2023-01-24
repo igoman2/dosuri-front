@@ -162,46 +162,46 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
   );
 
   useEffect(() => {
-    const parsedArea = LOCATIONS.filter((location) =>
-      location.label.includes(largeArea as string)
-    )
-      .sort((a, b) => (a.label > b.label ? 1 : -1))
-      .map((loc) => {
-        let returnArea;
-        if (
-          loc.label.includes("서울특별시") ||
-          loc.label.includes("부산광역시") ||
-          loc.label.includes("대구광역시") ||
-          loc.label.includes("인천광역시") ||
-          loc.label.includes("광주광역시") ||
-          loc.label.includes("대전광역시") ||
-          loc.label.includes("울산광역시")
-        ) {
-          returnArea = loc.label.replace(largeArea as string, "").split(" ")[1];
-        } else if (loc.label.includes("세종특별자치시")) {
-          returnArea = "세종특별자치시";
-          setIsSmallAreaDisabled(true);
-          setSmallArea(null);
-          formik.setFieldValue("smallArea", null);
-        } else {
-          const 구제외한주소 = loc.label
-            .replace(largeArea as string, "")
-            .split(" ");
-          if (구제외한주소.length > 3) {
-            returnArea = 구제외한주소.slice(1, 3).join(" ");
-          } else {
-            returnArea = 구제외한주소.slice(1, 2).join("");
-          }
-        }
-        return { value: returnArea, label: returnArea };
-      });
-
-    setSortedSmallArea(_.uniqBy(parsedArea, "label"));
-  }, []);
-
-  useEffect(() => {
     if (userLargeArea) {
       setLargeArea(userLargeArea.label);
+
+      const parsedArea = LOCATIONS.filter((location) =>
+        location.label.includes(userLargeArea.label)
+      )
+        .sort((a, b) => (a.label > b.label ? 1 : -1))
+        .map((loc) => {
+          let returnArea;
+          if (
+            loc.label.includes("서울특별시") ||
+            loc.label.includes("부산광역시") ||
+            loc.label.includes("대구광역시") ||
+            loc.label.includes("인천광역시") ||
+            loc.label.includes("광주광역시") ||
+            loc.label.includes("대전광역시") ||
+            loc.label.includes("울산광역시")
+          ) {
+            returnArea = loc.label
+              .replace(userLargeArea.label, "")
+              .split(" ")[1];
+          } else if (loc.label.includes("세종특별자치시")) {
+            returnArea = "세종특별자치시";
+            setIsSmallAreaDisabled(true);
+            setSmallArea(null);
+            formik.setFieldValue("smallArea", null);
+          } else {
+            const 구제외한주소 = loc.label
+              .replace(userLargeArea.label, "")
+              .split(" ");
+            if (구제외한주소.length > 3) {
+              returnArea = 구제외한주소.slice(1, 3).join(" ");
+            } else {
+              returnArea = 구제외한주소.slice(1, 2).join("");
+            }
+          }
+          return { value: returnArea, label: returnArea };
+        });
+
+      setSortedSmallArea(_.uniqBy(parsedArea, "label"));
     }
 
     if (userSmallArea) {
@@ -212,7 +212,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
         value: formik.initialValues.smallArea,
       });
     }
-  }, [formik.initialValues, userLargeArea, userSmallArea]);
+  }, [formik.initialValues, userLargeArea]);
 
   useEffect(() => {
     const userSymtoms = Symtoms.map((symtom) => {
@@ -499,6 +499,8 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                   onChange={(selectedOption: any) => {
                     onLargeAreaSelect(selectedOption);
                     formik.setFieldValue("largeArea", selectedOption.value);
+                    setSmallArea(null);
+                    formik.setFieldValue("smallArea", "");
                   }}
                   defaultValue={sortedLargeArea.find(
                     (largeArea) => largeArea.label === initialValues.largeArea

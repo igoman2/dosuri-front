@@ -18,10 +18,16 @@ export const getUserAuth = async (params: GetUserAuthParams) => {
   return response.data;
 };
 
-export const checkNicknameDuplication = async (nickname: string) => {
+export const checkNicknameDuplication = async (
+  nickname: string,
+  accessToken: string
+) => {
   const response = await api.get(`/user/v1/users/nickname`, {
     params: {
       nickname,
+    },
+    headers: {
+      Authorization: "Bearer " + accessToken,
     },
   });
   return response;

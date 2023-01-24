@@ -24,3 +24,8 @@ export type UserFullInfo = UserInfo & {
   refreshToken: string;
   accessToken: string;
 };
+
+export type TSmallArea = {
+  value: string;
+  label: string;
+};
