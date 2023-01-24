@@ -2,6 +2,7 @@ import { ChangeEvent, FC, useEffect, useId, useMemo, useState } from "react";
 import { DropdownIndicator, ValueContainer, colourStyles } from "./style";
 import { Field, FormikProvider, useFormik } from "formik";
 import { LOCATIONS, Location, do_si } from "./location";
+import { TSmallArea, UserInfo } from "@/types/user";
 import { checkNicknameDuplication, registerUser } from "@/service/apis/user";
 import {
   formatPartialPhoneNumberToComplete,
@@ -13,7 +14,7 @@ import { AxiosError } from "axios";
 import Button from "@/components/Button";
 import Select from "react-select";
 import { Symtom } from "@/types/hospital";
-import { UserInfo } from "@/types/user";
+import { Symtoms } from "@/constants/Symtoms";
 import _ from "lodash";
 import { queryClient } from "@/service/react-query/queryClient";
 import { setTokenInCookie } from "@/util/setToken";
@@ -24,49 +25,6 @@ import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
 import { useUser } from "@/hooks/service/useUser";
 import { userInfoState } from "@/store/user";
-
-export const Symtoms: Symtom[] = [
-  {
-    name: "머리",
-    selected: false,
-  },
-  {
-    name: "목",
-    selected: false,
-  },
-  {
-    name: "허리",
-    selected: false,
-  },
-  {
-    name: "어깨",
-    selected: false,
-  },
-  {
-    name: "골반",
-    selected: false,
-  },
-  {
-    name: "무릎",
-    selected: false,
-  },
-  {
-    name: "손목",
-    selected: false,
-  },
-  {
-    name: "발목",
-    selected: false,
-  },
-  {
-    name: "관절",
-    selected: false,
-  },
-  {
-    name: "그외",
-    selected: false,
-  },
-];
 
 interface IRegisterForm {
   formType: "register" | "edit";
@@ -85,6 +43,8 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
   const [isSmallAreaDisabled, setIsSmallAreaDisabled] = useState(false);
   const id1 = useId();
   const id2 = useId();
+
+  const [sortedSmallArea, setSortedSmallArea] = useState<TSmallArea[]>([]);
 
   const { mutate } = useMutation<UserInfo, AxiosError, UserInfo, unknown>(
     (data) => registerUser(data, userInfo.accessToken),
@@ -124,7 +84,6 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
 
   const { initialValues, validationSchema } = useFormikFactory(user);
 
-  console.log(initialValues);
   const sortedLargeArea = useMemo(
     () => do_si.sort((a, b) => (a.label > b.label ? 1 : -1)),
     []
@@ -156,8 +115,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
     },
   });
 
-  const sortedSmallArea = useMemo(() => {
-    console.log("cjang");
+  useEffect(() => {
     const parsedArea = LOCATIONS.filter((location) =>
       location.label.includes(largeArea as string)
     )
@@ -192,7 +150,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
         return { value: returnArea, label: returnArea };
       });
 
-    return _.uniqBy(parsedArea, "label");
+    setSortedSmallArea(_.uniqBy(parsedArea, "label"));
   }, [formik.values.largeArea]);
 
   const userLargeArea = sortedLargeArea.find(
@@ -202,6 +160,44 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
   const userSmallArea = sortedSmallArea.find(
     (smallArea) => smallArea.label === initialValues.smallArea
   );
+
+  useEffect(() => {
+    const parsedArea = LOCATIONS.filter((location) =>
+      location.label.includes(largeArea as string)
+    )
+      .sort((a, b) => (a.label > b.label ? 1 : -1))
+      .map((loc) => {
+        let returnArea;
+        if (
+          loc.label.includes("서울특별시") ||
+          loc.label.includes("부산광역시") ||
+          loc.label.includes("대구광역시") ||
+          loc.label.includes("인천광역시") ||
+          loc.label.includes("광주광역시") ||
+          loc.label.includes("대전광역시") ||
+          loc.label.includes("울산광역시")
+        ) {
+          returnArea = loc.label.replace(largeArea as string, "").split(" ")[1];
+        } else if (loc.label.includes("세종특별자치시")) {
+          returnArea = "세종특별자치시";
+          setIsSmallAreaDisabled(true);
+          setSmallArea(null);
+          formik.setFieldValue("smallArea", null);
+        } else {
+          const 구제외한주소 = loc.label
+            .replace(largeArea as string, "")
+            .split(" ");
+          if (구제외한주소.length > 3) {
+            returnArea = 구제외한주소.slice(1, 3).join(" ");
+          } else {
+            returnArea = 구제외한주소.slice(1, 2).join("");
+          }
+        }
+        return { value: returnArea, label: returnArea };
+      });
+
+    setSortedSmallArea(_.uniqBy(parsedArea, "label"));
+  }, []);
 
   useEffect(() => {
     if (userLargeArea) {
@@ -241,7 +237,8 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
 
   const { refetch } = useQuery(
     ["nicknameDuplication", formik.values.nickname],
-    () => checkNicknameDuplication(formik.values.nickname),
+    () =>
+      checkNicknameDuplication(formik.values.nickname, userInfo.accessToken),
     {
       enabled: false,
       suspense: false,
@@ -261,11 +258,16 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
   );
 
   const onNicknameValidation = () => {
-    if (formik.values.nickname === userInfo.nickname) {
-      setIsNicknameSame(true);
-      setDidNicknameValidCheck(true);
+    if (formType === "edit") {
+      if (formik.values.nickname === userInfo.nickname) {
+        setIsNicknameSame(true);
+        setDidNicknameValidCheck(true);
 
-      return;
+        return;
+      } else {
+        setIsNicknameSame(false);
+        refetch();
+      }
     } else {
       setIsNicknameSame(false);
       refetch();
@@ -280,9 +282,6 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
     if (largeArea === selectedValue.value) {
       return;
     }
-    console.log(largeArea, selectedValue);
-
-    console.log("@@");
 
     setLargeArea(selectedValue.value);
     setSmallArea(null);
@@ -381,16 +380,34 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
               </div>
 
               <div className="noti">
-                {didNicknameValidCheck ? (
-                  isNicknameSame ? (
-                    <div className="invalid">기존과 동일한 닉네임 입니다.</div>
-                  ) : isNicknameValid ? (
-                    <div className="valid">사용 가능한 닉네임입니다.</div>
-                  ) : (
-                    <div className="invalid">중복된 닉네임이 있습니다.</div>
-                  )
+                {formType === "edit" ? (
+                  <>
+                    {didNicknameValidCheck ? (
+                      isNicknameSame ? (
+                        <div className="invalid">
+                          기존과 동일한 닉네임 입니다.
+                        </div>
+                      ) : isNicknameValid ? (
+                        <div className="valid">사용 가능한 닉네임입니다.</div>
+                      ) : (
+                        <div className="invalid">중복된 닉네임이 있습니다.</div>
+                      )
+                    ) : (
+                      <div className="invisible">dd</div>
+                    )}
+                  </>
                 ) : (
-                  <div className="invisible">dd</div>
+                  <>
+                    {didNicknameValidCheck ? (
+                      isNicknameValid ? (
+                        <div className="valid">사용 가능한 닉네임입니다.</div>
+                      ) : (
+                        <div className="invalid">중복된 닉네임이 있습니다.</div>
+                      )
+                    ) : (
+                      <div className="invisible">dd</div>
+                    )}
+                  </>
                 )}
               </div>
             </div>
