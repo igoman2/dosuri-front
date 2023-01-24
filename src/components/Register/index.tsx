@@ -305,6 +305,15 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
     });
   };
 
+  const isSubmittable = () => {
+    return !(
+      formik.isValid &&
+      formik.dirty &&
+      didNicknameValidCheck &&
+      isNicknameValid
+    );
+  };
+
   return (
     <FormWrapper>
       <FormikProvider value={formik}>
@@ -564,14 +573,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                 height="5.2rem"
                 borderRadius="0.3rem"
                 backgroundColor={theme.colors.purple_light}
-                disabled={
-                  !(
-                    formik.isValid &&
-                    formik.dirty &&
-                    didNicknameValidCheck &&
-                    isNicknameValid
-                  )
-                }
+                disabled={isSubmittable()}
               />
             </FloatButtonWrapper>
           </div>
