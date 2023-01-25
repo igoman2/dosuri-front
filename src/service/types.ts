@@ -266,3 +266,53 @@ export interface IResignResponse {
   created_at: string;
   reason: string;
 }
+
+export interface IImageUploadResponse {
+  attachment_uuid: string;
+}
+
+export interface IRegisterReviewBody {
+  article_type: string;
+  hospital?: string;
+  content?: string;
+  article_attachment_assoc?: {
+    attachment: string;
+  }[];
+  article_keyword_assoc?: {
+    treatment_keyword: string;
+  }[];
+  article_detail?: {
+    treatment_effect: number;
+    doctor_kindness: number;
+    therapist_kindness: number;
+    staff_kindness: number;
+    clean_score: number;
+    cost: number;
+    treat_count: number;
+  };
+  article_auth?: {
+    sensitive_agreement: true;
+    personal_agreement: true;
+    status: string;
+    auth_attachment_assoc: {
+      attachment: string;
+    }[];
+  };
+  article_doctor_assoc?: {
+    doctor: string;
+  }[];
+}
+
+export interface IRegisterReviewResult {
+  uuid: string;
+  user: {
+    uuid: string;
+    nickname: string;
+  };
+  article_type: string;
+  up_count: number;
+  view_count: number;
+  created_at: string;
+  content: string;
+  is_like: boolean;
+}

@@ -5,6 +5,8 @@ import {
   IHospitalReviewsResponse,
   IHotCommunityResponse,
   IRegisterCommentResult,
+  IRegisterReviewBody,
+  IRegisterReviewResult,
 } from "../types";
 
 import api from "../axiosConfig";
@@ -81,6 +83,15 @@ export const likePost = async (articleId: string) => {
     {
       article: articleId,
     }
+  );
+
+  return response.data;
+};
+
+export const registerReview = async (data: IRegisterReviewBody) => {
+  const response = await api.post<IRegisterReviewResult>(
+    "community/v1/community/articles",
+    data
   );
 
   return response.data;

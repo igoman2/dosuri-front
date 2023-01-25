@@ -1,32 +1,178 @@
-import React, { FC, useRef } from "react";
+import * as Yup from "yup";
+
+import { A11y, Scrollbar } from "swiper";
+import { Field, FormikProvider, useFormik } from "formik";
+import React, { FC, FormEvent, useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 import Button from "../Button";
 import Content from "./Form/Content";
 import FullModalBase from "../Modal/FullModalBase";
+import Icon from "@/util/Icon";
 import Image from "next/image";
-import InputForm from "./Form/InputForm";
 import UploadFileImage from "@/public/assets/upload-file.png";
+import axios from "axios";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";
+import { useRegisterReview } from "@/hooks/service/useRegisterReview";
+
+const MAX_COUNT = 10;
 
 interface IWriteQeustionProps {
   isActive: boolean;
   onChangeActive: () => void;
+  onClose: () => void;
 }
 const WriteQuesiton: FC<IWriteQeustionProps> = ({
   isActive,
-
   onChangeActive,
+  onClose,
 }) => {
   const imageInput = useRef<HTMLInputElement>(null);
-
+  const [imgFiles, setImgFiles] = useState<string[]>([]);
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [fileLimit, setFileLimit] = useState(false);
+  const [imagesId, setImageId] = useState<string[]>([]);
+  const [isUploadingComplete, setIsUploadingComplete] = useState(true);
+  const { mutate } = useRegisterReview();
   const onCickImageUpload = () => {
     imageInput.current && imageInput.current.click();
   };
 
-  const submitHandler = () => {
-    console.log("질문 등록하기!");
+  interface MyFormValues {
+    content: string;
+  }
+
+  const initialValues: MyFormValues = {
+    content: "",
   };
+
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues,
+    validationSchema: Yup.object({
+      content: Yup.string().min(20),
+    }),
+    onSubmit: () => {
+      mutate(
+        {
+          article_type: "question",
+          content: formik.values.content,
+          article_attachment_assoc: imagesId.map((id) => ({
+            attachment: id,
+          })),
+        },
+        {
+          onSuccess: () => {
+            onClose();
+          },
+        }
+      );
+    },
+  });
+
+  const submitHandler = () => {
+    formik.handleSubmit();
+  };
+
+  // TODO: Promise.all => Promise.allSettled 로 개선
+  // Promise.allSettled(postArr)
+  //   .then((result) => {
+  //     // 실패한 것들만 필터링해서 다시 시도
+  //     result.forEach(async (val, index) => {
+  //       if (val.status === "rejected") {
+  //         await postArr[index]; // 실패한 요청 다시 ajax
+  //       }
+  //     });
+  //   })
+  //   .catch((err) => console.log(err));
+
+  const upload = async (file: File): Promise<string> => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const resp = await axios({
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        url: `https://api.dosuri.site/src`, // 파일 업로드 요청 URL
+        method: "POST",
+        data: formData,
+      });
+
+      return resp.data.attachment_uuid;
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const getUploadedImagesId = async (uploaded: File[]) => {
+    Promise.all([...uploaded.map((file) => upload(file))])
+      .then((uuids) => {
+        setImageId(uuids);
+        previewFiles(Array.prototype.slice.call(uploaded));
+        setIsUploadingComplete(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsUploadingComplete(false);
+      });
+  };
+
+  const reset = () => {
+    setImgFiles([]);
+    setUploadedFiles([]);
+    setImageId([]);
+  };
+
+  const handleImageUpload = (e: FormEvent<HTMLInputElement>) => {
+    reset();
+    setIsUploadingComplete(false);
+
+    const target = e.target as HTMLInputElement;
+    const fileArr = Array.prototype.slice.call(target.files);
+    const uploaded = [...uploadedFiles];
+
+    if (isFilesExceedLimit(fileArr, uploaded)) {
+      return;
+    }
+
+    setUploadedFiles(uploaded);
+    getUploadedImagesId(uploaded);
+  };
+
+  const isFilesExceedLimit = (fileArr: File[], uploaded: File[]) => {
+    let limitExceeded = false;
+    fileArr.some((file) => {
+      if (uploaded.findIndex((f) => f.name === file.name) === -1) {
+        uploaded.push(file);
+        if (uploaded.length === MAX_COUNT) setFileLimit(true);
+        if (uploaded.length > MAX_COUNT) {
+          alert(`You can only add a maximum of ${MAX_COUNT} files`);
+          setFileLimit(false);
+          limitExceeded = true;
+          return true;
+        }
+      }
+    });
+
+    return limitExceeded;
+  };
+
+  const previewFiles = (fileArr: File[]) => {
+    const fileURLs: string[] = [];
+
+    fileArr.forEach((file, i) => {
+      let reader = new FileReader();
+      reader.onload = () => {
+        fileURLs[i] = reader.result as string;
+        setImgFiles([...fileURLs]);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
   return (
     <FullModalBase
       isActive={isActive}
@@ -42,13 +188,22 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
                 <div className="required">{"(필수)"}</div>
               </TitleWrapper>
 
-              <div className="text-limit">0자 / 최소 20자</div>
+              <div className="text-limit">
+                {formik.values.content.length}자 / 최소 20자
+              </div>
             </div>
 
-            <InputForm
-              placeholder="궁금한거나 공유하고 싶은 내용을 다른 회원들에게 공유해주세요."
-              type="textarea"
-            />
+            <FormikProvider value={formik}>
+              <form onSubmit={formik.handleSubmit}>
+                <Field
+                  className={`field ${formik.isValid ? "" : "error"}`}
+                  id="content"
+                  name="content"
+                  placeholder="궁금한거나 공유하고 싶은 내용을 다른 회원들에게 공유해주세요."
+                  as="textarea"
+                />
+              </form>
+            </FormikProvider>
           </Content>
 
           <Content>
@@ -62,23 +217,88 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
               </div>
             </div>
 
-            <input type="file" style={{ display: "none" }} ref={imageInput} />
-            <Image
-              className="upload-image"
-              src={UploadFileImage}
-              width={130}
-              height={130}
-              alt="업로드 이미지 버튼"
-              onClick={onCickImageUpload}
-            />
+            {imgFiles ? (
+              <SwiperWrapper>
+                <Swiper
+                  watchSlidesProgress={true}
+                  scrollbar={{ draggable: true }}
+                  modules={[Scrollbar, A11y]}
+                  slidesPerView={2}
+                  spaceBetween={20}
+                  initialSlide={0}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  autoplay={{ delay: 3000 }}
+                >
+                  {imgFiles.map((image, i) => (
+                    <SwiperSlide key={i}>
+                      <DeleteImageIconWrapper
+                        onClick={() => {
+                          console.log(i);
+                        }}
+                      >
+                        <Icon name="delete" />
+                      </DeleteImageIconWrapper>
+                      <Image
+                        className="upload-image"
+                        width={130}
+                        height={130}
+                        src={image}
+                        alt="preview"
+                      />
+                    </SwiperSlide>
+                  ))}
+                  <SwiperSlide key={"attach"}>
+                    <input
+                      type="file"
+                      style={{ display: "none" }}
+                      ref={imageInput}
+                      multiple
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                    />
+                    <Image
+                      className="upload-image"
+                      src={UploadFileImage}
+                      width={130}
+                      height={130}
+                      alt="업로드 이미지 버튼"
+                      onClick={onCickImageUpload}
+                    />
+                  </SwiperSlide>
+                </Swiper>
+              </SwiperWrapper>
+            ) : (
+              <>
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  ref={imageInput}
+                  multiple
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                />
+                <Image
+                  className="upload-image"
+                  src={UploadFileImage}
+                  width={130}
+                  height={130}
+                  alt="업로드 이미지 버튼"
+                  onClick={onCickImageUpload}
+                />
+              </>
+            )}
           </Content>
         </div>
         <ButtonWrapper>
           <Button
             text="질문 등록하기"
             width="50%"
+            disabled={!(formik.isValid && formik.dirty && isUploadingComplete)}
             backgroundColor={theme.colors.purple_light}
             onClick={submitHandler}
+            type="submit"
           />
         </ButtonWrapper>
       </WriteQuesitonWrapper>
@@ -87,6 +307,12 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
 };
 
 export default WriteQuesiton;
+
+const SwiperWrapper = styled.div`
+  .swiper-slide {
+    width: 13rem !important;
+  }
+`;
 
 const WriteQuesitonWrapper = styled.div`
   height: 100%;
@@ -128,6 +354,10 @@ const WriteQuesitonWrapper = styled.div`
     &::placeholder {
       color: ${(props) => props.theme.colors.grey};
     }
+
+    &.error {
+      border: 1px solid ${(props) => props.theme.colors.red};
+    }
   }
 
   .upload-image {
@@ -164,4 +394,10 @@ const TitleWrapper = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: right;
+`;
+
+const DeleteImageIconWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
 `;

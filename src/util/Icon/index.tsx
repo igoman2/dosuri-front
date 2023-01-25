@@ -7,6 +7,7 @@ import Close from "@/public/assets/close.svg";
 import Comment from "@/public/assets/comment.svg";
 import Cross from "@/public/assets/cross.svg";
 import CrossClicked from "@/public/assets/cross_clicked.svg";
+import Delete from "@/public/assets/delete.svg";
 import Heart from "@/public/assets/heart.svg";
 import Home from "@/public/assets/home.svg";
 import HomeClicked from "@/public/assets/home_clicked.svg";
@@ -50,6 +51,7 @@ export const iconTypes: any = {
   logo2: Logo2,
   logo3: Logo3,
   write: Write,
+  delete: Delete,
 } as const;
 export type IconName = keyof typeof iconTypes;
 

@@ -57,6 +57,9 @@ const Community = () => {
     setScrollY(window.pageYOffset);
   }, []);
 
+  const handleClose = () => {
+    setIsActive(false);
+  };
   useEffect(() => {
     if (window) {
       window.scrollTo(0, scrollY);
@@ -212,12 +215,14 @@ const Community = () => {
         {modalType === "question" ? (
           <WriteQuesiton
             isActive={isActive}
+            onClose={handleClose}
             onChangeActive={changeActiveHandler}
           />
         ) : (
           <WriteReview
             onSwap={onSwapModalType}
             isActive={isActive}
+            onClose={handleClose}
             onChangeActive={changeActiveHandler}
           />
         )}

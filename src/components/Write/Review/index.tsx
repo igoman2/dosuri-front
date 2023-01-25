@@ -2,7 +2,6 @@ import React, { FC, useRef, useState } from "react";
 
 import BillExamplesImage from "@/public/assets/bill-examples.png";
 import Button from "@/components/Button";
-import Checkbox from "@/components/UI/Checkbox";
 import CoinPurpleIcon from "@/public/assets/coin-purple.png";
 import Content from "../Form/Content";
 import FullModalBase from "@/components/Modal/FullModalBase";
@@ -16,6 +15,8 @@ import QuestionMarkIcon from "@/public/assets/question-mark.png";
 import SadFaceIcon from "@/public/assets/sad-face.png";
 import SelectForm from "../Form/SelectForm";
 import UploadFileImage from "@/public/assets/upload-file.png";
+import { css } from "@emotion/react";
+import magnifier_grey from "@/public/assets/magnifier_grey.png";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";
 
@@ -23,20 +24,21 @@ interface IWriteReviewProps {
   isActive: boolean;
   onChangeActive: () => void;
   onSwap: () => void;
+  onClose: () => void;
 }
 
 const WriteReview: FC<IWriteReviewProps> = ({
   isActive,
   onChangeActive,
   onSwap,
+  onClose,
 }) => {
-  const [mode, setMode] = useState(0);
+  const [mode, setMode] = useState<number>(0);
   const [isWarnVisible, setIsWarnVisible] = useState(false);
-  const [searchType, setSearchType] = useState("");
   const imageInput = useRef<HTMLInputElement>(null);
 
   const handleHospitalSelect = () => {
-    setSearchType("hospital");
+    setMode(10);
   };
 
   const onCickImageUpload = () => {
@@ -83,6 +85,12 @@ const WriteReview: FC<IWriteReviewProps> = ({
     </ButtonWrapper>
   );
 
+  const image = css`
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+  `;
+
   const renderWithMode = () => {
     switch (mode) {
       case 0:
@@ -102,7 +110,27 @@ const WriteReview: FC<IWriteReviewProps> = ({
                     </TitleWrapper>
                   </div>
                   <div onClick={handleHospitalSelect}>
-                    <SelectForm />
+                    <SearchInputWrapper>
+                      <span css={image}>
+                        <Icon
+                          name="arrow"
+                          width="24"
+                          height="24"
+                          stroke={theme.colors.grey}
+                          strokeWidth="2"
+                          css={{
+                            transform: "rotate(180deg)",
+                          }}
+                        />
+                      </span>
+                      <input
+                        type="text"
+                        id="roll"
+                        name="roll"
+                        required
+                        placeholder="병원, 지역, 후기 키워드 검색하기"
+                      />
+                    </SearchInputWrapper>
                   </div>
                 </Content>
 
@@ -596,6 +624,50 @@ const WriteReview: FC<IWriteReviewProps> = ({
             </WriteReviewWrapper>
           </FullModalBase>
         );
+
+      case 10:
+        return (
+          <FullModalBase
+            isActive={isActive}
+            onClose={() => setMode(0)}
+            title="병원 선택"
+          >
+            <WriteReviewWrapper>
+              <div>
+                <SearchInputWrapper>
+                  <form>
+                    <span css={image}>
+                      <Image
+                        src={magnifier_grey}
+                        alt="magnifier"
+                        width={20}
+                        height={20}
+                      />
+                    </span>
+                    <input
+                      type="text"
+                      id="roll"
+                      name="roll"
+                      required
+                      placeholder="병원, 지역, 후기 키워드 검색하기"
+                    />
+                  </form>
+                </SearchInputWrapper>
+              </div>
+              <ButtonWrapper>
+                <Button
+                  borderRadius="0.3rem"
+                  bold
+                  text="도수톡으로 돌아가기"
+                  width="100%"
+                  backgroundColor={theme.colors.white}
+                  color={theme.colors.purple}
+                  onClick={() => setMode((prev) => prev + 1)}
+                />
+              </ButtonWrapper>
+            </WriteReviewWrapper>
+          </FullModalBase>
+        );
     }
   };
 
@@ -840,5 +912,22 @@ const ReviewComplete = styled.div`
       color: ${(props) => props.theme.colors.purple};
       font-weight: 700;
     }
+  }
+`;
+
+const SearchInputWrapper = styled.div`
+  flex-grow: 1;
+  position: relative;
+  color: ${(props) => props.theme.colors.grey};
+
+  input {
+    height: 4.2rem;
+    width: 100%;
+    font-size: ${(props) => props.theme.fontSizes.md};
+    line-height: ${(props) => props.theme.lineHeights.md};
+    padding-left: 1rem;
+    border-radius: 0.5rem;
+    border: 0.1rem solid ${(props) => props.theme.colors.grey};
+    font-size: ${(props) => props.theme.fontSizes.lg};
   }
 `;
