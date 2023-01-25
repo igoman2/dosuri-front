@@ -128,6 +128,8 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
     const fileArr = Array.prototype.slice.call(target.files);
     const uploaded = [...uploadedFiles];
 
+    target.value = "";
+
     if (isFilesExceedLimit(fileArr, uploaded)) {
       return;
     }
@@ -138,6 +140,7 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
 
   const isFilesExceedLimit = (fileArr: File[], uploaded: File[]) => {
     let limitExceeded = false;
+
     fileArr.some((file) => {
       if (uploaded.findIndex((f) => f.name === file.name) === -1) {
         uploaded.push(file);
