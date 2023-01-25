@@ -116,6 +116,8 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
   });
 
   useEffect(() => {
+    setIsSmallAreaDisabled(false);
+
     const parsedArea = LOCATIONS.filter((location) =>
       location.label.includes(largeArea as string)
     )
@@ -162,6 +164,8 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
   );
 
   useEffect(() => {
+    setIsSmallAreaDisabled(false);
+
     if (userLargeArea) {
       setLargeArea(userLargeArea.label);
 
