@@ -37,7 +37,6 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
   const [isUploadingComplete, setIsUploadingComplete] = useState(true);
   const { mutate } = useRegisterReview();
   const onCickImageUpload = () => {
-    reset();
     imageInput.current && imageInput.current.click();
   };
 
@@ -120,12 +119,6 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
         console.log(err);
         setIsUploadingComplete(false);
       });
-  };
-
-  const reset = () => {
-    setImgFiles([]);
-    setUploadedFiles([]);
-    setImagesId([]);
   };
 
   const handleImageUpload = (e: FormEvent<HTMLInputElement>) => {
