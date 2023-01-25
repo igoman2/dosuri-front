@@ -5,6 +5,7 @@ import { Field, FormikProvider, useFormik } from "formik";
 import React, { FC, FormEvent, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+import { BeatLoader } from "react-spinners";
 import Button from "../Button";
 import Content from "./Form/Content";
 import FullModalBase from "../Modal/FullModalBase";
@@ -251,6 +252,12 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
                   }}
                   autoplay={{ delay: 3000 }}
                 >
+                  {!isUploadingComplete && (
+                    <SpinnerWrapper>
+                      <BeatLoader color={theme.colors.purple} />
+                    </SpinnerWrapper>
+                  )}
+
                   {imgFiles.map((image, i) => (
                     <SwiperSlide key={i}>
                       <DeleteImageIconWrapper
@@ -428,4 +435,12 @@ const DeleteImageIconWrapper = styled.div`
   position: absolute;
   top: 0;
   right: 0;
+`;
+
+const SpinnerWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 `;
