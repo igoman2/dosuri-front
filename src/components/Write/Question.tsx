@@ -318,11 +318,13 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
         <ButtonWrapper>
           <Button
             text="질문 등록하기"
+            height="5.2rem"
             width="50%"
             disabled={!(formik.isValid && formik.dirty && isUploadingComplete)}
             backgroundColor={theme.colors.purple_light}
             onClick={submitHandler}
             type="submit"
+            bold
           />
         </ButtonWrapper>
       </WriteQuesitonWrapper>
