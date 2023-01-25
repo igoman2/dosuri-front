@@ -40,6 +40,7 @@ const HospitalCard: FC<IHospitalCardProps> = ({
               layout="fill"
               objectFit="cover"
               alt="hospital-image"
+              priority
             />
           </ImageWrapper>
         )}
