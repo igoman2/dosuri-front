@@ -147,6 +147,7 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
         if (uploaded.length > MAX_COUNT) {
           alert(`You can only add a maximum of ${MAX_COUNT} files`);
           setFileLimit(false);
+          setIsUploadingComplete(true);
           limitExceeded = true;
           return true;
         }
