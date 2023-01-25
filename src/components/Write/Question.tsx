@@ -32,10 +32,11 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
   const [imgFiles, setImgFiles] = useState<string[]>([]);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [fileLimit, setFileLimit] = useState(false);
-  const [imagesId, setImageId] = useState<string[]>([]);
+  const [imagesId, setImagesId] = useState<string[]>([]);
   const [isUploadingComplete, setIsUploadingComplete] = useState(true);
   const { mutate } = useRegisterReview();
   const onCickImageUpload = () => {
+    reset();
     imageInput.current && imageInput.current.click();
   };
 
@@ -110,7 +111,7 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
   const getUploadedImagesId = async (uploaded: File[]) => {
     Promise.all([...uploaded.map((file) => upload(file))])
       .then((uuids) => {
-        setImageId(uuids);
+        setImagesId(uuids);
         previewFiles(Array.prototype.slice.call(uploaded));
         setIsUploadingComplete(true);
       })
@@ -123,11 +124,10 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
   const reset = () => {
     setImgFiles([]);
     setUploadedFiles([]);
-    setImageId([]);
+    setImagesId([]);
   };
 
   const handleImageUpload = (e: FormEvent<HTMLInputElement>) => {
-    reset();
     setIsUploadingComplete(false);
 
     const target = e.target as HTMLInputElement;
