@@ -100,6 +100,7 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
         url: `https://api.dosuri.site/src`, // 파일 업로드 요청 URL
         method: "POST",
         data: formData,
+        timeout: 10000,
       });
 
       return resp.data.attachment_uuid;
@@ -115,9 +116,10 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
         previewFiles(Array.prototype.slice.call(uploaded));
         setIsUploadingComplete(true);
       })
+      // TODO: sentry로 throw
       .catch((err) => {
-        console.log(err);
-        setIsUploadingComplete(false);
+        setIsUploadingComplete(true);
+        alert("업로드에 실패했습니다.");
       });
   };
 
