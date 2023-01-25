@@ -173,6 +173,24 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
     });
   };
 
+  const handleDeleteUploadedImate = (index: number) => {
+    setImgFiles((prev) => {
+      const tmp = [...prev];
+      tmp.splice(index, 1);
+      return tmp;
+    });
+    setUploadedFiles((prev) => {
+      const tmp = [...prev];
+      tmp.splice(index, 1);
+      return tmp;
+    });
+    setImagesId((prev) => {
+      const tmp = [...prev];
+      tmp.splice(index, 1);
+      return tmp;
+    });
+  };
+
   return (
     <FullModalBase
       isActive={isActive}
@@ -234,13 +252,19 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
                   {imgFiles.map((image, i) => (
                     <SwiperSlide key={i}>
                       <DeleteImageIconWrapper
+                        css={{
+                          zIndex: 1000,
+                        }}
                         onClick={() => {
-                          console.log(i);
+                          handleDeleteUploadedImate(i);
                         }}
                       >
                         <Icon name="delete" />
                       </DeleteImageIconWrapper>
                       <Image
+                        css={{
+                          zIndex: 100,
+                        }}
                         className="upload-image"
                         width={130}
                         height={130}
