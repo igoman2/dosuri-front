@@ -269,6 +269,25 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
                     </SpinnerWrapper>
                   )}
 
+                  <SwiperSlide key={"attach"}>
+                    <input
+                      type="file"
+                      style={{ display: "none" }}
+                      ref={imageInput}
+                      multiple
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                    />
+                    <Image
+                      className="upload-image"
+                      src={UploadFileImage}
+                      width={130}
+                      height={130}
+                      alt="업로드 이미지 버튼"
+                      onClick={onCickImageUpload}
+                    />
+                  </SwiperSlide>
+
                   {imgFiles.map((image, i) => (
                     <SwiperSlide key={i}>
                       <DeleteImageIconWrapper
@@ -293,24 +312,6 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
                       />
                     </SwiperSlide>
                   ))}
-                  <SwiperSlide key={"attach"}>
-                    <input
-                      type="file"
-                      style={{ display: "none" }}
-                      ref={imageInput}
-                      multiple
-                      accept="image/*"
-                      onChange={handleImageUpload}
-                    />
-                    <Image
-                      className="upload-image"
-                      src={UploadFileImage}
-                      width={130}
-                      height={130}
-                      alt="업로드 이미지 버튼"
-                      onClick={onCickImageUpload}
-                    />
-                  </SwiperSlide>
                 </Swiper>
               </SwiperWrapper>
             ) : (
