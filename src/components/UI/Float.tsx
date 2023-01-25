@@ -7,12 +7,13 @@ import styled from "@emotion/styled";
 interface IFloatProps {
   scrollDir: DIRECTION | undefined;
   distance: string;
+  onClick: () => void;
 }
 
-const Float: FC<IFloatProps> = ({ scrollDir, distance }) => {
+const Float: FC<IFloatProps> = ({ scrollDir, distance, onClick }) => {
   return (
     <FloatWrapper direction={scrollDir} distance={distance}>
-      <Button iconName="pen" text="후기 또는 질문 쓰기" />
+      <Button iconName="pen" text="후기 또는 질문 쓰기" onClick={onClick} />
     </FloatWrapper>
   );
 };

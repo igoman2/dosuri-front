@@ -1,6 +1,4 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { modalContentState, modalState } from "@/components/Modal/store";
-import { useRecoilState, useSetRecoilState } from "recoil";
 
 import Button from "@/components/Button";
 import Float from "@/components/UI/Float";
@@ -9,15 +7,15 @@ import { IHotCommunityResponse } from "@/service/types";
 import Icon from "@/util/Icon";
 import InfiniteScroll from "react-infinite-scroller";
 import Layout from "@/components/Layout";
+import ModalFactory from "@/components/Write/Review/ModalFactory";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
-import WriteQuesiton from "@/components/Write/Question";
-import WriteReview from "@/components/Write/Review";
 import api from "@/service/axiosConfig";
 import { scrollState } from "@/store/searchOption";
 import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
 import { useInfiniteQuery } from "react-query";
+import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
 
@@ -47,8 +45,7 @@ const Community = () => {
   const [scrollDir] = useDirection();
   const [isActive, setIsActive] = useState(false);
   const [modalType, setModalType] = useState("");
-  const setModalIsActive = useSetRecoilState(modalState);
-  const setModalContent = useSetRecoilState(modalContentState);
+
   const router = useRouter();
 
   const [scrollY, setScrollY] = useRecoilState(scrollState);
@@ -57,9 +54,6 @@ const Community = () => {
     setScrollY(window.pageYOffset);
   }, []);
 
-  const handleClose = () => {
-    setIsActive(false);
-  };
   useEffect(() => {
     if (window) {
       window.scrollTo(0, scrollY);
@@ -102,39 +96,6 @@ const Community = () => {
     setIsActive(true);
   };
 
-  const onSwapModalType = () => {
-    setIsActive(false);
-    setModalType("question");
-    setIsActive(true);
-  };
-
-  const changeActiveHandler = () => {
-    setModalContent({
-      title: "후기 작성을 취소하시겠어요?",
-      content: `
-      작성을 취소할 경우 지금까지 입력한 내용이 모두 사라집니다.`,
-      actionLeft: {
-        text: "작성 취소",
-        action: () => {
-          setIsActive(false);
-          setModalIsActive({ isActive: false });
-        },
-      },
-      actionRight: {
-        text: "계속 작성",
-        action: () => {
-          setModalIsActive({ isActive: false });
-        },
-      },
-    });
-    setModalIsActive((prev) => ({
-      action: () => {
-        setModalIsActive((prev) => ({ ...prev, isActive: false }));
-      },
-      isActive: true,
-    }));
-  };
-
   const onTabClick = (tab: Tab) => {
     setCurrentTab(tab);
   };
@@ -151,6 +112,15 @@ const Community = () => {
     }
     fetchNextPage();
   };
+
+  const handleActive = (val: boolean) => {
+    setIsActive(val);
+  };
+
+  const handleModalType = (val: string) => {
+    setModalType(val);
+  };
+
   return (
     <Layout
       header={
@@ -210,20 +180,20 @@ const Community = () => {
           </InfiniteScroll>
         </div>
 
-        <Float scrollDir={scrollDir} distance="8.5rem" />
-
-        {modalType === "question" ? (
-          <WriteQuesiton
+        <Float
+          scrollDir={scrollDir}
+          distance="8.5rem"
+          onClick={() => {
+            setModalType("question");
+            setIsActive(true);
+          }}
+        />
+        {isActive && (
+          <ModalFactory
             isActive={isActive}
-            onClose={handleClose}
-            onChangeActive={changeActiveHandler}
-          />
-        ) : (
-          <WriteReview
-            onSwap={onSwapModalType}
-            isActive={isActive}
-            onClose={handleClose}
-            onChangeActive={changeActiveHandler}
+            setIsActive={handleActive}
+            modalType={modalType}
+            setModalType={handleModalType}
           />
         )}
       </>

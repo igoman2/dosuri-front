@@ -1,11 +1,13 @@
+import React, { useState } from "react";
+
 import { EmptyText } from "@/components/UI/emotion/EmptyText";
 import Float from "@/components/UI/Float";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Layout from "@/components/Layout";
 import Link from "next/link";
+import ModalFactory from "@/components/Write/Review/ModalFactory";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
-import React from "react";
 import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
 import { useGetCommunity } from "@/hooks/service/useGetCommunity";
@@ -20,11 +22,21 @@ export type DIRECTION = typeof DIRECTION[keyof typeof DIRECTION]; // 'UP' | DOWN
 
 const Review = () => {
   const [scrollDir] = useDirection();
-
+  const [isActive, setIsActive] = useState(false);
+  const [modalType, setModalType] = useState("");
   const user = useRecoilValue(userInfoState);
+
   const { communityList } = useGetCommunity({
     user: user.uuid,
   });
+
+  const handleActive = (val: boolean) => {
+    setIsActive(val);
+  };
+
+  const handleModalType = (val: string) => {
+    setModalType(val);
+  };
 
   return (
     <Layout header={<HeaderDepth />} footer={false}>
@@ -49,7 +61,22 @@ const Review = () => {
           )}
         </ReviewWrapper>
 
-        <Float scrollDir={scrollDir} distance="1.5rem" />
+        <Float
+          scrollDir={scrollDir}
+          distance="1.5rem"
+          onClick={() => {
+            setModalType("question");
+            setIsActive(true);
+          }}
+        />
+        {isActive && (
+          <ModalFactory
+            isActive={isActive}
+            setIsActive={handleActive}
+            modalType={modalType}
+            setModalType={handleModalType}
+          />
+        )}
       </>
     </Layout>
   );
