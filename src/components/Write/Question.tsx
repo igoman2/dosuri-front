@@ -309,6 +309,7 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
                         height={130}
                         src={image}
                         alt="preview"
+                        objectFit="contain"
                       />
                     </SwiperSlide>
                   ))}
