@@ -231,7 +231,9 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
                   <div className="title">사진을 올려주세요.</div>
                   <div className="optional">{"(선택)"}</div>
                 </TitleWrapper>
-                <div className="text-limit">0장 / 최대 10장</div>
+                <div className="text-limit">
+                  {imgFiles.length}장 / 최대 10장
+                </div>
               </div>
             </div>
 
