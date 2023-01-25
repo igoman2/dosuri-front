@@ -88,6 +88,12 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
   //   })
   //   .catch((err) => console.log(err));
 
+  const reset = () => {
+    setImgFiles([]);
+    setUploadedFiles([]);
+    setImagesId([]);
+  };
+
   const upload = async (file: File): Promise<string> => {
     const formData = new FormData();
     formData.append("file", file);
@@ -119,6 +125,7 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
       // TODO: sentry로 throw
       .catch((err) => {
         setIsUploadingComplete(true);
+        reset();
         alert("업로드에 실패했습니다.");
       });
   };
