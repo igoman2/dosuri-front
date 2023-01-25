@@ -56,7 +56,6 @@ const ModalWrapper = styled.div`
     font-size: ${(props) => props.theme.fontSizes.md};
     line-height: ${(props) => props.theme.lineHeights.md};
     margin: 2rem 0 3rem 0;
-    white-space: pre-wrap;
   }
 
   .action_box {
