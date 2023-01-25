@@ -64,7 +64,6 @@ const FullModalBase: FC<IFullModalBase> = ({
                   },
                   height: "5.4rem",
                   marginBottom: "0.5rem",
-                  padding: "0 1rem",
                 }}
               >
                 <div className="modal-head">
@@ -90,7 +89,7 @@ const FullModalBaseWrapper = styled(ModalBaseContainer)`
 
   .modal-head {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
     justify-content: center;
     align-items: center;
     height: 6rem;
