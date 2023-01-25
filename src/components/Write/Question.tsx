@@ -402,6 +402,10 @@ const WriteQuesitonWrapper = styled.div`
     }
   }
 
+  textarea {
+    outline: none !important;
+  }
+
   .field {
     width: 100%;
     height: 16rem;
