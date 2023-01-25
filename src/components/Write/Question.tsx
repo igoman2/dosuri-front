@@ -76,6 +76,8 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
     formik.handleSubmit();
   };
 
+  console.log(formik);
+
   // TODO: Promise.all => Promise.allSettled 로 개선
   // Promise.allSettled(postArr)
   //   .then((result) => {
@@ -200,7 +202,15 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
                 <div className="required">{"(필수)"}</div>
               </TitleWrapper>
 
-              <div className="text-limit">
+              <div
+                className={`text-limit ${
+                  formik.isValid
+                    ? formik.dirty
+                      ? "success"
+                      : "initial"
+                    : "error"
+                } ${formik.dirty ? "" : "initial"}`}
+              >
                 {formik.values.content.length}자 / 최소 20자
               </div>
             </div>
@@ -208,7 +218,13 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
             <FormikProvider value={formik}>
               <form onSubmit={formik.handleSubmit}>
                 <Field
-                  className={`field ${formik.isValid ? "" : "error"}`}
+                  className={`field ${
+                    formik.isValid
+                      ? formik.dirty
+                        ? "success"
+                        : "initial"
+                      : "error"
+                  } ${formik.dirty ? "" : "initial"}`}
                   id="content"
                   name="content"
                   placeholder="궁금한거나 공유하고 싶은 내용을 다른 회원들에게 공유해주세요."
@@ -364,8 +380,20 @@ const WriteQuesitonWrapper = styled.div`
     align-items: center;
     font-size: ${(props) => props.theme.fontSizes.md};
     line-height: ${(props) => props.theme.lineHeights.md};
-    color: ${(props) => props.theme.colors.grey};
     margin-top: 0.5rem;
+    color: ${(props) => props.theme.colors.grey};
+
+    &.initial {
+      color: ${(props) => props.theme.colors.grey};
+    }
+
+    &.error {
+      color: ${(props) => props.theme.colors.red};
+    }
+
+    &.success {
+      color: ${(props) => props.theme.colors.purple};
+    }
   }
 
   .field {
@@ -383,8 +411,16 @@ const WriteQuesitonWrapper = styled.div`
       color: ${(props) => props.theme.colors.grey};
     }
 
+    &.initial {
+      border: 1px solid ${(props) => props.theme.colors.grey};
+    }
+
     &.error {
       border: 1px solid ${(props) => props.theme.colors.red};
+    }
+
+    &.success {
+      border: 1px solid ${(props) => props.theme.colors.purple};
     }
   }
 
