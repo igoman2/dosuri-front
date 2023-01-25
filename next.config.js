@@ -9,6 +9,7 @@ const nextConfig = {
     emotion: true,
   },
   images: {
+    deviceSizes: [360],
     domains: [
       "dosuri-image.dosuri.site",
       "dosuri-image.s3.amazonaws.com",
