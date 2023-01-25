@@ -76,8 +76,6 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
     formik.handleSubmit();
   };
 
-  console.log(formik);
-
   // TODO: Promise.all => Promise.allSettled 로 개선
   // Promise.allSettled(postArr)
   //   .then((result) => {
@@ -144,8 +142,8 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
       if (uploaded.findIndex((f) => f.name === file.name) === -1) {
         uploaded.push(file);
         if (uploaded.length === MAX_COUNT) setFileLimit(true);
-        if (uploaded.length > MAX_COUNT) {
-          alert(`You can only add a maximum of ${MAX_COUNT} files`);
+        if (uploaded.length > MAX_COUNT || imgFiles.length > MAX_COUNT) {
+          alert(`최대 ${MAX_COUNT}장까지 업로드 가능합니다.`);
           setFileLimit(false);
           setIsUploadingComplete(true);
           limitExceeded = true;
