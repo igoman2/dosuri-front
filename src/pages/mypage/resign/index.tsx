@@ -8,6 +8,7 @@ import Layout from "@/components/Layout";
 import _ from "lodash";
 import styled from "@emotion/styled";
 import { useResignUser } from "@/hooks/service/useResignUser";
+import { useTheme } from "@emotion/react";
 
 interface FormValues {
   resignReason: string;
@@ -42,6 +43,7 @@ const Resign = () => {
       text: "기타",
     },
   ]);
+  const theme = useTheme();
   const [agree, setAgree] = useState(false);
 
   const { mutate } = useResignUser();
@@ -147,24 +149,41 @@ const Resign = () => {
                       })
                     }
                   />
-                  <Checkbox
-                    text="기타"
-                    value={reason[5].checked}
-                    onClick={() =>
-                      setReason((prev) => {
-                        const tmp = [...prev];
-                        prev.forEach((val) => {
-                          if (val.text === "기타") {
-                            return;
-                          }
+                  <div
+                    css={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "end",
+                    }}
+                  >
+                    <Checkbox
+                      text="기타"
+                      value={reason[5].checked}
+                      onClick={() =>
+                        setReason((prev) => {
+                          const tmp = [...prev];
+                          prev.forEach((val) => {
+                            if (val.text === "기타") {
+                              return;
+                            }
 
-                          return (val.checked = false);
-                        });
-                        tmp[5].checked = !prev[5].checked;
-                        return tmp;
-                      })
-                    }
-                  />
+                            return (val.checked = false);
+                          });
+                          tmp[5].checked = !prev[5].checked;
+                          return tmp;
+                        })
+                      }
+                    />
+                    <span
+                      css={{
+                        color: theme.colors.grey,
+                        fontSize: theme.fontSizes.md,
+                        lineHeight: theme.lineHeights.md,
+                      }}
+                    >
+                      {formik.values.resignReason.length}자 / 최소 20자
+                    </span>
+                  </div>
                 </CheckboxWrapper>
 
                 <Field
