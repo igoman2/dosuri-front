@@ -65,7 +65,7 @@ const Review = () => {
           scrollDir={scrollDir}
           distance="1.5rem"
           onClick={() => {
-            setModalType("question");
+            setModalType("review");
             setIsActive(true);
           }}
         />

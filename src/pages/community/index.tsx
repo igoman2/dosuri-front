@@ -184,7 +184,7 @@ const Community = () => {
           scrollDir={scrollDir}
           distance="8.5rem"
           onClick={() => {
-            setModalType("question");
+            setModalType("review");
             setIsActive(true);
           }}
         />
