@@ -266,6 +266,7 @@ const ResignWrapper = styled.div`
     flex-grow: 1;
     padding: 1rem;
     vertical-align: top;
+    resize: none;
 
     &::placeholder {
       color: ${(props) => props.theme.colors.grey};
