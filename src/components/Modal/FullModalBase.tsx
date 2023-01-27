@@ -4,12 +4,16 @@ import Icon from "@/util/Icon";
 import { ModalBaseContainer } from "./ModalBase";
 import WritePostContent from "../Write/Question";
 import styled from "@emotion/styled";
+import theme from "@/styles/theme";
 
 interface IFullModalBase {
   isActive: boolean;
   children: ReactNode;
   title: string;
+  subTitle?: string;
+  right?: ReactNode;
   onClose: () => void;
+  onClickBack?: () => void;
 }
 
 const FullModalBase: FC<IFullModalBase> = ({
@@ -17,6 +21,9 @@ const FullModalBase: FC<IFullModalBase> = ({
   onClose,
   children,
   title,
+  subTitle,
+  right,
+  onClickBack,
 }) => {
   const [closed, setClosed] = useState(true);
 
@@ -49,10 +56,13 @@ const FullModalBase: FC<IFullModalBase> = ({
   return (
     <>
       <FullModalBaseWrapper active={isActive}>
-        <div className="modal_back" onClick={onClose} />
-        <div className="modal_content">
+        <div
+          className="modal_back"
+          onClick={onClickBack ? onClickBack : onClose}
+        />
+        <div className="modal_content ">
           <div>
-            <div className="title">
+            <div>
               <div
                 css={{
                   display: "flex",
@@ -64,13 +74,37 @@ const FullModalBase: FC<IFullModalBase> = ({
                   },
                   height: "5.4rem",
                   marginBottom: "0.5rem",
+                  padding: "0 1rem",
                 }}
               >
                 <div className="modal-head">
                   <span onClick={onClose}>
-                    <Icon name="close" />
+                    <Icon
+                      name="close"
+                      fill={theme.colors.black}
+                      width="14"
+                      height="14"
+                    />
                   </span>
-                  <span>{title}</span>
+                  <div
+                    css={{
+                      display: "flex",
+                      width: "100%",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <div
+                      css={{
+                        display: "flex",
+                        gap: "1.5rem",
+                        alignItems: "center",
+                      }}
+                    >
+                      <span className="title">{title}</span>
+                      <span className="subTitle">{subTitle}</span>
+                    </div>
+                    <div>{right}</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -89,10 +123,11 @@ const FullModalBaseWrapper = styled(ModalBaseContainer)`
 
   .modal-head {
     display: flex;
-    gap: 1rem;
+    gap: 2rem;
     justify-content: center;
     align-items: center;
     height: 6rem;
+    flex-grow: 1;
   }
 
   .modal_content {
@@ -113,5 +148,11 @@ const FullModalBaseWrapper = styled(ModalBaseContainer)`
     font-size: ${(props) => props.theme.fontSizes.xxl};
     line-height: ${(props) => props.theme.lineHeights.xxl};
     font-weight: 700;
+  }
+
+  .subTitle {
+    font-size: ${(props) => props.theme.fontSizes.md};
+    line-height: ${(props) => props.theme.lineHeights.md};
+    color: ${(props) => props.theme.colors.grey};
   }
 `;

@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 
 interface ICheckboxProps {
   text: string;
-  value: boolean;
+  value?: boolean;
   onClick?: () => void;
 }
 
@@ -15,19 +15,21 @@ const Checkbox: FC<ICheckboxProps> = ({ value, text, onClick }) => {
   };
 
   return (
-    <CheckBoxLayout>
-      <CheckBoxWrapper isChecked={value} onClick={onCheckToggle}>
-        <Icon name="check" />
-      </CheckBoxWrapper>
-      <div className="checkbox-label">{text}</div>
-    </CheckBoxLayout>
+    <div onClick={onCheckToggle} css={{ cursor: "pointer" }}>
+      <CheckBoxLayout>
+        <CheckBoxWrapper isChecked={value}>
+          <Icon name="check" />
+        </CheckBoxWrapper>
+        <div className="checkbox-label">{text}</div>
+      </CheckBoxLayout>
+    </div>
   );
 };
 
 export default Checkbox;
 
 interface Props {
-  isChecked: boolean;
+  isChecked?: boolean;
 }
 
 const CheckBoxLayout = styled.div`
@@ -43,7 +45,6 @@ const CheckBoxLayout = styled.div`
 
 const CheckBoxWrapper = styled.div<Props>`
   border-radius: 0.2rem;
-  cursor: pointer;
   background-color: ${(props) =>
     props.isChecked ? props.theme.colors.purple : ""};
   border: ${(props) =>

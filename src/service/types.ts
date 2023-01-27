@@ -22,6 +22,11 @@ export interface IGetHospitalListParams {
   longitude?: number;
 }
 
+export interface IGetTreatmentKeywordsParams {
+  page?: number;
+  page_size?: number;
+}
+
 export interface IGetFilteredHospitalListParams {
   ordering?: string;
   page?: number;
@@ -164,6 +169,18 @@ export interface IHospitalInfoResult {
   }[];
 }
 
+export interface ITreatmentKeywordsResult {
+  uuid: string;
+  keyword: string;
+}
+
+export interface ITreatmentKeywordsResponse {
+  count: number;
+  next: string;
+  previous: string;
+  results: ITreatmentKeywordsResult[];
+}
+
 export interface IGoodPriceHospitals {
   area: string;
   attachments: {
@@ -291,8 +308,8 @@ export interface IRegisterReviewBody {
     treat_count: number;
   };
   article_auth?: {
-    sensitive_agreement: true;
-    personal_agreement: true;
+    sensitive_agreement: boolean;
+    personal_agreement: boolean;
     status: string;
     auth_attachment_assoc: {
       attachment: string;

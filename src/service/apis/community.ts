@@ -2,11 +2,13 @@ import {
   ICommunityPostDetailResponse,
   IGetCommunityListParams,
   IGetHospitalReviewsParams,
+  IGetTreatmentKeywordsParams,
   IHospitalReviewsResponse,
   IHotCommunityResponse,
   IRegisterCommentResult,
   IRegisterReviewBody,
   IRegisterReviewResult,
+  ITreatmentKeywordsResponse,
 } from "../types";
 
 import api from "../axiosConfig";
@@ -94,5 +96,17 @@ export const registerReview = async (data: IRegisterReviewBody) => {
     data
   );
 
+  return response.data;
+};
+
+export const getTreatmentKeywords = async (
+  params: IGetTreatmentKeywordsParams
+) => {
+  const response = await api.get<ITreatmentKeywordsResponse>(
+    "/community/v1/community/treatment-keywords",
+    {
+      params,
+    }
+  );
   return response.data;
 };

@@ -11,6 +11,7 @@ import ModalFactory from "@/components/Write/Review/ModalFactory";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
 import api from "@/service/axiosConfig";
+import { createReviewState } from "@/components/Write/Review/store";
 import { scrollState } from "@/store/searchOption";
 import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
@@ -120,6 +121,8 @@ const Community = () => {
   const handleModalType = (val: string) => {
     setModalType(val);
   };
+
+  const [reviewState, setReviewState] = useRecoilState(createReviewState);
 
   return (
     <Layout

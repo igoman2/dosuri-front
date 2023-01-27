@@ -1,9 +1,10 @@
 import React, { FC } from "react";
 import { modalContentState, modalState } from "@/components/Modal/store";
+import { useResetRecoilState, useSetRecoilState } from "recoil";
 
 import WriteQuesiton from "../Question";
 import WriteReview from ".";
-import { useSetRecoilState } from "recoil";
+import { createReviewState } from "./store";
 
 interface IModalFactoryProps {
   isActive: boolean;
@@ -19,6 +20,7 @@ const ModalFactory: FC<IModalFactoryProps> = ({
 }) => {
   const setModalIsActive = useSetRecoilState(modalState);
   const setModalContent = useSetRecoilState(modalContentState);
+  const resetReviewState = useResetRecoilState(createReviewState);
 
   const handleClose = () => {
     setIsActive(false);
@@ -38,6 +40,7 @@ const ModalFactory: FC<IModalFactoryProps> = ({
       actionLeft: {
         text: "작성 취소",
         action: () => {
+          resetReviewState();
           setIsActive(false);
           setModalIsActive({ isActive: false });
         },

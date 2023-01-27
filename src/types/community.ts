@@ -37,3 +37,9 @@ export type ArticleThread = {
   content: string;
   created_at: string;
 };
+
+export type Treatment = {
+  uuid: string;
+  keyword: string;
+  selected?: boolean;
+};

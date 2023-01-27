@@ -1,6 +1,5 @@
 import { IHospitalInfoResult } from "@/service/types";
 import { getHospitalList } from "@/service/apis/hospital";
-import { useCreateSearchHistory } from "./useCreateSearchHistory";
 import { useQuery } from "react-query";
 
 interface UseSearchHospital {
@@ -30,7 +29,7 @@ export function useSearchHospital({
       return data.results;
     },
     suspense: false,
-    enabled: !isInput,
+    enabled: isInput,
   });
 
   return { searchedHospitalList: searchedHospitalList ?? fallback };

@@ -1,23 +1,15 @@
 import * as Yup from "yup";
 
-import { A11y, Scrollbar } from "swiper";
 import { Field, FormikProvider, useFormik } from "formik";
-import React, { FC, FormEvent, useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import React, { FC, useState } from "react";
 
-import { BeatLoader } from "react-spinners";
+import AttachImage from "./Review/AttachImage";
 import Button from "../Button";
 import Content from "./Form/Content";
 import FullModalBase from "../Modal/FullModalBase";
-import Icon from "@/util/Icon";
-import Image from "next/image";
-import UploadFileImage from "@/public/assets/upload-file.png";
-import axios from "axios";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";
 import { useRegisterReview } from "@/hooks/service/useRegisterReview";
-
-const MAX_COUNT = 10;
 
 interface IWriteQeustionProps {
   isActive: boolean;
@@ -29,16 +21,10 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
   onChangeActive,
   onClose,
 }) => {
-  const imageInput = useRef<HTMLInputElement>(null);
   const [imgFiles, setImgFiles] = useState<string[]>([]);
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  const [fileLimit, setFileLimit] = useState(false);
   const [imagesId, setImagesId] = useState<string[]>([]);
   const [isUploadingComplete, setIsUploadingComplete] = useState(true);
   const { mutate } = useRegisterReview();
-  const onCickImageUpload = () => {
-    imageInput.current && imageInput.current.click();
-  };
 
   interface MyFormValues {
     content: string;
@@ -87,116 +73,6 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
   //     });
   //   })
   //   .catch((err) => console.log(err));
-
-  const reset = () => {
-    setImgFiles([]);
-    setUploadedFiles([]);
-    setImagesId([]);
-  };
-
-  const upload = async (file: File): Promise<string> => {
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const resp = await axios({
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        url: `https://api.dosuri.site/src`, // 파일 업로드 요청 URL
-        method: "POST",
-        data: formData,
-        timeout: 10000,
-      });
-
-      return resp.data.attachment_uuid;
-    } catch (e) {
-      throw e;
-    }
-  };
-
-  const getUploadedImagesId = async (uploaded: File[]) => {
-    Promise.all([...uploaded.map((file) => upload(file))])
-      .then((uuids) => {
-        setImagesId(uuids);
-        previewFiles(Array.prototype.slice.call(uploaded));
-        setIsUploadingComplete(true);
-      })
-      // TODO: sentry로 throw
-      .catch((err) => {
-        setIsUploadingComplete(true);
-        reset();
-        alert("업로드에 실패했습니다.");
-      });
-  };
-
-  const handleImageUpload = (e: FormEvent<HTMLInputElement>) => {
-    setIsUploadingComplete(false);
-
-    const target = e.target as HTMLInputElement;
-    const fileArr = Array.prototype.slice.call(target.files);
-    const uploaded = [...uploadedFiles];
-
-    target.value = "";
-
-    if (isFilesExceedLimit(fileArr, uploaded)) {
-      return;
-    }
-
-    setUploadedFiles(uploaded);
-    getUploadedImagesId(uploaded);
-  };
-
-  const isFilesExceedLimit = (fileArr: File[], uploaded: File[]) => {
-    let limitExceeded = false;
-
-    fileArr.some((file) => {
-      if (uploaded.findIndex((f) => f.name === file.name) === -1) {
-        uploaded.push(file);
-        if (uploaded.length === MAX_COUNT) setFileLimit(true);
-        if (uploaded.length > MAX_COUNT || imgFiles.length > MAX_COUNT) {
-          alert(`최대 ${MAX_COUNT}장까지 업로드 가능합니다.`);
-          setFileLimit(false);
-          setIsUploadingComplete(true);
-          limitExceeded = true;
-          return true;
-        }
-      }
-    });
-
-    return limitExceeded;
-  };
-
-  const previewFiles = (fileArr: File[]) => {
-    const fileURLs: string[] = [];
-
-    fileArr.forEach((file, i) => {
-      let reader = new FileReader();
-      reader.onload = () => {
-        fileURLs[i] = reader.result as string;
-        setImgFiles([...fileURLs]);
-      };
-      reader.readAsDataURL(file);
-    });
-  };
-
-  const handleDeleteUploadedImate = (index: number) => {
-    setImgFiles((prev) => {
-      const tmp = [...prev];
-      tmp.splice(index, 1);
-      return tmp;
-    });
-    setUploadedFiles((prev) => {
-      const tmp = [...prev];
-      tmp.splice(index, 1);
-      return tmp;
-    });
-    setImagesId((prev) => {
-      const tmp = [...prev];
-      tmp.splice(index, 1);
-      return tmp;
-    });
-  };
 
   return (
     <FullModalBase
@@ -257,93 +133,14 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
                 </div>
               </div>
             </div>
-
-            {imgFiles ? (
-              <SwiperWrapper>
-                <Swiper
-                  watchSlidesProgress={true}
-                  scrollbar={{ draggable: true }}
-                  modules={[Scrollbar, A11y]}
-                  slidesPerView={2}
-                  spaceBetween={20}
-                  initialSlide={0}
-                  pagination={{
-                    clickable: true,
-                  }}
-                  autoplay={{ delay: 3000 }}
-                >
-                  {!isUploadingComplete && (
-                    <SpinnerWrapper>
-                      <BeatLoader color={theme.colors.purple} />
-                    </SpinnerWrapper>
-                  )}
-
-                  <SwiperSlide key={"attach"}>
-                    <input
-                      type="file"
-                      style={{ display: "none" }}
-                      ref={imageInput}
-                      multiple
-                      accept="image/*"
-                      onChange={handleImageUpload}
-                    />
-                    <Image
-                      className="upload-image"
-                      src={UploadFileImage}
-                      width={130}
-                      height={130}
-                      alt="업로드 이미지 버튼"
-                      onClick={onCickImageUpload}
-                    />
-                  </SwiperSlide>
-
-                  {imgFiles.map((image, i) => (
-                    <SwiperSlide key={i}>
-                      <DeleteImageIconWrapper
-                        css={{
-                          zIndex: 1000,
-                        }}
-                        onClick={() => {
-                          handleDeleteUploadedImate(i);
-                        }}
-                      >
-                        <Icon name="delete" />
-                      </DeleteImageIconWrapper>
-                      <Image
-                        css={{
-                          zIndex: 100,
-                        }}
-                        className="upload-image"
-                        width={130}
-                        height={130}
-                        src={image}
-                        alt="preview"
-                        objectFit="contain"
-                      />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </SwiperWrapper>
-            ) : (
-              <>
-                <input
-                  type="file"
-                  style={{ display: "none" }}
-                  ref={imageInput}
-                  multiple
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                />
-                <Image
-                  className="upload-image"
-                  src={UploadFileImage}
-                  width={130}
-                  height={130}
-                  alt="업로드 이미지 버튼"
-                  onClick={onCickImageUpload}
-                />
-              </>
-            )}
+            <AttachImage
+              imgFiles={imgFiles}
+              setImgFiles={setImgFiles}
+              imagesId={imagesId}
+              setImagesId={setImagesId}
+              isUploadingComplete={isUploadingComplete}
+              setIsUploadingComplete={setIsUploadingComplete}
+            />
           </Content>
         </div>
         <ButtonWrapper>
@@ -364,12 +161,6 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
 };
 
 export default WriteQuesiton;
-
-const SwiperWrapper = styled.div`
-  .swiper-slide {
-    width: 13rem !important;
-  }
-`;
 
 const WriteQuesitonWrapper = styled.div`
   height: 100%;
@@ -475,18 +266,4 @@ const TitleWrapper = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: right;
-`;
-
-const DeleteImageIconWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-`;
-
-const SpinnerWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
 `;

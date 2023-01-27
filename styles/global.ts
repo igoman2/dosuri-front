@@ -5,6 +5,7 @@ export const global = css`
   @import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
   * {
+    -webkit-tap-highlight-color: transparent;
     box-sizing: border-box;
   }
   html,

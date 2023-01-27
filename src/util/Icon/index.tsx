@@ -8,17 +8,20 @@ import Comment from "@/public/assets/comment.svg";
 import Cross from "@/public/assets/cross.svg";
 import CrossClicked from "@/public/assets/cross_clicked.svg";
 import Delete from "@/public/assets/delete.svg";
+import Happy from "@/public/assets/happy.svg";
 import Heart from "@/public/assets/heart.svg";
 import Home from "@/public/assets/home.svg";
 import HomeClicked from "@/public/assets/home_clicked.svg";
 import Logo1 from "@/public/assets/logo1.svg";
 import Logo2 from "@/public/assets/logo2.svg";
 import Logo3 from "@/public/assets/logo3.svg";
+import Neutral from "@/public/assets/neutral.svg";
 import NotificationOff from "@/public/assets/notification_off.svg";
 import NotificationOn from "@/public/assets/notification_on.svg";
 import Pen from "@/public/assets/pen.svg";
 import Profile from "@/public/assets/profile.svg";
 import ProfileClicked from "@/public/assets/profile_clicked.svg";
+import Sad from "@/public/assets/sad.svg";
 import Setting from "@/public/assets/setting.svg";
 import Talk from "@/public/assets/talk.svg";
 import TalkClicked from "@/public/assets/talk_clicked.svg";
@@ -52,6 +55,9 @@ export const iconTypes: any = {
   logo3: Logo3,
   write: Write,
   delete: Delete,
+  sad: Sad,
+  neutral: Neutral,
+  happy: Happy,
 } as const;
 export type IconName = keyof typeof iconTypes;
 

@@ -20,7 +20,6 @@ const Reply: FC<IReplyProps> = ({ postId }) => {
   const { mutate } = useRegisterComment(value.isThread);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  console.log(value);
   useEffect(() => {
     if (value.to.uuid) {
       if (inputRef.current) {
