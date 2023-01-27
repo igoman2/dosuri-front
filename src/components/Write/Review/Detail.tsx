@@ -125,7 +125,7 @@ const Detail: FC<IDetailProps> = ({
                 lineHeight: theme.lineHeights.md,
               }}
             >
-              보통이었어요
+              별로였어요
             </div>
           </div>
           <div
@@ -203,12 +203,17 @@ const Detail: FC<IDetailProps> = ({
                 <div className="title">병원 평가</div>
                 <div className="required">{"(필수)"}</div>
               </TitleWrapper>
-
-              {renderIcons("treatment_effect")}
-              {renderIcons("doctor_kindness")}
-              {renderIcons("therapist_kindness")}
-              {renderIcons("staff_kindness")}
-              {renderIcons("clean_score")}
+              <div
+                css={{
+                  marginTop: "1rem",
+                }}
+              >
+                {renderIcons("treatment_effect")}
+                {renderIcons("doctor_kindness")}
+                {renderIcons("therapist_kindness")}
+                {renderIcons("staff_kindness")}
+                {renderIcons("clean_score")}
+              </div>
             </div>
           </Content>
 
@@ -245,7 +250,7 @@ const Detail: FC<IDetailProps> = ({
                     } ${formik.dirty ? "" : "initial"}`}
                     id="content"
                     name="content"
-                    placeholder="궁금한거나 공유하고 싶은 내용을 다른 회원들에게 공유해주세요."
+                    placeholder="병원 방문 경험에 대한 자세한 후기를 다른 방문자들에게 공유해주세요."
                     as="textarea"
                     onChange={handleInput}
                   />

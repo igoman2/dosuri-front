@@ -9,8 +9,8 @@ import { createReviewState } from "./store";
 interface IModalFactoryProps {
   isActive: boolean;
   setIsActive: (val: boolean) => void;
-  modalType: string;
-  setModalType: (val: string) => void;
+  modalType: "question" | "review";
+  setModalType: (val: "question" | "review") => void;
 }
 const ModalFactory: FC<IModalFactoryProps> = ({
   isActive,
@@ -24,12 +24,6 @@ const ModalFactory: FC<IModalFactoryProps> = ({
 
   const handleClose = () => {
     setIsActive(false);
-  };
-
-  const onSwapModalType = () => {
-    setIsActive(false);
-    setModalType("question");
-    setIsActive(true);
   };
 
   const changeActiveHandler = () => {
@@ -67,10 +61,19 @@ const ModalFactory: FC<IModalFactoryProps> = ({
           isActive={isActive}
           onClose={handleClose}
           onChangeActive={changeActiveHandler}
+          onSwap={() => {
+            setIsActive(false);
+            setModalType("review");
+            setIsActive(true);
+          }}
         />
       ) : (
         <WriteReview
-          onSwap={onSwapModalType}
+          onSwap={() => {
+            setIsActive(false);
+            setModalType("question");
+            setIsActive(true);
+          }}
           isActive={isActive}
           onClose={handleClose}
           onChangeActive={changeActiveHandler}

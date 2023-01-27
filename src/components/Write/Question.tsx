@@ -7,6 +7,7 @@ import AttachImage from "./Review/AttachImage";
 import Button from "../Button";
 import Content from "./Form/Content";
 import FullModalBase from "../Modal/FullModalBase";
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";
 import { useRegisterReview } from "@/hooks/service/useRegisterReview";
@@ -14,11 +15,13 @@ import { useRegisterReview } from "@/hooks/service/useRegisterReview";
 interface IWriteQeustionProps {
   isActive: boolean;
   onChangeActive: () => void;
+  onSwap: () => void;
   onClose: () => void;
 }
 const WriteQuesiton: FC<IWriteQeustionProps> = ({
   isActive,
   onChangeActive,
+  onSwap,
   onClose,
 }) => {
   const [imgFiles, setImgFiles] = useState<string[]>([]);
@@ -73,7 +76,18 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
   //     });
   //   })
   //   .catch((err) => console.log(err));
-
+  const button = css`
+    width: 16rem;
+    font-weight: 700;
+    color: ${theme.colors.purple};
+    background-color: ${theme.colors.white};
+    font-size: ${theme.fontSizes.lg};
+    line-height: ${theme.lineHeights.lg};
+    box-shadow: none;
+    border: none;
+    outline: 0;
+    cursor: pointer;
+  `;
   return (
     <FullModalBase
       isActive={isActive}
@@ -144,15 +158,21 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
           </Content>
         </div>
         <ButtonWrapper>
+          <button css={button} onClick={onSwap}>
+            <div>질문/상담 말고</div>
+            <div>치료후기 글 쓰러 가기</div>
+          </button>
+
           <Button
-            text="질문 등록하기"
+            bold
+            borderRadius="0.3rem"
             height="5.2rem"
-            width="50%"
-            disabled={!(formik.isValid && formik.dirty && isUploadingComplete)}
+            text="질문 등록하기"
+            type="submit"
+            width="14rem"
             backgroundColor={theme.colors.purple_light}
             onClick={submitHandler}
-            type="submit"
-            bold
+            disabled={!(formik.isValid && formik.dirty && isUploadingComplete)}
           />
         </ButtonWrapper>
       </WriteQuesitonWrapper>
@@ -265,5 +285,7 @@ const TitleWrapper = styled.div`
 
 const ButtonWrapper = styled.div`
   display: flex;
-  justify-content: right;
+  gap: 2rem;
+  justify-content: space-between;
+  align-items: center;
 `;

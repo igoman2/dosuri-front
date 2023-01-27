@@ -11,7 +11,6 @@ import ModalFactory from "@/components/Write/Review/ModalFactory";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
 import api from "@/service/axiosConfig";
-import { createReviewState } from "@/components/Write/Review/store";
 import { scrollState } from "@/store/searchOption";
 import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
@@ -45,7 +44,7 @@ const Community = () => {
   const [currentTab, setCurrentTab] = useState<Tab>(Tablist[0]);
   const [scrollDir] = useDirection();
   const [isActive, setIsActive] = useState(false);
-  const [modalType, setModalType] = useState("");
+  const [modalType, setModalType] = useState<"question" | "review">("question");
 
   const router = useRouter();
 
@@ -118,11 +117,9 @@ const Community = () => {
     setIsActive(val);
   };
 
-  const handleModalType = (val: string) => {
+  const handleModalType = (val: "question" | "review") => {
     setModalType(val);
   };
-
-  const [reviewState, setReviewState] = useRecoilState(createReviewState);
 
   return (
     <Layout
