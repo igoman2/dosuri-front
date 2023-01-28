@@ -74,7 +74,6 @@ const FullModalBase: FC<IFullModalBase> = ({
                   },
                   height: "5.4rem",
                   marginBottom: "0.5rem",
-                  padding: "0 1rem",
                 }}
               >
                 <div className="modal-head">
