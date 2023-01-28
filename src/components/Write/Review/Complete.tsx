@@ -25,7 +25,10 @@ const Complete: FC<ICompleteProps> = ({ isActive, setMode, onClose }) => {
   return (
     <FullModalBase
       isActive={isActive}
-      onClose={onClose}
+      onClose={() => {
+        resetReviewState();
+        onClose();
+      }}
       title="치료후기 쓰기 - 완료"
     >
       <WriteReviewWrapper>
@@ -47,7 +50,11 @@ const Complete: FC<ICompleteProps> = ({ isActive, setMode, onClose }) => {
                   </div>
                   <div className="information">
                     <div className="element">인증여부</div>
-                    <div className="detail">인증함</div>
+                    <div className="detail">
+                      {reviewState.auth_attach.length > 0
+                        ? "인증함"
+                        : "인증안함"}
+                    </div>
                   </div>
                 </ReviewComplete>
               </Content>

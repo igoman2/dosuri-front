@@ -6,7 +6,6 @@ import ChooseHospital from "./ChooseHospital";
 import ChooseTreatment from "./ChooseTreatment";
 import Complete from "./Complete";
 import Detail from "./Detail";
-import { css } from "@emotion/react";
 
 interface IWriteReviewProps {
   isActive: boolean;
