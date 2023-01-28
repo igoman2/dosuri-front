@@ -10,8 +10,6 @@ import axios from "axios";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";
 
-const MAX_COUNT = 10;
-
 interface IAttachImageProps {
   imgFiles: string[];
   setImgFiles: Dispatch<React.SetStateAction<string[]>>;
@@ -19,6 +17,7 @@ interface IAttachImageProps {
   setImagesId: Dispatch<React.SetStateAction<string[]>>;
   isUploadingComplete: boolean;
   setIsUploadingComplete: Dispatch<React.SetStateAction<boolean>>;
+  maxImageNumber: number;
 }
 
 const AttachImage: FC<IAttachImageProps> = ({
@@ -28,6 +27,7 @@ const AttachImage: FC<IAttachImageProps> = ({
   setImagesId,
   isUploadingComplete,
   setIsUploadingComplete,
+  maxImageNumber,
 }) => {
   const imageInput = useRef<HTMLInputElement>(null);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
@@ -102,9 +102,12 @@ const AttachImage: FC<IAttachImageProps> = ({
     fileArr.some((file) => {
       if (uploaded.findIndex((f) => f.name === file.name) === -1) {
         uploaded.push(file);
-        if (uploaded.length === MAX_COUNT) setFileLimit(true);
-        if (uploaded.length > MAX_COUNT || imgFiles.length > MAX_COUNT) {
-          alert(`최대 ${MAX_COUNT}장까지 업로드 가능합니다.`);
+        if (uploaded.length === maxImageNumber) setFileLimit(true);
+        if (
+          uploaded.length > maxImageNumber ||
+          imgFiles.length > maxImageNumber
+        ) {
+          alert(`최대 ${maxImageNumber}장까지 업로드 가능합니다.`);
           setFileLimit(false);
           setIsUploadingComplete(true);
           limitExceeded = true;

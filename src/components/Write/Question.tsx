@@ -12,6 +12,8 @@ import styled from "@emotion/styled";
 import theme from "@/styles/theme";
 import { useRegisterReview } from "@/hooks/service/useRegisterReview";
 
+const MAX_IMAGE_NUMBER = 10;
+
 interface IWriteQeustionProps {
   isActive: boolean;
   onChangeActive: () => void;
@@ -143,7 +145,7 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
                   <div className="optional">{"(선택)"}</div>
                 </TitleWrapper>
                 <div className="text-limit">
-                  {imgFiles.length}장 / 최대 10장
+                  {imgFiles.length}장 / 최대 {MAX_IMAGE_NUMBER}장
                 </div>
               </div>
             </div>
@@ -154,6 +156,7 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
               setImagesId={setImagesId}
               isUploadingComplete={isUploadingComplete}
               setIsUploadingComplete={setIsUploadingComplete}
+              maxImageNumber={MAX_IMAGE_NUMBER}
             />
           </Content>
         </div>

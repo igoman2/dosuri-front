@@ -5,10 +5,12 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import AttachImage from "./AttachImage";
 import BillExamplesImage from "@/public/assets/bill-examples.png";
 import Checkbox from "@/components/UI/Checkbox";
+import CoinPurpleIcon from "@/public/assets/coin-purple.png";
 import Content from "../Form/Content";
 import FullModalBase from "@/components/Modal/FullModalBase";
 import Icon from "@/util/Icon";
 import Image from "next/image";
+import Link from "next/link";
 import { ModalBottom } from "./ModalBottom";
 import QuestionMarkIcon from "@/public/assets/question-mark.png";
 import { TitleWrapper } from "@/components/UI/emotion/Review/TitleWrapper";
@@ -16,6 +18,8 @@ import { WriteReviewWrapper } from "@/components/UI/emotion/Review/WriteReviewWr
 import { createReviewState } from "./store";
 import styled from "@emotion/styled";
 import { useRegisterReview } from "@/hooks/service/useRegisterReview";
+
+const MAX_IMAGE_NUMBER = 3;
 
 interface IAuthProps {
   isActive: boolean;
@@ -149,13 +153,36 @@ const Auth: FC<IAuthProps> = ({ isActive, mode, setMode, onClose, onSwap }) => {
             <div className="container">
               <div className="title-layout">
                 <TitleWrapper>
-                  <div className="title">사진을 올려주세요.</div>
+                  <div className="title">치료를 인증해주세요.</div>
                   <div className="optional">{"(선택)"}</div>
                 </TitleWrapper>
                 <div className="text-limit">
-                  {imgFiles.length}장 / 최대 10장
+                  {imgFiles.length}장 / 최대 {MAX_IMAGE_NUMBER}장
                 </div>
               </div>
+            </div>
+            <div className="banner-layout">
+              <div className="banner">
+                <Image
+                  src={CoinPurpleIcon}
+                  alt="coin-icon"
+                  width={20}
+                  height={20}
+                />
+                <div className="banner-text">
+                  인증 완료하면 도수리 포인트
+                  <span className="highlight"> 1,000P </span>
+                  지급
+                </div>
+              </div>
+
+              <Link href="https://jade-grill-d5b.notion.site/4e50154c10c841b5a1eb9a8aac1355aa">
+                <a target="_blank" rel="noopener noreferrer">
+                  <QuestionIconWrapper css={{ marginLeft: "0.4rem" }}>
+                    <Image src={QuestionMarkIcon} alt="도움말" />
+                  </QuestionIconWrapper>
+                </a>
+              </Link>
             </div>
             <AttachImage
               imgFiles={imgFiles}
@@ -164,6 +191,7 @@ const Auth: FC<IAuthProps> = ({ isActive, mode, setMode, onClose, onSwap }) => {
               setImagesId={setImagesId}
               isUploadingComplete={isUploadingComplete}
               setIsUploadingComplete={setIsUploadingComplete}
+              maxImageNumber={MAX_IMAGE_NUMBER}
             />
           </Content>
 
@@ -212,11 +240,13 @@ const Auth: FC<IAuthProps> = ({ isActive, mode, setMode, onClose, onSwap }) => {
                     setPersonalAgreement((prev) => !prev);
                   }}
                 />
-                <QuestionIconWrapper
-                  css={{ paddingBottom: "0.2rem", marginLeft: "0.5rem" }}
-                >
-                  <Image src={QuestionMarkIcon} alt="도움말" />
-                </QuestionIconWrapper>
+                <Link href="https://jade-grill-d5b.notion.site/a424b489456a4ee9af5f6067e2cc6718">
+                  <a target="_blank" rel="noopener noreferrer">
+                    <QuestionIconWrapper css={{ marginLeft: "0.4rem" }}>
+                      <Image src={QuestionMarkIcon} alt="도움말" />
+                    </QuestionIconWrapper>
+                  </a>
+                </Link>
               </div>
               <div>
                 <Checkbox
@@ -226,11 +256,13 @@ const Auth: FC<IAuthProps> = ({ isActive, mode, setMode, onClose, onSwap }) => {
                     setSensitiveAgreement((prev) => !prev);
                   }}
                 />
-                <QuestionIconWrapper
-                  css={{ paddingBottom: "0.2rem", marginLeft: "0.5rem" }}
-                >
-                  <Image src={QuestionMarkIcon} alt="도움말" />
-                </QuestionIconWrapper>
+                <Link href="https://jade-grill-d5b.notion.site/591f0834abb54961a0fab1c24667a351">
+                  <a target="_blank" rel="noopener noreferrer">
+                    <QuestionIconWrapper css={{ marginLeft: "0.4rem" }}>
+                      <Image src={QuestionMarkIcon} alt="도움말" />
+                    </QuestionIconWrapper>
+                  </a>
+                </Link>
               </div>
             </Agreement>
           </Content>

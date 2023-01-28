@@ -15,6 +15,8 @@ import styled from "@emotion/styled";
 import { useRecoilState } from "recoil";
 import { useTheme } from "@emotion/react";
 
+const MAX_IMAGE_NUMBER = 10;
+
 interface IDetailProps {
   isActive: boolean;
   mode: number;
@@ -282,7 +284,7 @@ const Detail: FC<IDetailProps> = ({
                   <div className="optional">{"(선택)"}</div>
                 </TitleWrapper>
                 <div className="text-limit">
-                  {imgFiles.length}장 / 최대 10장
+                  {imgFiles.length}장 / 최대 {MAX_IMAGE_NUMBER}장
                 </div>
               </div>
             </div>
@@ -293,6 +295,7 @@ const Detail: FC<IDetailProps> = ({
               setImagesId={setImagesId}
               isUploadingComplete={isUploadingComplete}
               setIsUploadingComplete={setIsUploadingComplete}
+              maxImageNumber={MAX_IMAGE_NUMBER}
             />
           </Content>
         </div>
