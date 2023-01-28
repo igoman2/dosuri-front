@@ -89,6 +89,21 @@ const Detail: FC<IDetailProps> = ({
     setReviewState((prev) => ({ ...prev, content: e.target.value }));
   };
 
+  const getQuestionTitle = (type: string) => {
+    switch (type) {
+      case "treatment_effect":
+        return "진료와 치료의 효과는 좋았나요?";
+      case "doctor_kindness":
+        return "의사는 친절했나요?";
+      case "therapist_kindness":
+        return "치료사는 친절했나요?";
+      case "staff_kindness":
+        return "병원 스탭은 친절했나요?";
+      case "clean_score":
+        return "병원 시설은 청결하고 위생적이었나요?";
+    }
+  };
+
   const renderIcons = (
     element:
       | "treatment_effect"
@@ -99,7 +114,7 @@ const Detail: FC<IDetailProps> = ({
   ) => {
     return (
       <FaceIconsQuestions>
-        <div className="question">진료와 치료의 효과는 좋았나요?</div>
+        <div className="question">{getQuestionTitle(element)}</div>
         <div className="face-container">
           <div
             className="inner"
@@ -301,7 +316,7 @@ const FaceIconsQuestions = styled.div`
   .face-container {
     display: flex;
     justify-content: space-between;
-    padding: 0 2rem;
+    padding: 0 1rem;
 
     & .inner {
       display: flex;
