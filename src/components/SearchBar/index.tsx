@@ -105,7 +105,8 @@ const SearchInputWrapper = styled.div`
     width: 100%;
     font-size: ${(props) => props.theme.fontSizes.md};
     line-height: ${(props) => props.theme.lineHeights.md};
-    padding-left: 4rem;
+    padding-left: 3.5rem;
+    padding-right: 2rem;
     border-radius: 5rem;
     border: 0.1rem solid ${(props) => props.theme.colors.grey};
   }
