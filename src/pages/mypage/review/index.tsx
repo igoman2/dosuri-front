@@ -23,7 +23,7 @@ export type DIRECTION = typeof DIRECTION[keyof typeof DIRECTION]; // 'UP' | DOWN
 const Review = () => {
   const [scrollDir] = useDirection();
   const [isActive, setIsActive] = useState(false);
-  const [modalType, setModalType] = useState("");
+  const [modalType, setModalType] = useState<"question" | "review">("question");
   const user = useRecoilValue(userInfoState);
 
   const { communityList } = useGetCommunity({
@@ -34,7 +34,7 @@ const Review = () => {
     setIsActive(val);
   };
 
-  const handleModalType = (val: string) => {
+  const handleModalType = (val: "question" | "review") => {
     setModalType(val);
   };
 
