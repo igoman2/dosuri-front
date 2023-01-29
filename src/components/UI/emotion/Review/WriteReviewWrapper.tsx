@@ -115,7 +115,7 @@ export const WriteReviewWrapper = styled.div`
   .bill-example {
     display: flex;
     justify-content: space-between;
-
+    padding: 0 1rem;
     margin: 1rem 0 1.5rem;
   }
 
