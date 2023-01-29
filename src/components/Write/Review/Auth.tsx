@@ -240,8 +240,8 @@ const Auth: FC<IAuthProps> = ({ isActive, mode, setMode, onClose, onSwap }) => {
                   strokeWidth="4"
                   css={{
                     transform: isWarnVisible
-                      ? "rotate(-90deg)"
-                      : "rotate(90deg)",
+                      ? "rotate(90deg)"
+                      : "rotate(-90deg)",
                   }}
                 />
               </div>
@@ -335,6 +335,7 @@ const Warn = styled.div`
   .warn-wrapper {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 
   .warn-title {
