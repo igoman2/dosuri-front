@@ -335,6 +335,7 @@ const Warn = styled.div`
   .warn-wrapper {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 
   .warn-title {
