@@ -3,7 +3,9 @@ import { modalContentState, modalState } from "@/components/Modal/store";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
 import AttachImage from "./AttachImage";
-import BillExamplesImage from "@/public/assets/bill-examples.png";
+import AuthImageExampleApp from "@/public/assets/auth-image-example-app.png";
+import AuthImageExampleBill from "@/public/assets/auth-image-example-bill.png";
+import AuthImageExampleMessage from "@/public/assets/auth-image-example-message.png";
 import Checkbox from "@/components/UI/Checkbox";
 import CoinPurpleIcon from "@/public/assets/coin-purple.png";
 import Content from "../Form/Content";
@@ -197,11 +199,36 @@ const Auth: FC<IAuthProps> = ({ isActive, mode, setMode, onClose, onSwap }) => {
 
           <Content>
             <div className="question">인증 가능한 사진 종류</div>
-
             <div className="bill-example">
-              <Image src={BillExamplesImage} alt="영수증 예시" />
-            </div>
+              <AuthImageExampleWrapper>
+                <Image
+                  src={AuthImageExampleBill}
+                  width={80}
+                  height={80}
+                  alt="영수증 예시"
+                />
+                <span className="example-name">영수증</span>
+              </AuthImageExampleWrapper>
 
+              <AuthImageExampleWrapper>
+                <Image
+                  src={AuthImageExampleApp}
+                  width={80}
+                  height={80}
+                  alt="영수증 예시"
+                />
+                <span className="example-name">은행 앱</span>
+              </AuthImageExampleWrapper>
+              <AuthImageExampleWrapper>
+                <Image
+                  src={AuthImageExampleMessage}
+                  width={80}
+                  height={80}
+                  alt="영수증 예시"
+                />
+                <span className="example-name">결제 문자</span>
+              </AuthImageExampleWrapper>
+            </div>
             <Warn>
               <div className="warn-wrapper" onClick={handleWarnClick}>
                 <span className="warn-title">시술 인증 시 유의사항</span>
@@ -319,5 +346,18 @@ const Warn = styled.div`
     margin-top: 0.7rem;
     font-size: ${(props) => props.theme.fontSizes.sm};
     line-height: ${(props) => props.theme.lineHeights.sm};
+  }
+`;
+
+const AuthImageExampleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  .example-name {
+    font-size: ${(props) => props.theme.fontSizes.lg};
+    line-height: ${(props) => props.theme.lineHeights.lg};
   }
 `;
