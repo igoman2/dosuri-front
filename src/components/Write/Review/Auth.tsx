@@ -247,7 +247,7 @@ const Auth: FC<IAuthProps> = ({ isActive, mode, setMode, onClose, onSwap }) => {
               </div>
               <div
                 className="warn-description"
-                css={{ display: isWarnVisible ? "none" : "" }}
+                css={{ display: isWarnVisible ? "" : "none" }}
               >
                 도수리는 이용자분들께 최대한 정확한 정보만을 제공해 드리기 위해,
                 실제 진료를 받은 리얼 후기를 수집하려 노력하고 있습니다.
@@ -335,7 +335,6 @@ const Warn = styled.div`
   .warn-wrapper {
     display: flex;
     justify-content: space-between;
-    align-items: center;
   }
 
   .warn-title {
