@@ -157,17 +157,6 @@ const ChooseHospital: FC<IChooseHospitalProps> = ({
             }
           </Main>
         </div>
-        <ButtonWrapper>
-          <Button
-            borderRadius="0.3rem"
-            bold
-            text="도수톡으로 돌아가기"
-            width="100%"
-            backgroundColor={theme.colors.white}
-            color={theme.colors.purple}
-            onClick={() => setMode((prev) => prev + 1)}
-          />
-        </ButtonWrapper>
       </WriteReviewWrapper>
     </FullModalBase>
   );
