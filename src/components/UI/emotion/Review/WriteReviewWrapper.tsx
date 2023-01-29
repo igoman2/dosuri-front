@@ -81,7 +81,6 @@ export const WriteReviewWrapper = styled.div`
   .banner-layout {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
     margin-top: -0.5rem;
     margin-right: 1.5rem;
     margin-bottom: 1rem;
