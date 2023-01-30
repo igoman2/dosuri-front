@@ -107,6 +107,7 @@ const ChooseTreatment: FC<IChooseTreatmentProps> = ({
       subTitle="최대 3개까지 선택"
       right={
         <Button
+          padding="0"
           text="적용"
           bold
           color={theme.colors.purple}
