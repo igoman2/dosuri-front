@@ -134,7 +134,7 @@ const ChooseTreatment: FC<IChooseTreatmentProps> = ({
                 id="roll"
                 name="roll"
                 required
-                placeholder="병원 이름을 검색하세요"
+                placeholder="질환, 증상, 치료명을 검색하세요"
                 defaultValue={inputText}
                 ref={inputRef}
                 onChange={handleInput}
