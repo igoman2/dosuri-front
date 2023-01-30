@@ -74,3 +74,13 @@ export const formatDate_YYYY_MM_DD = (dayString: string) => {
 
   return dayjs(dayString).format("YYYY.MM.DD.");
 };
+
+export const addComma = (value: string) => {
+  value = String(value);
+  return value.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+};
+
+export const removeComma = (value: string) => {
+  value = String(value);
+  return value.replace(/[^\d]+/g, "");
+};

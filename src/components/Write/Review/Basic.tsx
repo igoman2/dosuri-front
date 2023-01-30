@@ -9,6 +9,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import { addComma, removeComma } from "@/util/format";
 import { css, useTheme } from "@emotion/react";
 
 import Content from "../Form/Content";
@@ -21,7 +22,6 @@ import { TitleWrapper } from "@/components/UI/emotion/Review/TitleWrapper";
 import { Treatment } from "@/types/community";
 import { WriteReviewWrapper } from "@/components/UI/emotion/Review/WriteReviewWrapper";
 import { createReviewState } from "./store";
-import { treatments } from "@/constants/Treatments";
 import { useRecoilState } from "recoil";
 
 interface IBasicProps {
@@ -78,16 +78,27 @@ const Basic: FC<IBasicProps> = ({
     setMode(11);
   };
 
+  const [treatmentPrice, setTreatmentPrice] = useState("");
+
+  const inputPriceFormat = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    return addComma(removeComma(value));
+  };
+
   const handleInputTreatmentPrice = (e: ChangeEvent<HTMLInputElement>) => {
+    setTreatmentPrice(inputPriceFormat(e));
     formik.handleChange(e);
 
     setReviewState((prev) => ({
       ...prev,
-      treatmentPrice: e.target.value,
+      treatmentPrice: removeComma(e.target.value),
     }));
   };
 
   const handleInputTreatmentCount = (e: ChangeEvent<HTMLInputElement>) => {
+    formik.handleChange(e);
+
     setReviewState((prev) => ({
       ...prev,
       treatmentCount: e.target.value,
@@ -293,7 +304,18 @@ const Basic: FC<IBasicProps> = ({
                 </TitleWrapper>
                 <div className="input-form-layout">
                   <div className="input-small">
-                    <Field
+                    <input
+                      className="field"
+                      type="text"
+                      css={{ width: "12rem" }}
+                      id="treatmentRrice"
+                      name="treatmentRrice"
+                      value={treatmentPrice}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        handleInputTreatmentPrice(e)
+                      }
+                    />
+                    {/* <Field
                       css={{ width: "12rem" }}
                       className="field"
                       id="treatmentRrice"
@@ -304,7 +326,7 @@ const Basic: FC<IBasicProps> = ({
                       onChange={(e: ChangeEvent<HTMLInputElement>) => {
                         handleInputTreatmentPrice(e);
                       }}
-                    />
+                    /> */}
                   </div>
 
                   <div className="unit">원</div>
