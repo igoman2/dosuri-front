@@ -72,6 +72,10 @@ export const WriteReviewWrapper = styled.div`
     flex-grow: 1;
     padding: 1rem;
     cursor: pointer;
+
+    &.clicked {
+      color: black;
+    }
   }
 
   .upload-image {

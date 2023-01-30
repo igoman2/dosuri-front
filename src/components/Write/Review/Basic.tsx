@@ -175,7 +175,11 @@ const Basic: FC<IBasicProps> = ({
                       }}
                     />
                   </span>
-                  <div className="input-box">
+                  <div
+                    className={`input-box ${
+                      reviewState.hospital.name ? "clicked" : ""
+                    }`}
+                  >
                     {reviewState.hospital.name
                       ? reviewState.hospital.name
                       : `병원 선택하기`}
