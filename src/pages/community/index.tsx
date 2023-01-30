@@ -21,7 +21,7 @@ import { useTheme } from "@emotion/react";
 
 const Tablist: Tab[] = [
   {
-    title: "전체보기",
+    title: "전체",
     value: "all",
   },
   {
@@ -35,7 +35,7 @@ const Tablist: Tab[] = [
 ];
 
 type Tab = {
-  title: "전체보기" | "치료후기만 보기" | "질문/상담만 보기";
+  title: "전체" | "치료후기만 보기" | "질문/상담만 보기";
   value: "all" | "review" | "question";
 };
 
