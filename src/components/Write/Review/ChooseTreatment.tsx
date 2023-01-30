@@ -24,6 +24,8 @@ import styled from "@emotion/styled";
 import { treatments } from "@/constants/Treatments";
 import { useRecoilState } from "recoil";
 
+const MAX_TREATMENT_COUNT = 3;
+
 interface IChooseTreatmentProps {
   isActive: boolean;
   mode: number;
@@ -31,6 +33,7 @@ interface IChooseTreatmentProps {
   onClose: () => void;
   onSwap: () => void;
 }
+
 const ChooseTreatment: FC<IChooseTreatmentProps> = ({
   isActive,
   setMode,
@@ -60,8 +63,18 @@ const ChooseTreatment: FC<IChooseTreatmentProps> = ({
 
   const handleListClick = (index: number) => {
     const tmp = [...keywordState];
-    tmp[index].selected = !tmp[index].selected;
+    const isClicked = tmp[index].selected;
+
+    if (!isClicked && checkMaxTreatmentCount()) {
+      return;
+    }
+
+    tmp[index].selected = !isClicked;
     setKeywordState(tmp);
+  };
+
+  const checkMaxTreatmentCount = () => {
+    return selectedKeyword.length === MAX_TREATMENT_COUNT;
   };
 
   const handleKeywordDelete = (keyword: Treatment) => {
