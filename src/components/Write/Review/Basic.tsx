@@ -315,6 +315,7 @@ const Basic: FC<IBasicProps> = ({
                       id="treatmentRrice"
                       name="treatmentRrice"
                       value={treatmentPrice}
+                      placeholder="원 단위로 입력"
                       onChange={(e: ChangeEvent<HTMLInputElement>) =>
                         handleInputTreatmentPrice(e)
                       }
