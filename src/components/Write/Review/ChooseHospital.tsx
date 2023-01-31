@@ -131,25 +131,43 @@ const ChooseHospital: FC<IChooseHospitalProps> = ({
           <Main>
             {
               <HospitalQueryListWrapper>
-                {searchedHospitalList.map((searchedHospital) => (
+                {searchedHospitalList.length > 0 ? (
+                  searchedHospitalList.map((searchedHospital) => (
+                    <div
+                      className="link"
+                      key={searchedHospital.uuid}
+                      onClick={() => handleListClick(searchedHospital)}
+                    >
+                      <>
+                        <Divider height={1} />
+                        <div className="item">
+                          <span className="word">
+                            {highlightIncludedText(
+                              searchedHospital.name,
+                              inputText
+                            )}
+                          </span>
+                        </div>
+                      </>
+                    </div>
+                  ))
+                ) : (
                   <div
                     className="link"
-                    key={searchedHospital.uuid}
-                    onClick={() => handleListClick(searchedHospital)}
+                    onClick={() => {
+                      setReviewState((prev) => ({
+                        ...prev,
+                        hospital: { name: inputText, uuid: "" },
+                      }));
+                      setMode(0);
+                    }}
                   >
-                    <>
-                      <Divider height={1} />
-                      <div className="item">
-                        <span className="word">
-                          {highlightIncludedText(
-                            searchedHospital.name,
-                            inputText
-                          )}
-                        </span>
-                      </div>
-                    </>
+                    <Divider height={1} />
+                    <div className="item">
+                      <span className="word">{inputText}</span>
+                    </div>
                   </div>
-                ))}
+                )}
               </HospitalQueryListWrapper>
             }
           </Main>
@@ -223,8 +241,8 @@ const HospitalQueryListWrapper = styled.div`
     padding: 1rem 0;
 
     .word {
-      font-size: ${(props) => props.theme.fontSizes.md};
-      line-height: ${(props) => props.theme.lineHeights.md};
+      font-size: ${(props) => props.theme.fontSizes.lg};
+      line-height: ${(props) => props.theme.lineHeights.lg};
     }
   }
 
