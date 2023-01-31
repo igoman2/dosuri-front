@@ -320,7 +320,7 @@ const Basic: FC<IBasicProps> = ({
                   <div className="input-small">
                     <input
                       ref={treatmentPriceRef}
-                      className="field treament-price"
+                      className="field treatment-price"
                       type="number"
                       css={{ width: "12rem" }}
                       id="treatmentRrice"

@@ -43,6 +43,7 @@ export const WriteReviewWrapper = styled.div`
 
     &[comma-value] {
       position: relative;
+      overflow: hidden;
     }
 
     &[comma-value]:before {
@@ -54,7 +55,7 @@ export const WriteReviewWrapper = styled.div`
       left: 0.8rem;
     }
 
-    .treament-price {
+    .treatment-price {
       color: #fff;
     }
   }
