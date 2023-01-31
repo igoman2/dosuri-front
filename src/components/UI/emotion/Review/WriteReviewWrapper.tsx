@@ -40,6 +40,24 @@ export const WriteReviewWrapper = styled.div`
         color: ${(props) => props.theme.colors.grey};
       }
     }
+
+    &[comma-value] {
+      position: relative;
+      overflow: hidden;
+    }
+
+    &[comma-value]:before {
+      content: attr(comma-value);
+      font-size: ${(props) => props.theme.fontSizes.lg};
+      line-height: ${(props) => props.theme.lineHeights.lg};
+      position: absolute;
+      top: 1.2rem;
+      left: 0.8rem;
+    }
+
+    .treatment-price {
+      color: #fff;
+    }
   }
 
   .input-large {
