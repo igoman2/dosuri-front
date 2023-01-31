@@ -8,6 +8,8 @@ import ChooseTherapist from "./ChooseTherapist";
 import ChooseTreatment from "./ChooseTreatment";
 import Complete from "./Complete";
 import Detail from "./Detail";
+import { createReviewState } from "./store";
+import { useRecoilValue } from "recoil";
 
 interface IWriteReviewProps {
   isActive: boolean;
@@ -23,6 +25,8 @@ const WriteReview: FC<IWriteReviewProps> = ({
   onClose,
 }) => {
   const [mode, setMode] = useState<number>(0);
+  const reviewState = useRecoilValue(createReviewState);
+  console.log(reviewState);
 
   const renderWithMode = () => {
     switch (mode) {
