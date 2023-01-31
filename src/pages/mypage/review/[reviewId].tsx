@@ -51,7 +51,6 @@ const ReviewDetail: FC<IReviewDetailProps> = ({ reviewId }) => {
       actionRight: {
         text: "삭제",
         action: () => {
-          console.log("삭제!");
           setIsActive((prev) => {
             return { ...prev, isActive: false };
           });

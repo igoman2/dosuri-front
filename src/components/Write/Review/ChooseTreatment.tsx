@@ -809,8 +809,6 @@ const ChooseTreatment: FC<IChooseTreatmentProps> = ({
     setInputText(e.target.value);
   };
 
-  console.log(keywordState);
-
   const handleListClick = (index: number) => {
     const tmp = [...keywordState];
     const isClicked = tmp[index].selected;

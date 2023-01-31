@@ -26,7 +26,6 @@ const WriteReview: FC<IWriteReviewProps> = ({
 }) => {
   const [mode, setMode] = useState<number>(0);
   const reviewState = useRecoilValue(createReviewState);
-  console.log(reviewState);
 
   const renderWithMode = () => {
     switch (mode) {
