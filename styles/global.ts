@@ -158,5 +158,16 @@ export const global = css`
         -webkit-text-fill-color: ${theme.colors.black};
       }
     }
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    &[type="number"] {
+      -moz-appearance: textfield;
+    }
   }
 `;

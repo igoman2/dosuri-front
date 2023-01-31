@@ -7,9 +7,9 @@ import React, {
   FC,
   MouseEvent,
   useEffect,
+  useRef,
   useState,
 } from "react";
-import { addComma, removeComma } from "@/util/format";
 import { css, useTheme } from "@emotion/react";
 
 import Content from "../Form/Content";
@@ -44,6 +44,7 @@ const Basic: FC<IBasicProps> = ({
   const [selectedKeyword, setSelectedKeyword] = useState<Treatment[]>(
     reviewState.treatmentKeywords
   );
+  const treatmentPriceRef = useRef<HTMLInputElement>(null);
 
   const handleKeywordDelete = (
     e: MouseEvent<HTMLElement>,
@@ -78,21 +79,30 @@ const Basic: FC<IBasicProps> = ({
     setMode(11);
   };
 
-  const [treatmentPrice, setTreatmentPrice] = useState("");
-
-  const inputPriceFormat = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    return addComma(removeComma(value));
-  };
-
   const handleInputTreatmentPrice = (e: ChangeEvent<HTMLInputElement>) => {
-    setTreatmentPrice(inputPriceFormat(e));
+    const value = e.target.value;
+    var chars = value.split("").reverse();
+    var withCommas = [];
+    for (var i = 1; i <= chars.length; i++) {
+      withCommas.push(chars[i - 1]);
+      if (i % 3 == 0 && i != chars.length) {
+        withCommas.push(",");
+      }
+    }
+    var val = withCommas.reverse().join("");
+    if (
+      treatmentPriceRef &&
+      treatmentPriceRef.current &&
+      treatmentPriceRef.current.parentNode
+    ) {
+      const parentNode = treatmentPriceRef.current.parentNode as HTMLElement;
+      parentNode.setAttribute("comma-value", val);
+    }
     formik.handleChange(e);
 
     setReviewState((prev) => ({
       ...prev,
-      treatmentPrice: removeComma(e.target.value),
+      treatmentPrice: e.target.value,
     }));
   };
 
@@ -309,29 +319,17 @@ const Basic: FC<IBasicProps> = ({
                 <div className="input-form-layout">
                   <div className="input-small">
                     <input
-                      className="field"
-                      type="text"
+                      ref={treatmentPriceRef}
+                      className="field treament-price"
+                      type="number"
                       css={{ width: "12rem" }}
                       id="treatmentRrice"
                       name="treatmentRrice"
-                      value={treatmentPrice}
                       placeholder="원 단위로 입력"
                       onChange={(e: ChangeEvent<HTMLInputElement>) =>
                         handleInputTreatmentPrice(e)
                       }
                     />
-                    {/* <Field
-                      css={{ width: "12rem" }}
-                      className="field"
-                      id="treatmentRrice"
-                      name="treatmentRrice"
-                      placeholder="원 단위로 입력"
-                      type="number"
-                      defaultValue={reviewState.treatmentPrice}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        handleInputTreatmentPrice(e);
-                      }}
-                    /> */}
                   </div>
 
                   <div className="unit">원</div>
