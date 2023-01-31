@@ -13,15 +13,15 @@ import React, {
 
 import Divider from "@/components/UI/Divider";
 import DoSwiper from "@/components/DoSwiper";
-import PostBottom from "./PostBottom";
 import styled from "@emotion/styled";
 
 interface IPostCardProps {
   review: IHospitalReviewsResult | ICommunityPostDetailResponse;
   bottom: ReactNode;
+  skip?: boolean;
 }
 
-const PostCard: FC<IPostCardProps> = ({ review, bottom }) => {
+const PostCard: FC<IPostCardProps> = ({ review, bottom, skip = true }) => {
   const [isCommentOver3Line, setIsCommentOver3Line] = useState<boolean>();
   const [isShowMoreClicked, setIsShowMoreClicked] = useState<boolean>(false);
   const commentRef = useRef<HTMLDivElement>(null);
@@ -73,6 +73,13 @@ const PostCard: FC<IPostCardProps> = ({ review, bottom }) => {
     (attachment) => attachment.attachment.signed_path
   );
 
+  const showMoreButton = () => {
+    if (!skip) {
+      return false;
+    }
+    return !isShowMoreClicked && isCommentOver3Line;
+  };
+
   return (
     <>
       <PostCardWrapper>
@@ -93,13 +100,10 @@ const PostCard: FC<IPostCardProps> = ({ review, bottom }) => {
           )}
         </div>
         <div className="post-comment">
-          <div
-            className={!isShowMoreClicked && isCommentOver3Line ? "hide" : ""}
-            ref={commentRef}
-          >
+          <div className={showMoreButton() ? "hide" : ""} ref={commentRef}>
             {review.content}
           </div>
-          {showMoreRender()}
+          {showMoreButton() && showMoreRender()}
         </div>
         {bottom}
       </PostCardWrapper>

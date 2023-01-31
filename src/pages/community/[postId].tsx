@@ -30,6 +30,7 @@ const Post: FC<IPostProps> = ({ postId }) => {
         <PostCard
           review={data}
           bottom={<PostBottom review={data} type="detail" />}
+          skip={false}
         />
         <Comment comments={data.article_comment} />
         <Reply postId={postId} />
