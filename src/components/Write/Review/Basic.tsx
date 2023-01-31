@@ -8,7 +8,6 @@ import React, {
   MouseEvent,
   useEffect,
   useRef,
-  useRef,
   useState,
 } from "react";
 import { css, useTheme } from "@emotion/react";
@@ -134,7 +133,6 @@ const Basic: FC<IBasicProps> = ({
 
     setReviewState((prev) => ({
       ...prev,
-      treatmentPrice: e.target.value,
       treatmentPrice: e.target.value,
     }));
 
