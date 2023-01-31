@@ -8,6 +8,7 @@ import React, {
   MouseEvent,
   useEffect,
   useRef,
+  useRef,
   useState,
 } from "react";
 import { css, useTheme } from "@emotion/react";
@@ -44,6 +45,9 @@ const Basic: FC<IBasicProps> = ({
   const [selectedKeyword, setSelectedKeyword] = useState<Treatment[]>(
     reviewState.treatmentKeywords
   );
+
+  const [treatmentPrice, setTreatmentPrice] = useState("");
+
   const treatmentPriceRef = useRef<HTMLInputElement>(null);
 
   const handleKeywordDelete = (
@@ -79,31 +83,69 @@ const Basic: FC<IBasicProps> = ({
     setMode(11);
   };
 
-  const handleInputTreatmentPrice = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    var chars = value.split("").reverse();
-    var withCommas = [];
-    for (var i = 1; i <= chars.length; i++) {
+  useEffect(() => {
+    setTreatmentPrice(reviewState.treatmentPrice);
+    if (
+      treatmentPriceRef &&
+      treatmentPriceRef.current &&
+      treatmentPriceRef.current.parentNode
+    ) {
+      if (reviewState.treatmentPrice.length < 1) {
+        treatmentPriceRef.current.placeholder = "원 단위로 입력";
+
+        return;
+      }
+
+      const parentNode = treatmentPriceRef.current.parentNode as HTMLElement;
+      parentNode.setAttribute(
+        "comma-value",
+        addComma(reviewState.treatmentPrice)
+      );
+      treatmentPriceRef.current.placeholder = "";
+    }
+  }, [treatmentPriceRef]);
+
+  const addComma = (value: string) => {
+    const chars = value.split("").reverse();
+    const withCommas = [];
+    for (let i = 1; i <= chars.length; i++) {
       withCommas.push(chars[i - 1]);
       if (i % 3 == 0 && i != chars.length) {
         withCommas.push(",");
       }
     }
-    var val = withCommas.reverse().join("");
+    return withCommas.reverse().join("");
+  };
+
+  const handleInputTreatmentPrice = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (
+      treatmentPriceRef &&
+      treatmentPriceRef.current &&
+      treatmentPriceRef.current.parentNode
+    ) {
+      if (reviewState.treatmentPrice.length < 1) {
+        treatmentPriceRef.current.placeholder = "원 단위로 입력";
+      }
+    }
+
+    setTreatmentPrice(value);
+    formik.handleChange(e);
+
+    setReviewState((prev) => ({
+      ...prev,
+      treatmentPrice: e.target.value,
+      treatmentPrice: e.target.value,
+    }));
+
     if (
       treatmentPriceRef &&
       treatmentPriceRef.current &&
       treatmentPriceRef.current.parentNode
     ) {
       const parentNode = treatmentPriceRef.current.parentNode as HTMLElement;
-      parentNode.setAttribute("comma-value", val);
+      parentNode.setAttribute("comma-value", addComma(value));
     }
-    formik.handleChange(e);
-
-    setReviewState((prev) => ({
-      ...prev,
-      treatmentPrice: e.target.value,
-    }));
   };
 
   const handleInputTreatmentCount = (e: ChangeEvent<HTMLInputElement>) => {
@@ -321,6 +363,7 @@ const Basic: FC<IBasicProps> = ({
                     <input
                       ref={treatmentPriceRef}
                       className="field treatment-price"
+                      value={treatmentPrice}
                       type="number"
                       css={{ width: "12rem" }}
                       id="treatmentRrice"
