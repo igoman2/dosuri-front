@@ -130,7 +130,7 @@ const WriteQuesiton: FC<IWriteQeustionProps> = ({
                   } ${formik.dirty ? "" : "initial"}`}
                   id="content"
                   name="content"
-                  placeholder="궁금한거나 공유하고 싶은 내용을 다른 회원들에게 공유해주세요."
+                  placeholder="궁금하거나 공유하고 싶은 내용을 다른 회원들에게 공유해주세요."
                   as="textarea"
                 />
               </form>
