@@ -8,8 +8,6 @@ import React, {
 } from "react";
 import { useBoolean, useDebounce } from "usehooks-ts";
 
-import Button from "@/components/Button";
-import { ButtonWrapper } from "@/components/UI/emotion/Review/ButtonWrapper";
 import Divider from "@/components/UI/Divider";
 import FullModalBase from "@/components/Modal/FullModalBase";
 import { IHospitalInfoResult } from "@/service/types";
@@ -19,7 +17,6 @@ import { createReviewState } from "./store";
 import { css } from "@emotion/react";
 import magnifier_grey from "@/public/assets/magnifier_grey.png";
 import styled from "@emotion/styled";
-import theme from "@/styles/theme";
 import { useRecoilState } from "recoil";
 import { useSearchHospital } from "@/hooks/service/useSearchHospital";
 

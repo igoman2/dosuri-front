@@ -10,7 +10,6 @@ import React, {
 import { css, useTheme } from "@emotion/react";
 
 import Button from "@/components/Button";
-import { ButtonWrapper } from "@/components/UI/emotion/Review/ButtonWrapper";
 import Checkbox from "@/components/UI/Checkbox";
 import Divider from "@/components/UI/Divider";
 import FullModalBase from "@/components/Modal/FullModalBase";

@@ -1,0 +1,123 @@
+import React, {
+  ChangeEvent,
+  Dispatch,
+  FC,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { useBoolean, useDebounce } from "usehooks-ts";
+
+import Button from "@/components/Button";
+import { EmptyText } from "@/components/UI/emotion/EmptyText";
+import FullModalBase from "@/components/Modal/FullModalBase";
+import { IHospitalInfoResult } from "@/service/types";
+import { createReviewState } from "./store";
+import { css } from "@emotion/react";
+import theme from "@/styles/theme";
+import { useRecoilState } from "recoil";
+import { useSearchHospital } from "@/hooks/service/useSearchHospital";
+
+interface IChooseTherapistProps {
+  isActive: boolean;
+  mode: number;
+  setMode: Dispatch<React.SetStateAction<number>>;
+  onClose: () => void;
+  onSwap: () => void;
+}
+const ChooseTherapist: FC<IChooseTherapistProps> = ({
+  isActive,
+  mode,
+  setMode,
+  onClose,
+  onSwap,
+}) => {
+  const image = css`
+    position: absolute;
+    left: 1rem;
+    top: 0.8rem;
+  `;
+  const [inputText, setInputText] = useState("");
+  const { value, setTrue, setFalse } = useBoolean(false);
+  const debouncedValue = useDebounce<string>(inputText, 300);
+  const [reviewState, setReviewState] = useRecoilState(createReviewState);
+
+  const { searchedHospitalList } = useSearchHospital({
+    query: inputText,
+    isInput: value,
+    page_size: 30,
+  });
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setTrue();
+    setInputText(e.target.value);
+  };
+
+  useEffect(() => {
+    setFalse();
+  }, [debouncedValue]);
+
+  const handleListClick = (hospital: IHospitalInfoResult) => {
+    setReviewState((prev) => ({
+      ...prev,
+      hospital: { name: hospital.name, uuid: hospital.uuid },
+    }));
+    setMode(0);
+  };
+
+  const highlightIncludedText = (text: string, value: string) => {
+    const title = text.toLowerCase();
+    const searchValue = value.toLowerCase();
+    if (searchValue !== "" && title.includes(searchValue)) {
+      const matchText = text.split(new RegExp(`(${searchValue})`, "gi"));
+
+      return (
+        <>
+          {matchText.map((text, index) =>
+            text.toLowerCase() === searchValue.toLowerCase() ? (
+              <span className="highlight" key={index}>
+                {text}
+              </span>
+            ) : (
+              text
+            )
+          )}
+        </>
+      );
+    }
+
+    return text;
+  };
+
+  return (
+    <FullModalBase
+      isActive={isActive}
+      onClose={() => setMode(0)}
+      onClickBack={onClose}
+      title="치료사 선택"
+      right={
+        <Button
+          padding="0"
+          text="적용"
+          bold
+          color={theme.colors.purple}
+          backgroundColor={theme.colors.white}
+          fontSize="xxl"
+        />
+      }
+      divider
+    >
+      <div
+        css={{
+          marginTop: "0.5rem",
+        }}
+      >
+        <EmptyText>등록된 치료사가 없습니다.</EmptyText>
+      </div>
+    </FullModalBase>
+  );
+};
+
+export default ChooseTherapist;

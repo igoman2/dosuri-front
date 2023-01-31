@@ -1,8 +1,8 @@
 import React, { FC, ReactNode, useEffect, useState } from "react";
 
+import Divider from "../UI/Divider";
 import Icon from "@/util/Icon";
 import { ModalBaseContainer } from "./ModalBase";
-import WritePostContent from "../Write/Question";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";
 
@@ -14,6 +14,7 @@ interface IFullModalBase {
   right?: ReactNode;
   onClose: () => void;
   onClickBack?: () => void;
+  divider?: boolean;
 }
 
 const FullModalBase: FC<IFullModalBase> = ({
@@ -24,6 +25,7 @@ const FullModalBase: FC<IFullModalBase> = ({
   subTitle,
   right,
   onClickBack,
+  divider = false,
 }) => {
   const [closed, setClosed] = useState(true);
 
@@ -106,6 +108,7 @@ const FullModalBase: FC<IFullModalBase> = ({
                   </div>
                 </div>
               </div>
+              {divider && <Divider height={1} />}
             </div>
           </div>
           <div className="content">{children}</div>

@@ -13,7 +13,6 @@ import React, {
 import { css, useTheme } from "@emotion/react";
 
 import Content from "../Form/Content";
-import { EmptyText } from "@/components/UI/emotion/EmptyText";
 import FullModalBase from "@/components/Modal/FullModalBase";
 import Icon from "@/util/Icon";
 import { ModalBottom } from "./ModalBottom";
@@ -80,6 +79,14 @@ const Basic: FC<IBasicProps> = ({
 
   const handleTreatmentSelect = () => {
     setMode(11);
+  };
+
+  const handleDoctorSelect = () => {
+    setMode(12);
+  };
+
+  const handleTherapistSelect = () => {
+    setMode(13);
   };
 
   useEffect(() => {
@@ -320,34 +327,66 @@ const Basic: FC<IBasicProps> = ({
                 </SearchInputWrapper>
               </div>
             </Content>
+            {reviewState.hospital.name ? (
+              <>
+                <Content>
+                  <div className="container">
+                    <TitleWrapper>
+                      <div className="title">
+                        진료 담당 의사를 선택해 주세요.
+                      </div>
+                      <div className="optional">{"(선택)"}</div>
+                    </TitleWrapper>
+                  </div>
+                  <div onClick={handleDoctorSelect}>
+                    <SearchInputWrapper>
+                      <span css={image}>
+                        <Icon
+                          name="arrow"
+                          width="24"
+                          height="24"
+                          stroke={theme.colors.grey}
+                          strokeWidth="2"
+                          css={{
+                            transform: "rotate(180deg)",
+                          }}
+                        />
+                      </span>
+                      <div className="input-box">의사 선택하기</div>
+                    </SearchInputWrapper>
+                  </div>
+                </Content>
 
-            <Content>
-              <div className="container">
-                <TitleWrapper>
-                  <div className="title">진료 담당 의사를 선택해 주세요.</div>
-                  <div className="optional">{"(선택)"}</div>
-                </TitleWrapper>
-              </div>
-              <div onClick={handleTreatmentSelect}>
-                <SearchInputWrapper>
-                  <EmptyText>의사가 없습니다.</EmptyText>
-                </SearchInputWrapper>
-              </div>
-            </Content>
+                <Content>
+                  <div className="container">
+                    <TitleWrapper>
+                      <div className="title">
+                        치료 담당 치료사를 선택해 주세요.
+                      </div>
+                      <div className="optional">{"(선택)"}</div>
+                    </TitleWrapper>
+                  </div>
+                  <div onClick={handleTherapistSelect}>
+                    <SearchInputWrapper>
+                      <span css={image}>
+                        <Icon
+                          name="arrow"
+                          width="24"
+                          height="24"
+                          stroke={theme.colors.grey}
+                          strokeWidth="2"
+                          css={{
+                            transform: "rotate(180deg)",
+                          }}
+                        />
+                      </span>
+                      <div className="input-box">치료사 선택하기</div>
+                    </SearchInputWrapper>
+                  </div>
+                </Content>
+              </>
+            ) : null}
 
-            <Content>
-              <div className="container">
-                <TitleWrapper>
-                  <div className="title">치료 담당 치료사를 선택해 주세요.</div>
-                  <div className="optional">{"(선택)"}</div>
-                </TitleWrapper>
-              </div>
-              <div>
-                <SearchInputWrapper>
-                  <EmptyText>치료사가 없습니다.</EmptyText>
-                </SearchInputWrapper>
-              </div>
-            </Content>
             <Content>
               <div className="container">
                 <TitleWrapper>

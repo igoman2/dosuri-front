@@ -2,7 +2,9 @@ import React, { FC, useState } from "react";
 
 import Auth from "./Auth";
 import Basic from "./Basic";
+import ChooseDoctor from "./ChooseDoctor";
 import ChooseHospital from "./ChooseHospital";
+import ChooseTherapist from "./ChooseTherapist";
 import ChooseTreatment from "./ChooseTreatment";
 import Complete from "./Complete";
 import Detail from "./Detail";
@@ -78,6 +80,28 @@ const WriteReview: FC<IWriteReviewProps> = ({
       case 11:
         return (
           <ChooseTreatment
+            isActive={isActive}
+            onClose={() => onChangeActive()}
+            setMode={setMode}
+            onSwap={onSwap}
+            mode={0}
+          />
+        );
+
+      case 12:
+        return (
+          <ChooseDoctor
+            isActive={isActive}
+            onClose={() => onChangeActive()}
+            setMode={setMode}
+            onSwap={onSwap}
+            mode={0}
+          />
+        );
+
+      case 13:
+        return (
+          <ChooseTherapist
             isActive={isActive}
             onClose={() => onChangeActive()}
             setMode={setMode}
