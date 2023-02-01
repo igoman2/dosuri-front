@@ -1,8 +1,10 @@
+import { IHospitalInfoResponse, IHospitalInfoResult } from "@/service/types";
 import React, {
   ChangeEvent,
   Dispatch,
   FC,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -10,15 +12,16 @@ import { useBoolean, useDebounce } from "usehooks-ts";
 
 import Divider from "@/components/UI/Divider";
 import FullModalBase from "@/components/Modal/FullModalBase";
-import { IHospitalInfoResult } from "@/service/types";
 import Image from "next/image";
+import InfiniteScroll from "react-infinite-scroller";
 import { WriteReviewWrapper } from "@/components/UI/emotion/Review/WriteReviewWrapper";
+import api from "@/service/axiosConfig";
 import { createReviewState } from "./store";
 import { css } from "@emotion/react";
 import magnifier_grey from "@/public/assets/magnifier_grey.png";
 import styled from "@emotion/styled";
+import { useInfiniteQuery } from "react-query";
 import { useRecoilState } from "recoil";
-import { useSearchHospital } from "@/hooks/service/useSearchHospital";
 
 interface IChooseHospitalProps {
   isActive: boolean;
@@ -44,11 +47,38 @@ const ChooseHospital: FC<IChooseHospitalProps> = ({
   const debouncedValue = useDebounce<string>(inputText, 300);
   const [reviewState, setReviewState] = useRecoilState(createReviewState);
 
-  const { searchedHospitalList } = useSearchHospital({
-    query: inputText,
-    isInput: value,
-    page_size: 30,
-  });
+  const initialUrl = useMemo(() => {
+    return `/hospital/v1/hospitals?search=${inputText}`;
+  }, [inputText]);
+
+  const fetchUrl = async (url: string) => {
+    const response = await api.get<IHospitalInfoResponse>(url);
+    return response.data;
+  };
+
+  const {
+    data: searchedHospitalList,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+  } = useInfiniteQuery(
+    ["choose-hospital", inputText],
+    ({ pageParam = initialUrl }) => fetchUrl(pageParam),
+    {
+      getNextPageParam: (lastPage) => {
+        return lastPage.next || undefined;
+      },
+      suspense: false,
+    }
+  );
+
+  const fetchNextList = () => {
+    console.log("next@@");
+    if (isFetching) {
+      return;
+    }
+    fetchNextPage();
+  };
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -128,49 +158,68 @@ const ChooseHospital: FC<IChooseHospitalProps> = ({
               />
             </form>
           </SearchInputWrapper>
-          <Main>
-            {
-              <HospitalQueryListWrapper>
-                {searchedHospitalList.length > 0 ? (
-                  searchedHospitalList.map((searchedHospital) => (
-                    <div
-                      className="link"
-                      key={searchedHospital.uuid}
-                      onClick={() => handleListClick(searchedHospital)}
-                    >
-                      <>
+          <InfiniteScroll
+            loadMore={fetchNextList}
+            hasMore={hasNextPage}
+            useWindow={false}
+            getScrollParent={() => {
+              const parent = document.getElementById("scroll-parent");
+              console.log(parent);
+              return parent;
+            }}
+          >
+            {searchedHospitalList?.pages.map((pageData, i) => {
+              if (pageData.count === 0) {
+                return (
+                  <Main key={`hospital-list-${i}`}>
+                    <HospitalQueryListWrapper>
+                      <div
+                        className="link"
+                        onClick={() => {
+                          setReviewState((prev) => ({
+                            ...prev,
+                            hospital: { name: inputText, uuid: "" },
+                          }));
+                          setMode(0);
+                        }}
+                      >
                         <Divider height={1} />
                         <div className="item">
-                          <span className="word">
-                            {highlightIncludedText(
-                              searchedHospital.name,
-                              inputText
-                            )}
-                          </span>
+                          <span className="word">{inputText}</span>
                         </div>
-                      </>
-                    </div>
-                  ))
-                ) : (
-                  <div
-                    className="link"
-                    onClick={() => {
-                      setReviewState((prev) => ({
-                        ...prev,
-                        hospital: { name: inputText, uuid: "" },
-                      }));
-                      setMode(0);
-                    }}
-                  >
-                    <Divider height={1} />
-                    <div className="item">
-                      <span className="word">{inputText}</span>
-                    </div>
-                  </div>
-                )}
-              </HospitalQueryListWrapper>
-            }
-          </Main>
+                      </div>
+                    </HospitalQueryListWrapper>
+                  </Main>
+                );
+              }
+
+              return (
+                <Main key={i}>
+                  <HospitalQueryListWrapper>
+                    {pageData.results.map((searchedHospital) => (
+                      <div
+                        className="link"
+                        key={searchedHospital.uuid}
+                        onClick={() => handleListClick(searchedHospital)}
+                      >
+                        <>
+                          <Divider height={1} />
+                          <div className="item">
+                            <span className="word">
+                              {highlightIncludedText(
+                                searchedHospital.name,
+                                inputText
+                              )}
+                            </span>
+                          </div>
+                        </>
+                      </div>
+                    ))}
+                  </HospitalQueryListWrapper>
+                </Main>
+              );
+            })}
+          </InfiniteScroll>
         </div>
       </WriteReviewWrapper>
     </FullModalBase>
