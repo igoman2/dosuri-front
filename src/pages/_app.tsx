@@ -1,3 +1,5 @@
+import * as gtag from "../lib/gtag";
+
 import { Global, ThemeProvider } from "@emotion/react";
 import { Hydrate, QueryClientProvider } from "react-query";
 
@@ -8,6 +10,7 @@ import Fallback from "./fallback";
 import Head from "next/head";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { RecoilRoot } from "recoil";
+import Script from "next/script";
 import Spinner from "@/components/UI/Spinner";
 import { Suspense } from "react";
 import { global } from "@/styles/global";
@@ -28,6 +31,24 @@ function MyApp({
         <title>Dosuri</title>
         <meta name="description" content="도수 통증치료 병원정보는 도수리" />
       </Head>
+      <Script
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+      />
+      <Script
+        id="gtag-init"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${gtag.GA_TRACKING_ID}', {
+              page_path: window.location.pathname,
+            });
+          `,
+        }}
+      />
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
