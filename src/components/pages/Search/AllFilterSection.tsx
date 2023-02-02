@@ -40,11 +40,7 @@ const AllFilterSection = () => {
   }, [category]);
 
   const initialUrl = useMemo(() => {
-    if (category.key === "distance") {
-      return `/hospital/v1/hospitals?latitude=${location.lat}&longitude=${location.lng}`;
-    } else {
-      return `/hospital/v1/hospitals?ordering=${category.key}`;
-    }
+    return `/hospital/v1/hospitals-current-address-filtered?latitude=${location.lat}&longitude=${location.lng}&ordering=${category.key}`;
   }, [category, location]);
 
   const fetchUrl = async (url: string) => {
