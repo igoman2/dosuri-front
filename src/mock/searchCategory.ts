@@ -1,8 +1,8 @@
 export const SELECT_LIST = [
-  {
-    title: "인기순",
-    key: "-view_count",
-  },
+  // {
+  //   title: "인기순",
+  //   key: "-view_count",
+  // },
   {
     title: "후기 많은순",
     key: "-article_count",
