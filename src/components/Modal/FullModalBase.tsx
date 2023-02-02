@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useEffect, useState } from "react";
+import React, { FC, ReactNode } from "react";
 
 import Divider from "../UI/Divider";
 import Icon from "@/util/Icon";
@@ -27,34 +27,6 @@ const FullModalBase: FC<IFullModalBase> = ({
   onClickBack,
   divider = false,
 }) => {
-  const [closed, setClosed] = useState(true);
-
-  useEffect(() => {
-    document.body.style.overflowY = isActive ? "hidden" : "initial";
-
-    let timeoutId: any;
-    if (isActive) {
-      setClosed(false);
-    } else {
-      timeoutId = setTimeout(() => {
-        setClosed(true);
-      }, 200);
-    }
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [isActive]);
-
-  useEffect(() => {
-    return () => {
-      document.body.style.overflowY = "initial";
-    };
-  }, []);
-
-  if (!isActive && closed) return null;
-
   return (
     <>
       <FullModalBaseWrapper active={isActive}>
