@@ -1,5 +1,6 @@
 import { IGoodPriceHospitals, IHospitalInfoResult } from "@/service/types";
 import React, { useEffect } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import Button from "@/components/Button";
 import Header from "@/components/Layout/Header";
@@ -16,15 +17,15 @@ import styled from "@emotion/styled";
 import useAuth from "@/hooks/useAuth";
 import useGeolocation from "@/hooks/useGeolocation";
 import { useQuery } from "react-query";
-import { useSetRecoilState } from "recoil";
 import { useTheme } from "@emotion/react";
+import { userInfoState } from "@/store/user";
 
 const Home = () => {
   const theme = useTheme();
   const location = useGeolocation();
   const setLocaton = useSetRecoilState(locationState);
+  const userInfo = useRecoilValue(userInfoState);
   const { isLoggedIn } = useAuth();
-
   useEffect(() => {
     setLocaton({
       lat: location.coordinates?.lat ?? 0,
@@ -57,7 +58,9 @@ const Home = () => {
                 fontWeight: 700,
               }}
             >
-              {isLoggedIn ? "내 주변 TOP 병원" : "도수리 TOP 병원"}
+              {isLoggedIn
+                ? `${userInfo.address.small_area} 주변 TOP 병원`
+                : "도수리 TOP 병원"}
             </div>
 
             {hospitalList.top_hospitals.map(
