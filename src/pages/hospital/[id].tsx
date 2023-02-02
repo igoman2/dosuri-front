@@ -20,6 +20,8 @@ import Price from "@/components/pages/Hospital/Price";
 import Reviews from "@/components/pages/Hospital/Reviews";
 import Spinner from "@/components/UI/Spinner";
 import Tab from "@/components/Tab";
+import { queryClient } from "@/service/react-query/queryClient";
+import { queryKeys } from "@/service/react-query/constants";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";
 import { useRouter } from "next/router";
@@ -109,6 +111,12 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
       return toggleHospitalThumbup({
         hospital: uuid,
         is_up: !isUp,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.hospital],
+        refetchInactive: true,
       });
     },
   });

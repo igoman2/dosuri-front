@@ -12,6 +12,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import Link from "next/link";
 import api from "@/service/axiosConfig";
 import { locationState } from "@/store/location";
+import { queryKeys } from "@/service/react-query/constants";
 import { searchFilterState } from "@/store/searchOption";
 import styled from "@emotion/styled";
 import { useInfiniteQuery } from "react-query";
@@ -54,7 +55,7 @@ const AllFilterSection = () => {
     hasNextPage,
     isFetching,
   } = useInfiniteQuery(
-    ["hospital-by-filter", category],
+    [queryKeys.hospital, "hospital-by-filter", category],
     ({ pageParam = initialUrl }) => fetchUrl(pageParam),
     {
       getNextPageParam: (lastPage) => {

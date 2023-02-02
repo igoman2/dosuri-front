@@ -2,6 +2,7 @@ import HospitalCard from "@/components/Card/HospitalCard";
 import Link from "next/link";
 import React from "react";
 import { getFilteredHospitalList } from "@/service/apis/hospital";
+import { queryKeys } from "@/service/react-query/constants";
 import { useQuery } from "react-query";
 import { useTheme } from "@emotion/react";
 
@@ -10,7 +11,8 @@ const LIST_COUNT_LIMIT = 3;
 const NewReviewSection = () => {
   const theme = useTheme();
   const { data: getHospitalListData1 } = useQuery({
-    queryKey: "getHospitalList-search-1",
+    queryKey: [queryKeys.hospital, "new-review"],
+
     queryFn: async () => {
       const data = await getFilteredHospitalList({
         ordering: "-latest_article_created_at",

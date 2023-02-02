@@ -11,6 +11,7 @@ import PostCard from "@/components/Card/PostCard";
 import { getHospitalInfoHome } from "@/service/apis/hospital";
 import { getHotCommunity } from "@/service/apis/community";
 import { locationState } from "@/store/location";
+import { queryKeys } from "@/service/react-query/constants";
 import styled from "@emotion/styled";
 import useAuth from "@/hooks/useAuth";
 import useGeolocation from "@/hooks/useGeolocation";
@@ -32,7 +33,7 @@ const Home = () => {
   }, [location]);
 
   const { data: hospitalList } = useQuery(
-    "getHospitalList",
+    queryKeys.hospital,
     getHospitalInfoHome
   );
   const { data: hotCommunity } = useQuery("getHotCommunity", getHotCommunity);
