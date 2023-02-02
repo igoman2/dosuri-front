@@ -46,6 +46,10 @@ function MyApp({
       <Head>
         <title>Dosuri</title>
         <meta name="description" content="도수 통증치료 병원정보는 도수리" />
+        <meta
+          name="facebook-domain-verification"
+          content="24ov5jif5wf1d1ci5yv25w6qb5eos1"
+        />
       </Head>
       <Script
         strategy="afterInteractive"
