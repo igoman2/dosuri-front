@@ -1,5 +1,6 @@
 import Avatar from "@/components/UI/Avatar";
 import Divider from "@/components/UI/Divider";
+import { EmptyText } from "@/components/UI/emotion/EmptyText";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Layout from "@/components/Layout";
 import React from "react";
@@ -11,7 +12,9 @@ const Notification = () => {
     <Layout header={<HeaderDepth />} footer={false}>
       <NotificationWrapper>
         <div className="sub-title">알림 내역</div>
-        <ul className="list-section">
+        <EmptyText>알림이 없습니다.</EmptyText>
+
+        {/* <ul className="list-section">
           <Divider height={1} />
 
           {notifications.map((notification) => {
@@ -39,7 +42,7 @@ const Notification = () => {
               </>
             );
           })}
-        </ul>
+        </ul> */}
       </NotificationWrapper>
     </Layout>
   );
@@ -53,12 +56,13 @@ const NotificationWrapper = styled.div`
     font-size: ${(props) => props.theme.fontSizes.xl};
     line-height: ${(props) => props.theme.lineHeights.xl};
     font-weight: 700;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
   }
 
   .list-section {
     font-size: ${(props) => props.theme.fontSizes.lg};
     line-height: ${(props) => props.theme.lineHeights.lg};
+    margin-top: 1.5rem;
 
     li {
       display: flex;
