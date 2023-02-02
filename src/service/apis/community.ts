@@ -35,6 +35,11 @@ export const getCommunityPostDetail = async (uuid: string) => {
   return response.data;
 };
 
+export const deleteCommunityPostDetail = async (uuid: string) => {
+  const response = await api.delete(`/community/v1/community/articles/${uuid}`);
+  return response.data;
+};
+
 export const getHospitalReviews = async (
   params?: IGetHospitalReviewsParams
 ) => {

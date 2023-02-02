@@ -11,8 +11,12 @@ import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
 import Reply from "@/components/Community/Reply";
 import { getCommunityPostDetail } from "@/service/apis/community";
+import { queryClient } from "@/service/react-query/queryClient";
+import { queryKeys } from "@/service/react-query/constants";
+import { useDeleteMyReview } from "@/hooks/service/useDeleteMyReview";
 import { useQuery } from "react-query";
 import { useRecoilState } from "recoil";
+import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
 
 interface IReviewDetailProps {
@@ -21,13 +25,15 @@ interface IReviewDetailProps {
 
 const ReviewDetail: FC<IReviewDetailProps> = ({ reviewId }) => {
   const theme = useTheme();
-
+  const router = useRouter();
   const [_, setIsActive] = useRecoilState(modalState);
   const [__, setModalContent] = useRecoilState(modalContentState);
 
   const { data } = useQuery(["getMyReviewDetail", reviewId], () =>
     getCommunityPostDetail(reviewId)
   );
+
+  const { mutate } = useDeleteMyReview();
 
   if (!data) {
     return null;
@@ -51,8 +57,17 @@ const ReviewDetail: FC<IReviewDetailProps> = ({ reviewId }) => {
       actionRight: {
         text: "삭제",
         action: () => {
-          setIsActive((prev) => {
-            return { ...prev, isActive: false };
+          mutate(reviewId, {
+            onSuccess: () => {
+              queryClient.invalidateQueries({
+                queryKey: [queryKeys.community],
+                refetchInactive: true,
+              });
+              setIsActive((prev) => {
+                return { ...prev, isActive: false };
+              });
+              router.replace("/mypage/review");
+            },
           });
         },
       },
@@ -83,6 +98,7 @@ const ReviewDetail: FC<IReviewDetailProps> = ({ reviewId }) => {
       <CommentProvider>
         <PostCard
           review={data}
+          skip={false}
           bottom={<PostBottom review={data} type="detail" />}
         />
         <Comment comments={data.article_comment} />
