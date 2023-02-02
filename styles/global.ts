@@ -81,6 +81,7 @@ export const global = css`
   hgroup,
   menu,
   nav,
+  button,
   output,
   ruby,
   section,
