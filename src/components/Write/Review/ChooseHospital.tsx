@@ -73,7 +73,6 @@ const ChooseHospital: FC<IChooseHospitalProps> = ({
   );
 
   const fetchNextList = () => {
-    console.log("next@@");
     if (isFetching) {
       return;
     }
@@ -158,16 +157,7 @@ const ChooseHospital: FC<IChooseHospitalProps> = ({
               />
             </form>
           </SearchInputWrapper>
-          <InfiniteScroll
-            loadMore={fetchNextList}
-            hasMore={hasNextPage}
-            useWindow={false}
-            getScrollParent={() => {
-              const parent = document.getElementById("scroll-parent");
-              console.log(parent);
-              return parent;
-            }}
-          >
+          <InfiniteScroll loadMore={fetchNextList} hasMore={hasNextPage}>
             {searchedHospitalList?.pages.map((pageData, i) => {
               if (pageData.count === 0) {
                 return (
