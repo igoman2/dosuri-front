@@ -2,6 +2,7 @@ import * as gtag from "../lib/gtag";
 
 import { Global, ThemeProvider } from "@emotion/react";
 import { Hydrate, QueryClientProvider } from "react-query";
+import { Suspense, useEffect } from "react";
 
 import type { AppProps } from "next/app";
 // import { ErrorBoundary } from "@sentry/react";
@@ -12,10 +13,10 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { RecoilRoot } from "recoil";
 import Script from "next/script";
 import Spinner from "@/components/UI/Spinner";
-import { Suspense } from "react";
 import { global } from "@/styles/global";
 import { queryClient } from "@/service/react-query/queryClient";
 import theme from "@/styles/theme";
+import { useRouter } from "next/router";
 import withAuth from "./withauth";
 
 function MyApp({
@@ -25,6 +26,21 @@ function MyApp({
   dehydratedState: unknown;
   session: any;
 }>) {
+  const router = useRouter();
+
+  useEffect(() => {
+    import("react-facebook-pixel")
+      .then((x) => x.default)
+      .then((ReactPixel) => {
+        ReactPixel.init("920725248931560"); // facebookPixelId
+        ReactPixel.pageView();
+
+        router.events.on("routeChangeComplete", () => {
+          ReactPixel.pageView();
+        });
+      });
+  }, [router.events]);
+
   return (
     <>
       <Head>
