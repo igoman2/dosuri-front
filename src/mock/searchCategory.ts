@@ -15,6 +15,10 @@ export const SELECT_LIST = [
     title: "거리순",
     key: "distance",
   },
+  {
+    title: "가격 낮은순",
+    key: "avg_price_per_hour",
+  },
 ];
 
 export interface ListItem {

@@ -54,7 +54,7 @@ const AllFilterSection = () => {
     hasNextPage,
     isFetching,
   } = useInfiniteQuery(
-    ["hospital-by-distance", category],
+    ["hospital-by-filter", category],
     ({ pageParam = initialUrl }) => fetchUrl(pageParam),
     {
       getNextPageParam: (lastPage) => {
@@ -99,7 +99,14 @@ const AllFilterSection = () => {
               return (
                 <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
                   <a>
-                    <HospitalCard hospitalInfo={hospital} />
+                    <HospitalCard
+                      hospitalInfo={hospital}
+                      type={
+                        category.key === "avg_price_per_hour"
+                          ? "price"
+                          : "review"
+                      }
+                    />
                   </a>
                 </Link>
               );
