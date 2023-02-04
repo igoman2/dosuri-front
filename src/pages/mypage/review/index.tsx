@@ -32,7 +32,7 @@ const Review = () => {
   const router = useRouter();
 
   const initialUrl = useMemo(() => {
-    return `/community/v1/community/articles?user=${user.uuid}`;
+    return `/community/v1/community/articles?user=${user.uuid}&ordering=-created_at`;
   }, []);
 
   const fetchUrl = async (url: string) => {
