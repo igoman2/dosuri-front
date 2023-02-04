@@ -75,4 +75,10 @@ const ButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: -webkit-sticky; /* 사파리 브라우저 지원 */
+  position: sticky;
+  bottom: -2rem;
+  padding: 1rem 0 1rem 0;
+  background: white;
+  z-index: 100;
 `;
