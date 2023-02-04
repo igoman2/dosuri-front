@@ -9,6 +9,7 @@ import React, {
   useState,
 } from "react";
 import { useBoolean, useDebounce } from "usehooks-ts";
+import { useInfiniteQuery, useMutation } from "react-query";
 
 import Divider from "@/components/UI/Divider";
 import FullModalBase from "@/components/Modal/FullModalBase";
@@ -17,10 +18,10 @@ import InfiniteScroll from "react-infinite-scroller";
 import { WriteReviewWrapper } from "@/components/UI/emotion/Review/WriteReviewWrapper";
 import api from "@/service/axiosConfig";
 import { createReviewState } from "./store";
+import { createTempHospital } from "@/service/apis/hospital";
 import { css } from "@emotion/react";
 import magnifier_grey from "@/public/assets/magnifier_grey.png";
 import styled from "@emotion/styled";
-import { useInfiniteQuery } from "react-query";
 import { useRecoilState } from "recoil";
 
 interface IChooseHospitalProps {
@@ -55,6 +56,8 @@ const ChooseHospital: FC<IChooseHospitalProps> = ({
     const response = await api.get<IHospitalInfoResponse>(url);
     return response.data;
   };
+
+  const { mutate } = useMutation(createTempHospital);
 
   const {
     data: searchedHospitalList,
@@ -122,6 +125,21 @@ const ChooseHospital: FC<IChooseHospitalProps> = ({
     return text;
   };
 
+  const handleClickHospital = () => {
+    mutate(
+      { name: inputText },
+      {
+        onSuccess: (resp) => {
+          setReviewState((prev) => ({
+            ...prev,
+            hospital: { name: resp.name, uuid: resp.uuid },
+          }));
+          setMode(0);
+        },
+      }
+    );
+  };
+
   return (
     <FullModalBase
       isActive={isActive}
@@ -163,16 +181,7 @@ const ChooseHospital: FC<IChooseHospitalProps> = ({
                 return (
                   <Main key={`hospital-list-${i}`}>
                     <HospitalQueryListWrapper>
-                      <div
-                        className="link"
-                        onClick={() => {
-                          setReviewState((prev) => ({
-                            ...prev,
-                            hospital: { name: inputText, uuid: "" },
-                          }));
-                          setMode(0);
-                        }}
-                      >
+                      <div className="link" onClick={handleClickHospital}>
                         <Divider height={1} />
                         <div className="item">
                           <span className="word">{inputText}</span>

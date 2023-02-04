@@ -333,3 +333,8 @@ export interface IRegisterReviewResult {
   content: string;
   is_like: boolean;
 }
+
+export interface ITempHospitalResult {
+  uuid: string;
+  name: string;
+}
