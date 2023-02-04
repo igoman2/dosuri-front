@@ -11,13 +11,14 @@ import NewReviewSection from "@/components/pages/Search/NewReviewSection";
 import Spinner from "@/components/UI/Spinner";
 import { locationState } from "@/store/location";
 import { scrollState } from "@/store/searchOption";
+import { useBoolean } from "usehooks-ts";
 import useGeolocation from "@/hooks/useGeolocation";
 
 const Home = () => {
   const [scrollY, setScrollY] = useRecoilState(scrollState);
   const location = useGeolocation();
   const setLocaton = useSetRecoilState(locationState);
-  console.log("rerender");
+  const { value: isIphone, setTrue, setFalse } = useBoolean();
   useEffect(() => {
     if (location.loaded) {
       setLocaton({
@@ -31,16 +32,38 @@ const Home = () => {
     setScrollY(window.pageYOffset);
   }, []);
 
-  // useEffect(() => {
-  //   if (window) {
-  //     window.scrollTo(0, scrollY);
+  useEffect(() => {
+    const agent = navigator.userAgent.toLowerCase();
 
-  //     window.addEventListener("scroll", onScroll, { passive: true });
-  //     return () => {
-  //       window.removeEventListener("scroll", onScroll);
-  //     };
-  //   }
-  // }, [scrollY]);
+    if (agent.indexOf("android") > -1) {
+      setFalse();
+    } else if (
+      agent.indexOf("iphone") > -1 ||
+      agent.indexOf("ipad") > -1 ||
+      agent.indexOf("ipod") > -1
+    ) {
+      setTrue();
+    } else {
+      setFalse();
+    }
+  }, []);
+
+  console.log(isIphone);
+
+  useEffect(() => {
+    if (isIphone) {
+      return;
+    }
+
+    if (window) {
+      window.scrollTo(0, scrollY);
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      return () => {
+        window.removeEventListener("scroll", onScroll);
+      };
+    }
+  }, [scrollY, isIphone]);
 
   return (
     <Layout header={<Header left={true} center={true} />}>
