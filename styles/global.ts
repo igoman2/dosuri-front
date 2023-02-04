@@ -7,6 +7,12 @@ export const global = css`
   * {
     -webkit-tap-highlight-color: transparent;
     box-sizing: border-box;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
   }
   html,
   body,
