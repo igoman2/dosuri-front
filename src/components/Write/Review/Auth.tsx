@@ -72,7 +72,6 @@ const Auth: FC<IAuthProps> = ({ isActive, mode, setMode, onClose, onSwap }) => {
         article_auth: {
           sensitive_agreement: reviewState.sensitive_agreement,
           personal_agreement: reviewState.personal_agreement,
-          status: "InComplete",
           auth_attachment_assoc: reviewState.auth_attach,
         },
       },

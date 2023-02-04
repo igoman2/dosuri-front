@@ -310,7 +310,6 @@ export interface IRegisterReviewBody {
   article_auth?: {
     sensitive_agreement: boolean;
     personal_agreement: boolean;
-    status: string;
     auth_attachment_assoc: {
       attachment: string;
     }[];
