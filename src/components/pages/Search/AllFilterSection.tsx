@@ -41,7 +41,7 @@ const AllFilterSection = () => {
   }, [category]);
 
   const initialUrl = useMemo(() => {
-    return `/hospital/v1/hospitals-current-address-filtered?ordering=${category.key}`;
+    return `/hospital/v1/hospitals-address-filtered?ordering=${category.key}`;
   }, [category]);
 
   const fetchUrl = async (url: string) => {
