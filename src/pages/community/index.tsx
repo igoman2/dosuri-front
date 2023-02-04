@@ -17,6 +17,7 @@ import useDirection from "@/hooks/useDirection";
 import { useInfiniteQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
+import useScrollRestoration from "@/hooks/useScrollRestoration";
 import { useTheme } from "@emotion/react";
 
 const Tablist: Tab[] = [
@@ -48,22 +49,7 @@ const Community = () => {
 
   const router = useRouter();
 
-  const [scrollY, setScrollY] = useRecoilState(scrollState);
-
-  const onScroll = useCallback((event: Event) => {
-    setScrollY(window.pageYOffset);
-  }, []);
-
-  useEffect(() => {
-    if (window) {
-      window.scrollTo(0, scrollY);
-
-      window.addEventListener("scroll", onScroll, { passive: true });
-      return () => {
-        window.removeEventListener("scroll", onScroll);
-      };
-    }
-  }, [scrollY]);
+  useScrollRestoration();
 
   const initialUrl = useMemo(() => {
     return `/community/v1/community/articles?article_type=${currentTab.value}&ordering=-created_at`;
