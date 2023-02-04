@@ -41,8 +41,8 @@ const AllFilterSection = () => {
   }, [category]);
 
   const initialUrl = useMemo(() => {
-    return `/hospital/v1/hospitals-current-address-filtered?latitude=${location.lat}&longitude=${location.lng}&ordering=${category.key}`;
-  }, [category, location]);
+    return `/hospital/v1/hospitals-current-address-filtered?ordering=${category.key}`;
+  }, [category]);
 
   const fetchUrl = async (url: string) => {
     const response = await api.get<IHospitalInfoResponse>(url);
