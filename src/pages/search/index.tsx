@@ -17,7 +17,7 @@ const Home = () => {
   const [scrollY, setScrollY] = useRecoilState(scrollState);
   const location = useGeolocation();
   const setLocaton = useSetRecoilState(locationState);
-
+  console.log("rerender");
   useEffect(() => {
     if (location.loaded) {
       setLocaton({
@@ -31,16 +31,16 @@ const Home = () => {
     setScrollY(window.pageYOffset);
   }, []);
 
-  useEffect(() => {
-    if (window) {
-      window.scrollTo(0, scrollY);
+  // useEffect(() => {
+  //   if (window) {
+  //     window.scrollTo(0, scrollY);
 
-      window.addEventListener("scroll", onScroll, { passive: true });
-      return () => {
-        window.removeEventListener("scroll", onScroll);
-      };
-    }
-  }, [scrollY]);
+  //     window.addEventListener("scroll", onScroll, { passive: true });
+  //     return () => {
+  //       window.removeEventListener("scroll", onScroll);
+  //     };
+  //   }
+  // }, [scrollY]);
 
   return (
     <Layout header={<Header left={true} center={true} />}>
