@@ -17,6 +17,7 @@ import { Symtom } from "@/types/hospital";
 import { Symtoms } from "@/constants/Symtoms";
 import _ from "lodash";
 import { queryClient } from "@/service/react-query/queryClient";
+import { queryKeys } from "@/service/react-query/constants";
 import { setTokenInCookie } from "@/util/setToken";
 import styled from "@emotion/styled";
 import useFormikFactory from "@/hooks/useFormikFactory";
@@ -51,7 +52,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
     {
       onSuccess: (resp) => {
         queryClient.invalidateQueries({
-          queryKey: ["getHospitalList"],
+          queryKey: [queryKeys.hospital],
           refetchInactive: true,
         });
         queryClient.invalidateQueries({
