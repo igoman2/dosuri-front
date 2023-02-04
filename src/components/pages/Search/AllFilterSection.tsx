@@ -41,8 +41,14 @@ const AllFilterSection = () => {
   }, [category]);
 
   const initialUrl = useMemo(() => {
-    return `/hospital/v1/hospitals-address-filtered?ordering=${category.key}`;
-  }, [category]);
+    if (category.key === "distance") {
+      return `/hospital/v1/hospitals?latitude=${location.lat}&longitude=${location.lng}`;
+    } else if (category.key === "avg_price_per_hour") {
+      return `/hospital/v1/hospitals-address-filtered-avg-price?ordering=${category.key}`;
+    } else {
+      return `/hospital/v1/hospitals-address-filtered?ordering=${category.key}`;
+    }
+  }, [category, location]);
 
   const fetchUrl = async (url: string) => {
     const response = await api.get<IHospitalInfoResponse>(url);
