@@ -22,15 +22,19 @@ import { userInfoState } from "@/store/user";
 
 const Home = () => {
   const theme = useTheme();
-  const location = useGeolocation();
-  const setLocaton = useSetRecoilState(locationState);
+
   const userInfo = useRecoilValue(userInfoState);
   const { isLoggedIn } = useAuth();
+  const location = useGeolocation();
+  const setLocaton = useSetRecoilState(locationState);
+
   useEffect(() => {
-    setLocaton({
-      lat: location.coordinates?.lat ?? 0,
-      lng: location.coordinates?.lng ?? 0,
-    });
+    if (location.loaded) {
+      setLocaton({
+        lat: location.coordinates?.lat ?? 0,
+        lng: location.coordinates?.lng ?? 0,
+      });
+    }
   }, [location]);
 
   const { data: hospitalList } = useQuery(
