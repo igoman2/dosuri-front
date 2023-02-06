@@ -2,6 +2,7 @@ import Divider from "@/components/UI/Divider";
 import { EmptyText } from "@/components/UI/emotion/EmptyText";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Layout from "@/components/Layout";
+import { NextSeo } from "next-seo";
 import React from "react";
 import { formatDate_YYYY_MM_DD } from "@/util/format";
 import styled from "@emotion/styled";
@@ -13,6 +14,8 @@ const Point = () => {
   const { currentPoint } = useGetMyCurrentPoint();
   return (
     <Layout header={<HeaderDepth />} footer={false}>
+      <NextSeo title="마이페이지 | 도수리-도수치료 리얼후기" />
+
       <PointWrapper>
         <div className="sub-title">
           내 포인트 {currentPoint?.total_point.toLocaleString()}P

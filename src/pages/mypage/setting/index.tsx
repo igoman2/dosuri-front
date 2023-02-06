@@ -5,6 +5,7 @@ import Image from "next/image";
 import Layout from "@/components/Layout";
 import Link from "next/link";
 import ListTab from "@/components/UI/ListTab";
+import { NextSeo } from "next-seo";
 import React from "react";
 import ToggleBar from "@/components/UI/ToggleBar";
 import { logout } from "@/pages/withauth";
@@ -16,6 +17,8 @@ const packageJson = require("/package.json");
 const Setting = () => {
   return (
     <Layout header={<HeaderDepth />} footer={false}>
+      <NextSeo title="마이페이지 | 도수리-도수치료 리얼후기" />
+
       <SettingWrapper>
         <div className="sub-title">설정</div>
 

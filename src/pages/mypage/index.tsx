@@ -8,6 +8,7 @@ import Image from "next/image";
 import Layout from "@/components/Layout";
 import Link from "next/link";
 import ListTab from "@/components/UI/ListTab";
+import { NextSeo } from "next-seo";
 import styled from "@emotion/styled";
 import { useGetMyCurrentPoint } from "@/hooks/service/useGetMyCurrentPoint";
 import { useRecoilValue } from "recoil";
@@ -112,6 +113,8 @@ const Mypage = () => {
         />
       }
     >
+      <NextSeo title="마이페이지 | 도수리-도수치료 리얼후기" />
+
       <ProfileSectionWrapper>
         <div className="nickname">{userInfo.nickname}</div>
         <div className="edit-profile">

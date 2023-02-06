@@ -3,6 +3,7 @@ import Divider from "@/components/UI/Divider";
 import { EmptyText } from "@/components/UI/emotion/EmptyText";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Layout from "@/components/Layout";
+import { NextSeo } from "next-seo";
 import React from "react";
 import { notifications } from "@/mock/notifications";
 import styled from "@emotion/styled";
@@ -10,6 +11,8 @@ import styled from "@emotion/styled";
 const Notification = () => {
   return (
     <Layout header={<HeaderDepth />} footer={false}>
+      <NextSeo title="마이페이지 | 도수리-도수치료 리얼후기" />
+
       <NotificationWrapper>
         <div className="sub-title">알림 내역</div>
         <EmptyText>알림이 없습니다.</EmptyText>

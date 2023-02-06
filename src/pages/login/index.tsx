@@ -2,6 +2,7 @@ import { css, useTheme } from "@emotion/react";
 
 import Icon from "@/util/Icon";
 import Kakao from "@/components/Oauth/Kakao";
+import { NextSeo } from "next-seo";
 import React from "react";
 
 const Login = () => {
@@ -40,6 +41,8 @@ const Login = () => {
 
   return (
     <main css={mainLayout}>
+      <NextSeo title="로그인 | 도수리-도수치료 리얼후기" />
+
       {/* <AppleLogin /> */}
       <Icon name="logo2" width="110" height="140" />
       <p css={logoTitle}>

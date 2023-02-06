@@ -5,6 +5,8 @@ import { Hydrate, QueryClientProvider } from "react-query";
 import { Suspense, useEffect } from "react";
 
 import type { AppProps } from "next/app";
+import DEFAULT_SEO from "@/lib/seo/seo.config";
+import { DefaultSeo } from "next-seo";
 // import { ErrorBoundary } from "@sentry/react";
 import { ErrorBoundary } from "react-error-boundary";
 import Fallback from "./fallback";
@@ -44,19 +46,19 @@ function MyApp({
   return (
     <>
       <Head>
-        <title>도수리</title>
-        <meta name="description" content="도수 통증치료 병원정보는 도수리" />
         <link
           rel="icon"
           type="ico"
           href="https://dosuri-image.dosuri.site/common/favicon.ico"
         />
-
         <meta
           name="facebook-domain-verification"
           content="24ov5jif5wf1d1ci5yv25w6qb5eos1"
         />
       </Head>
+
+      <DefaultSeo {...DEFAULT_SEO} />
+
       <Script
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
@@ -92,6 +94,7 @@ function MyApp({
               >
                 <ErrorBoundary FallbackComponent={Fallback}>
                   <Suspense fallback={<Spinner />}>
+                    {/* <DefaultSeo {...SEO} /> */}
                     <Component {...pageProps} />
                   </Suspense>
                 </ErrorBoundary>

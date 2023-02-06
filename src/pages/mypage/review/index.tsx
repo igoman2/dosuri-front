@@ -7,6 +7,7 @@ import { IHotCommunityResponse } from "@/service/types";
 import InfiniteScroll from "react-infinite-scroller";
 import Layout from "@/components/Layout";
 import ModalFactory from "@/components/Write/Review/ModalFactory";
+import { NextSeo } from "next-seo";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
 import api from "@/service/axiosConfig";
@@ -78,6 +79,8 @@ const Review = () => {
 
   return (
     <Layout header={<HeaderDepth />} footer={false}>
+      <NextSeo title="마이페이지 | 도수리-도수치료 리얼후기" />
+
       <>
         <ReviewWrapper>
           <div className="sub-title">

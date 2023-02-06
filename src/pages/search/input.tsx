@@ -4,6 +4,7 @@ import { useBoolean, useDebounce } from "usehooks-ts";
 import HospitalQueryList from "@/components/Search/HospitalQueryList";
 import Layout from "@/components/Layout";
 import Link from "next/link";
+import { NextSeo } from "next-seo";
 import RecentSearchList from "@/components/UI/RecentSearchList";
 import SearchHeader from "@/components/Layout/Header/SearchHeader";
 import styled from "@emotion/styled";
@@ -60,6 +61,8 @@ const SearchInput = () => {
       header={<SearchHeader onInput={onInput} inputText={inputText} />}
       footer={false}
     >
+      <NextSeo title="병원찾기 | 도수리-도수치료 리얼후기" />
+
       <Main>
         {inputText.length > 0 ? (
           <>

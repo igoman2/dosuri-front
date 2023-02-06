@@ -5,6 +5,7 @@ import React, { useMemo } from "react";
 import Button from "@/components/Button";
 import HeaderInsurance from "@/components/Layout/Header/Depth/HeaderInsurance";
 import Layout from "@/components/Layout";
+import { NextSeo } from "next-seo";
 import dayjs from "dayjs";
 import styled from "@emotion/styled";
 import { useRecoilValue } from "recoil";
@@ -33,6 +34,8 @@ const Confirm = () => {
 
   return (
     <Layout header={<HeaderInsurance />} footer={false}>
+      <NextSeo title="실손보험 가입 | 도수리-도수치료 리얼후기" />
+
       <Content>
         <div className="inner">
           <div className="title">

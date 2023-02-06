@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import HeaderInsurance from "@/components/Layout/Header/Depth/HeaderInsurance";
 import Image from "next/image";
 import Layout from "@/components/Layout";
+import { NextSeo } from "next-seo";
 import React from "react";
 import WithInsuranceImage from "@/public/assets/with-insurance.png";
 import WithoutInsuranceImage from "@/public/assets/without-insurance.png";
@@ -54,6 +55,8 @@ const InsuranceRegister = () => {
   };
   return (
     <Layout header={<HeaderInsurance />} footer={false}>
+      <NextSeo title="실손보험 가입 | 도수리-도수치료 리얼후기" />
+
       <Content>
         <div className="inner">
           <div className="title">실손보험 없이 도수치료 받으시려구요?</div>

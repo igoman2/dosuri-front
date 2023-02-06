@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import Button from "@/components/Button";
 import Float from "@/components/UI/Float";
@@ -8,14 +8,13 @@ import Icon from "@/util/Icon";
 import InfiniteScroll from "react-infinite-scroller";
 import Layout from "@/components/Layout";
 import ModalFactory from "@/components/Write/Review/ModalFactory";
+import { NextSeo } from "next-seo";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
 import api from "@/service/axiosConfig";
-import { scrollState } from "@/store/searchOption";
 import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
 import { useInfiniteQuery } from "react-query";
-import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import useScrollRestoration from "@/hooks/useScrollRestoration";
 import { useTheme } from "@emotion/react";
@@ -121,6 +120,8 @@ const Community = () => {
         />
       }
     >
+      <NextSeo title="도수톡 | 도수리-도수치료 리얼후기" />
+
       <>
         <div className="tab">
           <ButtonWrapper>

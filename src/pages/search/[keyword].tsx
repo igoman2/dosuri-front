@@ -10,6 +10,7 @@ import KeywordCommunity from "@/components/pages/Search/KeywordCommunity";
 import KeywordHospitals from "@/components/pages/Search/KeywordHospitals";
 import Layout from "@/components/Layout";
 import { NextPageContext } from "next";
+import { NextSeo } from "next-seo";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
 import SearchHeader from "@/components/Layout/Header/SearchHeader";
@@ -198,6 +199,8 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
       header={<SearchHeader onInput={onInput} inputText={inputText} />}
       footer={false}
     >
+      <NextSeo title={`${inputText} 검색결과 | 도수리-도수치료 리얼후기`} />
+
       <>
         <Tab
           tabList={TabList}

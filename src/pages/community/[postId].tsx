@@ -5,6 +5,7 @@ import CommentProvider from "@/store/context/Comment";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Layout from "@/components/Layout";
 import { NextPageContext } from "next";
+import { NextSeo } from "next-seo";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
 import Reply from "@/components/Community/Reply";
@@ -26,6 +27,8 @@ const Post: FC<IPostProps> = ({ postId }) => {
 
   return (
     <Layout header={<HeaderDepth />} footer={false}>
+      <NextSeo title={`${postId}의 리얼후기 | 도수리-도수치료 리얼후기`} />
+
       <CommentProvider>
         <PostCard
           review={data}
