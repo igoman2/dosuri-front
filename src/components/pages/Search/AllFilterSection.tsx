@@ -42,7 +42,7 @@ const AllFilterSection = () => {
 
   const initialUrl = useMemo(() => {
     if (category.key === "distance") {
-      return `/hospital/v1/hospitals?latitude=${location.lat}&longitude=${location.lng}`;
+      return `/hospital/v1/hospitals?latitude=${location.lat}&longitude=${location.lng}&ordering=${category.key}`;
     } else if (category.key === "avg_price_per_hour") {
       return `/hospital/v1/hospitals-address-filtered-avg-price?ordering=${category.key}`;
     } else {
