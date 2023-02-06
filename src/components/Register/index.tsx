@@ -106,6 +106,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
           small_area: formik.values.smallArea,
         },
         sex: formik.values.sex,
+        unread_notice: userInfo.unread_notice,
         pain_areas: formik.values.pain_areas.map((symtom) => {
           return {
             name: symtom.name,
