@@ -23,6 +23,12 @@
       "@/styles/*": ["./styles/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/withauth.jsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/pages/withauth.jsx",
+    "src/lib/fpixel.js"
+  ],
   "exclude": ["node_modules"]
 }
