@@ -44,8 +44,14 @@ function MyApp({
   return (
     <>
       <Head>
-        <title>Dosuri</title>
+        <title>도수리</title>
         <meta name="description" content="도수 통증치료 병원정보는 도수리" />
+        <link
+          rel="icon"
+          type="ico"
+          href="https://dosuri-image.dosuri.site/common/favicon.ico"
+        />
+
         <meta
           name="facebook-domain-verification"
           content="24ov5jif5wf1d1ci5yv25w6qb5eos1"
