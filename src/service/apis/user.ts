@@ -86,3 +86,9 @@ export const resignUser = async (data: { reason: string }) => {
 
   return resp.data;
 };
+
+export const updateNoticeReadingFlag = async () => {
+  const resp = await api.put("/user/v1/users/notice");
+
+  return resp.data;
+};

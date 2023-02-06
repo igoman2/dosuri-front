@@ -1,3 +1,5 @@
+import React, { useMemo } from "react";
+
 import ArrowRight from "@/public/assets/arrow-right.png";
 import Divider from "@/components/UI/Divider";
 import Header from "@/components/Layout/Header";
@@ -6,54 +8,86 @@ import Image from "next/image";
 import Layout from "@/components/Layout";
 import Link from "next/link";
 import ListTab from "@/components/UI/ListTab";
-import React from "react";
 import styled from "@emotion/styled";
 import { useGetMyCurrentPoint } from "@/hooks/service/useGetMyCurrentPoint";
 import { useRecoilValue } from "recoil";
+import { useRouter } from "next/router";
+import { useUpdateReadingFlag } from "@/hooks/service/useUpdateReadingFlag";
 import { userInfoState } from "@/store/user";
+
+type TabList = {
+  text: string;
+  subtext: string;
+  link: string;
+  hasNoti: boolean;
+  isExternalURL: boolean;
+};
 
 const Mypage = () => {
   const userInfo = useRecoilValue(userInfoState);
-  const tabList = [
-    {
-      text: "내 치료후기",
-      subtext: "",
-      link: "mypage/review",
-      hasNoti: false,
-      isExternalURL: false,
-    },
-    {
-      text: "내 포인트",
-      subtext: "",
-      link: "mypage/point",
-      hasNoti: false,
-    },
-    {
-      text: "공지사항",
-      subtext: "",
-      link: "https://jade-grill-d5b.notion.site/5f996c9048314c699fac080cd2f22509",
-      hasNoti: true,
-      isExternalURL: true,
-    },
-    {
-      text: "도수리 팀에게 의견 보내기",
-      subtext: "",
-      link: "https://docs.google.com/forms/d/e/1FAIpQLSdUtYb-pT6qp3W5WOjD78Nzu6ylKwblgxcV3pkh4e-bzgxYig/viewform",
-      hasNoti: false,
-      isExternalURL: true,
-    },
-    {
-      text: "병원 입점 문의",
-      subtext: "",
-      link: "https://docs.google.com/forms/d/e/1FAIpQLSfMUUNNMdUKnlVURL85SZiC3FDQssPEcZtbqtcYh7Zl_nSGHQ/viewform",
-      hasNoti: false,
-      isExternalURL: true,
-    },
-  ];
+  const router = useRouter();
+  const { mutate } = useUpdateReadingFlag();
+  const tabList: TabList[] = useMemo(() => {
+    return [
+      {
+        text: "내 치료후기",
+        subtext: "",
+        link: "mypage/review",
+        hasNoti: false,
+        isExternalURL: false,
+      },
+      {
+        text: "내 포인트",
+        subtext: "",
+        link: "mypage/point",
+        hasNoti: false,
+        isExternalURL: false,
+      },
+      {
+        text: "공지사항",
+        subtext: "",
+        link: "https://jade-grill-d5b.notion.site/5f996c9048314c699fac080cd2f22509",
+        hasNoti: userInfo.unread_notice,
+        isExternalURL: true,
+      },
+      {
+        text: "도수리 팀에게 의견 보내기",
+        subtext: "",
+        link: "https://docs.google.com/forms/d/e/1FAIpQLSdUtYb-pT6qp3W5WOjD78Nzu6ylKwblgxcV3pkh4e-bzgxYig/viewform",
+        hasNoti: false,
+        isExternalURL: true,
+      },
+      {
+        text: "병원 입점 문의",
+        subtext: "",
+        link: "https://docs.google.com/forms/d/e/1FAIpQLSfMUUNNMdUKnlVURL85SZiC3FDQssPEcZtbqtcYh7Zl_nSGHQ/viewform",
+        hasNoti: false,
+        isExternalURL: true,
+      },
+    ];
+  }, [userInfo.unread_notice]);
 
   const { currentPoint } = useGetMyCurrentPoint();
 
   tabList[1].subtext = currentPoint?.total_point.toLocaleString() + "P" ?? "P";
+
+  const handleListClick = (tab: TabList) => {
+    const isExternalURL = tab.isExternalURL;
+
+    if (tab.text === "공지사항") {
+      mutate();
+    }
+
+    if (isExternalURL) {
+      window.open(
+        tab.link,
+        isExternalURL ? "_blank" : "",
+        isExternalURL ? "noopener,noreferrer" : ""
+      );
+    } else {
+      router.push(tab.link);
+    }
+  };
 
   return (
     <Layout
@@ -101,31 +135,26 @@ const Mypage = () => {
 
       <div className="list-section">
         {tabList.map((tab, i) => (
-          <Link href={tab.link} key={`${tab.text}-${i}`}>
-            <a
-              target={tab.isExternalURL ? "_blank" : ""}
-              rel={tab.isExternalURL ? "noopener noreferrer" : ""}
-            >
-              <ListTab
-                text={tab.text}
-                subText={tab.subtext}
-                hasNoti={tab.hasNoti}
-                color={tab.text === "병원 입점 문의" ? "red_light" : "black"}
-                key={i}
-                right={
-                  <div>
-                    <Image
-                      src={ArrowRight}
-                      width={25}
-                      height={25}
-                      alt="arrow-right"
-                    />
-                  </div>
-                }
-                isLast={tabList.length - 1 === i ? true : false}
-              />
-            </a>
-          </Link>
+          <div onClick={() => handleListClick(tab)} key={`${tab.text}-${i}`}>
+            <ListTab
+              text={tab.text}
+              subText={tab.subtext}
+              hasNoti={tab.hasNoti}
+              color={tab.text === "병원 입점 문의" ? "red_light" : "black"}
+              key={i}
+              right={
+                <div>
+                  <Image
+                    src={ArrowRight}
+                    width={25}
+                    height={25}
+                    alt="arrow-right"
+                  />
+                </div>
+              }
+              isLast={tabList.length - 1 === i ? true : false}
+            />
+          </div>
         ))}
       </div>
     </Layout>

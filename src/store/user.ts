@@ -17,6 +17,7 @@ export const userInfoState = atom<UserFullInfo>({
       small_area: "",
     },
     sex: "",
+    unread_notice: false,
     pain_areas: [
       {
         name: "",

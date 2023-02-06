@@ -15,6 +15,7 @@ export type UserInfo = {
     small_area: string;
   };
   sex: string;
+  unread_notice: boolean;
   pain_areas: {
     name: string;
   }[];
