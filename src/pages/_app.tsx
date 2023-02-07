@@ -50,7 +50,7 @@ function MyApp({
         <link
           rel="icon"
           type="ico"
-          href="https://dosuri-image.dosuri.site/common/favicon.ico"
+          href="https://dosuri-image.dosuri.site/common/favicon.png"
         />
         <meta
           name="facebook-domain-verification"
