@@ -19,9 +19,15 @@ interface IPostCardProps {
   review: IHospitalReviewsResult | ICommunityPostDetailResponse;
   bottom: ReactNode;
   skip?: boolean;
+  hasBackground?: boolean;
 }
 
-const PostCard: FC<IPostCardProps> = ({ review, bottom, skip = true }) => {
+const PostCard: FC<IPostCardProps> = ({
+  review,
+  bottom,
+  skip = true,
+  hasBackground,
+}) => {
   const [isCommentOver3Line, setIsCommentOver3Line] = useState<boolean>();
   const [isShowMoreClicked, setIsShowMoreClicked] = useState<boolean>(false);
   const commentRef = useRef<HTMLDivElement>(null);
@@ -95,6 +101,7 @@ const PostCard: FC<IPostCardProps> = ({ review, bottom, skip = true }) => {
                 source={imageSource}
                 spaceBetween={6}
                 slidesPerView={2}
+                hasBackground={hasBackground}
               />
             </SwiperWrapper>
           )}

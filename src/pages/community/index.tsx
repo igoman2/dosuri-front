@@ -158,6 +158,7 @@ const Community = () => {
                   >
                     <PostCard
                       review={talk}
+                      hasBackground={true}
                       bottom={<PostBottom review={talk} type="list" />}
                     />
                   </div>
