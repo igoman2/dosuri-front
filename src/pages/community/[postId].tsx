@@ -27,7 +27,7 @@ const Post: FC<IPostProps> = ({ postId }) => {
 
   return (
     <Layout header={<HeaderDepth />} footer={false}>
-      <NextSeo title={`${postId}의 리얼후기 | 도수리-도수치료 리얼후기`} />
+      <NextSeo title={`${data.hospital} 치료후기 | 도수리-도수치료 리얼후기`} />
 
       <CommentProvider>
         <PostCard

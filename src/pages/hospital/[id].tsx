@@ -16,6 +16,7 @@ import Information from "@/components/pages/Hospital/Information";
 import Layout from "@/components/Layout";
 import Link from "next/link";
 import { NextPageContext } from "next";
+import { NextSeo } from "next-seo";
 import Price from "@/components/pages/Hospital/Price";
 import Reviews from "@/components/pages/Hospital/Reviews";
 import Spinner from "@/components/UI/Spinner";
@@ -136,6 +137,10 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
 
   return (
     <Layout header={<HeaderDepth />} footer={false}>
+      <NextSeo
+        title={`${hospitalInfoData.name} 상세정보 | 도수리-도수치료 리얼후기`}
+      />
+
       <Hospital>
         <div className="swiper-layout">
           {imageSource.length === 0 ? (
