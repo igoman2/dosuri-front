@@ -24,7 +24,6 @@ const DoSwiper: FC<DoSwiperProps> = ({
   const style = hasBackground
     ? {
         backgroundColor: "black",
-        borderRadius: "0.5rem",
       }
     : undefined;
   return (
