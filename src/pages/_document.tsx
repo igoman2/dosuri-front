@@ -22,7 +22,7 @@ class MyDocument extends Document {
           />
           <meta
             name="google-site-verification"
-            content="ZQF4KyRmUOW7MV1eMIrQYO1RX_a-ryHjBVsstFQWpZk"
+            content="nZSk2J4SaVkZwuucONktiqpBNgBIAxLqND64TrGGR0o"
           />
         </Head>
         <body>
