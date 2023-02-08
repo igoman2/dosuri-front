@@ -138,7 +138,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
   return (
     <Layout header={<HeaderDepth />} footer={false}>
       <NextSeo
-        title={`${hospitalInfoData.name} 상세정보 | 도수리-도수치료 리얼후기`}
+        title={`${hospitalInfoData.name} 치료후기 | 도수리-도수치료 리얼후기`}
       />
 
       <Hospital>
