@@ -52,14 +52,6 @@ function MyApp({
           type="ico"
           href="https://dosuri-image.dosuri.site/common/favicon.png"
         />
-        <meta
-          name="facebook-domain-verification"
-          content="24ov5jif5wf1d1ci5yv25w6qb5eos1"
-        />
-        <meta
-          name="google-site-verification"
-          content="ZQF4KyRmUOW7MV1eMIrQYO1RX_a-ryHjBVsstFQWpZk"
-        />
       </Head>
 
       <DefaultSeo {...DEFAULT_SEO} />
