@@ -24,6 +24,7 @@ const SearchBar: FC<ISearchBarProps> = ({ inputText, onInput }) => {
   const { mutate: createSearchHistory } = useCreateSearchHistory();
 
   const onSearch = (e: FormEvent<HTMLFormElement>) => {
+    console.log("search");
     e.preventDefault();
     createSearchHistory(inputText, {
       onSuccess: () => {
@@ -37,11 +38,14 @@ const SearchBar: FC<ISearchBarProps> = ({ inputText, onInput }) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-  const [isActive, setIsActive] = useState(router.asPath !== "/search/input");
-
+  const [isActive, setIsActive] = useState(
+    Object.keys(router.query).length > 0
+  );
   const onClickHandler = () => {
     if (isActive) {
       router.replace("/search/input");
+    } else {
+      router.push("/search/input");
     }
   };
 
