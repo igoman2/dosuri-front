@@ -43,7 +43,7 @@ const RecentSearchList: FC<IRecentSearchListProps> = ({
   return (
     <RecentSearchListWrapper>
       <>
-        <Link href={`/search/${text}?keyword=${text}&tab=all`}>
+        <Link href={`/search/${text}?keyword=${text}&tab=all`} replace>
           <a>
             <div className="item">
               <span className="word">
