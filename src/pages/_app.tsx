@@ -125,7 +125,8 @@ function MyApp({
         <link rel="manifest" href="/manifest.json" />
         <link
           rel="shortcut icon"
-          href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
+          type="image/x-icon"
+          href="https://dosuri-image.dosuri.site/common/favicon.ico"
         />
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta
