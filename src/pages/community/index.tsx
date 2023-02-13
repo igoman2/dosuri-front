@@ -152,7 +152,9 @@ const Community = () => {
               return pageData.results.map((talk) => {
                 return (
                   <div
-                    className="link"
+                    css={{
+                      cursor: "pointer",
+                    }}
                     onClick={() => postClickHandler(talk.uuid)}
                     key={talk.uuid}
                   >
