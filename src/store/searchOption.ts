@@ -12,7 +12,7 @@ export const searchFilterState = atom<{
 }>({
   key: `scroll${v4()}`,
   default: {
-    title: "후기 많은 순",
+    title: "후기 많은순",
     key: "-article_count",
   },
 });
