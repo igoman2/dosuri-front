@@ -3,7 +3,6 @@ import { DefaultSeoProps } from "next-seo";
 const DEFAULT_SEO: DefaultSeoProps = {
   title: "도수리",
   description: "도수 통증치료 병원정보는 도수리",
-  canonical: "https://www.dosuri.site",
   //   openGraph: {
   //     type: "website",
   //     locale: "ko_KR",

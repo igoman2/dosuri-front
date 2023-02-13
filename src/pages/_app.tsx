@@ -139,6 +139,11 @@ function MyApp({
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
+        <link
+          rel="canonical"
+          href={`${window.location.origin}${router.asPath}`}
+          key="canonical"
+        />
       </Head>
 
       <DefaultSeo {...DEFAULT_SEO} />
