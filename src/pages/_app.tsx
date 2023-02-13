@@ -49,8 +49,12 @@ function MyApp({
       <Head>
         <link
           rel="icon"
-          type="ico"
-          href="https://dosuri-image.dosuri.site/common/favicon.png"
+          href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
+        />
+
+        <link
+          rel="shortcut icon"
+          href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
         />
 
         <link
@@ -122,11 +126,7 @@ function MyApp({
           sizes="16x16"
           href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
         />
-        <link
-          rel="shortcut icon"
-          type="image/x-icon"
-          href="https://dosuri-image.dosuri.site/common/favicon.ico"
-        />
+
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta
           name="msapplication-TileImage"
