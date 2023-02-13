@@ -52,7 +52,7 @@ const Home = () => {
   return (
     <Layout header={<Header left={true} center={true} />}>
       <NextSeo title="도수리 | 도수치료 리얼후기" />
-      <div
+      <section
         css={{
           marginBottom: "2.5rem",
         }}
@@ -81,7 +81,7 @@ const Home = () => {
             )}
           </>
         )}
-      </div>
+      </section>
       <LogginBanner>
         {!isLoggedIn && (
           <Link href="/login">
@@ -99,7 +99,7 @@ const Home = () => {
         )}
       </LogginBanner>
 
-      <div
+      <section
         css={{
           marginBottom: "2.5rem",
         }}
@@ -132,8 +132,8 @@ const Home = () => {
             </EmptyTextWrapper>
           )}
         </>
-      </div>
-      <div
+      </section>
+      <section
         css={{
           marginBottom: "2.5rem",
         }}
@@ -160,7 +160,7 @@ const Home = () => {
             )}
           </>
         )}
-      </div>
+      </section>
 
       <LogginBanner>
         {!isLoggedIn && (
@@ -179,7 +179,7 @@ const Home = () => {
         )}
       </LogginBanner>
 
-      <div
+      <section
         css={{
           marginBottom: "2.5rem",
         }}
@@ -210,7 +210,7 @@ const Home = () => {
             <EmptyText>등록된 후기가 없습니다.</EmptyText>
           </EmptyTextWrapper>
         )}
-      </div>
+      </section>
     </Layout>
   );
 };
