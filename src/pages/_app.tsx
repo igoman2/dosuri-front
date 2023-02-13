@@ -123,12 +123,23 @@ function MyApp({
           href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
         />
         <link rel="manifest" href="/manifest.json" />
+        <link
+          rel="shortcut icon"
+          type="image/x-icon"
+          href="https://dosuri-image.dosuri.site/common/favicon.png"
+        />
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta
           name="msapplication-TileImage"
           content="https://dosuri-image.dosuri.site/common/ms-icon-144x144.png"
         />
         <meta name="theme-color" content="#ffffff" />
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
       </Head>
 
       <DefaultSeo {...DEFAULT_SEO} />
