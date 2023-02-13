@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import Button from "@/components/Button";
+import { EmptyText } from "@/components/UI/emotion/EmptyText";
 import Header from "@/components/Layout/Header";
 import HospitalCard from "@/components/Card/HospitalCard";
 import Layout from "@/components/Layout";
@@ -103,30 +104,35 @@ const Home = () => {
           marginBottom: "2.5rem",
         }}
       >
-        {hospitalList.new_hospitals.length !== 0 && (
-          <>
-            <div
-              css={{
-                fontSize: theme.fontSizes.xl,
-                fontWeight: 700,
-              }}
-            >
-              새로 생긴 병원
-            </div>
+        <>
+          <div
+            css={{
+              fontSize: theme.fontSizes.xl,
+              fontWeight: 700,
+            }}
+          >
+            새로 생긴 병원
+          </div>
 
-            {hospitalList.new_hospitals.map(
-              (hospital: IHospitalInfoResult, i) => (
-                <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
-                  <a>
-                    <HospitalCard hospitalInfo={hospital} />
-                  </a>
-                </Link>
-              )
-            )}
-          </>
-        )}
+          {hospitalList.new_hospitals.length !== 0 ? (
+            <>
+              {hospitalList.new_hospitals.map(
+                (hospital: IHospitalInfoResult, i) => (
+                  <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+                    <a>
+                      <HospitalCard hospitalInfo={hospital} />
+                    </a>
+                  </Link>
+                )
+              )}
+            </>
+          ) : (
+            <EmptyTextWrapper>
+              <EmptyText>새로 생긴 병원이 없습니다.</EmptyText>
+            </EmptyTextWrapper>
+          )}
+        </>
       </div>
-
       <div
         css={{
           marginBottom: "2.5rem",
@@ -186,16 +192,24 @@ const Home = () => {
         >
           HOT 도수톡
         </div>
-        {hotCommunity.results.map((review, i) => (
-          <Link href={`community/${review.uuid}`} key={review.uuid}>
-            <a>
-              <PostCard
-                review={review}
-                bottom={<PostBottom review={review} type="list" />}
-              />
-            </a>
-          </Link>
-        ))}
+        {hotCommunity.results.length !== 0 ? (
+          <>
+            {hotCommunity.results.map((review, i) => (
+              <Link href={`community/${review.uuid}`} key={review.uuid}>
+                <a>
+                  <PostCard
+                    review={review}
+                    bottom={<PostBottom review={review} type="list" />}
+                  />
+                </a>
+              </Link>
+            ))}
+          </>
+        ) : (
+          <EmptyTextWrapper>
+            <EmptyText>등록된 후기가 없습니다.</EmptyText>
+          </EmptyTextWrapper>
+        )}
       </div>
     </Layout>
   );
@@ -205,4 +219,10 @@ export default Home;
 
 const LogginBanner = styled.div`
   margin-bottom: 2rem;
+`;
+
+const EmptyTextWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
 `;
