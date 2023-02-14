@@ -14,6 +14,7 @@ import React, {
 import Divider from "@/components/UI/Divider";
 import DoSwiper from "@/components/DoSwiper";
 import styled from "@emotion/styled";
+import { useRouter } from "next/router";
 
 interface IPostCardProps {
   review: IHospitalReviewsResult | ICommunityPostDetailResponse;
@@ -32,6 +33,7 @@ const PostCard: FC<IPostCardProps> = ({
   const [isShowMoreClicked, setIsShowMoreClicked] = useState<boolean>(false);
   const commentRef = useRef<HTMLDivElement>(null);
   const showCommentMoreRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const getCommentHeight = () => {
     const currentElementHeight = commentRef?.current!.scrollHeight;
@@ -86,6 +88,14 @@ const PostCard: FC<IPostCardProps> = ({
     return !isShowMoreClicked && isCommentOver3Line;
   };
 
+  const handleHospitalClick = () => {
+    if (skip) {
+      return;
+    }
+
+    router.push(`/hospital/${review.hospital_uuid}`);
+  };
+
   return (
     <>
       <PostCardWrapper>
@@ -93,7 +103,9 @@ const PostCard: FC<IPostCardProps> = ({
           <div className="nickname">{review.user.nickname}</div>
           <div className="register-time">{review.created_at}</div>
         </div>
-        <div className="hospital-name">{review.hospital}</div>
+        <div className="hospital-name" onClick={handleHospitalClick}>
+          {review.hospital}
+        </div>
         <div className="swiper-layout">
           {imageSource.length !== 0 && (
             <SwiperWrapper>
@@ -147,6 +159,7 @@ const PostCardWrapper = styled.div`
     color: ${(props) => props.theme.colors.purple};
     font-size: ${(props) => props.theme.fontSizes.md};
     line-height: ${(props) => props.theme.lineHeights.md};
+    cursor: pointer;
   }
 
   .swiper-layout {

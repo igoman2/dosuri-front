@@ -96,10 +96,7 @@ export interface IHospitalTreatmentsResponse {
 
 export interface IHospitalReviewsResult {
   uuid: string;
-  user: {
-    uuid: string;
-    nickname: string;
-  };
+  user: User;
   comment_count: number;
   article_type: string;
   up_count: number;
@@ -107,6 +104,7 @@ export interface IHospitalReviewsResult {
   created_at: string;
   is_like: boolean;
   hospital: string;
+  hospital_uuid: string;
   content: string;
   article_attachment_assoc: Attach[];
 }
@@ -235,6 +233,7 @@ export interface ICommunityPostDetailResponse {
   view_count: number;
   created_at: string;
   hospital: string;
+  hospital_uuid: string;
   is_like: boolean;
   content: string;
   article_attachment_assoc: Attach[];
