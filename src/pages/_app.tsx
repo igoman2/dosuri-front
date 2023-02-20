@@ -144,6 +144,10 @@ function MyApp({
           href={`${window.location.origin}${router.asPath}`}
           key="canonical"
         />
+        <meta
+          name="naver-site-verification"
+          content="00988a9242f88ec4eea87b27eff618f6eedc2e19"
+        />
       </Head>
 
       <DefaultSeo {...DEFAULT_SEO} />
