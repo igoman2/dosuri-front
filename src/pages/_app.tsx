@@ -47,6 +47,10 @@ function MyApp({
   return (
     <>
       <Head>
+        <title>도수리</title>
+        <meta name="description" content="도수 통증치료 병원정보는 도수리" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
         <link
           rel="icon"
           href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
