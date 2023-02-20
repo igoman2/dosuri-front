@@ -21,6 +21,8 @@ import { queryClient } from "@/service/react-query/queryClient";
 import theme from "@/styles/theme";
 import { useRouter } from "next/router";
 import withAuth from "./withauth";
+import "react-toastify/dist/ReactToastify.css";
+import { StyledToast } from "@/components/UI/Toast";
 
 function MyApp({
   Component,
@@ -191,6 +193,18 @@ function MyApp({
             });
           `,
         }}
+      />
+      <StyledToast
+        position="bottom-center"
+        autoClose={122000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        closeButton={false}
       />
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>

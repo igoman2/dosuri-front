@@ -26,6 +26,7 @@ import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
 import { useUser } from "@/hooks/service/useUser";
 import { userInfoState } from "@/store/user";
+import { toast } from "react-toastify";
 
 interface IRegisterForm {
   formType: "register" | "edit";
@@ -75,6 +76,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
         if (formType === "register") {
           router.push("/");
         } else {
+          toast("변경사항이 저장되었습니다.");
           router.back();
         }
       },
