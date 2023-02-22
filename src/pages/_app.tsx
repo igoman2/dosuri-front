@@ -1,7 +1,7 @@
 import * as fbq from "../lib/fpixel";
 import * as gtag from "../lib/gtag";
 
-import { Global, ThemeProvider } from "@emotion/react";
+import { Global, ThemeProvider, useTheme } from "@emotion/react";
 import { Hydrate, QueryClientProvider } from "react-query";
 import { Suspense, useEffect } from "react";
 
@@ -21,8 +21,7 @@ import { queryClient } from "@/service/react-query/queryClient";
 import theme from "@/styles/theme";
 import { useRouter } from "next/router";
 import withAuth from "./withauth";
-import "react-toastify/dist/ReactToastify.css";
-import { StyledToast } from "@/components/UI/Toast";
+import { Toaster } from "react-hot-toast";
 
 function MyApp({
   Component,
@@ -194,17 +193,18 @@ function MyApp({
           `,
         }}
       />
-      <StyledToast
+      <Toaster
         position="bottom-center"
-        autoClose={122000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        closeButton={false}
+        toastOptions={{
+          duration: 1000,
+          style: {
+            background: "transparent",
+            boxShadow: "none",
+            color: "#3D3DC1",
+            fontSize: "14px",
+            marginBottom: "6rem",
+          },
+        }}
       />
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>

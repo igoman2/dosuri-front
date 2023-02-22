@@ -26,7 +26,7 @@ import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
 import { useUser } from "@/hooks/service/useUser";
 import { userInfoState } from "@/store/user";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 interface IRegisterForm {
   formType: "register" | "edit";
