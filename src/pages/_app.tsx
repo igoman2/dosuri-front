@@ -51,17 +51,14 @@ function MyApp({
         <title>도수리</title>
         <meta name="description" content="도수 통증치료 병원정보는 도수리" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-
         <link
           rel="icon"
           href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
         />
-
         <link
           rel="shortcut icon"
           href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
         />
-
         <link
           rel="apple-touch-icon"
           sizes="57x57"
@@ -131,14 +128,12 @@ function MyApp({
           sizes="16x16"
           href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
         />
-
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta
           name="msapplication-TileImage"
           content="https://dosuri-image.dosuri.site/common/ms-icon-144x144.png"
         />
         <meta name="theme-color" content="#ffffff" />
-
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
           name="apple-mobile-web-app-status-bar-style"
@@ -152,6 +147,32 @@ function MyApp({
         <meta
           name="naver-site-verification"
           content="00988a9242f88ec4eea87b27eff618f6eedc2e19"
+        />
+        <meta property="og:url" content="www.youtube.com" />
+        <meta property="og:title" content="YouTube" />
+        <meta
+          property="og:description"
+          content="여기를 눌러 링크를 확인하세요."
+        />
+        <meta property="og:type" content="article" />
+        <meta
+          property="og:image"
+          content="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
+        />
+        <meta property="og:image:alt" content="" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="en_GB" />
+
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="오터 로그" />
+        <meta
+          name="twitter:description"
+          content="도수 통증치료 병원정보는 도수리."
+        />
+        <meta
+          name="twitter:image"
+          content="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
         />
       </Head>
 
