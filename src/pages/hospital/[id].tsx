@@ -38,7 +38,7 @@ const TabList: TabItem[] = [
     value: "reviews",
   },
   {
-    title: "가격정보",
+    title: "비용정보",
     value: "price",
   },
   {
@@ -138,7 +138,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
   return (
     <Layout header={<HeaderDepth />} footer={false}>
       <NextSeo
-        title={`${hospitalInfoData.name} 치료후기 | 도수리-도수치료 리얼후기`}
+        title={`${hospitalInfoData.name} 도수치료 비용 후기 | 도수리-도수치료 리얼후기`}
       />
 
       <Hospital>

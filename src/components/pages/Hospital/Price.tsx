@@ -43,7 +43,7 @@ const Price: FC<IPriceProps> = ({ hospitalData, hospitalTreatmentsData }) => {
   return (
     <PriceWrapper>
       {data.length === 0 ? (
-        <EmptyText>등록된 가격 정보가 없습니다.</EmptyText>
+        <EmptyText>등록된 비용 정보가 없습니다.</EmptyText>
       ) : (
         <>
           {hospitalTreatmentsData.price_per_hour ? (
@@ -100,7 +100,7 @@ const Price: FC<IPriceProps> = ({ hospitalData, hospitalTreatmentsData }) => {
           <ul className="etc">
             <li>
               비급여 진료비용 공개제도에 의해 병원이 직접 건강보험심사평가원에
-              제출한 가격정보입니다.
+              제출한 비용정보입니다.
             </li>
             <li>진료시 상황 등에 따라 실제 치료비와는 다를 수 있습니다.</li>
           </ul>

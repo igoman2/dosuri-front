@@ -146,7 +146,7 @@ const Home = () => {
                 fontWeight: 700,
               }}
             >
-              가격이 착한 병원
+              치료비가 착한 병원
             </div>
 
             {hospitalList.good_price_hospitals.map(
