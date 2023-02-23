@@ -174,6 +174,19 @@ function MyApp({
           name="twitter:image"
           content="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
         />
+
+        <meta property="og:title" content="Kakao Product" />
+        <meta property="og:description" content="Kakao Product Description" />
+        <meta property="og:url" content="https://www.dosuri.site" />
+        <meta
+          property="og:image"
+          content="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
+        />
+        <meta property="product:brand" content="KAKAO" />
+        <meta property="product:availability" content="in stock" />
+        <meta property="product:condition" content="new" />
+        <meta property="product:price:amount" content="10000" />
+        <meta property="product:price:currency" content="KRW" />
       </Head>
 
       <DefaultSeo {...DEFAULT_SEO} />
