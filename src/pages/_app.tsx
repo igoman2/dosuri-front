@@ -148,6 +148,7 @@ function MyApp({
           name="naver-site-verification"
           content="00988a9242f88ec4eea87b27eff618f6eedc2e19"
         />
+
         <meta property="og:url" content="www.youtube.com" />
         <meta property="og:title" content="YouTube" />
         <meta
@@ -188,8 +189,6 @@ function MyApp({
         <meta property="product:price:amount" content="10000" />
         <meta property="product:price:currency" content="KRW" />
       </Head>
-
-      <DefaultSeo {...DEFAULT_SEO} />
 
       <Script
         id="fb-pixel"
