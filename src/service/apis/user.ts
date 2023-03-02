@@ -10,7 +10,7 @@ import {
 import { UserInfo } from "@/types/user";
 import api from "../axiosConfig";
 
-export const getUserAuth = async (params: GetUserAuthParams) => {
+export const getUserAuth = async (params: any) => {
   const response = await api.post<GetUserAuthResponse>("/user/v1/auth", {
     token: params.token,
     type: params.type,
