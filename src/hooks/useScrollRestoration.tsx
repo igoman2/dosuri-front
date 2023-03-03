@@ -7,7 +7,6 @@ import { useRecoilState } from "recoil";
 const useScrollRestoration = () => {
   const { isIphone } = useMobile();
   const [scrollY, setScrollY] = useRecoilState(scrollState);
-
   const onScroll = useCallback((event: Event) => {
     setScrollY(window.pageYOffset);
   }, []);
@@ -19,7 +18,6 @@ const useScrollRestoration = () => {
 
     if (window) {
       window.scrollTo(0, scrollY);
-
       window.addEventListener("scroll", onScroll, { passive: true });
       return () => {
         window.removeEventListener("scroll", onScroll);

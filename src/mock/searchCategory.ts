@@ -8,7 +8,7 @@ export const SELECT_LIST = [
     key: "-article_count",
   },
   {
-    title: "가격 낮은순",
+    title: "치료비 낮은순",
     key: "avg_price_per_hour",
   },
   {
