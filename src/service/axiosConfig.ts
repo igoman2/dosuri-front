@@ -71,6 +71,11 @@ api.interceptors.response.use(
       const resp = await api.post("/user/v1/token/refresh", {
         refresh: refreshToken,
       });
+
+      if (resp.status === 401) {
+        logout();
+        return;
+      }
       const newAccessToken = resp.data.access;
 
       axios.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
