@@ -63,7 +63,7 @@ const AttachImage: FC<IAttachImageProps> = ({
         headers: {
           "Content-Type": "multipart/form-data",
         },
-        url: `https://api.dosuri.site/src`, // 파일 업로드 요청 URL
+        url: `https://dev-api.dosuri.site/src`, // 파일 업로드 요청 URL
         method: "POST",
         data: formData,
         timeout: 10000,
