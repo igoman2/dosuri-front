@@ -51,6 +51,10 @@ function MyApp({
         <title>도수리</title>
         <meta name="description" content="도수 통증치료 병원정보는 도수리" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta
+          name="naver-site-verification"
+          content="00988a9242f88ec4eea87b27eff618f6eedc2e19"
+        />
         <link
           rel="icon"
           href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
@@ -143,10 +147,6 @@ function MyApp({
           rel="canonical"
           href={`${window.location.origin}${router.asPath}`}
           key="canonical"
-        />
-        <meta
-          name="naver-site-verification"
-          content="00988a9242f88ec4eea87b27eff618f6eedc2e19"
         />
 
         <meta property="og:url" content="https://www.dosuri.site" />
