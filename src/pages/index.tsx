@@ -21,6 +21,7 @@ import useGeolocation from "@/hooks/useGeolocation";
 import { useQuery } from "react-query";
 import { useTheme } from "@emotion/react";
 import { userInfoState } from "@/store/user";
+import Head from "next/head";
 
 const Home = () => {
   const theme = useTheme();
@@ -51,7 +52,14 @@ const Home = () => {
 
   return (
     <Layout header={<Header left={true} center={true} />}>
-      <NextSeo title="도수리 | 도수치료 리얼후기" />
+      <Head>
+        <title>도수리</title>
+        <meta name="description" content="도수치료 리얼후기" />
+        <meta
+          name="naver-site-verification"
+          content="00988a9242f88ec4eea87b27eff618f6eedc2e19"
+        />
+      </Head>
       <section
         css={{
           marginBottom: "2.5rem",

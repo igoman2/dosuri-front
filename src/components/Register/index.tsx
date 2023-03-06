@@ -57,7 +57,11 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
           refetchInactive: true,
         });
         queryClient.invalidateQueries({
-          queryKey: ["getHotCommunity"],
+          queryKey: [queryKeys.community],
+          refetchInactive: true,
+        });
+        queryClient.invalidateQueries({
+          queryKey: [queryKeys.user],
           refetchInactive: true,
         });
         if (formType === "register") {

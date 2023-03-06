@@ -149,11 +149,11 @@ function MyApp({
           content="00988a9242f88ec4eea87b27eff618f6eedc2e19"
         />
 
-        <meta property="og:url" content="www.youtube.com" />
-        <meta property="og:title" content="YouTube" />
+        <meta property="og:url" content="https://www.dosuri.site" />
+        <meta property="og:title" content="도수리" />
         <meta
           property="og:description"
-          content="여기를 눌러 링크를 확인하세요."
+          content="도수 통증치료 병원정보는 도수리"
         />
         <meta property="og:type" content="article" />
         <meta
@@ -169,21 +169,24 @@ function MyApp({
         <meta name="twitter:title" content="오터 로그" />
         <meta
           name="twitter:description"
-          content="도수 통증치료 병원정보는 도수리."
+          content="도수 통증치료 병원정보는 도수리"
         />
         <meta
           name="twitter:image"
           content="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
         />
 
-        <meta property="og:title" content="Kakao Product" />
-        <meta property="og:description" content="Kakao Product Description" />
+        <meta property="og:title" content="도수리" />
+        <meta
+          property="og:description"
+          content="도수 통증치료 병원정보는 도수리"
+        />
         <meta property="og:url" content="https://www.dosuri.site" />
         <meta
           property="og:image"
           content="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
         />
-        <meta property="product:brand" content="KAKAO" />
+        <meta property="product:brand" content="도수리" />
         <meta property="product:availability" content="in stock" />
         <meta property="product:condition" content="new" />
         <meta property="product:price:amount" content="10000" />
