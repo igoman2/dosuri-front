@@ -24,6 +24,18 @@ export const getHospitalList = async (params?: IGetHospitalListParams) => {
   return response.data;
 };
 
+export const getHospitalListByKeyword = async (
+  params?: IGetHospitalListParams
+) => {
+  const response = await api.get<IHospitalInfoResponse>(
+    "/hospital/v1/hospitals/names",
+    {
+      params,
+    }
+  );
+  return response.data;
+};
+
 export const getFilteredHospitalList = async (
   params?: IGetFilteredHospitalListParams
 ) => {
