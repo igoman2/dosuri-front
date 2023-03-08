@@ -143,11 +143,7 @@ function MyApp({
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
-        <link
-          rel="canonical"
-          href={`${window.location.origin}${router.asPath}`}
-          key="canonical"
-        />
+        <link rel="canonical" href="https://www.dosuri.site" />
 
         <meta property="og:url" content="https://www.dosuri.site" />
         <meta property="og:title" content="도수리" />
