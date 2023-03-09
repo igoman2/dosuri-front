@@ -24,6 +24,10 @@ class MyDocument extends Document {
             name="google-site-verification"
             content="nZSk2J4SaVkZwuucONktiqpBNgBIAxLqND64TrGGR0o"
           />
+          <meta
+            name="naver-site-verification"
+            content="00988a9242f88ec4eea87b27eff618f6eedc2e19"
+          />
         </Head>
         <body>
           <Main />
