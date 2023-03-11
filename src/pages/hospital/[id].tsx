@@ -37,10 +37,10 @@ const TabList: TabItem[] = [
     title: "치료후기",
     value: "reviews",
   },
-  {
-    title: "비용정보",
-    value: "price",
-  },
+  // {
+  //   title: "비용정보",
+  //   value: "price",
+  // },
   {
     title: "병원정보",
     value: "information",
