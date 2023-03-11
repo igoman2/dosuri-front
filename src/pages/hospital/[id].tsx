@@ -200,7 +200,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
             )}
           </Suspense>
         </div>
-        {/* <SaleButtonWrapper>
+        <SaleButtonWrapper>
           <Link href="/insurance-register">
             <a>
               <Button
@@ -213,7 +213,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
               />
             </a>
           </Link>
-        </SaleButtonWrapper> */}
+        </SaleButtonWrapper>
       </Hospital>
     </Layout>
   );

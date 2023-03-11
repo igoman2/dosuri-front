@@ -141,7 +141,7 @@ const Home = () => {
           )}
         </>
       </section>
-      {/* <section
+      <section
         css={{
           marginBottom: "2.5rem",
         }}
@@ -168,7 +168,7 @@ const Home = () => {
             )}
           </>
         )}
-      </section> */}
+      </section>
 
       <LogginBanner>
         {!isLoggedIn && (
