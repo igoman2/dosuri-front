@@ -444,13 +444,13 @@ const Basic: FC<IBasicProps> = ({
             </Content>
           </form>
         </FormikProvider>
+        <ModalBottom
+          mode={mode}
+          setMode={setMode}
+          onSwap={onSwap}
+          disabled={!isValid()}
+        />
       </WriteReviewWrapper>
-      <ModalBottom
-        mode={mode}
-        setMode={setMode}
-        onSwap={onSwap}
-        disabled={!isValid()}
-      />
     </FullModalBase>
   );
 };

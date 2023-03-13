@@ -13,6 +13,7 @@ const nextConfig = {
     domains: [
       "dev-dosuri-image.dosuri.site",
       "dev-dosuri-image-resized.dosuri.site",
+      "dosuri-image-resized.dosuri.site",
       "dosuri-image.dosuri.site",
       "dosuri-image.s3.amazonaws.com",
       "dosuri-images.s3.ap-northeast-2.amazonaws.com",

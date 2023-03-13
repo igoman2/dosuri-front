@@ -37,10 +37,10 @@ const TabList: TabItem[] = [
     title: "치료후기",
     value: "reviews",
   },
-  {
-    title: "비용정보",
-    value: "price",
-  },
+  // {
+  //   title: "비용정보",
+  //   value: "price",
+  // },
   {
     title: "병원정보",
     value: "information",
@@ -200,7 +200,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
             )}
           </Suspense>
         </div>
-        <SaleButtonWrapper>
+        {/* <SaleButtonWrapper>
           <Link href="/insurance-register">
             <a>
               <Button
@@ -213,7 +213,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
               />
             </a>
           </Link>
-        </SaleButtonWrapper>
+        </SaleButtonWrapper> */}
       </Hospital>
     </Layout>
   );

@@ -13,7 +13,7 @@ import { useDeleteSearchHistory } from "@/hooks/service/useDeleteSearchHistory";
 import { useDeleteSearchHistoryAll } from "@/hooks/service/useDeleteSearchHistoryAll";
 import { useRecentHospitalSearchList } from "@/hooks/service/useRecentHospitalSearchList";
 import { useRouter } from "next/router";
-import { useSearchHospital } from "@/hooks/service/useSearchHospital";
+import { useSearchHospitalByKeyword } from "@/hooks/service/useSearchHospitalByKeyword";
 
 const SearchInput = () => {
   const [inputText, setInputText] = useState("");
@@ -21,11 +21,12 @@ const SearchInput = () => {
   const debouncedValue = useDebounce<string>(inputText, 300);
   const router = useRouter();
 
-  const { searchedHospitalList } = useSearchHospital({
+  const { searchedHospitalList } = useSearchHospitalByKeyword({
     query: inputText,
     isInput: value,
     page_size: 30,
   });
+
   const { mutate } = useDeleteSearchHistory();
   const { mutate: deleteAllHistory } = useDeleteSearchHistoryAll();
   const { mutate: createSearchHistory } = useCreateSearchHistory();
