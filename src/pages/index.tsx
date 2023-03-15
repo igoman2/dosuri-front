@@ -69,13 +69,29 @@ const Home = () => {
           <>
             <div
               css={{
-                fontSize: theme.fontSizes.xl,
-                fontWeight: 700,
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
-              {isLoggedIn
-                ? `${userInfo.address.small_area} 주변 TOP 병원`
-                : "도수리 TOP 병원"}
+              <div
+                css={{
+                  fontSize: theme.fontSizes.xl,
+                  fontWeight: 700,
+                }}
+              >
+                {isLoggedIn
+                  ? `${userInfo.address.small_area} 주변 TOP 병원`
+                  : "도수리 TOP 병원"}
+              </div>
+              <div
+                css={{
+                  fontSize: theme.fontSizes.sm,
+                  color: theme.colors.grey,
+                }}
+              >
+                인근 병원 중 후기 많은 순으로 노출
+              </div>
             </div>
 
             {hospitalList.top_hospitals.map(
