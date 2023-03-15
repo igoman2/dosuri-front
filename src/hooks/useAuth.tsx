@@ -1,18 +1,10 @@
-import { useEffect, useState } from "react";
-
-import { getCookie } from "cookies-next";
+import { userInfoState } from "@/store/user";
+import { useRecoilValue } from "recoil";
 
 const useAuth = () => {
-  const token = getCookie("accessToken");
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const userInfo = useRecoilValue(userInfoState);
 
-  useEffect(() => {
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, [token]);
-
-  return { isLoggedIn };
+  return { isLoggedIn: !!userInfo.accessToken };
 };
 
 export default useAuth;
