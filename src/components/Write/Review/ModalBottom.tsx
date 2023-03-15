@@ -20,7 +20,7 @@ export const ModalBottom: FC<IModalBottomProps> = ({
 }) => {
   const theme = useTheme();
   const button = css`
-    width: 16rem;
+    min-width: 16rem;
     font-weight: 700;
     color: ${theme.colors.purple};
     background-color: ${theme.colors.white};
