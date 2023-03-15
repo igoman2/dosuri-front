@@ -5,7 +5,10 @@ import { useMutation } from "react-query";
 export function useRegisterReview() {
   const { mutate } = useMutation(registerReview, {
     onSuccess: () => {
-      queryClient.invalidateQueries(["getCommunityListKeyword"]);
+      queryClient.invalidateQueries({
+        queryKey: ["getCommunityListKeyword"],
+        refetchInactive: true,
+      });
     },
   });
   return { mutate };
