@@ -5,33 +5,21 @@ import api from "@/service/axiosConfig";
 import { queryKeys } from "@/service/react-query/constants";
 import { IHotCommunityResponse } from "@/service/types";
 import { useRouter } from "next/router";
-import React, { useMemo, useState } from "react";
+import React, { FC, useMemo } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { useInfiniteQuery } from "react-query";
-
-const Tablist: Tab[] = [
-  {
-    title: "전체",
-    value: "all",
-  },
-  {
-    title: "치료후기만 보기",
-    value: "review",
-  },
-  {
-    title: "질문/상담만 보기",
-    value: "question",
-  },
-];
 
 type Tab = {
   title: "전체" | "치료후기만 보기" | "질문/상담만 보기";
   value: "all" | "review" | "question";
 };
 
-const ReviewSection = () => {
+interface IReviewSectionProps {
+  currentTab: Tab;
+}
+
+const ReviewSection: FC<IReviewSectionProps> = ({ currentTab }) => {
   const router = useRouter();
-  const [currentTab, setCurrentTab] = useState<Tab>(Tablist[0]);
   useScrollRestoration();
 
   const initialUrl = useMemo(() => {

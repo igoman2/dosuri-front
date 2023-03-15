@@ -11,26 +11,8 @@ import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
 import { useTheme } from "@emotion/react";
 import ReviewSection from "@/components/pages/Community/ReviewSection";
-
-const Tablist: Tab[] = [
-  {
-    title: "전체",
-    value: "all",
-  },
-  {
-    title: "치료후기만 보기",
-    value: "review",
-  },
-  {
-    title: "질문/상담만 보기",
-    value: "question",
-  },
-];
-
-type Tab = {
-  title: "전체" | "치료후기만 보기" | "질문/상담만 보기";
-  value: "all" | "review" | "question";
-};
+import { Tab } from "@/types/community";
+import { Tablist } from "@/constants/Tab";
 
 const Community = () => {
   const theme = useTheme();
@@ -96,7 +78,7 @@ const Community = () => {
             ))}
           </ButtonWrapper>
         </div>
-        <ReviewSection />
+        <ReviewSection currentTab={currentTab} />
 
         <Float
           scrollDir={scrollDir}
