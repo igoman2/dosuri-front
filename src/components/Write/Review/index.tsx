@@ -1,4 +1,6 @@
-import React, { FC, useState } from "react";
+import useAuth from "@/hooks/useAuth";
+import { useRouter } from "next/router";
+import React, { FC, useEffect, useState } from "react";
 
 import Auth from "./Auth";
 import Basic from "./Basic";
@@ -8,8 +10,6 @@ import ChooseTherapist from "./ChooseTherapist";
 import ChooseTreatment from "./ChooseTreatment";
 import Complete from "./Complete";
 import Detail from "./Detail";
-import { createReviewState } from "./store";
-import { useRecoilValue } from "recoil";
 
 interface IWriteReviewProps {
   isActive: boolean;
@@ -25,8 +25,14 @@ const WriteReview: FC<IWriteReviewProps> = ({
   onClose,
 }) => {
   const [mode, setMode] = useState<number>(0);
-  const reviewState = useRecoilValue(createReviewState);
+  const { isLoggedIn } = useAuth();
+  const router = useRouter();
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push("/login");
+    }
+  }, [isLoggedIn]);
   const renderWithMode = () => {
     switch (mode) {
       case 0:
