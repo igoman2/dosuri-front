@@ -177,6 +177,7 @@ const PostCardWrapper = styled.div`
     font-size: ${(props) => props.theme.fontSizes.lg};
     line-height: ${(props) => props.theme.lineHeights.lg};
     margin-bottom: 1rem;
+    max-height: 9.3rem;
   }
 
   .comment-show {
