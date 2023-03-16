@@ -372,6 +372,9 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                       ? " is-invalid"
                       : "")
                   }
+                  style={{
+                    width: "22rem",
+                  }}
                   id="nickname"
                   name="nickname"
                   placeholder="2글자 이상 10글자 이하"
