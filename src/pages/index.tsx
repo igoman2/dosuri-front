@@ -1,4 +1,4 @@
-import { IGoodPriceHospitals, IHospitalInfoResult } from "@/service/types";
+import { IHospitalInfoResult } from "@/service/types";
 import React, { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
@@ -21,7 +21,6 @@ import useGeolocation from "@/hooks/useGeolocation";
 import { useQuery } from "react-query";
 import { useTheme } from "@emotion/react";
 import { userInfoState } from "@/store/user";
-import Head from "next/head";
 
 const Home = () => {
   const theme = useTheme();
@@ -52,14 +51,14 @@ const Home = () => {
 
   return (
     <Layout header={<Header left={true} center={true} />}>
-      <Head>
-        <title>도수리</title>
-        <meta name="description" content="도수치료 리얼후기" />
-        <meta
-          name="naver-site-verification"
-          content="00988a9242f88ec4eea87b27eff618f6eedc2e19"
-        />
-      </Head>
+      <NextSeo
+        title="도수리 | 도수치료 리얼후기"
+        canonical="https://www.dosuri.site"
+        openGraph={{
+          url: "https://www.dosuri.site",
+        }}
+      />
+
       <section
         css={{
           marginBottom: "2.5rem",

@@ -30,7 +30,13 @@ const Home = () => {
 
   return (
     <Layout header={<Header left={true} center={true} />}>
-      <NextSeo title="병원찾기 | 도수리-도수치료 리얼후기" />
+      <NextSeo
+        title="병원찾기 | 도수리-도수치료 리얼후기"
+        canonical="https://www.dosuri.site/search"
+        openGraph={{
+          url: "https://www.dosuri.site/search",
+        }}
+      />
 
       <NewReviewSection />
       <ManyReviewSection />

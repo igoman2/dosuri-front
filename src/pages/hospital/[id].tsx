@@ -139,6 +139,10 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
     <Layout header={<HeaderDepth />} footer={false}>
       <NextSeo
         title={`${hospitalInfoData.name} 도수치료 비용 후기 | 도수리-도수치료 리얼후기`}
+        canonical={`https://www.dosuri.site/hospital/${hospitalInfoData.uuid}`}
+        openGraph={{
+          url: `https://www.dosuri.site/hospital/${hospitalInfoData.uuid}`,
+        }}
       />
 
       <Hospital>

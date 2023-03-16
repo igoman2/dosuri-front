@@ -62,7 +62,13 @@ const SearchInput = () => {
       header={<SearchHeader onInput={onInput} inputText={inputText} />}
       footer={false}
     >
-      <NextSeo title="병원찾기 | 도수리-도수치료 리얼후기" />
+      <NextSeo
+        title="병원찾기 | 도수리-도수치료 리얼후기"
+        canonical="https://www.dosuri.site/search/input"
+        openGraph={{
+          url: "https://www.dosuri.site/search/input",
+        }}
+      />
 
       <Main>
         {inputText.length > 0 ? (

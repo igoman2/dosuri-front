@@ -55,8 +55,13 @@ const InsuranceRegister = () => {
   };
   return (
     <Layout header={<HeaderInsurance />} footer={false}>
-      <NextSeo title="실손보험 가입 | 도수리-도수치료 리얼후기" />
-
+      <NextSeo
+        title="실손보험 가입 | 도수리-도수치료 리얼후기"
+        canonical="https://www.dosuri.site/insurance-register"
+        openGraph={{
+          url: "https://www.dosuri.site/insurance-register",
+        }}
+      />
       <Content>
         <div className="inner">
           <div className="title">실손보험 없이 도수치료 받으시려구요?</div>

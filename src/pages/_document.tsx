@@ -16,6 +16,12 @@ class MyDocument extends Document {
     return (
       <Html lang="kr">
         <Head>
+          <meta name="robots" content="index,follow" />
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+          <meta charSet="UTF-8" />
           <meta
             name="facebook-domain-verification"
             content="24ov5jif5wf1d1ci5yv25w6qb5eos1"

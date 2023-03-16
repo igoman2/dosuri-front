@@ -52,7 +52,13 @@ const Community = () => {
         />
       }
     >
-      <NextSeo title="도수톡 | 도수리-도수치료 리얼후기" />
+      <NextSeo
+        title="도수톡 | 도수리-도수치료 리얼후기"
+        canonical={`https://www.dosuri.site/community`}
+        openGraph={{
+          url: `https://www.dosuri.site/community`,
+        }}
+      />
 
       <>
         <div className="tab">

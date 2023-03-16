@@ -1,14 +1,11 @@
 import * as fbq from "../lib/fpixel";
 import * as gtag from "../lib/gtag";
 
-import { Global, ThemeProvider, useTheme } from "@emotion/react";
+import { Global, ThemeProvider } from "@emotion/react";
 import { Hydrate, QueryClientProvider } from "react-query";
 import { Suspense, useEffect } from "react";
 
 import type { AppProps } from "next/app";
-import DEFAULT_SEO from "@/lib/seo/seo.config";
-import { DefaultSeo } from "next-seo";
-// import { ErrorBoundary } from "@sentry/react";
 import { ErrorBoundary } from "react-error-boundary";
 import Fallback from "./fallback";
 import Head from "next/head";
@@ -22,6 +19,8 @@ import theme from "@/styles/theme";
 import { useRouter } from "next/router";
 import withAuth from "./withauth";
 import { Toaster } from "react-hot-toast";
+import { DefaultSeo } from "next-seo";
+import SEO from "../lib/seo/seo.config";
 
 function MyApp({
   Component,
@@ -48,13 +47,6 @@ function MyApp({
   return (
     <>
       <Head>
-        <title>도수리</title>
-        <meta name="description" content="도수 통증치료 병원정보는 도수리" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta
-          name="naver-site-verification"
-          content="00988a9242f88ec4eea87b27eff618f6eedc2e19"
-        />
         <link
           rel="icon"
           href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
@@ -145,43 +137,6 @@ function MyApp({
         />
         <link rel="canonical" href="https://www.dosuri.site" />
 
-        <meta property="og:url" content="https://www.dosuri.site" />
-        <meta property="og:title" content="도수리" />
-        <meta
-          property="og:description"
-          content="도수 통증치료 병원정보는 도수리"
-        />
-        <meta property="og:type" content="article" />
-        <meta
-          property="og:image"
-          content="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
-        />
-        <meta property="og:image:alt" content="" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:locale" content="en_GB" />
-
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="오터 로그" />
-        <meta
-          name="twitter:description"
-          content="도수 통증치료 병원정보는 도수리"
-        />
-        <meta
-          name="twitter:image"
-          content="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
-        />
-
-        <meta property="og:title" content="도수리" />
-        <meta
-          property="og:description"
-          content="도수 통증치료 병원정보는 도수리"
-        />
-        <meta property="og:url" content="https://www.dosuri.site" />
-        <meta
-          property="og:image"
-          content="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
-        />
         <meta property="product:brand" content="도수리" />
         <meta property="product:availability" content="in stock" />
         <meta property="product:condition" content="new" />
@@ -255,7 +210,7 @@ function MyApp({
               >
                 <ErrorBoundary FallbackComponent={Fallback}>
                   <Suspense fallback={<Spinner />}>
-                    {/* <DefaultSeo {...SEO} /> */}
+                    <DefaultSeo {...SEO} />
                     <Component {...pageProps} />
                   </Suspense>
                 </ErrorBoundary>
