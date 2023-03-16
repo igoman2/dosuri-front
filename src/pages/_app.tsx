@@ -47,6 +47,45 @@ function MyApp({
   return (
     <>
       <Head>
+        <title>도수리</title>
+        <meta name="description" content="도수 통증치료 병원정보는 도수리" />
+        <meta property="og:url" content="https://www.dosuri.site" />
+        <meta property="og:title" content="도수리" />
+        <meta
+          property="og:description"
+          content="도수 통증치료 병원정보는 도수리"
+        />
+        <meta property="og:type" content="article" />
+        <meta
+          property="og:image"
+          content="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
+        />
+        <meta property="og:image:alt" content="" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="en_GB" />
+
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="오터 로그" />
+        <meta
+          name="twitter:description"
+          content="도수 통증치료 병원정보는 도수리"
+        />
+        <meta
+          name="twitter:image"
+          content="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
+        />
+
+        <meta property="og:title" content="도수리" />
+        <meta
+          property="og:description"
+          content="도수 통증치료 병원정보는 도수리"
+        />
+        <meta property="og:url" content="https://www.dosuri.site" />
+        <meta
+          property="og:image"
+          content="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
+        />
         <link
           rel="icon"
           href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
