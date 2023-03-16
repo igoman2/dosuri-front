@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { deleteCookie, getCookie } from "cookies-next";
 
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const freeRoute = ["/login", "/register", "oauth"];
 
@@ -60,7 +61,12 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
     if (verified) {
       return !isProcessing && <WrappedComponent {...props} />;
     } else {
-      return null;
+      return (
+        <Head>
+          <title>도수리</title>
+          <meta name="description" content="도수 통증치료 병원정보는 도수리" />
+        </Head>
+      );
     }
   };
 };
