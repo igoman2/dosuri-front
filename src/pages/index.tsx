@@ -1,4 +1,4 @@
-import { IHospitalInfoResult } from "@/service/types";
+import { IGoodPriceHospitals, IHospitalInfoResult } from "@/service/types";
 import React, { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
@@ -68,29 +68,13 @@ const Home = () => {
           <>
             <div
               css={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
+                fontSize: theme.fontSizes.xl,
+                fontWeight: 700,
               }}
             >
-              <div
-                css={{
-                  fontSize: theme.fontSizes.xl,
-                  fontWeight: 700,
-                }}
-              >
-                {isLoggedIn
-                  ? `${userInfo.address.small_area} 주변 TOP 병원`
-                  : "도수리 TOP 병원"}
-              </div>
-              <div
-                css={{
-                  fontSize: theme.fontSizes.sm,
-                  color: theme.colors.grey,
-                }}
-              >
-                인근 병원 중 후기 많은 순으로 노출
-              </div>
+              {isLoggedIn
+                ? `${userInfo.address.small_area} 주변 TOP 병원`
+                : "도수리 TOP 병원"}
             </div>
 
             {hospitalList.top_hospitals.map(
@@ -156,7 +140,7 @@ const Home = () => {
           )}
         </>
       </section>
-      {/* <section
+      <section
         css={{
           marginBottom: "2.5rem",
         }}
@@ -183,7 +167,7 @@ const Home = () => {
             )}
           </>
         )}
-      </section> */}
+      </section>
 
       <LogginBanner>
         {!isLoggedIn && (

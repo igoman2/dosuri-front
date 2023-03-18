@@ -34,7 +34,8 @@ const sentryWebpackPluginOptions = {};
 
 let config = {};
 
-process.env.NODE_ENV === "production"
-  ? (config = withSentryConfig(nextConfig, sentryWebpackPluginOptions))
-  : (config = nextConfig);
+// process.env.NODE_ENV === "production"
+//   ? (config = withSentryConfig(nextConfig, sentryWebpackPluginOptions))
+//   : (config = nextConfig);
+config = nextConfig;
 module.exports = config;
