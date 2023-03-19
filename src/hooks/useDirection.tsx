@@ -1,6 +1,5 @@
+import { DIRECTION } from "@/types/common";
 import { useEffect, useState } from "react";
-
-import { DIRECTION } from "@/pages/mypage/review";
 
 const useDirection = () => {
   const [scrollDir, setScrollDir] = useState<DIRECTION>();

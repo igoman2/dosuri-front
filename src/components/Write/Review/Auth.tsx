@@ -1,5 +1,9 @@
 import React, { Dispatch, FC, useEffect, useState } from "react";
-import { modalContentState, modalState } from "@/components/Modal/store";
+import {
+  closeModalDirectionState,
+  modalContentState,
+  modalState,
+} from "@/components/Modal/store";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
 import AttachImage from "./AttachImage";
@@ -47,6 +51,7 @@ const Auth: FC<IAuthProps> = ({ isActive, mode, setMode, onClose, onSwap }) => {
   );
   const setModalContent = useSetRecoilState(modalContentState);
   const setModalIsActive = useSetRecoilState(modalState);
+  const setCloseModalDirection = useSetRecoilState(closeModalDirectionState);
 
   const { mutate } = useRegisterReview();
 
@@ -110,6 +115,11 @@ const Auth: FC<IAuthProps> = ({ isActive, mode, setMode, onClose, onSwap }) => {
 
   const isValid = () => {
     return personalAgreement && sensitiveAgreement && isUploadingComplete;
+  };
+
+  const handleMode = (modeNum: number) => {
+    setMode(modeNum);
+    setCloseModalDirection({ direction: "UP" });
   };
 
   useEffect(() => {
@@ -295,7 +305,7 @@ const Auth: FC<IAuthProps> = ({ isActive, mode, setMode, onClose, onSwap }) => {
         </div>
         <ModalBottom
           mode={mode}
-          setMode={setMode}
+          setMode={handleMode}
           onSwap={onSwap}
           disabled={!isValid()}
           action={submitReview}

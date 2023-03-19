@@ -15,13 +15,15 @@ import { IHospitalInfoResult } from "@/service/types";
 import { createReviewState } from "./store";
 import { css } from "@emotion/react";
 import theme from "@/styles/theme";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useSearchHospital } from "@/hooks/service/useSearchHospital";
+import { closeModalDirectionState } from "@/components/Modal/store";
+import { DIRECTION } from "@/types/common";
 
 interface IChooseTherapistProps {
   isActive: boolean;
   mode: number;
-  setMode: Dispatch<React.SetStateAction<number>>;
+  setMode: (val: number) => void;
   onClose: () => void;
   onSwap: () => void;
 }
@@ -41,6 +43,7 @@ const ChooseTherapist: FC<IChooseTherapistProps> = ({
   const { value, setTrue, setFalse } = useBoolean(false);
   const debouncedValue = useDebounce<string>(inputText, 300);
   const [reviewState, setReviewState] = useRecoilState(createReviewState);
+  const setCloseModalDirection = useSetRecoilState(closeModalDirectionState);
 
   const { searchedHospitalList } = useSearchHospital({
     query: inputText,
@@ -94,7 +97,10 @@ const ChooseTherapist: FC<IChooseTherapistProps> = ({
   return (
     <FullModalBase
       isActive={isActive}
-      onClose={() => setMode(0)}
+      onClose={() => {
+        setCloseModalDirection({ direction: DIRECTION.Down });
+        setMode(0);
+      }}
       onClickBack={onClose}
       title="치료사 선택"
       right={

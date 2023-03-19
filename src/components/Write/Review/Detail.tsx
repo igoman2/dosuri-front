@@ -12,8 +12,9 @@ import { TitleWrapper } from "@/components/UI/emotion/Review/TitleWrapper";
 import { WriteReviewWrapper } from "@/components/UI/emotion/Review/WriteReviewWrapper";
 import { createReviewState } from "./store";
 import styled from "@emotion/styled";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useTheme } from "@emotion/react";
+import { closeModalDirectionState } from "@/components/Modal/store";
 
 const MAX_IMAGE_NUMBER = 10;
 
@@ -39,6 +40,7 @@ const Detail: FC<IDetailProps> = ({
   );
   const [isUploadingComplete, setIsUploadingComplete] = useState(true);
   const theme = useTheme();
+  const setCloseModalDirection = useSetRecoilState(closeModalDirectionState);
 
   interface MyFormValues {
     content: string;
@@ -56,6 +58,11 @@ const Detail: FC<IDetailProps> = ({
     }),
     onSubmit: () => {},
   });
+
+  const handleMode = (modeNum: number) => {
+    setMode(modeNum);
+    setCloseModalDirection({ direction: "UP" });
+  };
 
   useEffect(() => {
     setReviewState((prev) => ({
@@ -301,7 +308,7 @@ const Detail: FC<IDetailProps> = ({
         </div>
         <ModalBottom
           mode={mode}
-          setMode={setMode}
+          setMode={handleMode}
           onSwap={onSwap}
           disabled={!isValid()}
         />

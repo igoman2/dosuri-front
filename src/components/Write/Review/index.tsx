@@ -1,6 +1,8 @@
+import { closeModalDirectionState, modalState } from "@/components/Modal/store";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import Auth from "./Auth";
 import Basic from "./Basic";
@@ -27,6 +29,10 @@ const WriteReview: FC<IWriteReviewProps> = ({
   const [mode, setMode] = useState<number>(0);
   const { isLoggedIn } = useAuth();
   const router = useRouter();
+
+  const handleMode = (modeNum: number) => {
+    setMode(modeNum);
+  };
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -80,7 +86,7 @@ const WriteReview: FC<IWriteReviewProps> = ({
           <ChooseHospital
             isActive={isActive}
             onClose={() => onChangeActive()}
-            setMode={setMode}
+            setMode={handleMode}
             onSwap={onSwap}
             mode={0}
           />
@@ -91,7 +97,7 @@ const WriteReview: FC<IWriteReviewProps> = ({
           <ChooseTreatment
             isActive={isActive}
             onClose={() => onChangeActive()}
-            setMode={setMode}
+            setMode={handleMode}
             onSwap={onSwap}
             mode={0}
           />
@@ -102,7 +108,7 @@ const WriteReview: FC<IWriteReviewProps> = ({
           <ChooseDoctor
             isActive={isActive}
             onClose={() => onChangeActive()}
-            setMode={setMode}
+            setMode={handleMode}
             onSwap={onSwap}
             mode={0}
           />
@@ -113,7 +119,7 @@ const WriteReview: FC<IWriteReviewProps> = ({
           <ChooseTherapist
             isActive={isActive}
             onClose={() => onChangeActive()}
-            setMode={setMode}
+            setMode={handleMode}
             onSwap={onSwap}
             mode={0}
           />

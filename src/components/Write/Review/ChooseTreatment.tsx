@@ -20,14 +20,16 @@ import { WriteReviewWrapper } from "@/components/UI/emotion/Review/WriteReviewWr
 import { createReviewState } from "./store";
 import magnifier_grey from "@/public/assets/magnifier_grey.png";
 import styled from "@emotion/styled";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { DIRECTION } from "@/types/common";
+import { closeModalDirectionState } from "@/components/Modal/store";
 
 const MAX_TREATMENT_COUNT = 3;
 
 interface IChooseTreatmentProps {
   isActive: boolean;
   mode: number;
-  setMode: Dispatch<React.SetStateAction<number>>;
+  setMode: (val: number) => void;
   onClose: () => void;
   onSwap: () => void;
 }
@@ -800,6 +802,7 @@ const ChooseTreatment: FC<IChooseTreatmentProps> = ({
   const [selectedKeyword, setSelectedKeyword] = useState<Treatment[]>(
     reviewState.treatmentKeywords
   );
+  const setCloseModalDirection = useSetRecoilState(closeModalDirectionState);
 
   const searchedKeywords = useMemo(() => {
     return keywordState.filter((el) => el.keyword.includes(inputText));
@@ -849,7 +852,10 @@ const ChooseTreatment: FC<IChooseTreatmentProps> = ({
   return (
     <FullModalBase
       isActive={isActive}
-      onClose={() => setMode(0)}
+      onClose={() => {
+        setCloseModalDirection({ direction: DIRECTION.Down });
+        setMode(0);
+      }}
       onClickBack={onClose}
       title="치료 선택"
       subTitle="최대 3개까지 선택"
