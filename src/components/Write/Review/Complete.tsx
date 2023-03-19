@@ -13,7 +13,7 @@ import theme from "@/styles/theme";
 
 interface ICompleteProps {
   isActive: boolean;
-  setMode: Dispatch<React.SetStateAction<number>>;
+  setMode: (val: number) => void;
   onClose: () => void;
   onSwap: () => void;
 }

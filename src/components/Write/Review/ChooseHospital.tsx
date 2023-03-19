@@ -22,12 +22,14 @@ import { createTempHospital } from "@/service/apis/hospital";
 import { css } from "@emotion/react";
 import magnifier_grey from "@/public/assets/magnifier_grey.png";
 import styled from "@emotion/styled";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { closeModalDirectionState } from "@/components/Modal/store";
+import { DIRECTION } from "@/types/common";
 
 interface IChooseHospitalProps {
   isActive: boolean;
   mode: number;
-  setMode: Dispatch<React.SetStateAction<number>>;
+  setMode: (val: number) => void;
   onClose: () => void;
   onSwap: () => void;
 }
@@ -47,6 +49,7 @@ const ChooseHospital: FC<IChooseHospitalProps> = ({
   const { value, setTrue, setFalse } = useBoolean(false);
   const debouncedValue = useDebounce<string>(inputText, 300);
   const [reviewState, setReviewState] = useRecoilState(createReviewState);
+  const setCloseModalDirection = useSetRecoilState(closeModalDirectionState);
 
   const initialUrl = useMemo(() => {
     return `/hospital/v1/hospitals?search=${inputText}`;
@@ -143,7 +146,10 @@ const ChooseHospital: FC<IChooseHospitalProps> = ({
   return (
     <FullModalBase
       isActive={isActive}
-      onClose={() => setMode(0)}
+      onClose={() => {
+        setCloseModalDirection({ direction: DIRECTION.Down });
+        setMode(0);
+      }}
       onClickBack={onClose}
       title="병원 선택"
     >

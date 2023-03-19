@@ -19,12 +19,6 @@ import { useRecoilValue } from "recoil";
 import { useRouter } from "next/router";
 import { userInfoState } from "@/store/user";
 
-export const DIRECTION = {
-  Up: "UP",
-  Down: "Down",
-} as const;
-export type DIRECTION = typeof DIRECTION[keyof typeof DIRECTION]; // 'UP' | DOWN'
-
 const Review = () => {
   const [scrollDir] = useDirection();
   const [isActive, setIsActive] = useState(false);

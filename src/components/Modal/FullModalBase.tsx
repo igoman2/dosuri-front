@@ -5,6 +5,9 @@ import Icon from "@/util/Icon";
 import { ModalBaseContainer } from "./ModalBase";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";
+import { css } from "@emotion/react";
+import { useRecoilValue } from "recoil";
+import { closeModalDirectionState } from "./store";
 
 interface IFullModalBase {
   isActive: boolean;
@@ -27,9 +30,11 @@ const FullModalBase: FC<IFullModalBase> = ({
   onClickBack,
   divider = false,
 }) => {
+  const closeDirection = useRecoilValue(closeModalDirectionState);
+
   return (
     <>
-      <FullModalBaseWrapper active={isActive}>
+      <FullModalBaseWrapper active={isActive} closeDirection={closeDirection}>
         <div
           className="modal_back"
           onClick={onClickBack ? onClickBack : onClose}
@@ -92,7 +97,13 @@ const FullModalBase: FC<IFullModalBase> = ({
 
 export default FullModalBase;
 
-const FullModalBaseWrapper = styled(ModalBaseContainer)`
+type SFullModalBaseWrapperProps = {
+  closeDirection: any;
+};
+
+const FullModalBaseWrapper = styled(
+  ModalBaseContainer
+)<SFullModalBaseWrapperProps>`
   padding: 0;
 
   .modal-head {
@@ -111,22 +122,62 @@ const FullModalBaseWrapper = styled(ModalBaseContainer)`
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-  }
+    ${(props) => {
+      console.log(props.closeDirection);
 
-  .content {
-    margin-top: 0.5rem;
-    flex: 1;
-  }
+      return props.active
+        ? props.closeDirection.direction === "UP"
+          ? css`
+              animation: popInFromBottom 0.4s forwards ease-in-out;
+            `
+          : css`
+              animation: popOutToBottom 0.4s forwards ease-in-out;
+            `
+        : css`
+            animation: popInFromBottom 0.4s forwards ease-in-out;
+          `;
+    }}
 
-  .title {
-    font-size: ${(props) => props.theme.fontSizes.xxl};
-    line-height: ${(props) => props.theme.lineHeights.xxl};
-    font-weight: 700;
-  }
+    .content {
+      margin-top: 0.5rem;
+      flex: 1;
+    }
 
-  .subTitle {
-    font-size: ${(props) => props.theme.fontSizes.md};
-    line-height: ${(props) => props.theme.lineHeights.md};
-    color: ${(props) => props.theme.colors.grey};
+    .title {
+      font-size: ${(props) => props.theme.fontSizes.xxl};
+      line-height: ${(props) => props.theme.lineHeights.xxl};
+      font-weight: 700;
+    }
+
+    .subTitle {
+      font-size: ${(props) => props.theme.fontSizes.md};
+      line-height: ${(props) => props.theme.lineHeights.md};
+      color: ${(props) => props.theme.colors.grey};
+    }
+
+    @keyframes popInFromBottom {
+      0% {
+        opacity: 0;
+        transform: translateY(40rem) scale(0.75);
+      }
+      75% {
+        opacity: 1;
+        transform: translateY(-1.6rem) scale(1);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes popOutToBottom {
+      0% {
+        opacity: 0;
+        transform: translateY(-40rem) scale(0.75);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
   }
 `;

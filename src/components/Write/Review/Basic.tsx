@@ -21,7 +21,8 @@ import { TitleWrapper } from "@/components/UI/emotion/Review/TitleWrapper";
 import { Treatment } from "@/types/community";
 import { WriteReviewWrapper } from "@/components/UI/emotion/Review/WriteReviewWrapper";
 import { createReviewState } from "./store";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { closeModalDirectionState } from "@/components/Modal/store";
 
 interface IBasicProps {
   isActive: boolean;
@@ -47,6 +48,7 @@ const Basic: FC<IBasicProps> = ({
   const [treatmentPrice, setTreatmentPrice] = useState("");
 
   const treatmentPriceRef = useRef<HTMLInputElement>(null);
+  const setCloseModalDirection = useSetRecoilState(closeModalDirectionState);
 
   const handleKeywordDelete = (
     e: MouseEvent<HTMLElement>,
@@ -74,18 +76,22 @@ const Basic: FC<IBasicProps> = ({
   }, [selectedKeyword]);
 
   const handleHospitalSelect = () => {
+    setCloseModalDirection({ direction: "UP" });
     setMode(10);
   };
 
   const handleTreatmentSelect = () => {
+    setCloseModalDirection({ direction: "UP" });
     setMode(11);
   };
 
   const handleDoctorSelect = () => {
+    setCloseModalDirection({ direction: "UP" });
     setMode(12);
   };
 
   const handleTherapistSelect = () => {
+    setCloseModalDirection({ direction: "UP" });
     setMode(13);
   };
 
@@ -160,6 +166,11 @@ const Basic: FC<IBasicProps> = ({
       ...prev,
       treatmentCount: e.target.value,
     }));
+  };
+
+  const handleMode = (modeNum: number) => {
+    setMode(modeNum);
+    setCloseModalDirection({ direction: "UP" });
   };
 
   const image = css`
@@ -446,7 +457,7 @@ const Basic: FC<IBasicProps> = ({
         </FormikProvider>
         <ModalBottom
           mode={mode}
-          setMode={setMode}
+          setMode={handleMode}
           onSwap={onSwap}
           disabled={!isValid()}
         />

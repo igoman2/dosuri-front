@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 
 interface IModalBottomProps {
   mode: number;
-  setMode: Dispatch<React.SetStateAction<number>>;
+  setMode: (val: number) => void;
   onSwap: () => void;
   disabled: boolean;
   action?: () => void;
@@ -51,7 +51,7 @@ export const ModalBottom: FC<IModalBottomProps> = ({
           color={theme.colors.purple}
           border={`0.1rem solid ${theme.colors.purple}`}
           onClick={() => {
-            setMode((prev) => prev - 1);
+            setMode(mode - 1);
           }}
         />
       )}
@@ -64,7 +64,7 @@ export const ModalBottom: FC<IModalBottomProps> = ({
         type="submit"
         width="14rem"
         backgroundColor={theme.colors.purple_light}
-        onClick={() => (action ? action() : setMode((prev) => prev + 1))}
+        onClick={() => (action ? action() : setMode(mode + 1))}
         disabled={disabled}
       />
     </ButtonWrapper>

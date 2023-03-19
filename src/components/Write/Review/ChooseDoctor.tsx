@@ -14,13 +14,15 @@ import { EmptyText } from "@/components/UI/emotion/EmptyText";
 import FullModalBase from "@/components/Modal/FullModalBase";
 import { IHospitalInfoResult } from "@/service/types";
 import { createReviewState } from "./store";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useSearchHospital } from "@/hooks/service/useSearchHospital";
+import { closeModalDirectionState } from "@/components/Modal/store";
+import { DIRECTION } from "@/types/common";
 
 interface IChooseDoctorProps {
   isActive: boolean;
   mode: number;
-  setMode: Dispatch<React.SetStateAction<number>>;
+  setMode: (val: number) => void;
   onClose: () => void;
   onSwap: () => void;
 }
@@ -41,6 +43,7 @@ const ChooseDoctor: FC<IChooseDoctorProps> = ({
   const { value, setTrue, setFalse } = useBoolean(false);
   const debouncedValue = useDebounce<string>(inputText, 300);
   const [reviewState, setReviewState] = useRecoilState(createReviewState);
+  const setCloseModalDirection = useSetRecoilState(closeModalDirectionState);
 
   const { searchedHospitalList } = useSearchHospital({
     query: inputText,
@@ -94,8 +97,11 @@ const ChooseDoctor: FC<IChooseDoctorProps> = ({
   return (
     <FullModalBase
       isActive={isActive}
-      onClose={() => setMode(0)}
-      onClickBack={onClose}
+      onClose={() => {
+        setCloseModalDirection({ direction: DIRECTION.Down });
+        setMode(0);
+      }}
+      onClickBack={() => onClose}
       title="의사 선택"
       right={
         <Button

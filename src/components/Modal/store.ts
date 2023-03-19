@@ -9,6 +9,13 @@ export const modalState = atom({
   },
 });
 
+export const closeModalDirectionState = atom({
+  key: `closeModalDirectionState${v4()}`,
+  default: {
+    direction: "UP",
+  },
+});
+
 export const modalContentState = atom({
   key: `modalContentState${v4()}`,
   default: {
