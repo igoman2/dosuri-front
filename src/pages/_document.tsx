@@ -43,7 +43,7 @@ class MyDocument extends Document {
           <meta property="og:type" content="article" />
           <meta
             property="og:image"
-            content="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
+            content="https://dosuri-image.dosuri.site/common/favicon.png"
           />
           <meta property="og:image:alt" content="" />
           <meta property="og:image:width" content="1200" />
@@ -58,7 +58,7 @@ class MyDocument extends Document {
           />
           <meta
             name="twitter:image"
-            content="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
+            content="https://dosuri-image.dosuri.site/common/favicon.png"
           />
 
           <meta property="og:title" content="도수리" />
@@ -69,7 +69,7 @@ class MyDocument extends Document {
           <meta property="og:url" content="https://www.dosuri.site" />
           <meta
             property="og:image"
-            content="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
+            content="https://dosuri-image.dosuri.site/common/favicon.png"
           />
         </Head>
         <body>
