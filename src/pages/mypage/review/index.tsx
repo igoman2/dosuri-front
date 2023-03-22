@@ -16,15 +16,14 @@ import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";
 import { useInfiniteQuery } from "react-query";
 import { useRecoilValue } from "recoil";
-import { useRouter } from "next/router";
 import { userInfoState } from "@/store/user";
+import Link from "next/link";
 
 const Review = () => {
   const [scrollDir] = useDirection();
   const [isActive, setIsActive] = useState(false);
   const [modalType, setModalType] = useState<"question" | "review">("question");
   const user = useRecoilValue(userInfoState);
-  const router = useRouter();
 
   const initialUrl = useMemo(() => {
     return `/community/v1/community/articles?user=${user.uuid}&ordering=-created_at`;
@@ -65,12 +64,6 @@ const Review = () => {
     setModalType(val);
   };
 
-  const postClickHandler = (id: string) => {
-    router.push({
-      pathname: `review/${id}`,
-    });
-  };
-
   return (
     <Layout header={<HeaderDepth />} footer={false}>
       <NextSeo title="마이페이지 | 도수리-도수치료 리얼후기" />
@@ -87,16 +80,14 @@ const Review = () => {
               {communityList?.pages.map((pageData) => {
                 return pageData.results.map((review) => {
                   return (
-                    <div
-                      className="link"
-                      onClick={() => postClickHandler(review.uuid)}
-                      key={review.uuid}
-                    >
-                      <PostCard
-                        review={review}
-                        bottom={<PostBottom review={review} type="list" />}
-                      />
-                    </div>
+                    <Link href={`review/${review.uuid}`} key={review.uuid}>
+                      <a>
+                        <PostCard
+                          review={review}
+                          bottom={<PostBottom review={review} type="list" />}
+                        />
+                      </a>
+                    </Link>
                   );
                 });
               })}
@@ -134,9 +125,5 @@ const ReviewWrapper = styled.div`
     line-height: ${(props) => props.theme.lineHeights.xl};
     font-weight: 700;
     margin-bottom: 0.5rem;
-  }
-
-  .link {
-    cursor: pointer;
   }
 `;

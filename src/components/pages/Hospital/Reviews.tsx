@@ -8,7 +8,7 @@ import PostCard from "@/components/Card/PostCard";
 import api from "@/service/axiosConfig";
 import styled from "@emotion/styled";
 import { useInfiniteQuery } from "react-query";
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface IReviewsProps {
   hospitalData: IGetHospitalInfo;
@@ -17,8 +17,6 @@ interface IReviewsProps {
 type LoadMore = (page: number) => void;
 
 const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
-  const router = useRouter();
-
   const initialUrl = useMemo(() => {
     return `/community/v1/community/articles?hospital=${hospitalData.uuid}&ordering=-created_at`;
   }, []);
@@ -44,12 +42,6 @@ const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
     }
   );
 
-  const handleReviewClick = (uuid: string) => {
-    router.push({
-      pathname: `/community/${uuid}`,
-    });
-  };
-
   const fetchNextList = () => {
     if (isFetching) {
       return;
@@ -74,16 +66,14 @@ const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
             {reviews?.pages.map((pageData) => {
               return pageData.results.map((review) => {
                 return (
-                  <div
-                    className="link"
-                    onClick={() => handleReviewClick(review.uuid)}
-                    key={review.uuid}
-                  >
-                    <PostCard
-                      review={review}
-                      bottom={<PostBottom review={review} type="list" />}
-                    />
-                  </div>
+                  <Link href={`/community/${review.uuid}`} key={review.uuid}>
+                    <a>
+                      <PostCard
+                        review={review}
+                        bottom={<PostBottom review={review} type="list" />}
+                      />
+                    </a>
+                  </Link>
                 );
               });
             })}
@@ -105,9 +95,5 @@ const ReviewsWrapper = styled.div`
 
   .list-length {
     color: ${(props) => props.theme.colors.purple};
-  }
-
-  .link {
-    cursor: pointer;
   }
 `;
