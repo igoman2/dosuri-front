@@ -8,6 +8,7 @@ import api from "@/service/axiosConfig";
 import styled from "@emotion/styled";
 import { useInfiniteQuery } from "react-query";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const KeywordCommunity = () => {
   const router = useRouter();
@@ -36,12 +37,6 @@ const KeywordCommunity = () => {
     }
   );
 
-  const postClickHandler = (id: string) => {
-    router.push({
-      pathname: `/community/${id}`,
-    });
-  };
-
   const fetchNextList = () => {
     if (isFetching) {
       return;
@@ -61,16 +56,14 @@ const KeywordCommunity = () => {
             {talks?.pages.map((pageData) => {
               return pageData.results.map((talk) => {
                 return (
-                  <div
-                    className="link"
-                    onClick={() => postClickHandler(talk.uuid)}
-                    key={talk.uuid}
-                  >
-                    <PostCard
-                      review={talk}
-                      bottom={<PostBottom review={talk} type="list" />}
-                    />
-                  </div>
+                  <Link href={`/community/${talk.uuid}`} key={talk.uuid}>
+                    <a>
+                      <PostCard
+                        review={talk}
+                        bottom={<PostBottom review={talk} type="list" />}
+                      />
+                    </a>
+                  </Link>
                 );
               });
             })}
@@ -96,9 +89,5 @@ const ResultWrapper = styled.div`
 
   .list-length {
     color: ${(props) => props.theme.colors.purple};
-  }
-
-  .link {
-    cursor: pointer;
   }
 `;

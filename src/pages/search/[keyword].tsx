@@ -20,6 +20,7 @@ import { useGetCommunity } from "@/hooks/service/useGetCommunity";
 import { useHospital } from "@/hooks/service/useHospital";
 import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
+import Link from "next/link";
 
 interface ISearchResultProps {
   keyword: string;
@@ -46,18 +47,6 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
   );
 
   const { communityList } = useGetCommunity(params);
-
-  const postClickHandler = (id: string) => {
-    router.push({
-      pathname: `/community/${id}`,
-    });
-  };
-
-  const hospitalClickHandler = (id: string) => {
-    router.push({
-      pathname: `/hospital/${id}`,
-    });
-  };
 
   const onTabClickHander = (tab: TabItem) => {
     setCurrentTab(tab);
@@ -102,13 +91,11 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
         </div>
 
         {hospitalsInAllTab?.results.map((hospital: IHospitalInfoResult) => (
-          <div
-            className="link"
-            onClick={() => hospitalClickHandler(hospital.uuid)}
-            key={hospital.uuid}
-          >
-            <HospitalCard hospitalInfo={hospital} />
-          </div>
+          <Link href={`/hospital/${hospital.uuid}`} key={hospital.uuid}>
+            <a>
+              <HospitalCard hospitalInfo={hospital} />
+            </a>
+          </Link>
         ))}
       </div>
     </ResultWrapper>
@@ -122,16 +109,12 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
           <span className="list-length"> {communityList.count}</span>건
         </div>
         {communityList.results.map((post) => (
-          <div
-            className="link"
-            onClick={() => postClickHandler(post.uuid)}
-            key={post.uuid}
-          >
+          <Link href={`/community/${post.uuid}`} key={post.uuid}>
             <PostCard
               review={post}
               bottom={<PostBottom review={post} type="list" />}
             />
-          </div>
+          </Link>
         ))}
       </div>
     </ResultWrapper>
@@ -235,10 +218,6 @@ const ResultWrapper = styled.div`
 
   .list-length {
     color: ${(props) => props.theme.colors.purple};
-  }
-
-  .link {
-    cursor: pointer;
   }
 `;
 

@@ -4,7 +4,7 @@ import useScrollRestoration from "@/hooks/useScrollRestoration";
 import api from "@/service/axiosConfig";
 import { queryKeys } from "@/service/react-query/constants";
 import { IHotCommunityResponse } from "@/service/types";
-import { useRouter } from "next/router";
+import Link from "next/link";
 import React, { FC, useMemo } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { useInfiniteQuery } from "react-query";
@@ -19,7 +19,6 @@ interface IReviewSectionProps {
 }
 
 const ReviewSection: FC<IReviewSectionProps> = ({ currentTab }) => {
-  const router = useRouter();
   useScrollRestoration();
 
   const initialUrl = useMemo(() => {
@@ -46,12 +45,6 @@ const ReviewSection: FC<IReviewSectionProps> = ({ currentTab }) => {
     }
   );
 
-  const postClickHandler = (id: string) => {
-    router.push({
-      pathname: `/community/${id}`,
-    });
-  };
-
   const fetchNextList = () => {
     if (isFetching) {
       return;
@@ -64,19 +57,15 @@ const ReviewSection: FC<IReviewSectionProps> = ({ currentTab }) => {
       {communityList?.pages.map((pageData) => {
         return pageData.results.map((talk) => {
           return (
-            <div
-              css={{
-                cursor: "pointer",
-              }}
-              onClick={() => postClickHandler(talk.uuid)}
-              key={talk.uuid}
-            >
-              <PostCard
-                review={talk}
-                hasBackground={true}
-                bottom={<PostBottom review={talk} type="list" />}
-              />
-            </div>
+            <Link href={`/community/${talk.uuid}`} key={talk.uuid}>
+              <a>
+                <PostCard
+                  review={talk}
+                  hasBackground={true}
+                  bottom={<PostBottom review={talk} type="list" />}
+                />
+              </a>
+            </Link>
           );
         });
       })}

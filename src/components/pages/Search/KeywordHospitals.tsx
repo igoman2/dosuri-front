@@ -7,6 +7,7 @@ import api from "@/service/axiosConfig";
 import styled from "@emotion/styled";
 import { useInfiniteQuery } from "react-query";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const KeywordHospitals = () => {
   const router = useRouter();
@@ -35,12 +36,6 @@ const KeywordHospitals = () => {
     }
   );
 
-  const hospitalClickHandler = (id: string) => {
-    router.push({
-      pathname: `/hospital/${id}`,
-    });
-  };
-
   const fetchNextList = () => {
     if (isFetching) {
       return;
@@ -60,13 +55,11 @@ const KeywordHospitals = () => {
             {hospitals?.pages.map((pageData) => {
               return pageData.results.map((hospital) => {
                 return (
-                  <div
-                    className="link"
-                    onClick={() => hospitalClickHandler(hospital.uuid)}
-                    key={hospital.uuid}
-                  >
-                    <HospitalCard hospitalInfo={hospital} />
-                  </div>
+                  <Link href={`/hospital/${hospital.uuid}`} key={hospital.uuid}>
+                    <a>
+                      <HospitalCard hospitalInfo={hospital} />
+                    </a>
+                  </Link>
                 );
               });
             })}
@@ -91,9 +84,5 @@ const ResultWrapper = styled.div`
 
   .list-length {
     color: ${(props) => props.theme.colors.purple};
-  }
-
-  .link {
-    cursor: pointer;
   }
 `;
