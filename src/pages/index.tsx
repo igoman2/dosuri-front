@@ -74,7 +74,7 @@ const Home = () => {
             >
               {isLoggedIn
                 ? `${userInfo.address.small_area} 주변 TOP 병원`
-                : "도수리 TOP 병원"}
+                : `${hospitalList.address} TOP 병원`}
             </div>
 
             {hospitalList.top_hospitals.map(
