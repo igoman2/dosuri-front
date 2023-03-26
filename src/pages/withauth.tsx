@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { deleteCookie, getCookie } from "cookies-next";
 
 import { useRouter } from "next/router";
@@ -53,7 +53,7 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
       }
     };
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       setIsProcessing(true);
       checkAuth();
     }, [router]);
