@@ -4,7 +4,7 @@ import {
   modalContentState,
   modalState,
 } from "@/components/Modal/store";
-import { useResetRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 
 import WriteQuesiton from "../Question";
 import WriteReview from ".";
@@ -25,7 +25,10 @@ const ModalFactory: FC<IModalFactoryProps> = ({
   const setModalIsActive = useSetRecoilState(modalState);
   const setModalContent = useSetRecoilState(modalContentState);
   const resetReviewState = useResetRecoilState(createReviewState);
-  const setCloseModalDirection = useSetRecoilState(closeModalDirectionState);
+
+  const [closeModalDirection, setCloseModalDirection] = useRecoilState(
+    closeModalDirectionState
+  );
 
   const handleClose = () => {
     setIsActive(false);
@@ -57,7 +60,9 @@ const ModalFactory: FC<IModalFactoryProps> = ({
       },
       isActive: true,
     }));
-    setCloseModalDirection({ direction: "UP" });
+    if (closeModalDirection.direction === "DOWN") {
+      setCloseModalDirection({ direction: "UP" });
+    }
   };
 
   return (
