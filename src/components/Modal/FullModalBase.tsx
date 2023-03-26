@@ -123,15 +123,13 @@ const FullModalBaseWrapper = styled(
     flex-direction: column;
     overflow-y: scroll;
     ${(props) => {
-      console.log(props.closeDirection);
-
       return props.active
         ? props.closeDirection.direction === "UP"
           ? css`
               animation: popInFromBottom 0.4s forwards ease-in-out;
             `
           : css`
-              animation: popOutToBottom 0.4s forwards ease-in-out;
+              animation: popInFromTop 0.4s forwards ease-in-out;
             `
         : css`
             animation: popInFromBottom 0.4s forwards ease-in-out;
@@ -169,14 +167,18 @@ const FullModalBaseWrapper = styled(
         transform: translateY(0);
       }
     }
-    @keyframes popOutToBottom {
+    @keyframes popInFromTop {
       0% {
         opacity: 0;
         transform: translateY(-40rem) scale(0.75);
       }
+      75% {
+        opacity: 1;
+        transform: translateY(1.6rem) scale(1);
+      }
       100% {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0);
       }
     }
   }
