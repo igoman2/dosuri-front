@@ -97,6 +97,7 @@ const ChooseHospital: FC<IChooseHospitalProps> = ({
   }, [debouncedValue]);
 
   const handleListClick = (hospital: IHospitalInfoResult) => {
+    setCloseModalDirection({ direction: DIRECTION.Down });
     setReviewState((prev) => ({
       ...prev,
       hospital: { name: hospital.name, uuid: hospital.uuid },
