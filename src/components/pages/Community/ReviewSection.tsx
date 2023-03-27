@@ -85,15 +85,6 @@ const ReviewSection: FC<IReviewSectionProps> = ({ currentTab }) => {
     }
   };
 
-  useEffect(() => {
-    window.onpopstate = () => {
-      router.push(`/community`, `/community`, {
-        shallow: true,
-        scroll: false,
-      });
-    };
-  }, []);
-
   return (
     <>
       <InfiniteScroll loadMore={fetchNextList} hasMore={hasNextPage}>
