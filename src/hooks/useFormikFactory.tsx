@@ -11,8 +11,8 @@ interface MyFormValues {
   birthday: string;
   phone: string;
   sex: string;
-  // largeArea: string;
-  // smallArea: string;
+  largeArea: string;
+  smallArea: string;
   pain_areas: {
     name: string;
   }[];
@@ -26,8 +26,8 @@ const useFormikFactory = (user: UserInfo) => {
     birthday: formatDate_YYYYMMDD(user.birthday),
     phone: formatPhoneNumber_00000000(user.phone_no),
     sex: user.sex ?? "",
-    // largeArea: user.address.large_area ?? "",
-    // smallArea: user.address.small_area ?? "",
+    largeArea: user.address.large_area ?? "",
+    smallArea: user.address.small_area ?? "",
     pain_areas: user.pain_areas ?? "",
   };
   return {
@@ -39,8 +39,8 @@ const useFormikFactory = (user: UserInfo) => {
       phone: Yup.string().length(8).required(),
       birthday: Yup.string().length(8).required(),
       sex: Yup.string().required(),
-      // largeArea: Yup.string().required(),
-      // smallArea: Yup.string().required(),
+      largeArea: Yup.string().required(),
+      smallArea: Yup.string().required(),
       pain_areas: Yup.array().min(1).required(),
     }),
   };
