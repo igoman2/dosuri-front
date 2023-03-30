@@ -197,6 +197,7 @@ export interface IHospitalInfoHomeResponse {
   new_hospitals: IHospitalInfoResult[];
   good_price_hospitals: IGoodPriceHospitals[];
   good_review_hospitals: IHospitalInfoResult[];
+  address?: string;
 }
 
 export interface IHospitalInfoResponse {

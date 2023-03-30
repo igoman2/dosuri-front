@@ -94,7 +94,10 @@ const ReplyWrapper = styled.div`
   bottom: 0;
   left: 0;
   padding: 0 2rem;
-  width: 100%;
+  max-width: 40rem;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
   border-top: 1px solid rgba(51, 51, 51, 0.1);
 
   .tagged {

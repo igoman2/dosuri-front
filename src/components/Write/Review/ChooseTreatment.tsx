@@ -842,6 +842,7 @@ const ChooseTreatment: FC<IChooseTreatmentProps> = ({
   }, [keywordState]);
 
   const handleSubmitTreatmentKeyword = () => {
+    setCloseModalDirection({ direction: DIRECTION.Down });
     setReviewState((prev) => ({
       ...prev,
       treatmentKeywords: selectedKeyword,

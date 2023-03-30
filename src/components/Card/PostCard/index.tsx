@@ -14,7 +14,7 @@ import React, {
 import Divider from "@/components/UI/Divider";
 import DoSwiper from "@/components/DoSwiper";
 import styled from "@emotion/styled";
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface IPostCardProps {
   review: IHospitalReviewsResult | ICommunityPostDetailResponse;
@@ -33,6 +33,7 @@ const PostCard: FC<IPostCardProps> = ({
   const [isShowMoreClicked, setIsShowMoreClicked] = useState<boolean>(false);
   const commentRef = useRef<HTMLDivElement>(null);
   const showCommentMoreRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const getCommentHeight = () => {
     const currentElementHeight = commentRef?.current!.scrollHeight;
@@ -54,6 +55,7 @@ const PostCard: FC<IPostCardProps> = ({
 
   const showCommentMore = (e: MouseEvent) => {
     e.stopPropagation();
+    e.nativeEvent.preventDefault();
     if (showCommentMoreRef.current) {
       setIsShowMoreClicked(true);
     }
@@ -87,6 +89,14 @@ const PostCard: FC<IPostCardProps> = ({
     return !isShowMoreClicked && isCommentOver3Line;
   };
 
+  const handleHospitalClick = () => {
+    if (skip) {
+      return;
+    }
+
+    router.push(`/hospital/${review.hospital_uuid}`);
+  };
+
   return (
     <>
       <PostCardWrapper>
@@ -94,9 +104,9 @@ const PostCard: FC<IPostCardProps> = ({
           <div className="nickname">{review.user.nickname}</div>
           <div className="register-time">{review.created_at}</div>
         </div>
-        <Link href={skip ? "" : `/hospital/${review.hospital_uuid}`}>
-          <a className="hospital-name">{review.hospital}</a>
-        </Link>
+        <div className="hospital-name" onClick={handleHospitalClick}>
+          {review.hospital}
+        </div>
         <div className="swiper-layout">
           {imageSource.length !== 0 && (
             <SwiperWrapper>
