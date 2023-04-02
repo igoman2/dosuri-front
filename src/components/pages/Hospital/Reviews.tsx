@@ -9,6 +9,7 @@ import api from "@/service/axiosConfig";
 import styled from "@emotion/styled";
 import { useInfiniteQuery } from "react-query";
 import Link from "next/link";
+import ReviewBanner from "@/components/UI/ReviewBanner";
 
 interface IReviewsProps {
   hospitalData: IGetHospitalInfo;
@@ -49,6 +50,23 @@ const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
     fetchNextPage();
   };
 
+  const isBannerVisible = (
+    parentIndex: number,
+    childIndex: number
+  ): Boolean => {
+    // 처음 5번째
+    if (parentIndex === 0 && childIndex === 5) {
+      return true;
+    }
+    // 그 후 20개마다
+    // parentIndex !== 0 은 0번째에 나오지 않음을 의미
+    else if (parentIndex !== 0 && parentIndex % 2 === 0 && childIndex === 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <ReviewsWrapper>
       {isSuccess && reviews?.pages.length === 0 ? (
@@ -63,17 +81,20 @@ const Reviews: FC<IReviewsProps> = ({ hospitalData }) => {
             건
           </div>
           <InfiniteScroll loadMore={fetchNextList} hasMore={hasNextPage}>
-            {reviews?.pages.map((pageData) => {
-              return pageData.results.map((review) => {
+            {reviews?.pages.map((pageData, index1) => {
+              return pageData.results.map((review, index2) => {
                 return (
-                  <Link href={`/community/${review.uuid}`} key={review.uuid}>
-                    <a>
-                      <PostCard
-                        review={review}
-                        bottom={<PostBottom review={review} type="list" />}
-                      />
-                    </a>
-                  </Link>
+                  <>
+                    <ReviewBanner parentIndex={index1} childIndex={index2} />
+                    <Link href={`/community/${review.uuid}`} key={review.uuid}>
+                      <a>
+                        <PostCard
+                          review={review}
+                          bottom={<PostBottom review={review} type="list" />}
+                        />
+                      </a>
+                    </Link>
+                  </>
                 );
               });
             })}
