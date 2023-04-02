@@ -62,14 +62,6 @@ class MyDocument extends Document {
           />
 
           <link
-            rel="icon"
-            href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
-          />
-          <link
-            rel="shortcut icon"
-            href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
-          />
-          <link
             rel="apple-touch-icon"
             sizes="57x57"
             href="https://dosuri-image.dosuri.site/common/apple-icon-57x57.png"
@@ -138,17 +130,34 @@ class MyDocument extends Document {
             sizes="16x16"
             href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
           />
+          <link
+            rel="shortcut icon"
+            href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
+          />
           <meta name="msapplication-TileColor" content="#ffffff" />
           <meta
+            name="msapplication-TileImage"
+            content="https://dosuri-image.dosuri.site/common/ms-icon-144x144.png"
             name="msapplication-TileImage"
             content="https://dosuri-image.dosuri.site/common/ms-icon-144x144.png"
           />
           <meta name="theme-color" content="#ffffff" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="theme-color" content="#ffffff" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta
             name="apple-mobile-web-app-status-bar-style"
             content="black-translucent"
+            name="apple-mobile-web-app-status-bar-style"
+            content="black-translucent"
           />
+          <link rel="canonical" href="https://www.dosuri.site" />
+
+          <meta property="product:brand" content="도수리" />
+          <meta property="product:availability" content="in stock" />
+          <meta property="product:condition" content="new" />
+          <meta property="product:price:amount" content="10000" />
+          <meta property="product:price:currency" content="KRW" />
           <link rel="canonical" href="https://www.dosuri.site" />
 
           <meta property="product:brand" content="도수리" />
