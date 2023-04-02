@@ -62,14 +62,6 @@ class MyDocument extends Document {
           />
 
           <link
-            rel="icon"
-            href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
-          />
-          <link
-            rel="shortcut icon"
-            href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
-          />
-          <link
             rel="apple-touch-icon"
             sizes="57x57"
             href="https://dosuri-image.dosuri.site/common/apple-icon-57x57.png"
@@ -136,6 +128,10 @@ class MyDocument extends Document {
             rel="icon"
             type="image/png"
             sizes="16x16"
+            href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
+          />
+          <link
+            rel="shortcut icon"
             href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
           />
           <meta name="msapplication-TileColor" content="#ffffff" />
