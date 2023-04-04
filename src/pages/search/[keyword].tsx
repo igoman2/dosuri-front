@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
-import { IGetHospitalListParams, IHospitalInfoResult } from "@/service/types";
+import { IGetHospitalListParams, IHospitalInfoResult } from "@/types/service";
 import { TabItem, TabList } from "@/mock/tabList";
 
 import ArrowRight from "@/public/assets/arrow-right-bold.png";

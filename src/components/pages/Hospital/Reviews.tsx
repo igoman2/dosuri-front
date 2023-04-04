@@ -1,7 +1,7 @@
-import { IGetHospitalInfo, IHotCommunityResponse } from "@/service/types";
+import { IGetHospitalInfo, IHotCommunityResponse } from "@/types/service";
 import React, { FC, useMemo } from "react";
 
-import { EmptyText } from "@/components/UI/emotion/EmptyText";
+import { EmptyText } from "@/components/etc/emotion/EmptyText";
 import InfiniteScroll from "react-infinite-scroller";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
@@ -9,7 +9,7 @@ import api from "@/service/axiosConfig";
 import styled from "@emotion/styled";
 import { useInfiniteQuery } from "react-query";
 import Link from "next/link";
-import ReviewBanner from "@/components/UI/ReviewBanner";
+import ReviewBanner from "@/components/pages/Community/ReviewBanner";
 
 interface IReviewsProps {
   hospitalData: IGetHospitalInfo;

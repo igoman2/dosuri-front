@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from "react";
 
-import Divider from "../UI/Divider";
+import Divider from "../Divider/Divider";
 import Icon from "@/util/Icon";
 import { ModalBaseContainer } from "./ModalBase";
 import styled from "@emotion/styled";

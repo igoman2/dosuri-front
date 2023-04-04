@@ -1,4 +1,4 @@
-import { IRecentHospitalSearchListResult } from "@/service/types";
+import { IRecentHospitalSearchListResult } from "@/types/service";
 import { getRecentHospitalSearchList } from "@/service/apis/hospital";
 import { useQuery } from "react-query";
 

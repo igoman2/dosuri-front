@@ -1,7 +1,7 @@
 import {
   ICommunityPostDetailResponse,
   IHospitalReviewsResult,
-} from "@/service/types";
+} from "@/types/service";
 import React, { FC } from "react";
 
 import Icon from "@/util/Icon";

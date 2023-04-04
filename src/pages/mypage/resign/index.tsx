@@ -2,7 +2,7 @@ import { Field, FormikProvider, useFormik } from "formik";
 import React, { useState } from "react";
 
 import Button from "@/components/Button";
-import Checkbox from "@/components/UI/Checkbox";
+import Checkbox from "@/components/Checkbox/Checkbox";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Layout from "@/components/Layout";
 import { NextSeo } from "next-seo";

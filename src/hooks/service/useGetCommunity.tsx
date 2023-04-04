@@ -1,9 +1,8 @@
+import { getCommunityList } from "@/service/apis/community";
 import {
   IGetCommunityListParams,
   IHotCommunityResponse,
-} from "@/service/types";
-
-import { getCommunityList } from "@/service/apis/community";
+} from "@/types/service";
 import { useQuery } from "react-query";
 
 export function useGetCommunity(params?: IGetCommunityListParams) {

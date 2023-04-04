@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 
 import HospitalCard from "@/components/Card/HospitalCard";
-import { IHospitalInfoResponse } from "@/service/types";
+import { IHospitalInfoResponse } from "@/types/service";
 import InfiniteScroll from "react-infinite-scroller";
 import api from "@/service/axiosConfig";
 import styled from "@emotion/styled";

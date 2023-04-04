@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FC, useContext, useState } from "react";
 
-import Button from "../Button";
+import Button from "../../Button";
 import { CommentStore } from "@/store/context/Comment";
 import { KeyboardEvent } from "react";
 import styled from "@emotion/styled";

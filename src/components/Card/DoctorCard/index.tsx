@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { IGetDoctorListResult } from "@/service/types";
+import { IGetDoctorListResult } from "@/types/service";
 import Image from "next/image";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";

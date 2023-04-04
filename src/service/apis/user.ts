@@ -5,7 +5,7 @@ import {
   IGetMyCurrentPointResponse,
   IGetMyPointHistoryResponse,
   IResignResponse,
-} from "./../types";
+} from "../../types/service";
 
 import { UserInfo } from "@/types/user";
 import api from "../axiosConfig";

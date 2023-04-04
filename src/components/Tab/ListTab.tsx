@@ -1,6 +1,6 @@
 import { FC, ReactElement } from "react";
 
-import Divider from "./Divider";
+import Divider from "../Divider/Divider";
 import { Theme } from "@emotion/react";
 import styled from "@emotion/styled";
 

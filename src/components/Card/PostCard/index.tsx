@@ -1,7 +1,7 @@
 import {
   ICommunityPostDetailResponse,
   IHospitalReviewsResult,
-} from "@/service/types";
+} from "@/types/service";
 import React, {
   FC,
   MouseEvent,
@@ -11,7 +11,7 @@ import React, {
   useState,
 } from "react";
 
-import Divider from "@/components/UI/Divider";
+import Divider from "@/components/Divider/Divider";
 import DoSwiper from "@/components/DoSwiper";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
