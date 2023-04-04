@@ -10,7 +10,7 @@ import {
   IRecentHospitalSearchListResponse,
   ITempHospitalResult,
   IToggleHospitalThumbup,
-} from "../types";
+} from "../../types/service";
 
 import api from "../axiosConfig";
 

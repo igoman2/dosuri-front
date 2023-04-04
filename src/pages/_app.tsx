@@ -12,7 +12,7 @@ import Head from "next/head";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { RecoilRoot } from "recoil";
 import Script from "next/script";
-import Spinner from "@/components/UI/Spinner";
+import Spinner from "@/components/Spinner/Spinner";
 import { global } from "@/styles/global";
 import { queryClient } from "@/service/react-query/queryClient";
 import theme from "@/styles/theme";

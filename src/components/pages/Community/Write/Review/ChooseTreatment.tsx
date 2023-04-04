@@ -10,13 +10,13 @@ import React, {
 import { css, useTheme } from "@emotion/react";
 
 import Button from "@/components/Button";
-import Checkbox from "@/components/UI/Checkbox";
-import Divider from "@/components/UI/Divider";
+import Checkbox from "@/components/Checkbox/Checkbox";
+import Divider from "@/components/Divider/Divider";
 import FullModalBase from "@/components/Modal/FullModalBase";
 import Icon from "@/util/Icon";
 import Image from "next/image";
 import { Treatment } from "@/types/community";
-import { WriteReviewWrapper } from "@/components/UI/emotion/Review/WriteReviewWrapper";
+import { WriteReviewWrapper } from "@/components/etc/emotion/Review/WriteReviewWrapper";
 import { createReviewState } from "./store";
 import magnifier_grey from "@/public/assets/magnifier_grey.png";
 import styled from "@emotion/styled";

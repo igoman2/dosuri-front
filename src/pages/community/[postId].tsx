@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import Comment from "@/components/Comment";
+import Comment from "@/components/pages/Community/Comment";
 import CommentProvider from "@/store/context/Comment";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Layout from "@/components/Layout";
@@ -8,7 +8,7 @@ import { NextPageContext } from "next";
 import { NextSeo } from "next-seo";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
-import Reply from "@/components/Community/Reply";
+import Reply from "@/components/pages/Community/Reply";
 import { getCommunityPostDetail } from "@/service/apis/community";
 import { useQuery } from "react-query";
 

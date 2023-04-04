@@ -3,7 +3,7 @@ import * as Sentry from "@sentry/nextjs";
 import React, { useEffect } from "react";
 
 import { GetServerSideProps } from "next";
-import Spinner from "@/components/UI/Spinner";
+import Spinner from "@/components/Spinner/Spinner";
 import { getUserAuth } from "@/service/apis/user";
 import { setTokenInCookie } from "@/util/setToken";
 import { useRecoilState } from "recoil";

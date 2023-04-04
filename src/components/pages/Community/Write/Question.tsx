@@ -4,9 +4,9 @@ import { Field, FormikProvider, useFormik } from "formik";
 import React, { FC, useState } from "react";
 
 import AttachImage from "./Review/AttachImage";
-import Button from "../Button";
+import Button from "../../../Button";
 import Content from "./Form/Content";
-import FullModalBase from "../Modal/FullModalBase";
+import FullModalBase from "../../../Modal/FullModalBase";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";

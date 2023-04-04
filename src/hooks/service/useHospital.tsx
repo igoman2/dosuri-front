@@ -1,4 +1,4 @@
-import { IGetHospitalListParams } from "@/service/types";
+import { IGetHospitalListParams } from "@/types/service";
 import { getHospitalList } from "@/service/apis/hospital";
 import { useQuery } from "react-query";
 

@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 
-import { IHotCommunityResponse } from "@/service/types";
+import { IHotCommunityResponse } from "@/types/service";
 import InfiniteScroll from "react-infinite-scroller";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
