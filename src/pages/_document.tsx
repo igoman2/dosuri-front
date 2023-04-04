@@ -58,7 +58,7 @@ class MyDocument extends Document {
           />
           <meta
             name="twitter:image"
-            content="https://dosuri-image.dosuri.site/common/favicon.png"
+            content="https://dosuri-image.dosuri.site/common/1200x600.png"
           />
 
           <link
@@ -132,7 +132,7 @@ class MyDocument extends Document {
           />
           <link
             rel="shortcut icon"
-            href="https://dosuri-image.dosuri.site/common/favicon-16x16.png"
+            href="https://dosuri-image.dosuri.site/common/favicon.ico"
           />
           <meta name="msapplication-TileColor" content="#ffffff" />
           <meta
