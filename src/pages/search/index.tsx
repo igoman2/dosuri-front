@@ -8,7 +8,7 @@ import Layout from "@/components/Layout";
 import ManyReviewSection from "@/components/pages/Search/ManyReviewSection";
 import NewReviewSection from "@/components/pages/Search/NewReviewSection";
 import { NextSeo } from "next-seo";
-import Spinner from "@/components/UI/Spinner";
+import Spinner from "@/components/Spinner/Spinner";
 import { locationState } from "@/store/location";
 import useGeolocation from "@/hooks/useGeolocation";
 import useScrollRestoration from "@/hooks/useScrollRestoration";

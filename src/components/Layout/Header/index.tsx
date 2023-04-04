@@ -2,7 +2,7 @@ import React, { FC, ReactElement } from "react";
 
 import Icon from "@/util/Icon";
 import Link from "next/link";
-import SearchBar from "@/components/SearchBar";
+import SearchBar from "@/components/pages/Search/SearchBar";
 import styled from "@emotion/styled";
 import useGeolocation from "@/hooks/useGeolocation";
 

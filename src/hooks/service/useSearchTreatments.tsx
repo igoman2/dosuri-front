@@ -1,4 +1,4 @@
-import { ITreatmentKeywordsResult } from "@/service/types";
+import { ITreatmentKeywordsResult } from "@/types/service";
 import { getTreatmentKeywords } from "@/service/apis/community";
 import { useQuery } from "react-query";
 

@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 
 import Button from "@/components/Button";
-import { EmptyText } from "@/components/UI/emotion/EmptyText";
-import { IGetHospitalInfo } from "@/service/types";
+import { EmptyText } from "@/components/etc/emotion/EmptyText";
+import { IGetHospitalInfo } from "@/types/service";
 import TimeTable from "@/components/TimeTable";
 import { formatPhoneNumber } from "@/util/format";
 import { phoneCall } from "@/util/phoneCall";

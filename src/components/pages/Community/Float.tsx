@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import Button from "../Button";
+import Button from "../../Button";
 import styled from "@emotion/styled";
 import { DIRECTION } from "@/types/common";
 

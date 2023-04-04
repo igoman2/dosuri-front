@@ -11,7 +11,6 @@ import DoSwiper from "@/components/DoSwiper";
 import Doctors from "@/components/pages/Hospital/Doctors";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Icon from "@/util/Icon";
-import ImageTextView from "@/components/UI/ImageTextView";
 import Information from "@/components/pages/Hospital/Information";
 import Layout from "@/components/Layout";
 import Link from "next/link";
@@ -19,13 +18,14 @@ import { NextPageContext } from "next";
 import { NextSeo } from "next-seo";
 import Price from "@/components/pages/Hospital/Price";
 import Reviews from "@/components/pages/Hospital/Reviews";
-import Spinner from "@/components/UI/Spinner";
+import Spinner from "@/components/Spinner/Spinner";
 import Tab from "@/components/Tab";
 import { queryClient } from "@/service/react-query/queryClient";
 import { queryKeys } from "@/service/react-query/constants";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";
 import { useRouter } from "next/router";
+import ImageTextView from "@/components/CustomImage/ImageTextView";
 
 interface TabItem {
   title: string;

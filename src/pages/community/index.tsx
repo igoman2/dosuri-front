@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
 import Button from "@/components/Button";
-import Float from "@/components/UI/Float";
+import Float from "@/components/pages/Community/Float";
 import Header from "@/components/Layout/Header";
 import Icon from "@/util/Icon";
 import Layout from "@/components/Layout";
-import ModalFactory from "@/components/Write/Review/ModalFactory";
+import ModalFactory from "@/components/pages/Community/Write/Review/ModalFactory";
 import { NextSeo } from "next-seo";
 import styled from "@emotion/styled";
 import useDirection from "@/hooks/useDirection";

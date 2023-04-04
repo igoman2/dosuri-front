@@ -1,13 +1,13 @@
 import React, { useMemo } from "react";
 
 import ArrowRight from "@/public/assets/arrow-right.png";
-import Divider from "@/components/UI/Divider";
+import Divider from "@/components/Divider/Divider";
 import Header from "@/components/Layout/Header";
 import Icon from "@/util/Icon";
 import Image from "next/image";
 import Layout from "@/components/Layout";
 import Link from "next/link";
-import ListTab from "@/components/UI/ListTab";
+import ListTab from "@/components/Tab/ListTab";
 import { NextSeo } from "next-seo";
 import styled from "@emotion/styled";
 import { useGetMyCurrentPoint } from "@/hooks/service/useGetMyCurrentPoint";

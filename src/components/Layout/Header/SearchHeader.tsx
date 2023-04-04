@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC } from "react";
 
 import Icon from "@/util/Icon";
-import SearchBar from "@/components/SearchBar";
+import SearchBar from "@/components/pages/Search/SearchBar";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 

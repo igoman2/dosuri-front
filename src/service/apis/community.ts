@@ -9,7 +9,7 @@ import {
   IRegisterReviewBody,
   IRegisterReviewResult,
   ITreatmentKeywordsResponse,
-} from "../types";
+} from "../../types/service";
 
 import api from "../axiosConfig";
 

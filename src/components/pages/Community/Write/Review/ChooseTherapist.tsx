@@ -9,9 +9,9 @@ import React, {
 import { useBoolean, useDebounce } from "usehooks-ts";
 
 import Button from "@/components/Button";
-import { EmptyText } from "@/components/UI/emotion/EmptyText";
+import { EmptyText } from "@/components/etc/emotion/EmptyText";
 import FullModalBase from "@/components/Modal/FullModalBase";
-import { IHospitalInfoResult } from "@/service/types";
+import { IHospitalInfoResult } from "@/types/service";
 import { createReviewState } from "./store";
 import { css } from "@emotion/react";
 import theme from "@/styles/theme";

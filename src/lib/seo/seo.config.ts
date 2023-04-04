@@ -8,7 +8,6 @@ const DEFAULT_SEO: DefaultSeoProps = {
     site_name: "도수리",
     locale: "ko_KR",
     url: "https://www.dosuri.site",
-    images: [{ url: "https://dosuri-image.dosuri.site/common/favicon.png" }],
   },
 };
 
