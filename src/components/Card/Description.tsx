@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { IHospitalInfoResult } from "@/service/types";
+import { IHospitalInfoResult } from "@/types/service";
 import Icon from "@/util/Icon";
 import { useTheme } from "@emotion/react";
 

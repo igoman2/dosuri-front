@@ -1,5 +1,5 @@
-import Divider from "@/components/UI/Divider";
-import { EmptyText } from "@/components/UI/emotion/EmptyText";
+import Divider from "@/components/Divider/Divider";
+import { EmptyText } from "@/components/etc/emotion/EmptyText";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Layout from "@/components/Layout";
 import { NextSeo } from "next-seo";

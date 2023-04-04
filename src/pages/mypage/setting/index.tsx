@@ -1,13 +1,13 @@
 import ArrowRight from "@/public/assets/arrow-right.png";
-import Divider from "@/components/UI/Divider";
+import Divider from "@/components/Divider/Divider";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Image from "next/image";
 import Layout from "@/components/Layout";
 import Link from "next/link";
-import ListTab from "@/components/UI/ListTab";
+import ListTab from "@/components/Tab/ListTab";
 import { NextSeo } from "next-seo";
 import React from "react";
-import ToggleBar from "@/components/UI/ToggleBar";
+import ToggleBar from "@/components/Toggle/ToggleBar";
 import { logout } from "@/pages/withauth";
 import { settings } from "@/mock/setting";
 import styled from "@emotion/styled";

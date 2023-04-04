@@ -1,10 +1,10 @@
-import { IGoodPriceHospitals, IHospitalInfoResult } from "@/service/types";
+import { IGoodPriceHospitals, IHospitalInfoResult } from "@/types/service";
 import React, { FC } from "react";
 
 import Description from "../Description";
 import DescriptionPrice from "../DescriptionPrice";
 import Image from "next/image";
-import ImageFallback from "@/components/UI/ImageFallback";
+import ImageFallback from "@/components/CustomImage/ImageFallback";
 import styled from "@emotion/styled";
 
 export interface IHospitalCardProps {

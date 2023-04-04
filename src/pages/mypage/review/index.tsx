@@ -1,12 +1,12 @@
 import React, { useMemo, useState } from "react";
 
-import { EmptyText } from "@/components/UI/emotion/EmptyText";
-import Float from "@/components/UI/Float";
+import { EmptyText } from "@/components/etc/emotion/EmptyText";
+import Float from "@/components/pages/Community/Float";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
-import { IHotCommunityResponse } from "@/service/types";
+import { IHotCommunityResponse } from "@/types/service";
 import InfiniteScroll from "react-infinite-scroller";
 import Layout from "@/components/Layout";
-import ModalFactory from "@/components/Write/Review/ModalFactory";
+import ModalFactory from "@/components/pages/Community/Write/Review/ModalFactory";
 import { NextSeo } from "next-seo";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";

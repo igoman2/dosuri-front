@@ -2,7 +2,7 @@ import PostCard from "@/components/Card/PostCard";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
 import api from "@/service/axiosConfig";
 import { queryKeys } from "@/service/react-query/constants";
-import { IHotCommunityResponse } from "@/service/types";
+import { IHotCommunityResponse } from "@/types/service";
 import React, { FC, useMemo } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { useInfiniteQuery } from "react-query";
@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import _ from "lodash";
 import ModalPostCard from "@/components/Card/PostCard/ModalPostCard";
-import ReviewBanner from "@/components/UI/ReviewBanner";
+import ReviewBanner from "@/components/pages/Community/ReviewBanner";
 
 type Tab = {
   title: "전체" | "치료후기만 보기" | "질문/상담만 보기";

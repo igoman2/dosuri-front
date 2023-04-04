@@ -1,4 +1,4 @@
-import { IHospitalInfoResult } from "@/service/types";
+import { IHospitalInfoResult } from "@/types/service";
 import { getHospitalListByKeyword } from "@/service/apis/hospital";
 import { useQuery } from "react-query";
 

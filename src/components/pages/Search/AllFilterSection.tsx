@@ -3,11 +3,10 @@ import React, { memo, useEffect, useMemo, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 import { BottomSheet } from "react-spring-bottom-sheet";
-import Divider from "@/components/UI/Divider";
+import Divider from "@/components/Divider/Divider";
 import HospitalCard from "@/components/Card/HospitalCard";
-import { IHospitalInfoResponse } from "@/service/types";
+import { IHospitalInfoResponse } from "@/types/service";
 import Icon from "@/util/Icon";
-import ImageTextView from "@/components/UI/ImageTextView";
 import InfiniteScroll from "react-infinite-scroller";
 import Link from "next/link";
 import api from "@/service/axiosConfig";
@@ -17,6 +16,7 @@ import { searchFilterState } from "@/store/searchOption";
 import styled from "@emotion/styled";
 import { useInfiniteQuery } from "react-query";
 import { useTheme } from "@emotion/react";
+import ImageTextView from "@/components/CustomImage/ImageTextView";
 
 const AllFilterSection = () => {
   const theme = useTheme();

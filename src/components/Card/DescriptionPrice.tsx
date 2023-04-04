@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { IGoodPriceHospitals } from "@/service/types";
+import { IGoodPriceHospitals } from "@/types/service";
 import { useTheme } from "@emotion/react";
 
 export interface IDescriptionPriceProps {

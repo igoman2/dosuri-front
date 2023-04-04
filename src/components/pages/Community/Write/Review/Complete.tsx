@@ -2,11 +2,11 @@ import React, { Dispatch, FC } from "react";
 import { useRecoilValue, useResetRecoilState } from "recoil";
 
 import Button from "@/components/Button";
-import { ButtonWrapper } from "@/components/UI/emotion/Review/ButtonWrapper";
+import { ButtonWrapper } from "@/components/etc/emotion/Review/ButtonWrapper";
 import Content from "../Form/Content";
 import FullModalBase from "@/components/Modal/FullModalBase";
-import { TitleWrapper } from "@/components/UI/emotion/Review/TitleWrapper";
-import { WriteReviewWrapper } from "@/components/UI/emotion/Review/WriteReviewWrapper";
+import { TitleWrapper } from "@/components/etc/emotion/Review/TitleWrapper";
+import { WriteReviewWrapper } from "@/components/etc/emotion/Review/WriteReviewWrapper";
 import { createReviewState } from "./store";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";

@@ -1,9 +1,9 @@
-import { IGoodPriceHospitals, IHospitalInfoResult } from "@/service/types";
+import { IGoodPriceHospitals, IHospitalInfoResult } from "@/types/service";
 import React, { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import Button from "@/components/Button";
-import { EmptyText } from "@/components/UI/emotion/EmptyText";
+import { EmptyText } from "@/components/etc/emotion/EmptyText";
 import Header from "@/components/Layout/Header";
 import HospitalCard from "@/components/Card/HospitalCard";
 import Layout from "@/components/Layout";

@@ -1,4 +1,4 @@
-import { IHospitalInfoResponse, IHospitalInfoResult } from "@/service/types";
+import { IHospitalInfoResponse, IHospitalInfoResult } from "@/types/service";
 import React, {
   ChangeEvent,
   Dispatch,
@@ -11,11 +11,11 @@ import React, {
 import { useBoolean, useDebounce } from "usehooks-ts";
 import { useInfiniteQuery, useMutation } from "react-query";
 
-import Divider from "@/components/UI/Divider";
+import Divider from "@/components/Divider/Divider";
 import FullModalBase from "@/components/Modal/FullModalBase";
 import Image from "next/image";
 import InfiniteScroll from "react-infinite-scroller";
-import { WriteReviewWrapper } from "@/components/UI/emotion/Review/WriteReviewWrapper";
+import { WriteReviewWrapper } from "@/components/etc/emotion/Review/WriteReviewWrapper";
 import api from "@/service/axiosConfig";
 import { createReviewState } from "./store";
 import { createTempHospital } from "@/service/apis/hospital";

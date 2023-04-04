@@ -1,6 +1,6 @@
 import React, { FC, ReactElement, useContext } from "react";
 
-import Button from "../Button";
+import Button from "../../../Button";
 import { CommentStore } from "@/store/context/Comment";
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
