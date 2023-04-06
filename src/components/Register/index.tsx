@@ -382,9 +382,6 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                     if (e.target.value.length > 10) {
                       return;
                     }
-
-                    if (e.target.value === userInfo.nickname) {
-                    }
                     setDidNicknameValidCheck(false);
                     formik.handleChange(e);
                   }}
