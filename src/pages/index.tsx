@@ -21,6 +21,7 @@ import useGeolocation from "@/hooks/useGeolocation";
 import { useQuery } from "react-query";
 import { useTheme } from "@emotion/react";
 import { userInfoState } from "@/store/user";
+import Map from "@/components/etc/KakaoMap";
 
 const Home = () => {
   const theme = useTheme();
@@ -58,6 +59,7 @@ const Home = () => {
           url: "https://www.dosuri.site",
         }}
       />
+      <Map />
 
       <section
         css={{
