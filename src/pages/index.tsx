@@ -72,7 +72,7 @@ const Home = () => {
                 fontWeight: 700,
               }}
             >
-              {`${hospitalList.address} TOP 병원`}
+              {`${hospitalList.address} 주변 TOP 병원`}
             </div>
 
             {hospitalList.top_hospitals.map(
