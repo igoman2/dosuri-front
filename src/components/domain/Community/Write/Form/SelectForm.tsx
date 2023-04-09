@@ -9,7 +9,7 @@ import Select, {
 import ArrowRight from "@/public/assets/arrow-right.png";
 import Icon from "@/util/Icon";
 import Image from "next/image";
-import { do_si } from "@/components/pages/Mypage/Register/location";
+import { do_si } from "@/components/domain/Mypage/Register/location";
 
 const SelectForm = () => {
   const theme = useTheme();

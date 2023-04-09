@@ -1,7 +1,7 @@
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Layout from "@/components/Layout";
 import { NextSeo } from "next-seo";
-import RegisterForm from "@/components/pages/Mypage/Register";
+import RegisterForm from "@/components/domain/Mypage/Register";
 
 const Edit: React.FC<{}> = () => {
   return (

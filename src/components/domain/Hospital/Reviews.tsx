@@ -9,7 +9,7 @@ import api from "@/service/axiosConfig";
 import styled from "@emotion/styled";
 import { useInfiniteQuery } from "react-query";
 import Link from "next/link";
-import ReviewBanner from "@/components/pages/Community/ReviewBanner";
+import ReviewBanner from "@/components/domain/Community/ReviewBanner";
 
 interface IReviewsProps {
   hospitalData: IGetHospitalInfo;

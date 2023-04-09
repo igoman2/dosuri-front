@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useBoolean, useDebounce } from "usehooks-ts";
 
-import HospitalQueryList from "@/components/pages/Search/HospitalQueryList";
+import HospitalQueryList from "@/components/domain/Search/HospitalQueryList";
 import Layout from "@/components/Layout";
 import Link from "next/link";
 import { NextSeo } from "next-seo";
-import RecentSearchList from "@/components/pages/Search/RecentSearchList";
+import RecentSearchList from "@/components/domain/Search/RecentSearchList";
 import SearchHeader from "@/components/Layout/Header/SearchHeader";
 import styled from "@emotion/styled";
 import { useCreateSearchHistory } from "@/hooks/service/useCreateSearchHistory";
