@@ -26,6 +26,7 @@ import styled from "@emotion/styled";
 import theme from "@/styles/theme";
 import { useRouter } from "next/router";
 import ImageTextView from "@/components/CustomImage/ImageTextView";
+import useAuth from "@/hooks/useAuth";
 
 interface TabItem {
   title: string;
@@ -56,12 +57,15 @@ interface IHospitalInformationProps {
   tab: string;
 }
 
+const PROTECTED_TABS = ["price"];
+
 const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
   const [currentTab, setCurrentTab] = useState<TabItem>(
     TabList.find((t) => t.value === tab) ?? TabList[0]
   );
   const [isUp, setIsUp] = useState<boolean>();
   const router = useRouter();
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     router.replace({
@@ -70,7 +74,15 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
     });
   }, [currentTab]);
 
+  const checkTabIsProtected = (tab: TabItem) => {
+    return PROTECTED_TABS.includes(tab.value);
+  };
+
   const onTabClickHander = (tab: TabItem) => {
+    if (checkTabIsProtected(tab) && !isLoggedIn) {
+      router.push("/login");
+      return;
+    }
     setCurrentTab(tab);
     router.replace({
       pathname: `/hospital/${router.query.id}`,
