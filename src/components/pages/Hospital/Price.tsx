@@ -1,12 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Column, useTable } from "react-table";
 import { IGetHospitalInfo, IHospitalTreatmentsResponse } from "@/types/service";
-import React, { FC, useEffect, useMemo } from "react";
+import React, { FC, useMemo } from "react";
 
 import { EmptyText } from "@/components/etc/emotion/EmptyText";
 import styled from "@emotion/styled";
-import useAuth from "@/hooks/useAuth";
-import router from "next/router";
 
 interface IPriceProps {
   hospitalData: IGetHospitalInfo;
@@ -14,13 +12,6 @@ interface IPriceProps {
 }
 
 const Price: FC<IPriceProps> = ({ hospitalData, hospitalTreatmentsData }) => {
-  const { isLoggedIn } = useAuth();
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      router.push("/login");
-    }
-  }, [isLoggedIn]);
   const data = useMemo(() => {
     return hospitalTreatmentsData.results.map((data) => {
       return { ...data, price: `${data.price.toLocaleString()}원` };
