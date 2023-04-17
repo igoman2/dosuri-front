@@ -59,7 +59,7 @@ api.interceptors.response.use(
       response: { status, data },
     } = error;
     if (status === 401) {
-      if (data.code === "user_not_found") {
+      if (data.code === "user_not_found" || data.code === "token_not_valid") {
         logout();
         return;
       }
