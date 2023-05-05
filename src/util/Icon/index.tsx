@@ -1,9 +1,9 @@
 import React, { FC } from "react";
-
 import Arrow from "@/public/assets/arrow.svg";
 import Check from "@/public/assets/check.svg";
 import Chevron from "@/public/assets/chevron.svg";
 import Close from "@/public/assets/close.svg";
+import Back from "@/public/assets/back.svg"; // [COMMENT] 이거 이상하게 보여서 일단 Arrow 씁니다.
 import Comment from "@/public/assets/comment.svg";
 import Cross from "@/public/assets/cross.svg";
 import CrossClicked from "@/public/assets/cross_clicked.svg";
@@ -28,6 +28,7 @@ import TalkClicked from "@/public/assets/talk_clicked.svg";
 import TalkSqaure from "@/public/assets/talk_square.svg";
 import Thumb from "@/public/assets/thumb.svg";
 import Write from "@/public/assets/write.svg";
+import Location from "@/public/assets/location.svg";
 
 export const iconTypes: any = {
   home: Home,
@@ -50,6 +51,7 @@ export const iconTypes: any = {
   pen: Pen,
   thumb: Thumb,
   close: Close,
+  back: Back,
   logo1: Logo1,
   logo2: Logo2,
   logo3: Logo3,
@@ -58,6 +60,7 @@ export const iconTypes: any = {
   sad: Sad,
   neutral: Neutral,
   happy: Happy,
+  location: Location,
 } as const;
 export type IconName = keyof typeof iconTypes;
 
@@ -71,7 +74,7 @@ interface IIconProps {
 }
 const Icon: FC<IIconProps> = ({ name, ...props }) => {
   let Icon: any = iconTypes[name];
-  return <Icon {...props} />;
+  return <Icon {...props} css={{ cursor: "pointer" }} />;
 };
 
 export default Icon;

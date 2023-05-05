@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC } from "react";
 
 import Icon from "@/util/Icon";
-import SearchBar from "@/components/pages/Search/SearchBar";
+import SearchBar from "@/components/domain/Search/SearchBar";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
@@ -30,7 +30,14 @@ const SearchHeader: FC<ISearchHeaderProps> = ({ inputText, onInput }) => {
           />
         </BackButton>
         <div className="center">
-          {<SearchBar inputText={inputText} onInput={onInput} />}
+          {
+            <SearchBar
+              inputText={inputText}
+              onInput={onInput}
+              placeHolder="병원, 지역, 후기 키워드 검색하기"
+              hasFocus={true}
+            />
+          }
         </div>
       </div>
     </SearchWrapper>

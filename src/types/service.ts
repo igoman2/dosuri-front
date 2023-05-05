@@ -1,6 +1,7 @@
 import { ArticleThread, Attach, Comments } from "@/types/community";
 
 import { User } from "@/types/user";
+import { Address, RoadAddress } from "./location";
 
 export interface GetUserAuthParams {
   token: string;
@@ -195,6 +196,8 @@ export interface IGoodPriceHospitals {
 export interface IHospitalInfoHomeResponse {
   top_hospitals: IHospitalInfoResult[];
   new_hospitals: IHospitalInfoResult[];
+  new_review_hospitals: IHospitalInfoResult[];
+  many_review_hospitals: IHospitalInfoResult[];
   good_price_hospitals: IGoodPriceHospitals[];
   good_review_hospitals: IHospitalInfoResult[];
   address?: string;
@@ -337,3 +340,49 @@ export interface ITempHospitalResult {
   uuid: string;
   name: string;
 }
+
+export interface IGetLocationByKeywordParams {
+  query: string;
+  analyzeType?: "similar" | "exact";
+}
+
+export interface IGetLocationByCoordinateParams {
+  longitude: number;
+  latitude: number;
+}
+
+export interface registerMyAddressResponse {
+  uuid: string;
+  name: string;
+  address: string;
+  address_type: string;
+  is_main: boolean;
+  latitude: string;
+  longitude: string;
+}
+
+export interface MyAddressListResult {
+  uuid: string;
+  name: string;
+  address: string;
+  address_type: string;
+  is_main: boolean;
+  latitude: number;
+  longitude: number;
+}
+
+export interface MyAddressListResponse {
+  count: number;
+  next: string;
+  previous: string;
+  results: MyAddressListResult[];
+}
+
+export type LocationType = {
+  documents: Document[];
+};
+
+export type Document = {
+  address: Address;
+  road_address: RoadAddress;
+};

@@ -19,15 +19,19 @@ export function useUser(accessToken?: string): UseUser {
     birthday: "",
     phone_no: "",
     address: {
-      large_area: "",
-      small_area: "",
+      name: "",
+      uuid: "",
+      address: "",
+      address_type: "",
+      latitude: 0,
+      longitude: 0,
     },
     sex: "",
     unread_notice: false,
     pain_areas: [],
   };
   const { data: user } = useQuery(
-    [queryKeys.user],
+    [queryKeys.user, "getUserInfo"],
     () => getUser(accessToken),
     {
       cacheTime: 9000,

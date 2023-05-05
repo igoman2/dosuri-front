@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 import { formatDate_YYYYMMDD, formatPhoneNumber_00000000 } from "@/util/format";
 
-import { UserInfo } from "@/types/user";
+import { AddressType, UserInfo } from "@/types/user";
 
 interface MyFormValues {
   name?: string;
@@ -11,8 +11,14 @@ interface MyFormValues {
   birthday: string;
   phone: string;
   sex: string;
-  largeArea: string;
-  smallArea: string;
+  address: {
+    uuid: string;
+    name: string;
+    address: string;
+    address_type: AddressType;
+    latitude: number;
+    longitude: number;
+  };
   pain_areas: {
     name: string;
   }[];
@@ -26,10 +32,10 @@ const useFormikFactory = (user: UserInfo) => {
     birthday: formatDate_YYYYMMDD(user.birthday),
     phone: formatPhoneNumber_00000000(user.phone_no),
     sex: user.sex ?? "",
-    largeArea: user.address.large_area ?? "",
-    smallArea: user.address.small_area ?? "",
+    address: user.address ?? {},
     pain_areas: user.pain_areas ?? "",
   };
+
   return {
     initialValues,
     validationSchema: Yup.object({
@@ -39,8 +45,7 @@ const useFormikFactory = (user: UserInfo) => {
       phone: Yup.string().length(8).required(),
       birthday: Yup.string().length(8).required(),
       sex: Yup.string().required(),
-      largeArea: Yup.string().required(),
-      smallArea: Yup.string().required(),
+      address: Yup.object().required(),
       pain_areas: Yup.array().min(1).required(),
     }),
   };

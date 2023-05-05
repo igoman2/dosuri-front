@@ -1,9 +1,9 @@
 import Header from "@/components/Layout/Header";
 import Layout from "@/components/Layout";
 import { NextSeo } from "next-seo";
-import React from "react";
-import RegisterForm from "@/components/pages/Mypage/Register";
+import RegisterForm from "@/components/domain/Mypage/Register";
 import styled from "@emotion/styled";
+import SelectAddressModal from "@/components/domain/Address/SelectAddressModal";
 
 const Register = () => {
   return (
@@ -17,6 +17,7 @@ const Register = () => {
         </div>
       </RegisterWrapper>
       <RegisterForm formType="register" />
+      <SelectAddressModal />
     </Layout>
   );
 };

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { modalContentState, modalState } from "@/components/Modal/store";
 
 import Button from "@/components/Button";
-import Comment from "@/components/pages/Community/Comment";
+import Comment from "@/components/domain/Community/Comment";
 import CommentProvider from "@/store/context/Comment";
 import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Layout from "@/components/Layout";
@@ -10,7 +10,7 @@ import { NextPageContext } from "next";
 import { NextSeo } from "next-seo";
 import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
-import Reply from "@/components/pages/Community/Reply";
+import Reply from "@/components/domain/Community/Reply";
 import { getCommunityPostDetail } from "@/service/apis/community";
 import { queryClient } from "@/service/react-query/queryClient";
 import { queryKeys } from "@/service/react-query/constants";
@@ -47,7 +47,7 @@ const ReviewDetail: FC<IReviewDetailProps> = ({ reviewId }) => {
       후기의 내용과 댓글이 모두 삭제되며, 삭제한 후기는 복구할 수
       없습니다. 정말로 삭제하시겠어요?
       삭제한 초대장은 복구 할 수 없습니다.`,
-      actionLeft: {
+      actionCancel: {
         text: "취소",
         action: () => {
           setIsActive((prev) => {
@@ -55,7 +55,7 @@ const ReviewDetail: FC<IReviewDetailProps> = ({ reviewId }) => {
           });
         },
       },
-      actionRight: {
+      actionWarn: {
         text: "삭제",
         action: () => {
           mutate(reviewId, {
@@ -71,6 +71,10 @@ const ReviewDetail: FC<IReviewDetailProps> = ({ reviewId }) => {
             },
           });
         },
+      },
+      actionConfirm: {
+        text: "",
+        action: () => {},
       },
     });
 

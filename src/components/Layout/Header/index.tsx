@@ -2,13 +2,13 @@ import React, { FC, ReactElement } from "react";
 
 import Icon from "@/util/Icon";
 import Link from "next/link";
-import SearchBar from "@/components/pages/Search/SearchBar";
+import SearchBar from "@/components/domain/Search/SearchBar";
 import styled from "@emotion/styled";
 import useGeolocation from "@/hooks/useGeolocation";
 
 interface IHeaderProps {
   left?: boolean;
-  center?: boolean;
+  center?: ReactElement;
   right?: ReactElement;
 }
 
@@ -32,14 +32,14 @@ const Header: FC<IHeaderProps> = ({ left, center, right }) => {
     >
       {process.env.NODE_ENV !== "production" && (
         <LocationBox>
-          <div>lat {coordinates?.lat}</div>
-          <div>lng {coordinates?.lng}</div>
+          <div>lat {coordinates?.latitude}</div>
+          <div>lng {coordinates?.longitude}</div>
         </LocationBox>
       )}
       <Link href="/">
         <a>{left && <Icon name="logo1" width="82" height="22" />}</a>
       </Link>
-      <div className="center">{center && <SearchBar inputText="" />}</div>
+      <div className="center">{center}</div>
       <div>{right}</div>
     </div>
   );
