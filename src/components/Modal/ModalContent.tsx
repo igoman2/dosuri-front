@@ -18,19 +18,27 @@ const ModalContent = () => {
 
       <div className="msg">{modalContent.content}</div>
       <div className="action_box">
-        {modalContent.actionLeft.text && (
+        {modalContent.actionCancel.text && (
           <Button
-            text={modalContent.actionLeft.text}
-            onClick={modalContent.actionLeft.action}
+            text={modalContent.actionCancel.text}
+            onClick={modalContent.actionCancel.action}
             color={theme.colors.black}
             backgroundColor={theme.colors.grey_light}
           />
         )}
-        {modalContent.actionRight.text && (
+        {modalContent.actionConfirm.text && (
           <Button
-            text={modalContent.actionRight.text}
+            text={modalContent.actionConfirm.text}
+            backgroundColor={theme.colors.purple}
+            onClick={modalContent.actionConfirm.action}
+          />
+        )}
+
+        {modalContent.actionWarn.text && (
+          <Button
+            text={modalContent.actionWarn.text}
             backgroundColor={theme.colors.red}
-            onClick={modalContent.actionRight.action}
+            onClick={modalContent.actionWarn.action}
           />
         )}
       </div>

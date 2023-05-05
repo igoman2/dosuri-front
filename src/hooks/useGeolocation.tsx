@@ -1,15 +1,16 @@
+import { Location } from "@/types/location";
 import { useEffect, useState } from "react";
 
 interface locationType {
   loaded: boolean;
-  coordinates?: { lat: number; lng: number };
+  coordinates: Location;
   error?: { code: number; message: string };
 }
 
 const useGeolocation = () => {
   const [location, setLocation] = useState<locationType>({
     loaded: false,
-    coordinates: { lat: 0, lng: 0 },
+    coordinates: { latitude: 0, longitude: 0 },
   });
 
   // 성공에 대한 로직
@@ -19,8 +20,8 @@ const useGeolocation = () => {
     setLocation({
       loaded: true,
       coordinates: {
-        lat: location.coords.latitude,
-        lng: location.coords.longitude,
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
       },
     });
   };
@@ -28,7 +29,8 @@ const useGeolocation = () => {
   // 에러에 대한 로직
   const onError = (error: { code: number; message: string }) => {
     setLocation({
-      loaded: true,
+      loaded: false,
+      coordinates: { latitude: 0, longitude: 0 },
       error,
     });
   };
@@ -42,7 +44,9 @@ const useGeolocation = () => {
         message: "Geolocation not supported",
       });
     }
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    navigator.geolocation.getCurrentPosition(onSuccess, onError, {
+      enableHighAccuracy: true,
+    });
   }, []);
 
   return location;

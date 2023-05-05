@@ -11,8 +11,12 @@ export type UserInfo = {
   birthday: string;
   phone_no: string;
   address: {
-    large_area: string;
-    small_area: string;
+    name: string;
+    uuid: string;
+    address: string;
+    address_type: AddressType;
+    latitude: number;
+    longitude: number;
   };
   sex: string;
   unread_notice: boolean;
@@ -30,3 +34,5 @@ export type TSmallArea = {
   value: string;
   label: string;
 };
+
+export type AddressType = "home" | "office" | "etc" | "";

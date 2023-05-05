@@ -65,7 +65,7 @@ const Confirm = () => {
           </ListElement>
           <ListElement>
             <div className="key">지역</div>
-            <div className="value">{`${userInfo.address.large_area} ${userInfo.address.small_area}`}</div>
+            <div className="value">{`${userInfo.address.address}`}</div>
           </ListElement>
         </div>
       </Content>

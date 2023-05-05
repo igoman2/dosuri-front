@@ -21,6 +21,8 @@ import useGeolocation from "@/hooks/useGeolocation";
 import { useQuery } from "react-query";
 import { useTheme } from "@emotion/react";
 import { userInfoState } from "@/store/user";
+import SelectAddressBar from "@/components/domain/Address/SelectAddressBar";
+import SelectAddressModal from "@/components/domain/Address/SelectAddressModal";
 
 const Home = () => {
   const theme = useTheme();
@@ -33,8 +35,8 @@ const Home = () => {
   useEffect(() => {
     if (location.loaded) {
       setLocaton({
-        lat: location.coordinates?.lat ?? 0,
-        lng: location.coordinates?.lng ?? 0,
+        lat: location.coordinates?.latitude ?? 0,
+        lng: location.coordinates?.longitude ?? 0,
       });
     }
   }, [location]);
@@ -50,7 +52,14 @@ const Home = () => {
   }
 
   return (
-    <Layout header={<Header left={true} center={true} />}>
+    <Layout
+      header={
+        <Header
+          left={true}
+          center={isLoggedIn ? <SelectAddressBar /> : <></>}
+        />
+      }
+    >
       <NextSeo
         title="도수리 | 도수치료 리얼후기"
         canonical="https://www.dosuri.site"
@@ -216,6 +225,7 @@ const Home = () => {
           </EmptyTextWrapper>
         )}
       </section>
+      <SelectAddressModal />
     </Layout>
   );
 };

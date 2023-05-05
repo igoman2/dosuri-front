@@ -1,5 +1,4 @@
-import React, { useMemo } from "react";
-
+import { useEffect, useMemo } from "react";
 import ArrowRight from "@/public/assets/arrow-right.png";
 import Divider from "@/components/Divider/Divider";
 import Header from "@/components/Layout/Header";
@@ -11,10 +10,15 @@ import ListTab from "@/components/Tab/ListTab";
 import { NextSeo } from "next-seo";
 import styled from "@emotion/styled";
 import { useGetMyCurrentPoint } from "@/hooks/service/useGetMyCurrentPoint";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import { useUpdateReadingFlag } from "@/hooks/service/useUpdateReadingFlag";
 import { userInfoState } from "@/store/user";
+import {
+  addressModalState,
+  addressModeState,
+} from "@/components/domain/Address/store";
+import SelectAddressModal from "@/components/domain/Address/SelectAddressModal";
 
 type TabList = {
   text: string;
@@ -25,9 +29,21 @@ type TabList = {
 };
 
 const Mypage = () => {
+  const setModal = useSetRecoilState(addressModalState);
+  const setMode = useSetRecoilState(addressModeState);
   const userInfo = useRecoilValue(userInfoState);
   const router = useRouter();
   const { mutate } = useUpdateReadingFlag();
+
+  useEffect(() => {
+    setModal({ isActive: false });
+  }, []);
+
+  const handleClickBar = () => {
+    setMode([4]);
+    setModal({ isActive: true });
+  };
+
   const tabList: TabList[] = useMemo(() => {
     return [
       {
@@ -137,6 +153,25 @@ const Mypage = () => {
       <Divider height={8} />
 
       <div className="list-section">
+        <ListTab
+          onClick={handleClickBar}
+          text="내 주소 관리"
+          subText=""
+          hasNoti={false}
+          key="addressManagement"
+          right={
+            <div>
+              <Image
+                src={ArrowRight}
+                width={25}
+                height={25}
+                alt="arrow-right"
+              />
+            </div>
+          }
+          isLast={false}
+        />
+
         {tabList.map((tab, i) => (
           <div onClick={() => handleListClick(tab)} key={`${tab.text}-${i}`}>
             <ListTab
@@ -160,6 +195,7 @@ const Mypage = () => {
           </div>
         ))}
       </div>
+      <SelectAddressModal />
     </Layout>
   );
 };

@@ -21,8 +21,8 @@ export const modalContentState = atom({
   default: {
     title: "",
     content: "",
-    actionLeft: { text: "", action: () => {} },
-    actionRight: { text: "", action: () => {} },
-    // actionString: "",
+    actionCancel: { text: "", action: () => {} },
+    actionWarn: { text: "", action: () => {} },
+    actionConfirm: { text: "", action: () => {} },
   },
 });

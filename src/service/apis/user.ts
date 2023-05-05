@@ -5,10 +5,13 @@ import {
   IGetMyCurrentPointResponse,
   IGetMyPointHistoryResponse,
   IResignResponse,
+  MyAddressListResponse,
+  registerMyAddressResponse,
 } from "../../types/service";
 
 import { UserInfo } from "@/types/user";
 import api from "../axiosConfig";
+import { boolean } from "yup";
 
 export const getUserAuth = async (params: any) => {
   const response = await api.post<GetUserAuthResponse>("/user/v1/auth", {
@@ -91,4 +94,43 @@ export const updateNoticeReadingFlag = async () => {
   const resp = await api.put("/user/v1/users/notice");
 
   return resp.data;
+};
+
+export const getMyAddressList = async () => {
+  const response = await api.get<MyAddressListResponse>(
+    `/user/v1/users/me/addresses`
+  );
+  return response.data;
+};
+
+export const registerMyAddress = async (params: any) => {
+  const response = await api.post<registerMyAddressResponse>(
+    "/user/v1/users/me/addresses",
+    {
+      name: params.name,
+      address: params.address,
+      address_type: params.address_type,
+      latitude: params.latitude,
+      longitude: params.longitude,
+    }
+  );
+  return response.data;
+};
+
+export const deleteMyAddress = async (uuid: string) => {
+  const response = await api.delete(`/user/v1/users/me/addresses/${uuid}`);
+  return response.data;
+};
+
+export const selectMyAddress = async (params: {
+  uuid: string;
+  isMain: boolean;
+}) => {
+  const response = await api.patch(
+    `/user/v1/users/me/addresses/${params.uuid}`,
+    {
+      is_main: params.isMain,
+    }
+  );
+  return response.data;
 };

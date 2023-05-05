@@ -1,15 +1,14 @@
 import Header from "@/components/Layout/Header";
 import Layout from "@/components/Layout";
 import { NextSeo } from "next-seo";
-import React from "react";
-import RegisterForm from "@/components/pages/Mypage/Register";
+import RegisterForm from "@/components/domain/Mypage/Register";
 import styled from "@emotion/styled";
+import SelectAddressModal from "@/components/domain/Address/SelectAddressModal";
 
 const Register = () => {
   return (
     <Layout header={<Header left={true} />} footer={false}>
       <NextSeo title="회원가입 | 도수리-도수치료 리얼후기" />
-
       <RegisterWrapper>
         <div className="top">
           <div className="title">어서오세요! 도수리에는 처음이시네요.</div>
@@ -17,6 +16,7 @@ const Register = () => {
         </div>
       </RegisterWrapper>
       <RegisterForm formType="register" />
+      <SelectAddressModal />
     </Layout>
   );
 };

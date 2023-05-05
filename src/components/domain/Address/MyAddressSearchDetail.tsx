@@ -1,0 +1,23 @@
+import { useState, ChangeEvent } from "react";
+import AddressSearchComponent from "./AddressSearchComponent";
+
+const MyAddressSearchDetail = () => {
+  const [inputText, setInputText] = useState("");
+  const [enableDelete, setDelete] = useState(true);
+
+  const onInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputText(e.target.value);
+    setDelete(e.target.value.length !== 0);
+  };
+
+  return (
+    <AddressSearchComponent
+      inputText={inputText}
+      onInput={onInput}
+      enableDelete={enableDelete}
+      nextMode={7}
+    />
+  );
+};
+
+export default MyAddressSearchDetail;

@@ -1,5 +1,4 @@
-import React, { FC, ReactNode } from "react";
-
+import { FC, ReactNode } from "react";
 import Divider from "../Divider/Divider";
 import Icon from "@/util/Icon";
 import { ModalBaseContainer } from "./ModalBase";
@@ -18,6 +17,7 @@ interface IFullModalBase {
   onClose: () => void;
   onClickBack?: () => void;
   divider?: boolean;
+  isBackBtnVisible?: boolean;
 }
 
 const FullModalBase: FC<IFullModalBase> = ({
@@ -29,16 +29,14 @@ const FullModalBase: FC<IFullModalBase> = ({
   right,
   onClickBack,
   divider = false,
+  isBackBtnVisible = false,
 }) => {
   const closeDirection = useRecoilValue(closeModalDirectionState);
 
   return (
     <>
       <FullModalBaseWrapper active={isActive} closeDirection={closeDirection}>
-        <div
-          className="modal_back"
-          onClick={onClickBack ? onClickBack : onClose}
-        />
+        <div className="modal_back" onClick={onClose} />
         <div className="modal_content ">
           <div>
             <div>
@@ -56,14 +54,35 @@ const FullModalBase: FC<IFullModalBase> = ({
                 }}
               >
                 <div className="modal-head">
-                  <span onClick={onClose}>
-                    <Icon
-                      name="close"
-                      fill={theme.colors.black}
-                      width="14"
-                      height="14"
-                    />
-                  </span>
+                  {isBackBtnVisible ? (
+                    <span onClick={onClickBack}>
+                      <Icon
+                        name="arrow"
+                        width="24"
+                        height="24"
+                        stroke="black"
+                        strokeWidth="2"
+                      />
+                    </span>
+                  ) : (
+                    <span
+                      onClick={onClose}
+                      css={{
+                        width: "2.4rem",
+                        height: "2.4rem",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Icon
+                        name="close"
+                        fill={theme.colors.black}
+                        width="14"
+                        height="14"
+                      />
+                    </span>
+                  )}
                   <div
                     css={{
                       display: "flex",
@@ -120,6 +139,7 @@ const FullModalBaseWrapper = styled(
     margin: 0;
     border-radius: 0;
     display: flex;
+    padding: 0 2rem;
     flex-direction: column;
     overflow-y: scroll;
     ${(props) => {

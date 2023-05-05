@@ -35,16 +35,20 @@ const InsuranceRegister = () => {
       setModalContent({
         title: "회원가입 페이지로 이동합니다.",
         content: `보험 신청을 위해선 추가 회원 정보가 필요해요`,
-        actionLeft: {
+        actionCancel: {
           text: "",
           action: () => {},
         },
-        actionRight: {
+        actionWarn: {
           text: "확인",
           action: () => {
             setModalIsActive({ isActive: false });
             router.push("/register");
           },
+        },
+        actionConfirm: {
+          text: "",
+          action: () => {},
         },
       });
     },
