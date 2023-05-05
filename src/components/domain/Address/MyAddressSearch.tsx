@@ -8,11 +8,11 @@ const MyAddressSearch = () => {
   const setMode = useSetRecoilState(addressModeState);
 
   const onSearchBarClick = () => {
-    setMode(6);
+    setMode((prev) => [...prev, 6]);
   };
 
   const onAddressMapButtonClick = () => {
-    setMode(3);
+    setMode((prev) => [...prev, 3]);
   };
 
   return (

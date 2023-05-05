@@ -10,8 +10,10 @@ import { Document } from "@/types/service";
 import useGeolocation from "@/hooks/useGeolocation";
 import Spinner from "@/components/Spinner/Spinner";
 import { Address } from "@/types/location";
+import { useRouter } from "next/router";
 
 const MapView = () => {
+  const router = useRouter();
   const setMode = useSetRecoilState(addressModeState);
   const setSelectedAddressObject = useSetRecoilState(selectedAddressObject);
   const { coordinates, loaded } = useGeolocation();
@@ -98,7 +100,13 @@ const MapView = () => {
         address: detailAddress(),
       };
     });
-    setMode(2); // [COMMNET] 여기 무조건 setMode(2)면 안되네용ㅠㅜ
+
+    console.log(router.asPath);
+    if (router.asPath.includes("mypage")) {
+      setMode((prev) => [...prev, 7]);
+    } else {
+      setMode((prev) => [...prev, 2]);
+    }
   };
 
   if (!loaded) {
@@ -114,7 +122,7 @@ const MapView = () => {
       <Wrapper>
         <IconWrapper
           onClick={() => {
-            setMode(0);
+            setMode((prev) => prev.slice(0, prev.length - 1));
           }}
         >
           <Icon

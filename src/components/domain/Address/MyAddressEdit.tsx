@@ -22,7 +22,6 @@ import SetAddressAliasButton from "./SetAddressAliasButton";
 import { useDeleteMyAddress } from "@/hooks/service/useDeleteMyAddress";
 import { registerMyAddress } from "@/service/apis/user";
 import { queryClient } from "@/service/react-query/queryClient";
-import useAddress from "@/hooks/useAddress";
 
 const MyAddressEdit = () => {
   const setMode = useSetRecoilState(addressModeState);
@@ -37,7 +36,6 @@ const MyAddressEdit = () => {
     useRecoilState(defaultAddressType);
   const resetDefaultAddressTyep = useResetRecoilState(defaultAddressType);
   const { mutate } = useDeleteMyAddress();
-  const { closeAddressModal } = useAddress();
 
   const onClick = (type: string) => {
     setPreselectedType("");
@@ -50,7 +48,7 @@ const MyAddressEdit = () => {
   };
 
   const onAddressMapButtonClick = () => {
-    setMode(3);
+    setMode((prev) => [...prev, 3]);
   };
 
   const getAlias = () => {
@@ -79,7 +77,7 @@ const MyAddressEdit = () => {
         queryKey: ["getMyAddressList"],
         refetchInactive: true,
       });
-      setMode(4);
+      setMode((prev) => [...prev, 4]);
       resetDefaultAddressTyep();
       resetIsNewAddress();
     } catch (e) {
@@ -110,7 +108,7 @@ const MyAddressEdit = () => {
               onSuccess: () => {
                 registerAddress();
                 setModalIsActive({ isActive: false });
-                setMode(4);
+                setMode((prev) => [...prev, 4]);
               },
             });
           },
@@ -119,7 +117,7 @@ const MyAddressEdit = () => {
     } else {
       registerAddress();
       setModalIsActive({ isActive: false });
-      setMode(4);
+      setMode((prev) => [...prev, 4]);
     }
   };
 
@@ -152,7 +150,7 @@ const MyAddressEdit = () => {
                 refetchInactive: true,
               });
               setModalIsActive({ isActive: false });
-              setMode(4);
+              setMode((prev) => [...prev, 4]);
             },
           });
         },
@@ -227,7 +225,6 @@ const MyAddressEdit = () => {
         address={selectedAddress.address}
         fullDivider={true}
       />
-
       <div className="addressType">
         {selectedType === "home" ||
         (isNewAddressValue && preselectedType === "home") ? (
@@ -255,7 +252,6 @@ const MyAddressEdit = () => {
           <AddressType type="etc" text="기타" onClick={() => onClick("etc")} />
         )}
       </div>
-
       {selectedType === "etc" ? (
         <div className="inputBar">
           <AliasInputBar
@@ -265,9 +261,7 @@ const MyAddressEdit = () => {
           />
         </div>
       ) : null}
-
       {DeleteButton()}
-
       <ButtonsWrapper>
         <AddressMapButton
           iconType="map"

@@ -6,9 +6,7 @@ const AddressSearch = () => {
   const [enableDelete, setDelete] = useState(true);
 
   const onInput = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("aaa");
     setInputText(e.target.value);
-    console.log(e.target.value);
     setDelete(e.target.value.length !== 0);
   };
 

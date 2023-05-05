@@ -32,7 +32,7 @@ const MyAddressMain = () => {
   const addNewAddress = (type: string) => {
     setIsNewAddress(true);
     setDefaultAddressType(type);
-    setMode(5);
+    setMode((prev) => [...prev, 5]);
   };
 
   const onAddressClick = (clickedAddressObject: MyAddressListResult) => {
@@ -44,7 +44,7 @@ const MyAddressMain = () => {
     setIsNewAddress(false);
     setDefaultAddressType("");
     setSelectedAddressObject(clickedAddressObject);
-    setMode(7);
+    setMode((prev) => [...prev, 7]);
   };
 
   const isHomeChecker = () => {

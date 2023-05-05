@@ -22,9 +22,9 @@ export const addressModalContentState = atom({
   },
 });
 
-export const addressModeState = atom<number>({
+export const addressModeState = atom<number[]>({
   key: `addressModeState${v4()}`,
-  default: 0,
+  default: [0],
 });
 
 export const addressObject = atom({

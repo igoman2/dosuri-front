@@ -187,12 +187,12 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
 
   const onSearchBarClick = () => {
     setModal({ isActive: true });
-    setMode(1);
+    setMode((prev) => [...prev, 1]);
   };
 
   const onAddressMapButtonClick = () => {
     setModal({ isActive: true });
-    setMode(3);
+    setMode((prev) => [...prev, 3]);
   };
 
   const onSymtomClick = (symtom: Symtom, formikState: typeof formik) => {

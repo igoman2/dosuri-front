@@ -41,7 +41,6 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
   };
 
   const onAddressClick = (address: any) => {
-    console.log(defaultAddressType);
     const newAddressObject = {
       uuid: "",
       name: address.place_name,
@@ -62,7 +61,7 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
       latitude: address.y,
     });
 
-    setMode(nextMode);
+    setMode((prev) => [...prev, nextMode]);
   };
   return (
     <Wrapper>

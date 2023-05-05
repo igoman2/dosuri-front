@@ -1,13 +1,13 @@
 import FullModalBase from "@/components/Modal/FullModalBase";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import AddressComplete from "./AddressComplete";
 import AddressMain from "./AddressMain";
 import AddressSearch from "./AddressSearch";
 import MapView from "./MapView";
 import MyAddressMain from "./MyAddressMain";
 import MyAddressEdit from "./MyAddressEdit";
-import { addressModalState, addressModeState, isNewAddress } from "./store";
-import { FC, useEffect, useState } from "react";
+import { addressModalState, addressModeState } from "./store";
+import { useEffect, useState } from "react";
 import MyAddressSearch from "./MyAddressSearch";
 import useAddress from "@/hooks/useAddress";
 import MyAddressSearchDetail from "./MyAddressSearchDetail";
@@ -17,13 +17,14 @@ const SelectAddressModal = () => {
   const [mode, setMode] = useRecoilState(addressModeState);
   const [addressModalTitle, setAddressModalTitle] = useState("");
   const [backBtnVisibility, setBackBtnVisibility] = useState(false);
-  const isNewAddressValue = useRecoilValue(isNewAddress);
   const { closeAddressModal } = useAddress();
 
+  const currentMode = mode.at(-1);
+
   const setModalTitle = () => {
-    if (mode === 4) {
+    if (currentMode === 4) {
       setAddressModalTitle("내 주소 관리");
-    } else if (mode === 3) {
+    } else if (currentMode === 3) {
       setAddressModalTitle("");
     } else {
       setAddressModalTitle("주소 설정");
@@ -31,21 +32,13 @@ const SelectAddressModal = () => {
   };
 
   const setModalButtonType = () => {
-    if (mode === 0 || mode === 4) {
-      setBackBtnVisibility(false);
-    } else {
-      setBackBtnVisibility(true);
-    }
+    mode.length === 1
+      ? setBackBtnVisibility(false)
+      : setBackBtnVisibility(true);
   };
 
   const onClickBack = () => {
-    if (backBtnVisibility) {
-      if (mode === 7 && !isNewAddressValue) {
-        setMode(4);
-      } else {
-        setMode(mode - 1);
-      }
-    }
+    setMode((prev) => prev.slice(0, -1));
   };
 
   useEffect(() => {
@@ -65,14 +58,14 @@ const SelectAddressModal = () => {
           isBackBtnVisible={backBtnVisibility}
           onClickBack={onClickBack}
         >
-          {mode === 0 && <AddressMain />}
-          {mode === 1 && <AddressSearch />}
-          {mode === 2 && <AddressComplete />}
-          {mode === 3 && <MapView />}
-          {mode === 4 && <MyAddressMain />}
-          {mode === 5 && <MyAddressSearch />}
-          {mode === 6 && <MyAddressSearchDetail />}
-          {mode === 7 && <MyAddressEdit />}
+          {currentMode === 0 && <AddressMain />}
+          {currentMode === 1 && <AddressSearch />}
+          {currentMode === 2 && <AddressComplete />}
+          {currentMode === 3 && <MapView />}
+          {currentMode === 4 && <MyAddressMain />}
+          {currentMode === 5 && <MyAddressSearch />}
+          {currentMode === 6 && <MyAddressSearchDetail />}
+          {currentMode === 7 && <MyAddressEdit />}
         </FullModalBase>
       )}
     </>

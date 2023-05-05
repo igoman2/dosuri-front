@@ -24,11 +24,11 @@ const AddressMain = () => {
   );
 
   const onSearchBarClick = () => {
-    setMode(1);
+    setMode((prev) => [...prev, 1]);
   };
 
   const onAddressMapButtonClick = () => {
-    setMode(3);
+    setMode((prev) => [...prev, 3]);
   };
 
   const selectAddress = async (uuid: string) => {

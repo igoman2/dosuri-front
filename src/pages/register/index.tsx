@@ -9,7 +9,6 @@ const Register = () => {
   return (
     <Layout header={<Header left={true} />} footer={false}>
       <NextSeo title="회원가입 | 도수리-도수치료 리얼후기" />
-
       <RegisterWrapper>
         <div className="top">
           <div className="title">어서오세요! 도수리에는 처음이시네요.</div>

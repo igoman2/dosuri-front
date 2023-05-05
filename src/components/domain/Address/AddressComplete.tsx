@@ -26,7 +26,7 @@ const AddressComplete = () => {
   };
 
   const onAddressMapButtonClick = () => {
-    setMode(3);
+    setMode((prev) => [...prev, 3]);
   };
 
   const onInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +66,7 @@ const AddressComplete = () => {
         queryKey: ["getMyAddressList"],
         refetchInactive: true,
       });
-      setMode(0);
+      setMode((prev) => [...prev, 1]);
       closeAddressModal();
     } catch (e) {
       console.log(e);

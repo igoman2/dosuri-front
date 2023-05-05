@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import ArrowRight from "@/public/assets/arrow-right.png";
 import Divider from "@/components/Divider/Divider";
 import Header from "@/components/Layout/Header";
@@ -35,8 +35,12 @@ const Mypage = () => {
   const router = useRouter();
   const { mutate } = useUpdateReadingFlag();
 
+  useEffect(() => {
+    setModal({ isActive: false });
+  }, []);
+
   const handleClickBar = () => {
-    setMode(4);
+    setMode([4]);
     setModal({ isActive: true });
   };
 
