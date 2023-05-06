@@ -89,7 +89,7 @@ const Wrapper = styled.div`
   .alias {
     font-size: ${(props) => props.theme.fontSizes.lg};
     line-height: ${(props) => props.theme.lineHeights.lg};
-    font-weight: 350;
+    font-weight: 400;
 
     &.solo {
       padding: 1.3rem 0;
