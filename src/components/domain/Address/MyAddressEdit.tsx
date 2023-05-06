@@ -58,7 +58,7 @@ const MyAddressEdit = () => {
       case "office":
         return "회사";
       default:
-        return inputText;
+        return inputText.length > 0 ? inputText : selectedAddress.address;
     }
   };
 
@@ -207,10 +207,6 @@ const MyAddressEdit = () => {
     };
 
     if (!!!address.address || !!!address.address_type || !!!address.name) {
-      return false;
-    }
-
-    if (address.address_type === "etc" && !!!address.name) {
       return false;
     }
 

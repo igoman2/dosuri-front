@@ -40,7 +40,7 @@ const AddressComplete = () => {
       case "office":
         return "회사";
       default:
-        return inputText;
+        return inputText.length > 0 ? inputText : addressObject.name;
     }
   };
 
@@ -83,10 +83,6 @@ const AddressComplete = () => {
     };
 
     if (!!!address.address || !!!address.address_type) {
-      return false;
-    }
-
-    if (address.address_type === "etc" && !!!address.name) {
       return false;
     }
 
