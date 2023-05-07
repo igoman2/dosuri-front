@@ -343,6 +343,10 @@ export interface ITempHospitalResult {
 
 export interface IGetLocationByKeywordParams {
   query: string;
+}
+
+export interface IGetLocationByAddressParams {
+  query: string;
   analyzeType?: "similar" | "exact";
 }
 

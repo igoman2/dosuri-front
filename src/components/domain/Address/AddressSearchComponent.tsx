@@ -10,8 +10,8 @@ import {
   locationState,
   selectedAddressObject,
 } from "./store";
-import { SearchedAddressByKeyword } from "@/types/location";
-import { getLocationByKeyword } from "@/service/apis/location";
+import { SearchedAddressByAddress } from "@/types/location";
+import { getLocationByAddress } from "@/service/apis/location";
 
 interface AddressSearchComponentProps {
   inputText: string;
@@ -32,17 +32,18 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
   const defaultAddressTypeValue = useRecoilValue(defaultAddressType);
   const [mode, setMode] = useRecoilState(addressModeState);
   const [searchedAddressList, setSearchedAddressList] = useState<
-    SearchedAddressByKeyword[]
+    SearchedAddressByAddress[]
   >([]);
 
   const handleSearch = async () => {
-    const data = await getLocationByKeyword({ query: inputText });
+    const data = await getLocationByAddress({ query: inputText });
     setSearchedAddressList(data.documents);
   };
 
   const onAddressClick = (address: any) => {
     const newAddressObject = {
       uuid: "",
+      alias: "",
       name: address.place_name,
       address: !!address.road_address_name
         ? address.road_address_name
@@ -63,6 +64,17 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
 
     setMode((prev) => [...prev, nextMode]);
   };
+
+  const extractAddress = (address: SearchedAddressByAddress) => {
+    if (!!address.road_address) {
+      return !!address.road_address.building_name
+        ? address.road_address.building_name
+        : address.road_address.address_name;
+    }
+
+    return address.address_name;
+  };
+
   return (
     <Wrapper>
       <AddressSearchBar
@@ -75,11 +87,11 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
       <div className="searchedAddressList">
         {searchedAddressList.map((address, idx) => (
           <SearchedAddressList
-            addressName={address.place_name}
+            addressName={extractAddress(address)}
             address={
-              !!address.road_address_name
-                ? address.road_address_name
-                : address.address_name
+              !!address.road_address
+                ? address.road_address.address_name
+                : address.address.address_name
             }
             key={`address-${idx}`}
             onClick={() => onAddressClick(address)}
