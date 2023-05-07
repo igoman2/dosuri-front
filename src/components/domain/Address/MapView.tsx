@@ -174,7 +174,7 @@ const Wrapper = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: calc(100vh - 172px);
+  height: calc(100% - 172px);
 
   .simple-address {
     margin-top: 2.5rem;
