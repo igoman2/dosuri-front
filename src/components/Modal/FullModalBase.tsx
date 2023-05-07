@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useEffect } from "react";
 import Divider from "../Divider/Divider";
 import Icon from "@/util/Icon";
 import { ModalBaseContainer } from "./ModalBase";
@@ -32,6 +32,19 @@ const FullModalBase: FC<IFullModalBase> = ({
   isBackBtnVisible = false,
 }) => {
   const closeDirection = useRecoilValue(closeModalDirectionState);
+
+  useEffect(() => {
+    document.body.style.cssText = `
+      position: fixed; 
+      top: -${window.scrollY}px;
+      overflow-y: scroll;
+      width: 100%;`;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+    };
+  }, []);
 
   return (
     <>
