@@ -52,6 +52,7 @@ export const selectedAddressObject = atom<SelectedMyAddress>({
   default: {
     uuid: "",
     name: "",
+    alias: "",
     address: "",
     address_type: "",
     latitude: 0,

@@ -5,7 +5,7 @@ import AddressType from "./AddressType";
 import AddressType2 from "./AddressType2";
 import AddressMapButton from "./AddressMapButton";
 import AliasInputBar from "./AliasInputBar";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { addressModeState, selectedAddressObject } from "./store";
 import SetAddressAliasButton from "./SetAddressAliasButton";
 import { registerMyAddress } from "@/service/apis/user";
@@ -14,15 +14,20 @@ import { useRouter } from "next/router";
 import useAddress from "@/hooks/useAddress";
 
 const AddressComplete = () => {
-  const [selectedType, setSelectedType] = useState("");
-  const addressObject = useRecoilValue(selectedAddressObject);
-  const [inputText, setInputText] = useState("");
+  const [addressObject, setAddressObject] = useRecoilState(
+    selectedAddressObject
+  );
+  const [selectedType, setSelectedType] = useState(
+    addressObject.address_type ?? ""
+  );
+  const [inputText, setInputText] = useState(addressObject.alias ?? "");
   const setMode = useSetRecoilState(addressModeState);
   const router = useRouter();
   const { closeAddressModal } = useAddress();
+
   const onClick = (type: string) => {
     setSelectedType(type);
-    setInputText("");
+    setAddressObject((prev) => ({ ...prev, address_type: type }));
   };
 
   const onAddressMapButtonClick = () => {
@@ -30,6 +35,10 @@ const AddressComplete = () => {
   };
 
   const onInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setAddressObject((prev) => ({
+      ...prev,
+      alias: e.target.value,
+    }));
     setInputText(e.target.value);
   };
 
