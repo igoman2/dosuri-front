@@ -1,7 +1,7 @@
 import "react-spring-bottom-sheet/dist/style.css";
-
+import Icon from "@/util/Icon";
 import { Suspense, useEffect } from "react";
-
+import Link from "next/link";
 import AllFilterSection from "@/components/domain/Search/AllFilterSection";
 import Header from "@/components/Layout/Header";
 import Layout from "@/components/Layout";
@@ -34,11 +34,10 @@ const Home = () => {
       header={
         <Header
           left={true}
-          center={
-            <SearchBar
-              inputText=""
-              placeHolder="병원, 지역, 후기 키워드 검색하기"
-            />
+          right={
+            <Link href="/search/input">
+              <Icon name="search" />
+            </Link>
           }
         />
       }

@@ -28,6 +28,7 @@ import TalkClicked from "@/public/assets/talk_clicked.svg";
 import TalkSqaure from "@/public/assets/talk_square.svg";
 import Thumb from "@/public/assets/thumb.svg";
 import Write from "@/public/assets/write.svg";
+import Search from "@/public/assets/search.svg";
 import Location from "@/public/assets/location.svg";
 
 export const iconTypes: any = {
@@ -56,6 +57,7 @@ export const iconTypes: any = {
   logo2: Logo2,
   logo3: Logo3,
   write: Write,
+  search: Search,
   delete: Delete,
   sad: Sad,
   neutral: Neutral,

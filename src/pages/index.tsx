@@ -1,7 +1,7 @@
 import { IGoodPriceHospitals, IHospitalInfoResult } from "@/types/service";
 import React, { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-
+import Icon from "@/util/Icon";
 import Button from "@/components/Button";
 import { EmptyText } from "@/components/etc/emotion/EmptyText";
 import Header from "@/components/Layout/Header";
@@ -51,12 +51,19 @@ const Home = () => {
     return;
   }
 
+  const onSearchHandler = () => {};
+
   return (
     <Layout
       header={
         <Header
           left={true}
           center={isLoggedIn ? <SelectAddressBar /> : <></>}
+          right={
+            <Link href="/search/input">
+              <Icon name="search" />
+            </Link>
+          }
         />
       }
     >
