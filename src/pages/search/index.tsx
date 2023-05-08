@@ -15,6 +15,7 @@ import useScrollRestoration from "@/hooks/useScrollRestoration";
 import { useSetRecoilState } from "recoil";
 import SelectAddressBar from "@/components/domain/Address/SelectAddressBar";
 import useAuth from "@/hooks/useAuth";
+import SelectAddressModal from "@/components/domain/Address/SelectAddressModal";
 
 const Home = () => {
   const location = useGeolocation();
@@ -58,6 +59,7 @@ const Home = () => {
       <Suspense fallback={<Spinner />}>
         <AllFilterSection />
       </Suspense>
+      <SelectAddressModal />
     </Layout>
   );
 };
