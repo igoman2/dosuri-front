@@ -40,16 +40,27 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
     setSearchedAddressList(data.documents);
   };
 
-  const onAddressClick = (address: any) => {
+  const extractAddress = (address: SearchedAddressByAddress) => {
+    console.log(address);
+    if (!!address.road_address) {
+      return !!address.road_address.building_name
+        ? address.road_address.building_name
+        : `${address.road_address.region_3depth_name} ${address.road_address.road_name}-${address.road_address.main_building_no}`;
+    }
+
+    return `${address.address.region_3depth_name} ${address.address.main_address_no}-${address.address.sub_address_no}`;
+  };
+
+  const onAddressClick = (address: SearchedAddressByAddress) => {
     const newAddressObject = {
       uuid: "",
       alias: "",
-      name: address.place_name,
-      address: !!address.road_address_name
-        ? address.road_address_name
+      name: extractAddress(address),
+      address: !!address.road_address
+        ? address.road_address.address_name
         : address.address_name,
-      longitude: address.x,
-      latitude: address.y,
+      longitude: Number(address.x),
+      latitude: Number(address.y),
       address_type:
         isNewAddressValue && defaultAddressTypeValue !== "etc"
           ? defaultAddressTypeValue
@@ -58,21 +69,11 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
     setSelectedAddressObject(newAddressObject);
 
     setLocation({
-      longitude: address.x,
-      latitude: address.y,
+      longitude: Number(address.x),
+      latitude: Number(address.y),
     });
 
     setMode((prev) => [...prev, nextMode]);
-  };
-
-  const extractAddress = (address: SearchedAddressByAddress) => {
-    if (!!address.road_address) {
-      return !!address.road_address.building_name
-        ? address.road_address.building_name
-        : address.road_address.address_name;
-    }
-
-    return address.address_name;
   };
 
   return (
