@@ -51,8 +51,6 @@ const Home = () => {
     return;
   }
 
-  const onSearchHandler = () => {};
-
   return (
     <Layout
       header={

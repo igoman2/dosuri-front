@@ -13,11 +13,13 @@ import { locationState } from "@/store/location";
 import useGeolocation from "@/hooks/useGeolocation";
 import useScrollRestoration from "@/hooks/useScrollRestoration";
 import { useSetRecoilState } from "recoil";
-import SearchBar from "@/components/domain/Search/SearchBar";
+import SelectAddressBar from "@/components/domain/Address/SelectAddressBar";
+import useAuth from "@/hooks/useAuth";
 
 const Home = () => {
   const location = useGeolocation();
   const setLocaton = useSetRecoilState(locationState);
+  const { isLoggedIn } = useAuth();
   useScrollRestoration();
 
   useEffect(() => {
@@ -34,6 +36,7 @@ const Home = () => {
       header={
         <Header
           left={true}
+          center={isLoggedIn ? <SelectAddressBar /> : <></>}
           right={
             <Link href="/search/input">
               <Icon name="search" />
