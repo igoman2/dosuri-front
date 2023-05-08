@@ -11,6 +11,7 @@ import { userInfoState } from "@/store/user";
 import { useState } from "react";
 import { queryClient } from "@/service/react-query/queryClient";
 import useAddress from "@/hooks/useAddress";
+import { queryKeys } from "@/service/react-query/constants";
 
 const AddressMain = () => {
   const [mode, setMode] = useRecoilState(addressModeState);
@@ -42,6 +43,11 @@ const AddressMain = () => {
       });
       queryClient.invalidateQueries({
         queryKey: "getMyAddressList",
+        refetchInactive: true,
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.hospital,
         refetchInactive: true,
       });
       const resp = await getUser();
