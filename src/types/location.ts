@@ -19,22 +19,32 @@ export type SearchedAddressByKeyword = {
 };
 
 export type SearchedAddressByAddress = {
-  address: {
-    b_code: string;
-    h_code: string;
-    x: string;
-    y: string;
-  } & Address;
+  address: SearchedAddressResultAddress;
   address_name: string;
   address_type: string;
-  road_address: {
-    x: string;
-    y: string;
-    zone_no: string;
-  } & RoadAddress;
+  road_address: SearchedAddressResultRoadAddress;
   x: string;
   y: string;
 };
+
+/**
+ * 주소 검색 결과 지번 타입
+ */
+export type SearchedAddressResultAddress = {
+  b_code: string;
+  h_code: string;
+  x: string;
+  y: string;
+} & Address;
+
+/**
+ * 주소 검색 결과 도로명 타입
+ */
+export type SearchedAddressResultRoadAddress = {
+  x: string;
+  y: string;
+  zone_no: string;
+} & RoadAddress;
 
 export type Address = {
   address_name: string;

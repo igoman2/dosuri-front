@@ -41,14 +41,24 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
   };
 
   const extractAddress = (address: SearchedAddressByAddress) => {
-    console.log(address);
     if (!!address.road_address) {
-      return !!address.road_address.building_name
-        ? address.road_address.building_name
-        : `${address.road_address.region_3depth_name} ${address.road_address.road_name}-${address.road_address.main_building_no}`;
+      if (!!address.road_address.building_name) {
+        return address.road_address.building_name;
+      } else {
+        if (!!address.road_address.region_3depth_name) {
+          return `${address.road_address.region_3depth_name} ${address.road_address.road_name} ${address.road_address.main_building_no}`;
+        } else {
+          return address.road_address.address_name;
+        }
+      }
     }
-
-    return `${address.address.region_3depth_name} ${address.address.main_address_no}-${address.address.sub_address_no}`;
+    return `${address.address.region_3depth_name} ${
+      address.address.main_address_no
+    }${
+      !!address.address.sub_address_no
+        ? `-${address.address.sub_address_no}`
+        : ""
+    }`;
   };
 
   const onAddressClick = (address: SearchedAddressByAddress) => {
