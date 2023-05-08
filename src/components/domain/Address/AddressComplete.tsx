@@ -12,6 +12,9 @@ import { registerMyAddress } from "@/service/apis/user";
 import { queryClient } from "@/service/react-query/queryClient";
 import { useRouter } from "next/router";
 import useAddress from "@/hooks/useAddress";
+import { selectMyAddress } from "@/service/apis/user";
+import { getUser } from "@/service/apis/user";
+import { userInfoState } from "@/store/user";
 
 const AddressComplete = () => {
   const [addressObject, setAddressObject] = useRecoilState(
@@ -24,6 +27,7 @@ const AddressComplete = () => {
   const setMode = useSetRecoilState(addressModeState);
   const router = useRouter();
   const { closeAddressModal } = useAddress();
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   const onClick = (type: string) => {
     setSelectedType(type);
@@ -53,6 +57,29 @@ const AddressComplete = () => {
     }
   };
 
+  const selectAddress = async (uuid: string) => {
+    try {
+      await selectMyAddress({
+        uuid: uuid,
+        isMain: true,
+      });
+      queryClient.invalidateQueries({
+        queryKey: "getMyAddressList",
+        refetchInactive: true,
+      });
+      const resp = await getUser();
+      const user = resp!;
+      setUserInfo((prev) => {
+        return {
+          ...prev,
+          address: user.address,
+        };
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const onButtonClick = async () => {
     if (router.pathname === "/register") {
       {
@@ -70,12 +97,15 @@ const AddressComplete = () => {
     };
 
     try {
-      await registerMyAddress(address);
+      const response = await registerMyAddress(address);
       queryClient.invalidateQueries({
         queryKey: ["getMyAddressList"],
         refetchInactive: true,
       });
       setMode((prev) => [...prev, 1]);
+
+      selectAddress(response.uuid);
+
       closeAddressModal();
     } catch (e) {
       console.log(e);
