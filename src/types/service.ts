@@ -390,3 +390,10 @@ export type Document = {
   address: Address;
   road_address: RoadAddress;
 };
+
+export type KakaoMapViewLocation = {
+  address: Address;
+  road_address: RoadAddress;
+  longitude: number;
+  latitude: number;
+};

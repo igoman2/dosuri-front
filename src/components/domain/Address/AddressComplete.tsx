@@ -87,8 +87,6 @@ const AddressComplete = () => {
       name: getAlias(),
       address: addressObject.address,
       address_type: selectedType,
-      latitude: 0,
-      longitude: 0,
     };
 
     if (!!!address.address || !!!address.address_type) {
