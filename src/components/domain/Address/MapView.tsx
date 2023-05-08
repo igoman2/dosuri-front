@@ -94,14 +94,20 @@ const MapView = () => {
 
   const handleSetLocation = () => {
     setSelectedAddressObject((prev) => {
-      return {
-        ...prev,
-        name: simpleAddress(),
-        address: detailAddress(),
-      };
+      if (prev.address_type === "etc") {
+        return {
+          ...prev,
+          address: detailAddress(),
+        };
+      } else {
+        return {
+          ...prev,
+          name: simpleAddress(),
+          address: detailAddress(),
+        };
+      }
     });
 
-    console.log(router.asPath);
     if (router.asPath.includes("mypage")) {
       setMode((prev) => [...prev, 7]);
     } else {
@@ -174,7 +180,7 @@ const Wrapper = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: calc(100vh - 172px);
+  height: calc(100% - 172px);
 
   .simple-address {
     margin-top: 2.5rem;

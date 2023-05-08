@@ -18,7 +18,7 @@ export type SearchedAddressByKeyword = {
   y: string;
 };
 
-export type SearchedAddressByLocation = {
+export type SearchedAddressByAddress = {
   address: {
     b_code: string;
     h_code: string;
@@ -61,6 +61,7 @@ export type RoadAddress = {
 export type SelectedMyAddress = {
   uuid: string;
   name: string;
+  alias?: string;
   address: string;
   address_type: string;
   latitude: number;
