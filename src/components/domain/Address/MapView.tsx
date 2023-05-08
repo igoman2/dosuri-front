@@ -114,7 +114,7 @@ const MapView = () => {
       }
     });
 
-    if (router.asPath.includes("mypage")) {
+    if (router.asPath === "/mypage") {
       setMode((prev) => [...prev, 7]);
     } else {
       setMode((prev) => [...prev, 2]);
