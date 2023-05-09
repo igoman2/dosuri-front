@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from "react";
+import { ChangeEvent, FC, FormEvent, useRef } from "react";
 import styled from "@emotion/styled";
 import AddressDivider from "@/components/Divider/AddressDivider";
 
@@ -13,13 +13,27 @@ const AliasInputBar: FC<AliasInputBarProps> = ({
   placeHolder,
   onInput,
 }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = (e: FormEvent) => {
+    if (inputRef && inputRef.current) {
+      inputRef.current.blur();
+    }
+
+    e.preventDefault();
+  };
   return (
     <InputWrapper>
-      <input
-        placeholder={placeHolder}
-        onChange={onInput}
-        defaultValue={inputText}
-      ></input>
+      <form onSubmit={handleSubmit}>
+        <input
+          ref={inputRef}
+          placeholder={placeHolder}
+          onChange={onInput}
+          defaultValue={inputText}
+          type="text"
+        ></input>
+      </form>
+
       <AddressDivider height={1} />
     </InputWrapper>
   );
