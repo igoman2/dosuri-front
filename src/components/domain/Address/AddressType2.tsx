@@ -43,6 +43,7 @@ export default AddressType2;
 
 const TypeButtonWrapper = styled.div`
   border: solid ${(props) => props.theme.colors.purple};
+  border-width: 1px;
   background-color: rgba(152, 143, 255, 0.2);
   height: 5rem;
   width: 100%;
