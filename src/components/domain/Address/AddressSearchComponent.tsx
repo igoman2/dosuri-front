@@ -34,10 +34,12 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
   const [searchedAddressList, setSearchedAddressList] = useState<
     SearchedAddressByAddress[]
   >([]);
+  const [searchFlag, setSearchFlag] = useState(false);
 
   const handleSearch = async () => {
     const data = await getLocationByAddress({ query: inputText });
     setSearchedAddressList(data.documents);
+    setSearchFlag(true);
   };
 
   const extractAddress = (address: SearchedAddressByAddress) => {
@@ -87,6 +89,10 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
   };
 
   const isSearchedAddressValid = () => {
+    if (!searchFlag) {
+      return true;
+    }
+
     if (searchedAddressList.length === 0) {
       return false;
     }
