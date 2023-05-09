@@ -1,8 +1,17 @@
-import { useEffect, useState } from "react";
+import Button from "../Button";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { useRecoilState } from "recoil";
+import Link from "next/link";
+import AppleIcon from "@/public/assets/AppleIcon.png";
 import { useTheme } from "@emotion/react";
+import Script from "next/script";
+import { useEffect } from "react";
+const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&response_type=code`;
+
+declare global {
+  interface Window {
+    AppleID: any;
+  }
+}
 
 import AppleIcon from "@/public/assets/AppleIcon.png";
 import { getUser, getUserAuth } from "@/service/apis/user";
