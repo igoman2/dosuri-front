@@ -34,10 +34,12 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
   const [searchedAddressList, setSearchedAddressList] = useState<
     SearchedAddressByAddress[]
   >([]);
+  const [searchFlag, setSearchFlag] = useState(false);
 
   const handleSearch = async () => {
     const data = await getLocationByAddress({ query: inputText });
     setSearchedAddressList(data.documents);
+    setSearchFlag(true);
   };
 
   const extractAddress = (address: SearchedAddressByAddress) => {
@@ -96,18 +98,22 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
         onSearch={handleSearch}
       />
       <div className="searchedAddressList">
-        {searchedAddressList.map((address, idx) => (
-          <SearchedAddressList
-            addressName={extractAddress(address)}
-            address={
-              !!address.road_address
-                ? address.road_address.address_name
-                : address.address.address_name
-            }
-            key={`address-${idx}`}
-            onClick={() => onAddressClick(address)}
-          />
-        ))}
+        {searchFlag && searchedAddressList.length === 0 ? (
+          <div className="noneSearched">검색 결과가 없습니다.</div>
+        ) : (
+          searchedAddressList.map((address, idx) => (
+            <SearchedAddressList
+              addressName={extractAddress(address)}
+              address={
+                !!address.road_address
+                  ? address.road_address.address_name
+                  : address.address.address_name
+              }
+              key={`address-${idx}`}
+              onClick={() => onAddressClick(address)}
+            />
+          ))
+        )}
       </div>
     </Wrapper>
   );
@@ -124,5 +130,11 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
+  }
+
+  .noneSearched {
+    text-align: center;
+    font-size: ${(props) => props.theme.fontSizes.md};
+    line-height: ${(props) => props.theme.lineHeights.md};
   }
 `;
