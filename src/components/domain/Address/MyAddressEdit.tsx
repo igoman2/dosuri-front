@@ -38,18 +38,19 @@ const MyAddressEdit = () => {
   const resetIsNewAddress = useResetRecoilState(isNewAddress);
   const [preselectedType, setPreselectedType] =
     useRecoilState(defaultAddressType);
+  const resetPreSelectedType = useResetRecoilState(defaultAddressType);
   const resetDefaultAddressTyep = useResetRecoilState(defaultAddressType);
   const { mutate } = useDeleteMyAddress();
 
   useEffect(() => {
     if (isNewAddressValue) {
       if (!!selectedAddress.address_type) {
-        setSelectedType(selectedAddress.address_type);
+        setType(selectedAddress.address_type);
       } else {
-        setSelectedType(preselectedType);
+        setType(preselectedType);
       }
     } else {
-      setSelectedType(selectedAddress.address_type);
+      setType(selectedAddress.address_type);
     }
   }, []);
 
@@ -58,9 +59,13 @@ const MyAddressEdit = () => {
       setInputText(selectedAddress.name);
   }, [selectedType]);
 
-  const onClick = (type: string) => {
-    setPreselectedType("");
+  const setType = (type: string) => {
+    if (preselectedType !== "") resetPreSelectedType();
     setSelectedType(type);
+  };
+
+  const onClick = (type: string) => {
+    setType(type);
     setSelectedAddress((prev) => ({ ...prev, address_type: type }));
   };
 

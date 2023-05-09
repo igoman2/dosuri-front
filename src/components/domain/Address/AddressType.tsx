@@ -42,7 +42,8 @@ const AddressType: FC<AddressType> = ({ type, text, onClick }) => {
 export default AddressType;
 
 const TypeButtonWrapper = styled.div`
-  border: solid lightgrey;
+  border: solid ${(props) => props.theme.colors.grey};
+  border-width: 1px;
   height: 5rem;
   width: 100%;
   display: flex;
