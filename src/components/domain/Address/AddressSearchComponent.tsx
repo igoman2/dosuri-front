@@ -34,12 +34,10 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
   const [searchedAddressList, setSearchedAddressList] = useState<
     SearchedAddressByAddress[]
   >([]);
-  const [searchFlag, setSearchFlag] = useState(false);
 
   const handleSearch = async () => {
     const data = await getLocationByAddress({ query: inputText });
     setSearchedAddressList(data.documents);
-    setSearchFlag(true);
   };
 
   const extractAddress = (address: SearchedAddressByAddress) => {
@@ -88,6 +86,18 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
     setMode((prev) => [...prev, nextMode]);
   };
 
+  const isSearchedAddressValid = () => {
+    if (searchedAddressList.length === 0) {
+      return false;
+    }
+
+    if (!!!searchedAddressList[0].road_address) {
+      return false;
+    }
+
+    return true;
+  };
+
   return (
     <Wrapper>
       <AddressSearchBar
@@ -98,9 +108,7 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
         onSearch={handleSearch}
       />
       <div className="searchedAddressList">
-        {searchFlag && searchedAddressList.length === 0 ? (
-          <div className="noneSearched">검색 결과가 없습니다.</div>
-        ) : (
+        {isSearchedAddressValid() ? (
           searchedAddressList.map((address, idx) => (
             <SearchedAddressList
               addressName={extractAddress(address)}
@@ -113,6 +121,8 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
               onClick={() => onAddressClick(address)}
             />
           ))
+        ) : (
+          <div className="noneSearched">검색 결과가 없습니다.</div>
         )}
       </div>
     </Wrapper>
