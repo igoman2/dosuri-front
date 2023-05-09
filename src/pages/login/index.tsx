@@ -4,6 +4,7 @@ import Icon from "@/util/Icon";
 import Kakao from "@/components/Oauth/Kakao";
 import { NextSeo } from "next-seo";
 import React from "react";
+import Apple from "@/components/Oauth/Apple";
 
 const Login = () => {
   const theme = useTheme();
@@ -62,7 +63,7 @@ const Login = () => {
           data-border-radius="5"
           data-height="50"
         ></div>
-
+        <Apple />
         {/* <Google /> */}
       </div>
     </main>
