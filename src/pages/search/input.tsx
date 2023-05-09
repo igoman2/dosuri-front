@@ -118,7 +118,6 @@ const Main = styled.div`
   overflow-x: hidden;
   padding: 0 2rem;
   margin-top: 0.5rem;
-  height: 100%;
 
   .link {
     cursor: pointer;
