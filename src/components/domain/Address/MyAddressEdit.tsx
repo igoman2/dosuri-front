@@ -20,8 +20,11 @@ import {
 import { modalContentState, modalState } from "@/components/Modal/store";
 import SetAddressAliasButton from "./SetAddressAliasButton";
 import { useDeleteMyAddress } from "@/hooks/service/useDeleteMyAddress";
-import { registerMyAddress } from "@/service/apis/user";
+import { getUser, registerMyAddress } from "@/service/apis/user";
 import { queryClient } from "@/service/react-query/queryClient";
+import { selectMyAddress } from "@/service/apis/user";
+import { queryKeys } from "@/service/react-query/constants";
+import { userInfoState } from "@/store/user";
 
 const MyAddressEdit = () => {
   const setMode = useSetRecoilState(addressModeState);
@@ -30,42 +33,23 @@ const MyAddressEdit = () => {
   const [selectedAddress, setSelectedAddress] = useRecoilState(
     selectedAddressObject
   );
-  const [selectedType, setSelectedType] = useState(
-    selectedAddress.address_type ?? ""
-  );
+  const resetSelectedAddress = useResetRecoilState(selectedAddressObject);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [inputText, setInputText] = useState(selectedAddress.alias ?? "");
   const isNewAddressValue = useRecoilValue(isNewAddress);
   const resetIsNewAddress = useResetRecoilState(isNewAddress);
-  const [preselectedType, setPreselectedType] =
-    useRecoilState(defaultAddressType);
-  const resetPreSelectedType = useResetRecoilState(defaultAddressType);
-  const resetDefaultAddressTyep = useResetRecoilState(defaultAddressType);
-  const { mutate } = useDeleteMyAddress();
+  const [selectedType, setSelectedType] = useRecoilState(defaultAddressType);
+  const resetSelectedType = useResetRecoilState(defaultAddressType);
 
-  useEffect(() => {
-    if (isNewAddressValue) {
-      if (!!selectedAddress.address_type) {
-        setType(selectedAddress.address_type);
-      } else {
-        setType(preselectedType);
-      }
-    } else {
-      setType(selectedAddress.address_type);
-    }
-  }, []);
+  const { mutate } = useDeleteMyAddress();
 
   useEffect(() => {
     if (!isNewAddressValue && selectedType === "etc" && inputText === "")
       setInputText(selectedAddress.name);
   }, [selectedType]);
 
-  const setType = (type: string) => {
-    if (preselectedType !== "") resetPreSelectedType();
-    setSelectedType(type);
-  };
-
   const onClick = (type: string) => {
-    setType(type);
+    setSelectedType(type);
     setSelectedAddress((prev) => ({ ...prev, address_type: type }));
   };
 
@@ -92,6 +76,33 @@ const MyAddressEdit = () => {
     }
   };
 
+  const selectAddress = async (uuid: string) => {
+    try {
+      await selectMyAddress({
+        uuid: uuid,
+        isMain: true,
+      });
+      queryClient.invalidateQueries({
+        queryKey: "getMyAddressList",
+        refetchInactive: true,
+      });
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.hospital,
+        refetchInactive: true,
+      });
+      const resp = await getUser();
+      const user = resp!;
+      setUserInfo((prev) => {
+        return {
+          ...prev,
+          address: user.address,
+        };
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const registerAddress = async () => {
     const address = {
       name: getAlias(),
@@ -102,13 +113,11 @@ const MyAddressEdit = () => {
     };
 
     try {
-      await registerMyAddress(address);
-      queryClient.invalidateQueries({
-        queryKey: ["getMyAddressList"],
-        refetchInactive: true,
-      });
+      const response = await registerMyAddress(address);
+      selectAddress(response.uuid);
       setMode((prev) => [...prev, 4]);
-      resetDefaultAddressTyep();
+      resetSelectedType();
+      resetSelectedAddress();
       resetIsNewAddress();
     } catch (e) {
       console.log(e);
@@ -240,13 +249,13 @@ const MyAddressEdit = () => {
       />
       <div className="addressType">
         {selectedType === "home" ||
-        (isNewAddressValue && preselectedType === "home") ? (
+        (isNewAddressValue && selectedType === "home") ? (
           <AddressType2 type="home" text="집" onClick={() => onClick("home")} />
         ) : (
           <AddressType type="home" text="집" onClick={() => onClick("home")} />
         )}
         {selectedType === "office" ||
-        (isNewAddressValue && preselectedType === "office") ? (
+        (isNewAddressValue && selectedType === "office") ? (
           <AddressType2
             type="office"
             text="회사"

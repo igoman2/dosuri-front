@@ -29,7 +29,7 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
   const [location, setLocation] = useRecoilState(locationState);
   const setSelectedAddressObject = useSetRecoilState(selectedAddressObject);
   const isNewAddressValue = useRecoilValue(isNewAddress);
-  const defaultAddressTypeValue = useRecoilValue(defaultAddressType);
+  const selectedType = useRecoilValue(defaultAddressType);
   const [mode, setMode] = useRecoilState(addressModeState);
   const [searchedAddressList, setSearchedAddressList] = useState<
     SearchedAddressByAddress[]
@@ -74,9 +74,7 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
       longitude: Number(address.x),
       latitude: Number(address.y),
       address_type:
-        isNewAddressValue && defaultAddressTypeValue !== "etc"
-          ? defaultAddressTypeValue
-          : "",
+        isNewAddressValue && selectedType !== "etc" ? selectedType : "",
     };
     setSelectedAddressObject(newAddressObject);
 
