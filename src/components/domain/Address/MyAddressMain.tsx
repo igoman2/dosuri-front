@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useQuery } from "react-query";
 import { getMyAddressList } from "@/service/apis/user";
 import AliasAddressList from "./AliasAddressList";
-import { useSetRecoilState } from "recoil";
+import { useResetRecoilState, useSetRecoilState } from "recoil";
 import {
   addressModeState,
   defaultAddressType,
@@ -18,8 +18,10 @@ import { useEffect, useState } from "react";
 const MyAddressMain = () => {
   const setMode = useSetRecoilState(addressModeState);
   const setSelectedAddressObject = useSetRecoilState(selectedAddressObject);
+  const resetSelectedAddressobject = useResetRecoilState(selectedAddressObject);
   const setIsNewAddress = useSetRecoilState(isNewAddress);
-  const setDefaultAddressType = useSetRecoilState(defaultAddressType);
+  const setSelectedType = useSetRecoilState(defaultAddressType);
+  const resetSelectedType = useResetRecoilState(defaultAddressType);
   const setLocation = useSetRecoilState(locationState);
   const [isHome, setIsHome] = useState(false);
   const [isOffice, setIsOffice] = useState(false);
@@ -31,7 +33,9 @@ const MyAddressMain = () => {
 
   const addNewAddress = (type: string) => {
     setIsNewAddress(true);
-    setDefaultAddressType(type);
+    resetSelectedAddressobject();
+    if (type === "home" || type === "office") setSelectedType(type);
+    else resetSelectedType();
     setMode((prev) => [...prev, 5]);
   };
 
@@ -42,8 +46,8 @@ const MyAddressMain = () => {
     });
 
     setIsNewAddress(false);
-    setDefaultAddressType("");
     setSelectedAddressObject(clickedAddressObject);
+    setSelectedType(clickedAddressObject.address_type);
     setMode((prev) => [...prev, 7]);
   };
 
