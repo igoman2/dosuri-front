@@ -73,9 +73,6 @@ const KakaoMap: FC<IMapProps> = ({
       return 강남구청;
     }
 
-    console.log(location);
-    console.log(mapCenter);
-
     if (location.longitude !== 0 && location.latitude !== 0) {
       return {
         latitude: location!.latitude,
@@ -96,33 +93,37 @@ const KakaoMap: FC<IMapProps> = ({
     }
   };
 
+  const getCurrentCenter = () => {
+    return { latitude: mapCenter!.latitude, longitude: mapCenter!.longitude };
+  };
+
+  const fetchLocation = async (latitude: number, longitude: number) => {
+    const data = await getLocationByCoordinate({
+      longitude,
+      latitude,
+    });
+
+    isValidAddress = data.documents.length > 0;
+
+    setIsValidAddress(isValidAddress);
+    if (isValidAddress) {
+      setLocationInfo({
+        address: data.documents[0].address,
+        road_address: data.documents[0].road_address,
+        latitude,
+        longitude,
+      });
+    } else {
+      setLocationInfo(emptyAddress);
+    }
+
+    return data.documents;
+  };
+
   // 중심 좌표가 바뀔 때마다 주소를 가져온다.
   useEffect(() => {
-    const { latitude, longitude } = getInitialCenter();
-
-    const fetchLocation = async () => {
-      const data = await getLocationByCoordinate({
-        longitude: longitude,
-        latitude: latitude,
-      });
-
-      isValidAddress = data.documents.length > 0;
-
-      setIsValidAddress(isValidAddress);
-      if (isValidAddress) {
-        setLocationInfo({
-          address: data.documents[0].address,
-          road_address: data.documents[0].road_address,
-          latitude,
-          longitude,
-        });
-      } else {
-        setLocationInfo(emptyAddress);
-      }
-
-      return data.documents;
-    };
-    fetchLocation();
+    const { latitude, longitude } = getCurrentCenter();
+    fetchLocation(latitude, longitude);
   }, [mapCenter]);
 
   // 카카오맵 이니셜라이징 및 마커 이벤트 등록
@@ -142,6 +143,8 @@ const KakaoMap: FC<IMapProps> = ({
         }
 
         const { latitude, longitude } = getInitialCenter();
+        fetchLocation(latitude, longitude);
+
         const initialCenter = new window.kakao.maps.LatLng(latitude, longitude);
 
         const mapOption = {
