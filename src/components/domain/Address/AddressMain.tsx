@@ -5,10 +5,10 @@ import AddressMapButton from "./AddressMapButton";
 import { useQuery } from "react-query";
 import { getUser } from "@/service/apis/user";
 import { getMyAddressList, selectMyAddress } from "@/service/apis/user";
-import { useRecoilState } from "recoil";
-import { addressModeState } from "./store";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
+import { addressModeState, locationState } from "./store";
 import { userInfoState } from "@/store/user";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { queryClient } from "@/service/react-query/queryClient";
 import useAddress from "@/hooks/useAddress";
 import { queryKeys } from "@/service/react-query/constants";
@@ -20,11 +20,16 @@ const AddressMain = () => {
     userInfo?.address?.uuid ?? ""
   );
   const { closeAddressModal } = useAddress();
+  const resetLocation = useResetRecoilState(locationState);
 
   const { data: myAddressList } = useQuery(
     "getMyAddressList",
     getMyAddressList
   );
+
+  useEffect(() => {
+    resetLocation();
+  }, []);
 
   const onSearchBarClick = () => {
     setMode((prev) => [...prev, 1]);

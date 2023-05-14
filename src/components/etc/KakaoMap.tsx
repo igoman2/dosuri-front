@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { getLocationByCoordinate } from "@/service/apis/location";
 import { KakaoMapViewLocation } from "@/types/service";
 import { Location } from "@/types/location";
@@ -18,27 +18,84 @@ interface IMapProps {
   setLocationInfo: (value: KakaoMapViewLocation) => void;
   coordinates: Location;
   loaded: boolean;
+  isValidAddress: boolean;
+  setIsValidAddress: (value: boolean) => void;
+  mapRef: any;
+  markersRef: any;
+  deleteMarkers: () => void;
+  showMarkers: () => void;
+  mapCenter: Location;
+  setMapCenter: (val: Location) => void;
 }
 
-const KakaoMap: FC<IMapProps> = ({ coordinates, setLocationInfo, loaded }) => {
+const emptyAddress = {
+  address: {
+    address_name: "",
+    region_1depth_name: "",
+    region_2depth_name: "",
+    region_3depth_name: "",
+    mountain_yn: "",
+    main_address_no: "",
+    sub_address_no: "",
+  },
+  road_address: {
+    address_name: "",
+    region_1depth_name: "",
+    region_2depth_name: "",
+    region_3depth_name: "",
+    road_name: "",
+    underground_yn: "",
+    main_building_no: "",
+    sub_building_no: "",
+    building_name: "",
+  },
+  latitude: 0,
+  longitude: 0,
+};
+
+const KakaoMap: FC<IMapProps> = ({
+  coordinates,
+  setLocationInfo,
+  loaded,
+  isValidAddress,
+  setIsValidAddress,
+  mapRef,
+  markersRef,
+  deleteMarkers,
+  showMarkers,
+  mapCenter,
+  setMapCenter,
+}) => {
   const [location, setLocation] = useRecoilState(locationState);
 
   const getInitialCenter = () => {
     if (!loaded) {
       return 강남구청;
     }
-    if (location.longitude === 0 && location.latitude === 0) {
-      return {
-        latitude: coordinates!.latitude,
-        longitude: coordinates!.longitude,
-      };
-    } else {
+
+    console.log(location);
+    console.log(mapCenter);
+
+    if (location.longitude !== 0 && location.latitude !== 0) {
       return {
         latitude: location!.latitude,
         longitude: location!.longitude,
       };
+    } else {
+      if (mapCenter.longitude === 0 && mapCenter.latitude === 0) {
+        return {
+          latitude: coordinates!.latitude,
+          longitude: coordinates!.longitude,
+        };
+      } else {
+        return {
+          latitude: mapCenter!.latitude,
+          longitude: mapCenter!.longitude,
+        };
+      }
     }
   };
+
   // 중심 좌표가 바뀔 때마다 주소를 가져온다.
   useEffect(() => {
     const { latitude, longitude } = getInitialCenter();
@@ -48,16 +105,25 @@ const KakaoMap: FC<IMapProps> = ({ coordinates, setLocationInfo, loaded }) => {
         longitude: longitude,
         latitude: latitude,
       });
-      setLocationInfo({
-        address: data.documents[0].address,
-        road_address: data.documents[0].road_address,
-        latitude,
-        longitude,
-      });
+
+      isValidAddress = data.documents.length > 0;
+
+      setIsValidAddress(isValidAddress);
+      if (isValidAddress) {
+        setLocationInfo({
+          address: data.documents[0].address,
+          road_address: data.documents[0].road_address,
+          latitude,
+          longitude,
+        });
+      } else {
+        setLocationInfo(emptyAddress);
+      }
+
       return data.documents;
     };
     fetchLocation();
-  }, [location]);
+  }, [mapCenter]);
 
   // 카카오맵 이니셜라이징 및 마커 이벤트 등록
   useEffect(() => {
@@ -88,24 +154,23 @@ const KakaoMap: FC<IMapProps> = ({ coordinates, setLocationInfo, loaded }) => {
           position: initialCenter,
         });
 
-        let markers: kakao.maps.Marker[] = [];
-        markers.push(marker);
+        // markersRef.current = [];
 
-        const map = new window.kakao.maps.Map(mapContainer!, mapOption);
-
-        markers.forEach(
-          (marker) => marker.setMap(map) // 지도 위에 마커를 표출합니다
-        );
+        // let markers: kakao.maps.Marker[] = [];
+        markersRef.current.push(marker);
+        mapRef.current = new window.kakao.maps.Map(mapContainer!, mapOption);
+        showMarkers();
+        // markers.forEach(
+        //   (marker) => marker.setMap(mapRef.current) // 지도 위에 마커를 표출합니다
+        // );
 
         // 지도 드래그 이벤트 발생 시 마커를 지우고 새로 생성한다.
-        kakao.maps.event.addListener(map, "drag", function () {
-          markers.forEach((marker) => {
-            marker.setMap(null);
-          });
-          markers = [];
+        kakao.maps.event.addListener(mapRef.current, "drag", function () {
+          deleteMarkers();
+          markersRef.current = [];
           // 지도 중심좌표를 얻어옵니다
-          const latlng = map.getCenter();
-          setLocation({
+          const latlng = mapRef.current.getCenter();
+          setMapCenter({
             latitude: latlng.getLat(),
             longitude: latlng.getLng(),
           });
@@ -120,10 +185,8 @@ const KakaoMap: FC<IMapProps> = ({ coordinates, setLocationInfo, loaded }) => {
             position: markerPosition,
           });
 
-          markers.push(marker);
-          markers.forEach(
-            (marker) => marker.setMap(map) // 지도 위에 마커를 표출합니다
-          );
+          markersRef.current.push(marker);
+          showMarkers();
         });
       });
     };

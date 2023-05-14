@@ -1,11 +1,17 @@
 import styled from "@emotion/styled";
 import SearchBar from "../Search/SearchBar";
 import AddressMapButton from "./AddressMapButton";
-import { useSetRecoilState } from "recoil";
-import { addressModeState } from "./store";
+import { useResetRecoilState, useSetRecoilState } from "recoil";
+import { addressModeState, locationState } from "./store";
+import { useEffect } from "react";
 
 const MyAddressSearch = () => {
   const setMode = useSetRecoilState(addressModeState);
+  const resetLocation = useResetRecoilState(locationState);
+
+  useEffect(() => {
+    resetLocation();
+  }, []);
 
   const onSearchBarClick = () => {
     setMode((prev) => [...prev, 6]);
