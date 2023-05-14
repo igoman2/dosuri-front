@@ -1,22 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import Button from "@/components/Button";
 import { useTheme } from "@emotion/react";
 import Icon from "@/util/Icon";
-import { useSetRecoilState } from "recoil";
-import { addressModeState, selectedAddressObject } from "./store";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import {
+  addressModeState,
+  locationState,
+  selectedAddressObject,
+} from "./store";
 import KakaoMap from "../../etc/KakaoMap";
 import { KakaoMapViewLocation } from "@/types/service";
 import useGeolocation from "@/hooks/useGeolocation";
 import Spinner from "@/components/Spinner/Spinner";
 import { Address } from "@/types/location";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import CurrentLocationIcon from "@/public/assets/current-location.png";
 
 const MapView = () => {
   const router = useRouter();
   const setMode = useSetRecoilState(addressModeState);
   const setSelectedAddressObject = useSetRecoilState(selectedAddressObject);
   const { coordinates, loaded } = useGeolocation();
+  const [location, setLocation] = useRecoilState(locationState);
+  const [isValidAddress, setIsValidAddress] = useState(true);
+  const mapRef = useRef<any>(null);
+  const markersRef = useRef<any>();
+  const [mapCenter, setMapCenter] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
   const [locationInfo, setLocationInfo] = useState<KakaoMapViewLocation>({
     address: {
       address_name: "",
@@ -41,11 +55,6 @@ const MapView = () => {
     longitude: 0,
     latitude: 0,
   });
-
-  const handleLocationInfo = (value: KakaoMapViewLocation) => {
-    setLocationInfo(value);
-  };
-
   const theme = useTheme();
 
   const extractAddressNumber = (address: Address) => {
@@ -56,6 +65,9 @@ const MapView = () => {
     }
   };
 
+  useEffect(() => {
+    markersRef.current = [];
+  }, []);
   const simpleAddress = () => {
     if (
       locationInfo &&
@@ -94,6 +106,16 @@ const MapView = () => {
     }
   };
 
+  const handleMapCenter = ({
+    latitude,
+    longitude,
+  }: {
+    latitude: number;
+    longitude: number;
+  }) => {
+    setMapCenter({ latitude, longitude });
+  };
+
   const handleSetLocation = () => {
     setSelectedAddressObject((prev) => {
       if (prev.address_type === "etc") {
@@ -114,6 +136,11 @@ const MapView = () => {
       }
     });
 
+    setLocation({
+      latitude: locationInfo.latitude,
+      longitude: locationInfo.longitude,
+    });
+
     if (router.asPath === "/mypage") {
       setMode((prev) => [...prev, 7]);
     } else {
@@ -128,6 +155,64 @@ const MapView = () => {
   if (loaded && (coordinates?.latitude === 0 || coordinates?.longitude === 0)) {
     return <Spinner />;
   }
+
+  const deleteMarkers = () => {
+    markersRef.current.forEach((marker: kakao.maps.Marker) => {
+      marker.setMap(null);
+    });
+    markersRef.current;
+  };
+
+  const showMarkers = () => {
+    markersRef.current.forEach((marker: kakao.maps.Marker) =>
+      marker.setMap(mapRef.current!)
+    );
+  };
+
+  const onCurrentLocation = () => {
+    goToCurrentLocation();
+  };
+
+  const goToCurrentLocation = () => {
+    deleteMarkers();
+
+    const initialCenter = new window.kakao.maps.LatLng(
+      coordinates.latitude,
+      coordinates.longitude
+    );
+
+    setMapCenter({
+      latitude: coordinates.latitude,
+      longitude: coordinates.longitude,
+    });
+
+    const marker = new window.kakao.maps.Marker({
+      position: initialCenter,
+    });
+
+    markersRef.current.push(marker);
+
+    const moveLatLon = new kakao.maps.LatLng(
+      coordinates.latitude,
+      coordinates.longitude
+    );
+    mapRef.current.setCenter(moveLatLon);
+
+    if (mapRef && mapRef.current) {
+      deleteMarkers();
+      markersRef.current.shift();
+
+      showMarkers();
+    }
+  };
+
+  const handleValidAddress = (value: boolean) => {
+    setIsValidAddress(value);
+  };
+
+  const handleLocationInfo = (value: KakaoMapViewLocation) => {
+    setLocationInfo(value);
+  };
 
   return (
     <>
@@ -146,11 +231,32 @@ const MapView = () => {
           />
         </IconWrapper>
 
+        <CurrentLocation onClick={onCurrentLocation}>
+          <div>
+            <Image
+              src={CurrentLocationIcon}
+              alt="buttonTypeIcon"
+              width={24}
+              height={24}
+            ></Image>
+          </div>
+        </CurrentLocation>
+
         <KakaoMap
           locationInfo={locationInfo}
           setLocationInfo={handleLocationInfo}
           coordinates={coordinates}
           loaded={loaded}
+          isValidAddress={isValidAddress}
+          setIsValidAddress={handleValidAddress}
+          mapRef={mapRef}
+          markersRef={markersRef}
+          deleteMarkers={deleteMarkers}
+          showMarkers={showMarkers}
+          mapCenter={mapCenter}
+          setMapCenter={handleMapCenter}
+          // map={map}
+          // setMap={handleMap}
         />
         <SaleButtonWrapper>
           <div className="simple-address">{simpleAddress()}</div>
@@ -164,6 +270,7 @@ const MapView = () => {
               backgroundColor={theme.colors.purple_light}
               bold
               onClick={handleSetLocation}
+              disabled={!isValidAddress}
             />
           </ButtonWrapper>
         </SaleButtonWrapper>
@@ -181,6 +288,23 @@ const IconWrapper = styled.div`
   z-index: 100;
 `;
 
+const CurrentLocation = styled.div`
+  position: absolute;
+  top: calc(100% - 5rem);
+  left: calc(100% - 5rem);
+  z-index: 100;
+
+  div {
+    background-color: white;
+    width: 3.3rem;
+    height: 3.3rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
 const Wrapper = styled.div`
   position: absolute;
   top: 0;
@@ -193,6 +317,8 @@ const Wrapper = styled.div`
     font-size: ${(props) => props.theme.fontSizes.xxl};
     line-height: ${(props) => props.theme.lineHeights.xxl};
     font-weight: 700;
+    height: 2.8rem;
+    overflow: hidden;
   }
 
   .detail-address {
@@ -200,6 +326,8 @@ const Wrapper = styled.div`
     margin-bottom: 1.5rem;
     font-size: ${(props) => props.theme.fontSizes.lg};
     line-height: ${(props) => props.theme.lineHeights.lg};
+    height: 2.2rem;
+    overflow: hidden;
   }
 `;
 
