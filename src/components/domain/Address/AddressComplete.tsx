@@ -59,6 +59,7 @@ const AddressComplete = () => {
   };
 
   const selectAddress = async (uuid: string) => {
+    // 예외처리로 빼놓은거 좋네요.
     try {
       await selectMyAddress({
         uuid: uuid,

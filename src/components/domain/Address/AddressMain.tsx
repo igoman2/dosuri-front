@@ -42,6 +42,7 @@ const AddressMain = () => {
   const selectAddress = async (uuid: string) => {
     setSelectedAddress(uuid);
     try {
+      // FIXME: api는 hook으로 빼야함
       await selectMyAddress({
         uuid: uuid,
         isMain: true,
@@ -55,6 +56,7 @@ const AddressMain = () => {
         queryKey: queryKeys.hospital,
         refetchInactive: true,
       });
+
       const resp = await getUser();
       const user = resp!;
       setUserInfo((prev) => {

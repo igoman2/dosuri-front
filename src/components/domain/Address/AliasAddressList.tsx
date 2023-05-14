@@ -50,6 +50,9 @@ const AliasAddressList: FC<AliasAddressListProp> = ({
           </ImageWrapper>
         }
         <div className="aliasAddress" css={{ width: "100%" }}>
+          {/* 
+          FIXME: !! 활용해서 null 체크하는 것이 좋을 것 같음
+           */}
           {address === null ? (
             <div>
               <div className="alias solo">{alias} 추가</div>
