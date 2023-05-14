@@ -28,7 +28,7 @@ const AddressComplete = () => {
   const setMode = useSetRecoilState(addressModeState);
   const router = useRouter();
   const { closeAddressModal } = useAddress();
-  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const setUserInfo = useSetRecoilState(userInfoState);
 
   const onClick = (type: string) => {
     setSelectedType(type);

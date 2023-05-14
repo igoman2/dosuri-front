@@ -14,7 +14,7 @@ import useAddress from "@/hooks/useAddress";
 import { queryKeys } from "@/service/react-query/constants";
 
 const AddressMain = () => {
-  const [mode, setMode] = useRecoilState(addressModeState);
+  const setMode = useSetRecoilState(addressModeState);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [selectedAddress, setSelectedAddress] = useState(
     userInfo?.address?.uuid ?? ""

@@ -34,7 +34,7 @@ const MyAddressEdit = () => {
     selectedAddressObject
   );
   const resetSelectedAddress = useResetRecoilState(selectedAddressObject);
-  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const setUserInfo = useSetRecoilState(userInfoState);
   const [inputText, setInputText] = useState(selectedAddress.alias ?? "");
   const isNewAddressValue = useRecoilValue(isNewAddress);
   const resetIsNewAddress = useResetRecoilState(isNewAddress);

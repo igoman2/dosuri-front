@@ -1,5 +1,5 @@
 import FullModalBase from "@/components/Modal/FullModalBase";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import AddressComplete from "./AddressComplete";
 import AddressMain from "./AddressMain";
 import AddressSearch from "./AddressSearch";
@@ -13,11 +13,16 @@ import useAddress from "@/hooks/useAddress";
 import MyAddressSearchDetail from "./MyAddressSearchDetail";
 
 const SelectAddressModal = () => {
-  const [modal, setModal] = useRecoilState(addressModalState);
+  const modal = useRecoilValue(addressModalState);
   const [mode, setMode] = useRecoilState(addressModeState);
   const [addressModalTitle, setAddressModalTitle] = useState("");
   const [backBtnVisibility, setBackBtnVisibility] = useState(false);
   const { closeAddressModal } = useAddress();
+
+  useEffect(() => {
+    setModalTitle();
+    setModalButtonType();
+  }, [mode]);
 
   const currentMode = mode.at(-1);
 
@@ -40,11 +45,6 @@ const SelectAddressModal = () => {
   const onClickBack = () => {
     setMode((prev) => prev.slice(0, -1));
   };
-
-  useEffect(() => {
-    setModalTitle();
-    setModalButtonType();
-  }, [mode]);
 
   return (
     <>

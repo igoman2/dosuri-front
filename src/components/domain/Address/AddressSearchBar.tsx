@@ -23,6 +23,12 @@ const AddressSearchBar: FC<IAddressSearchBarProps> = ({
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
   const onDeleteButtonClick = () => {
     if (inputRef.current && inputRef.current.value) {
       inputRef.current.value = "";
@@ -42,12 +48,6 @@ const AddressSearchBar: FC<IAddressSearchBarProps> = ({
     left: 1rem;
     top: 0.7rem;
   `;
-
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, []);
 
   return (
     <SearchInputWrapper>
