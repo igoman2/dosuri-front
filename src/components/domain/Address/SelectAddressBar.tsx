@@ -1,9 +1,8 @@
 import Icon from "@/util/Icon";
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { addressModalState } from "./store";
-import { useEffect } from "react";
 import { userInfoState } from "@/store/user";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/router";

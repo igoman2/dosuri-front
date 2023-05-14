@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { getLocationByCoordinate } from "@/service/apis/location";
 import { KakaoMapViewLocation } from "@/types/service";
 import { Location } from "@/types/location";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { locationState } from "../domain/Address/store";
 import { 강남구청 } from "@/constants/Location";
 
@@ -66,7 +66,7 @@ const KakaoMap: FC<IMapProps> = ({
   mapCenter,
   setMapCenter,
 }) => {
-  const [location, setLocation] = useRecoilState(locationState);
+  const location = useRecoilValue(locationState);
 
   const getInitialCenter = () => {
     if (!loaded) {
@@ -157,15 +157,9 @@ const KakaoMap: FC<IMapProps> = ({
           position: initialCenter,
         });
 
-        // markersRef.current = [];
-
-        // let markers: kakao.maps.Marker[] = [];
         markersRef.current.push(marker);
         mapRef.current = new window.kakao.maps.Map(mapContainer!, mapOption);
         showMarkers();
-        // markers.forEach(
-        //   (marker) => marker.setMap(mapRef.current) // 지도 위에 마커를 표출합니다
-        // );
 
         // 지도 드래그 이벤트 발생 시 마커를 지우고 새로 생성한다.
         kakao.maps.event.addListener(mapRef.current, "drag", function () {

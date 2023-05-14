@@ -31,6 +31,11 @@ const MyAddressMain = () => {
     getMyAddressList
   );
 
+  useEffect(() => {
+    setIsHome(isHomeChecker());
+    setIsOffice(isOfficeChecker());
+  });
+
   const addNewAddress = (type: string) => {
     setIsNewAddress(true);
     resetSelectedAddressobject();
@@ -118,11 +123,6 @@ const MyAddressMain = () => {
       }
     }
   };
-
-  useEffect(() => {
-    setIsHome(isHomeChecker());
-    setIsOffice(isOfficeChecker());
-  });
 
   return (
     <Wrapper>
