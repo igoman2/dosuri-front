@@ -6,7 +6,7 @@ import Icon from "@/util/Icon";
 import { useSetRecoilState } from "recoil";
 import { addressModeState, selectedAddressObject } from "./store";
 import KakaoMap from "../../etc/KakaoMap";
-import { Document } from "@/types/service";
+import { KakaoMapViewLocation } from "@/types/service";
 import useGeolocation from "@/hooks/useGeolocation";
 import Spinner from "@/components/Spinner/Spinner";
 import { Address } from "@/types/location";
@@ -17,7 +17,7 @@ const MapView = () => {
   const setMode = useSetRecoilState(addressModeState);
   const setSelectedAddressObject = useSetRecoilState(selectedAddressObject);
   const { coordinates, loaded } = useGeolocation();
-  const [locationInfo, setLocationInfo] = useState<Document>({
+  const [locationInfo, setLocationInfo] = useState<KakaoMapViewLocation>({
     address: {
       address_name: "",
       region_1depth_name: "",
@@ -38,9 +38,11 @@ const MapView = () => {
       sub_building_no: "",
       building_name: "",
     },
+    longitude: 0,
+    latitude: 0,
   });
 
-  const handleLocationInfo = (value: Document) => {
+  const handleLocationInfo = (value: KakaoMapViewLocation) => {
     setLocationInfo(value);
   };
 
@@ -94,15 +96,25 @@ const MapView = () => {
 
   const handleSetLocation = () => {
     setSelectedAddressObject((prev) => {
-      return {
-        ...prev,
-        name: simpleAddress(),
-        address: detailAddress(),
-      };
+      if (prev.address_type === "etc") {
+        return {
+          ...prev,
+          address: detailAddress(),
+          latitude: locationInfo.latitude,
+          longitude: locationInfo.longitude,
+        };
+      } else {
+        return {
+          ...prev,
+          name: simpleAddress(),
+          address: detailAddress(),
+          latitude: locationInfo.latitude,
+          longitude: locationInfo.longitude,
+        };
+      }
     });
 
-    console.log(router.asPath);
-    if (router.asPath.includes("mypage")) {
+    if (router.asPath === "/mypage") {
       setMode((prev) => [...prev, 7]);
     } else {
       setMode((prev) => [...prev, 2]);
@@ -174,7 +186,7 @@ const Wrapper = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: calc(100vh - 172px);
+  height: calc(100% - 172px);
 
   .simple-address {
     margin-top: 2.5rem;

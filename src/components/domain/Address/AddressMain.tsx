@@ -10,6 +10,7 @@ import { addressModeState } from "./store";
 import { userInfoState } from "@/store/user";
 import { useState } from "react";
 import { queryClient } from "@/service/react-query/queryClient";
+import useAddress from "@/hooks/useAddress";
 
 const AddressMain = () => {
   const [mode, setMode] = useRecoilState(addressModeState);
@@ -17,6 +18,7 @@ const AddressMain = () => {
   const [selectedAddress, setSelectedAddress] = useState(
     userInfo?.address?.uuid ?? ""
   );
+  const { closeAddressModal } = useAddress();
 
   const { data: myAddressList } = useQuery(
     "getMyAddressList",
@@ -53,6 +55,7 @@ const AddressMain = () => {
     } catch (e) {
       console.log(e);
     }
+    closeAddressModal();
   };
 
   return (

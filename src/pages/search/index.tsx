@@ -1,7 +1,7 @@
 import "react-spring-bottom-sheet/dist/style.css";
-
+import Icon from "@/util/Icon";
 import { Suspense, useEffect } from "react";
-
+import Link from "next/link";
 import AllFilterSection from "@/components/domain/Search/AllFilterSection";
 import Header from "@/components/Layout/Header";
 import Layout from "@/components/Layout";
@@ -13,11 +13,14 @@ import { locationState } from "@/store/location";
 import useGeolocation from "@/hooks/useGeolocation";
 import useScrollRestoration from "@/hooks/useScrollRestoration";
 import { useSetRecoilState } from "recoil";
-import SearchBar from "@/components/domain/Search/SearchBar";
+import SelectAddressBar from "@/components/domain/Address/SelectAddressBar";
+import useAuth from "@/hooks/useAuth";
+import SelectAddressModal from "@/components/domain/Address/SelectAddressModal";
 
 const Home = () => {
   const location = useGeolocation();
   const setLocaton = useSetRecoilState(locationState);
+  const { isLoggedIn } = useAuth();
   useScrollRestoration();
 
   useEffect(() => {
@@ -34,11 +37,11 @@ const Home = () => {
       header={
         <Header
           left={true}
-          center={
-            <SearchBar
-              inputText=""
-              placeHolder="병원, 지역, 후기 키워드 검색하기"
-            />
+          center={isLoggedIn ? <SelectAddressBar /> : <></>}
+          right={
+            <Link href="/search/input">
+              <Icon name="search" />
+            </Link>
           }
         />
       }
@@ -56,6 +59,7 @@ const Home = () => {
       <Suspense fallback={<Spinner />}>
         <AllFilterSection />
       </Suspense>
+      <SelectAddressModal />
     </Layout>
   );
 };

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { FC, useEffect } from "react";
 import { getLocationByCoordinate } from "@/service/apis/location";
-import { Document } from "@/types/service";
+import { KakaoMapViewLocation } from "@/types/service";
 import { Location } from "@/types/location";
 import { useRecoilState } from "recoil";
 import { locationState } from "../domain/Address/store";
@@ -14,8 +14,8 @@ declare global {
 }
 
 interface IMapProps {
-  locationInfo: Document;
-  setLocationInfo: (value: Document) => void;
+  locationInfo: KakaoMapViewLocation;
+  setLocationInfo: (value: KakaoMapViewLocation) => void;
   coordinates: Location;
   loaded: boolean;
 }
@@ -48,7 +48,12 @@ const KakaoMap: FC<IMapProps> = ({ coordinates, setLocationInfo, loaded }) => {
         longitude: longitude,
         latitude: latitude,
       });
-      setLocationInfo(data.documents[0]);
+      setLocationInfo({
+        address: data.documents[0].address,
+        road_address: data.documents[0].road_address,
+        latitude,
+        longitude,
+      });
       return data.documents;
     };
     fetchLocation();

@@ -30,6 +30,9 @@ const AddressSearchBar: FC<IAddressSearchBarProps> = ({
   };
 
   const onSubmit = (e: FormEvent) => {
+    if (inputRef && inputRef.current) {
+      inputRef.current.blur();
+    }
     e.preventDefault();
     onSearch();
   };

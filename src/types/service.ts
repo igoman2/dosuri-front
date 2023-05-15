@@ -343,6 +343,10 @@ export interface ITempHospitalResult {
 
 export interface IGetLocationByKeywordParams {
   query: string;
+}
+
+export interface IGetLocationByAddressParams {
+  query: string;
   analyzeType?: "similar" | "exact";
 }
 
@@ -385,4 +389,11 @@ export type LocationType = {
 export type Document = {
   address: Address;
   road_address: RoadAddress;
+};
+
+export type KakaoMapViewLocation = {
+  address: Address;
+  road_address: RoadAddress;
+  longitude: number;
+  latitude: number;
 };

@@ -1,10 +1,9 @@
-import { userInfoState } from "@/store/user";
-import { useRecoilValue } from "recoil";
+import { getCookie } from "cookies-next";
 
 const useAuth = () => {
-  const userInfo = useRecoilValue(userInfoState);
+  const accessToken = getCookie("accessToken");
 
-  return { isLoggedIn: !!userInfo.accessToken };
+  return { isLoggedIn: !!accessToken };
 };
 
 export default useAuth;

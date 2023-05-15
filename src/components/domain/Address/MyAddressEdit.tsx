@@ -27,9 +27,13 @@ const MyAddressEdit = () => {
   const setMode = useSetRecoilState(addressModeState);
   const setModalIsActive = useSetRecoilState(modalState);
   const setModalContent = useSetRecoilState(modalContentState);
-  const selectedAddress = useRecoilValue(selectedAddressObject);
-  const [selectedType, setSelectedType] = useState("");
-  const [inputText, setInputText] = useState("");
+  const [selectedAddress, setSelectedAddress] = useRecoilState(
+    selectedAddressObject
+  );
+  const [selectedType, setSelectedType] = useState(
+    selectedAddress.address_type ?? ""
+  );
+  const [inputText, setInputText] = useState(selectedAddress.alias ?? "");
   const isNewAddressValue = useRecoilValue(isNewAddress);
   const resetIsNewAddress = useResetRecoilState(isNewAddress);
   const [preselectedType, setPreselectedType] =
@@ -37,13 +41,34 @@ const MyAddressEdit = () => {
   const resetDefaultAddressTyep = useResetRecoilState(defaultAddressType);
   const { mutate } = useDeleteMyAddress();
 
+  useEffect(() => {
+    if (isNewAddressValue) {
+      if (!!selectedAddress.address_type) {
+        setSelectedType(selectedAddress.address_type);
+      } else {
+        setSelectedType(preselectedType);
+      }
+    } else {
+      setSelectedType(selectedAddress.address_type);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isNewAddressValue && selectedType === "etc" && inputText === "")
+      setInputText(selectedAddress.name);
+  }, [selectedType]);
+
   const onClick = (type: string) => {
     setPreselectedType("");
     setSelectedType(type);
-    setInputText("");
+    setSelectedAddress((prev) => ({ ...prev, address_type: type }));
   };
 
   const onInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setSelectedAddress((prev) => ({
+      ...prev,
+      alias: e.target.value,
+    }));
     setInputText(e.target.value);
   };
 
@@ -58,7 +83,7 @@ const MyAddressEdit = () => {
       case "office":
         return "회사";
       default:
-        return inputText;
+        return inputText.length > 0 ? inputText : selectedAddress.address;
     }
   };
 
@@ -158,19 +183,6 @@ const MyAddressEdit = () => {
     });
   };
 
-  useEffect(() => {
-    if (!isNewAddressValue) {
-      setSelectedType(selectedAddress.address_type);
-    } else {
-      setSelectedType(preselectedType);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isNewAddressValue && selectedType === "etc" && inputText === "")
-      setInputText(selectedAddress.name);
-  }, [selectedType]);
-
   /**
    *
    * @returns {boolean} 유저가 현재 사용중인 주소인지 아닌지를 반환합니다.
@@ -207,10 +219,6 @@ const MyAddressEdit = () => {
     };
 
     if (!!!address.address || !!!address.address_type || !!!address.name) {
-      return false;
-    }
-
-    if (address.address_type === "etc" && !!!address.name) {
       return false;
     }
 

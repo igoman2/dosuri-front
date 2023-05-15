@@ -10,8 +10,8 @@ import {
   locationState,
   selectedAddressObject,
 } from "./store";
-import { SearchedAddressByKeyword } from "@/types/location";
-import { getLocationByKeyword } from "@/service/apis/location";
+import { SearchedAddressByAddress } from "@/types/location";
+import { getLocationByAddress } from "@/service/apis/location";
 
 interface AddressSearchComponentProps {
   inputText: string;
@@ -32,23 +32,45 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
   const defaultAddressTypeValue = useRecoilValue(defaultAddressType);
   const [mode, setMode] = useRecoilState(addressModeState);
   const [searchedAddressList, setSearchedAddressList] = useState<
-    SearchedAddressByKeyword[]
+    SearchedAddressByAddress[]
   >([]);
 
   const handleSearch = async () => {
-    const data = await getLocationByKeyword({ query: inputText });
+    const data = await getLocationByAddress({ query: inputText });
     setSearchedAddressList(data.documents);
   };
 
-  const onAddressClick = (address: any) => {
+  const extractAddress = (address: SearchedAddressByAddress) => {
+    if (!!address.road_address) {
+      if (!!address.road_address.building_name) {
+        return address.road_address.building_name;
+      } else {
+        if (!!address.road_address.region_3depth_name) {
+          return `${address.road_address.region_3depth_name} ${address.road_address.road_name} ${address.road_address.main_building_no}`;
+        } else {
+          return address.road_address.address_name;
+        }
+      }
+    }
+    return `${address.address.region_3depth_name} ${
+      address.address.main_address_no
+    }${
+      !!address.address.sub_address_no
+        ? `-${address.address.sub_address_no}`
+        : ""
+    }`;
+  };
+
+  const onAddressClick = (address: SearchedAddressByAddress) => {
     const newAddressObject = {
       uuid: "",
-      name: address.place_name,
-      address: !!address.road_address_name
-        ? address.road_address_name
+      alias: "",
+      name: extractAddress(address),
+      address: !!address.road_address
+        ? address.road_address.address_name
         : address.address_name,
-      longitude: address.x,
-      latitude: address.y,
+      longitude: Number(address.x),
+      latitude: Number(address.y),
       address_type:
         isNewAddressValue && defaultAddressTypeValue !== "etc"
           ? defaultAddressTypeValue
@@ -57,12 +79,13 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
     setSelectedAddressObject(newAddressObject);
 
     setLocation({
-      longitude: address.x,
-      latitude: address.y,
+      longitude: Number(address.x),
+      latitude: Number(address.y),
     });
 
     setMode((prev) => [...prev, nextMode]);
   };
+
   return (
     <Wrapper>
       <AddressSearchBar
@@ -75,11 +98,11 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
       <div className="searchedAddressList">
         {searchedAddressList.map((address, idx) => (
           <SearchedAddressList
-            addressName={address.place_name}
+            addressName={extractAddress(address)}
             address={
-              !!address.road_address_name
-                ? address.road_address_name
-                : address.address_name
+              !!address.road_address
+                ? address.road_address.address_name
+                : address.address.address_name
             }
             key={`address-${idx}`}
             onClick={() => onAddressClick(address)}

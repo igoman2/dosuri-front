@@ -1,5 +1,4 @@
 import AddressDivider from "@/components/Divider/AddressDivider";
-import Divider from "@/components/Divider/Divider";
 import styled from "@emotion/styled";
 import { FC } from "react";
 export interface SearchedAddressListProp {
