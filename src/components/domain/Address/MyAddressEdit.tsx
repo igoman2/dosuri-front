@@ -27,7 +27,7 @@ import { queryKeys } from "@/service/react-query/constants";
 import { userInfoState } from "@/store/user";
 
 const MyAddressEdit = () => {
-  const setMode = useSetRecoilState(addressModeState);
+  const [mode, setMode] = useRecoilState(addressModeState);
   const setModalIsActive = useSetRecoilState(modalState);
   const setModalContent = useSetRecoilState(modalContentState);
   const [selectedAddress, setSelectedAddress] = useRecoilState(
@@ -61,8 +61,15 @@ const MyAddressEdit = () => {
     setInputText(e.target.value);
   };
 
+  const setModeHistory = (nextMode: number) => {
+    setMode((prev) => prev.filter((mode) => mode !== nextMode));
+    setMode((prev) => [...prev, nextMode]);
+    console.log(mode);
+  };
+
   const onAddressMapButtonClick = () => {
-    setMode((prev) => [...prev, 3]);
+    setModeHistory(3);
+    // setMode((prev) => [...prev, 3]);
   };
 
   const getAlias = () => {
@@ -115,7 +122,9 @@ const MyAddressEdit = () => {
     try {
       const response = await registerMyAddress(address);
       selectAddress(response.uuid);
-      setMode((prev) => [...prev, 4]);
+      setMode([4]);
+      // setModeHistory(4);
+      // setMode((prev) => [...prev, 4]);
       resetSelectedType();
       resetSelectedAddress();
       resetIsNewAddress();
@@ -147,7 +156,9 @@ const MyAddressEdit = () => {
               onSuccess: () => {
                 registerAddress();
                 setModalIsActive({ isActive: false });
-                setMode((prev) => [...prev, 4]);
+                setMode([4]);
+                // setModeHistory(4);
+                // setMode((prev) => [...prev, 4]);
               },
             });
           },
@@ -156,7 +167,9 @@ const MyAddressEdit = () => {
     } else {
       registerAddress();
       setModalIsActive({ isActive: false });
-      setMode((prev) => [...prev, 4]);
+      setMode([4]);
+      // setModeHistory(4);
+      // setMode((prev) => [...prev, 4]);
     }
   };
 
@@ -189,7 +202,9 @@ const MyAddressEdit = () => {
                 refetchInactive: true,
               });
               setModalIsActive({ isActive: false });
-              setMode((prev) => [...prev, 4]);
+              setMode([4]);
+              // setModeHistory(4);
+              // setMode((prev) => [...prev, 4]);
             },
           });
         },

@@ -45,7 +45,7 @@ const initialLocation = {
 
 const MapView = () => {
   const router = useRouter();
-  const setMode = useSetRecoilState(addressModeState);
+  const [mode, setMode] = useRecoilState(addressModeState);
   const setSelectedAddressObject = useSetRecoilState(selectedAddressObject);
   const { coordinates, loaded } = useGeolocation();
   const setLocation = useSetRecoilState(locationState);
@@ -82,6 +82,13 @@ const MapView = () => {
     setMapCenter({ latitude, longitude });
   };
 
+  const setModeHistory = (nextMode: number) => {
+    setMode((prev) =>
+      prev.filter((mode) => mode !== nextMode).filter((mode) => mode !== 3)
+    );
+    setMode((prev) => [...prev, nextMode]);
+  };
+
   const handleSetLocation = () => {
     setSelectedAddressObject((prev) => {
       if (prev.address_type === "etc") {
@@ -108,9 +115,11 @@ const MapView = () => {
     });
 
     if (router.asPath === "/mypage") {
-      setMode((prev) => [...prev, 7]);
+      setModeHistory(7);
+      // setMode((prev) => [...prev, 7]);
     } else {
-      setMode((prev) => [...prev, 2]);
+      setModeHistory(2);
+      // setMode((prev) => [...prev, 2]);
     }
   };
 

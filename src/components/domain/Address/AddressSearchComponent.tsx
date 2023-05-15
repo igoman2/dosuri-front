@@ -83,7 +83,14 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
       latitude: Number(address.y),
     });
 
+    setModeHistory(nextMode);
+    // setMode((prev) => [...prev, nextMode]);
+  };
+
+  const setModeHistory = (nextMode: number) => {
+    setMode((prev) => prev.filter((mode) => mode !== nextMode));
     setMode((prev) => [...prev, nextMode]);
+    console.log(mode);
   };
 
   const isSearchedAddressValid = () => {

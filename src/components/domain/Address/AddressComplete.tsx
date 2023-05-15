@@ -25,7 +25,7 @@ const AddressComplete = () => {
     addressObject.address_type ?? ""
   );
   const [inputText, setInputText] = useState(addressObject.alias ?? "");
-  const setMode = useSetRecoilState(addressModeState);
+  const [mode, setMode] = useRecoilState(addressModeState);
   const router = useRouter();
   const { closeAddressModal } = useAddress();
   const setUserInfo = useSetRecoilState(userInfoState);
@@ -35,8 +35,14 @@ const AddressComplete = () => {
     setAddressObject((prev) => ({ ...prev, address_type: type }));
   };
 
+  const setModeHistory = (nextMode: number) => {
+    setMode((prev) => prev.filter((mode) => mode !== nextMode));
+    setMode((prev) => [...prev, nextMode]);
+    console.log(mode);
+  };
+
   const onAddressMapButtonClick = () => {
-    setMode((prev) => [...prev, 3]);
+    setModeHistory(3);
   };
 
   const onInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -108,7 +114,6 @@ const AddressComplete = () => {
         queryKey: ["getMyAddressList"],
         refetchInactive: true,
       });
-      setMode((prev) => [...prev, 1]);
 
       selectAddress(response.uuid);
 

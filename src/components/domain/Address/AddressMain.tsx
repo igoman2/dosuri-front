@@ -32,11 +32,19 @@ const AddressMain = () => {
   }, []);
 
   const onSearchBarClick = () => {
-    setMode((prev) => [...prev, 1]);
+    setModeHistory(1);
+    // setMode((prev) => [...prev, 1]);
   };
 
   const onAddressMapButtonClick = () => {
-    setMode((prev) => [...prev, 3]);
+    setModeHistory(3);
+    // setMode((prev) => [...prev, 3]);
+  };
+
+  const setModeHistory = (nextMode: number) => {
+    setMode((prev) => prev.filter((mode) => mode !== nextMode));
+    setMode((prev) => [...prev, nextMode]);
+    console.log(mode);
   };
 
   const selectAddress = async (uuid: string) => {
