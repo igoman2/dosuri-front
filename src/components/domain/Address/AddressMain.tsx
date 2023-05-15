@@ -44,7 +44,6 @@ const AddressMain = () => {
   const setModeHistory = (nextMode: number) => {
     setMode((prev) => prev.filter((mode) => mode !== nextMode));
     setMode((prev) => [...prev, nextMode]);
-    console.log(mode);
   };
 
   const selectAddress = async (uuid: string) => {
