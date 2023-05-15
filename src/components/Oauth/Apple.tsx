@@ -5,6 +5,7 @@ import AppleIcon from "@/public/assets/AppleIcon.png";
 import { useTheme } from "@emotion/react";
 import Script from "next/script";
 import { useEffect } from "react";
+import { getUserAuth } from "@/service/apis/user";
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&response_type=code`;
 
 declare global {
@@ -48,27 +49,11 @@ const Apple = () => {
     try {
       const data = await window.AppleID.auth.signIn();
       console.log("data :>> ", data);
-      // Handle successful response.
-      // appleLogin(JSON.stringify(data), "", undefined, (result: any) => {
-      //   if (result?.success) {
-      //     if (result?.userId) {
-      //       setUserId("" + result?.userId);
-      //     }
-      //     gtagEvent("login");
-      //     track("complete log in", {
-      //       "account type": "apple",
-      //       pathname: decodeURIComponent(pathname!),
-      //     });
-      //     window.localStorage.setItem(LS_KEY, `${result.encryptEmail}`);
-      //     router.refresh();
-      //     window.location.reload();
-      //   } else {
-      //     alert(
-      //       result?.error ||
-      //         "애플 계정로그인에 실패하였습니다\n문제가 지속될 경우 고객센터에 문의주세요!"
-      //     );
-      //   }
-      // });
+      const resp = await getUserAuth({
+        token: data?.authorization?.id_token,
+        type: "apple",
+      });
+      console.log("resp :>> ", resp);
     } catch (error: any) {
       console.log(error?.message ?? "");
     }
