@@ -46,7 +46,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
   const [isNicknameSame, setIsNicknameSame] = useState(false);
   const [didNicknameValidCheck, setDidNicknameValidCheck] = useState(false);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-  const setMode = useSetRecoilState(addressModeState);
+  const [mode, setMode] = useRecoilState(addressModeState);
   const setModal = useSetRecoilState(addressModalState);
   const addressObject = useRecoilValue(selectedAddressObject);
 
@@ -185,14 +185,21 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
     }
   };
 
+  const setModeHistory = (nextMode: number) => {
+    setMode((prev) => prev.filter((mode) => mode !== nextMode));
+    setMode((prev) => [...prev, nextMode]);
+  };
+
   const onSearchBarClick = () => {
     setModal({ isActive: true });
-    setMode((prev) => [...prev, 1]);
+    setModeHistory(1);
+    // setMode((prev) => [...prev, 1]);
   };
 
   const onAddressMapButtonClick = () => {
     setModal({ isActive: true });
-    setMode((prev) => [...prev, 3]);
+    setModeHistory(3);
+    // setMode((prev) => [...prev, 3]);
   };
 
   const onSymtomClick = (symtom: Symtom, formikState: typeof formik) => {
