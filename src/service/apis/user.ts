@@ -1,3 +1,7 @@
+import { boolean } from "yup";
+
+import { UserInfo } from "@/types/user";
+
 import {
   GetUserAuthParams,
   GetUserAuthResponse,
@@ -8,10 +12,7 @@ import {
   MyAddressListResponse,
   registerMyAddressResponse,
 } from "../../types/service";
-
-import { UserInfo } from "@/types/user";
 import api from "../axiosConfig";
-import { boolean } from "yup";
 
 export const getUserAuth = async (params: any) => {
   const response = await api.post<GetUserAuthResponse>("/user/v1/auth", {
