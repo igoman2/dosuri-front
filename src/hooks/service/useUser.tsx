@@ -1,9 +1,10 @@
-import { UserInfo } from "@/types/user";
-import { getUser } from "@/service/apis/user";
-import { queryKeys } from "@/service/react-query/constants";
 import { useQuery } from "react-query";
 import { useRecoilState } from "recoil";
+
+import { getUser } from "@/service/apis/user";
+import { queryKeys } from "@/service/react-query/constants";
 import { userInfoState } from "@/store/user";
+import { UserInfo } from "@/types/user";
 
 interface UseUser {
   user: UserInfo;
