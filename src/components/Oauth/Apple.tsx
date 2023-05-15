@@ -1,11 +1,17 @@
-import Button from "../Button";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import AppleIcon from "@/public/assets/AppleIcon.png";
+import { useRouter } from "next/router";
+import { useRecoilState } from "recoil";
 import { useTheme } from "@emotion/react";
-import Script from "next/script";
-import { useEffect } from "react";
-const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&response_type=code`;
+
+import AppleIcon from "@/public/assets/AppleIcon.png";
+import { getUser, getUserAuth } from "@/service/apis/user";
+import { userInfoState } from "@/store/user";
+import Icon from "@/util/Icon";
+import { setTokenInCookie } from "@/util/setToken";
+
+import Button from "../Button";
+import Spinner from "../Spinner/Spinner";
 
 declare global {
   interface Window {
@@ -14,12 +20,19 @@ declare global {
 }
 
 const Apple = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const theme = useTheme();
-
+  const router = useRouter();
+  const [_, setUserInfo] = useRecoilState(userInfoState);
   const loadScript = (url: string) => {
     const handleScript = () => {
       window.AppleID.auth.init(
-        JSON.parse(process.env.NEXT_PUBLIC_APPLE_AUTH_CONFIG!)
+        JSON.parse(
+          process.env.NEXT_PUBLIC_APPLE_AUTH_CONFIG!.replace(
+            /:RTN_URL/gi,
+            window.location.host
+          )
+        )
       );
     };
     if (window) {
@@ -46,61 +59,89 @@ const Apple = () => {
 
   const loginWithApple = async () => {
     try {
+      setLoading(true);
+
       const data = await window.AppleID.auth.signIn();
       console.log("data :>> ", data);
-      // Handle successful response.
-      // appleLogin(JSON.stringify(data), "", undefined, (result: any) => {
-      //   if (result?.success) {
-      //     if (result?.userId) {
-      //       setUserId("" + result?.userId);
-      //     }
-      //     gtagEvent("login");
-      //     track("complete log in", {
-      //       "account type": "apple",
-      //       pathname: decodeURIComponent(pathname!),
-      //     });
-      //     window.localStorage.setItem(LS_KEY, `${result.encryptEmail}`);
-      //     router.refresh();
-      //     window.location.reload();
-      //   } else {
-      //     alert(
-      //       result?.error ||
-      //         "애플 계정로그인에 실패하였습니다\n문제가 지속될 경우 고객센터에 문의주세요!"
-      //     );
-      //   }
-      // });
+      const resp = await getUserAuth({
+        token: data?.authorization?.code,
+        type: "apple",
+      });
+
+      const {
+        user_uuid: uuid,
+        access_token: accessToken,
+        refresh_token: refreshToken,
+        is_new: isNew,
+      } = resp;
+
+      const user = await getUser(accessToken);
+
+      if (!user) {
+        setLoading(false);
+        return alert("로그인에 실패 했습니다. 다시 시도해주세요");
+      }
+
+      setUserInfo({ ...user, uuid, refreshToken, accessToken });
+
+      if (isNew) {
+        router.push("/register");
+      } else {
+        setTokenInCookie("refresh", refreshToken);
+        setTokenInCookie("access", accessToken);
+        router.push("/");
+      }
     } catch (error: any) {
-      console.log(error?.message ?? "");
+      setLoading(false);
+      console.log("loginWithApple error :>> ", error);
+      alert("로그인에 실패 했습니다. 다시 시도해주세요");
     }
   };
 
   return (
-    <Button
-      onClick={loginWithApple}
-      width="100%"
-      text={
+    <>
+      <Button
+        onClick={loginWithApple}
+        width="100%"
+        text={
+          <div
+            css={{
+              padding: "2px 0",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "1rem",
+              "& .text": {
+                fontSize: theme.fontSizes.lg,
+                lineHeight: theme.lineHeights.lg,
+                fontWeight: 600,
+                paddingTop: "0.5rem",
+                color: theme.colors.white,
+                letterSpacing: "1.5px",
+              },
+            }}
+          >
+            <Icon name={"appleIcon"} fill={"#ffffff"} />
+            <span className="text">Sign in with Apple</span>
+          </div>
+        }
+        color={theme.colors.black}
+        backgroundColor="#000"
+      />
+      {loading && (
         <div
-          css={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "1rem",
-            "& .text": {
-              fontSize: theme.fontSizes.lg,
-              lineHeight: theme.lineHeights.lg,
-              fontWeight: 700,
-              paddingTop: "0.2rem",
-              color: theme.colors.white,
-            },
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            zIndex: 999,
+            width: "100%",
           }}
         >
-          <Image src={AppleIcon} alt="kakao-logo" width={17} height={21} />
-          <div className="text">애플 계정으로 시작하기</div>
+          <Spinner />
         </div>
-      }
-      color={theme.colors.black}
-      backgroundColor="#000"
-    />
+      )}
+    </>
   );
 };
 

@@ -53,16 +53,6 @@ const Login = () => {
 
       <div css={buttonSection}>
         <Kakao />
-
-        <div
-          id="appleid-signin"
-          data-mode="center-align"
-          data-type="sign-in"
-          data-color="black"
-          data-border="false"
-          data-border-radius="5"
-          data-height="50"
-        ></div>
         <Apple />
         {/* <Google /> */}
       </div>
