@@ -31,11 +31,6 @@ const MyAddressMain = () => {
     getMyAddressList
   );
 
-  useEffect(() => {
-    setIsHome(isHomeChecker());
-    setIsOffice(isOfficeChecker());
-  });
-
   const addNewAddress = (type: string) => {
     setIsNewAddress(true);
     resetSelectedAddressobject();
@@ -48,7 +43,6 @@ const MyAddressMain = () => {
   const setModeHistory = (nextMode: number) => {
     setMode((prev) => prev.filter((mode) => mode !== nextMode));
     setMode((prev) => [...prev, nextMode]);
-    console.log(mode);
   };
 
   const onAddressClick = (clickedAddressObject: MyAddressListResult) => {
@@ -131,6 +125,11 @@ const MyAddressMain = () => {
       }
     }
   };
+
+  useEffect(() => {
+    setIsHome(isHomeChecker());
+    setIsOffice(isOfficeChecker());
+  });
 
   return (
     <Wrapper>

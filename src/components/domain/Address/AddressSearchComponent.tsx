@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useState } from "react";
 import styled from "@emotion/styled";
 import AddressSearchBar from "./AddressSearchBar";
 import SearchedAddressList from "./SearchedAddressList";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   addressModeState,
   defaultAddressType,
@@ -26,11 +26,11 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
   enableDelete,
   nextMode,
 }) => {
-  const setLocation = useSetRecoilState(locationState);
+  const [location, setLocation] = useRecoilState(locationState);
   const setSelectedAddressObject = useSetRecoilState(selectedAddressObject);
   const isNewAddressValue = useRecoilValue(isNewAddress);
   const selectedType = useRecoilValue(defaultAddressType);
-  const setMode = useSetRecoilState(addressModeState);
+  const [mode, setMode] = useRecoilState(addressModeState);
   const [searchedAddressList, setSearchedAddressList] = useState<
     SearchedAddressByAddress[]
   >([]);
@@ -90,7 +90,6 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
   const setModeHistory = (nextMode: number) => {
     setMode((prev) => prev.filter((mode) => mode !== nextMode));
     setMode((prev) => [...prev, nextMode]);
-    console.log(mode);
   };
 
   const isSearchedAddressValid = () => {

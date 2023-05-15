@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import Button from "@/components/Button";
 import { useTheme } from "@emotion/react";
 import Icon from "@/util/Icon";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   addressModeState,
   locationState,

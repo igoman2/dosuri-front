@@ -34,7 +34,7 @@ const MyAddressEdit = () => {
     selectedAddressObject
   );
   const resetSelectedAddress = useResetRecoilState(selectedAddressObject);
-  const setUserInfo = useSetRecoilState(userInfoState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [inputText, setInputText] = useState(selectedAddress.alias ?? "");
   const isNewAddressValue = useRecoilValue(isNewAddress);
   const resetIsNewAddress = useResetRecoilState(isNewAddress);
@@ -64,7 +64,6 @@ const MyAddressEdit = () => {
   const setModeHistory = (nextMode: number) => {
     setMode((prev) => prev.filter((mode) => mode !== nextMode));
     setMode((prev) => [...prev, nextMode]);
-    console.log(mode);
   };
 
   const onAddressMapButtonClick = () => {
