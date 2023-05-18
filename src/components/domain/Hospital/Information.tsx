@@ -127,7 +127,7 @@ const Content = styled.div`
   }
 
   .hospital-address {
-    padding-bottom: 1rem;
+    margin-bottom: 1rem;
   }
 
   .phone-number {
