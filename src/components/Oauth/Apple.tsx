@@ -50,7 +50,7 @@ const Apple = () => {
       const data = await window.AppleID.auth.signIn();
       console.log("data :>> ", data);
       const resp = await getUserAuth({
-        token: data?.authorization?.id_token,
+        token: data?.authorization?.code,
         type: "apple",
       });
       console.log("resp :>> ", resp);
