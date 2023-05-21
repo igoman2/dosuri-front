@@ -4,6 +4,7 @@ import Icon from "@/util/Icon";
 import Kakao from "@/components/Oauth/Kakao";
 import { NextSeo } from "next-seo";
 import React from "react";
+import Apple from "@/components/Oauth/Apple";
 
 const Login = () => {
   const theme = useTheme();
@@ -52,17 +53,7 @@ const Login = () => {
 
       <div css={buttonSection}>
         <Kakao />
-
-        <div
-          id="appleid-signin"
-          data-mode="center-align"
-          data-type="sign-in"
-          data-color="black"
-          data-border="false"
-          data-border-radius="5"
-          data-height="50"
-        ></div>
-
+        <Apple />
         {/* <Google /> */}
       </div>
     </main>
