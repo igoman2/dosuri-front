@@ -94,7 +94,7 @@ export const HospitalListState = atom<IHospitalInfoHomeResponse>({
         up_count: 0,
         view_count: 0,
         article_count: 0,
-        avg_price_per_hour: "",
+        avg_price_per_hour: 0,
         attachments: [
           {
             signed_path: "",
