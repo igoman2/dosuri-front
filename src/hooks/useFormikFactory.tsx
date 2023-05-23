@@ -45,7 +45,16 @@ const useFormikFactory = (user: UserInfo) => {
       phone: Yup.string().length(8).required(),
       birthday: Yup.string().length(8).required(),
       sex: Yup.string().required(),
-      address: Yup.object().required(),
+      address: Yup.object()
+        .shape({
+          uuid: Yup.string(),
+          name: Yup.string().required(),
+          address: Yup.string().required(),
+          address_type: Yup.string().required(),
+          latitude: Yup.number().required(),
+          longitude: Yup.number().required(),
+        })
+        .required(),
       pain_areas: Yup.array().min(1).required(),
     }),
   };

@@ -45,7 +45,6 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
   const [isNicknameValid, setIsNicknameValid] = useState(false);
   const [isNicknameSame, setIsNicknameSame] = useState(false);
   const [didNicknameValidCheck, setDidNicknameValidCheck] = useState(false);
-  const [isAddressValid, setIsAddressValid] = useState(false);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [mode, setMode] = useRecoilState(addressModeState);
   const setModal = useSetRecoilState(addressModalState);
@@ -146,7 +145,6 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
     }
     const tmp = R.omit(["uuid"], addressObject);
     formik.setFieldValue("address", tmp);
-    checkAddressValidity();
   }, [addressObject]);
 
   useEffect(() => {
@@ -169,16 +167,6 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
       setIsNicknameValid(true);
     }
   }, [formType]);
-
-  const checkAddressValidity = () => {
-    setIsAddressValid(
-      !!addressObject.address &&
-        !!addressObject.address_type &&
-        !!addressObject.latitude &&
-        !!addressObject.longitude &&
-        !!addressObject.name
-    );
-  };
 
   const onNicknameValidation = () => {
     if (formType === "edit") {
@@ -230,7 +218,6 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
 
   const isSubmittable = () => {
     return !(
-      isAddressValid &&
       formik.isValid &&
       formik.dirty &&
       didNicknameValidCheck &&
@@ -432,7 +419,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                   onClick={onAddressMapButtonClick}
                 />
               </div>
-              {!!formik.values.address.name && (
+              {!!formik.values?.address?.name && (
                 <AliasAddressList
                   type={formik.values.address.address_type}
                   alias={formik.values.address.name}
