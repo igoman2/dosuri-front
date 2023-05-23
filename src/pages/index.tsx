@@ -45,6 +45,7 @@ const Home = () => {
     queryKeys.hospital,
     getHospitalInfoHome
   );
+
   const { data: hotCommunity } = useQuery("getHotCommunity", getHotCommunity);
 
   if (!hospitalList || !hotCommunity) {
@@ -78,7 +79,7 @@ const Home = () => {
           marginBottom: "2.5rem",
         }}
       >
-        {hospitalList.top_hospitals.length !== 0 && (
+        {hospitalList.good_price_hospitals.length !== 0 && (
           <>
             <div
               css={{
@@ -86,14 +87,14 @@ const Home = () => {
                 fontWeight: 700,
               }}
             >
-              {`${hospitalList.address} 주변 TOP 병원`}
+              {`${hospitalList.address} 주변 치료비 싼 병원`}
             </div>
 
-            {hospitalList.top_hospitals.map(
-              (hospital: IHospitalInfoResult, i) => (
+            {hospitalList.good_price_hospitals.map(
+              (hospital: IGoodPriceHospitals, i) => (
                 <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
                   <a>
-                    <HospitalCard hospitalInfo={hospital} />
+                    <HospitalCard hospitalInfo={hospital} type="price" />
                   </a>
                 </Link>
               )
@@ -157,7 +158,7 @@ const Home = () => {
           marginBottom: "2.5rem",
         }}
       >
-        {hospitalList.good_price_hospitals.length !== 0 && (
+        {/* {hospitalList.good_review_hospitals.length !== 0 && (
           <>
             <div
               css={{
@@ -165,20 +166,20 @@ const Home = () => {
                 fontWeight: 700,
               }}
             >
-              치료비가 착한 병원
+              후기가 좋은 병원
             </div>
 
-            {hospitalList.good_price_hospitals.map(
-              (hospital: IGoodPriceHospitals, i) => (
+            {hospitalList.good_review_hospitals.map(
+              (hospital: IHospitalInfoResult, i) => (
                 <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
                   <a>
-                    <HospitalCard hospitalInfo={hospital} type="price" />
+                    <HospitalCard hospitalInfo={hospital} />
                   </a>
                 </Link>
               )
             )}
           </>
-        )}
+        )} */}
       </section>
 
       <LogginBanner>
