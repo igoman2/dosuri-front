@@ -158,7 +158,7 @@ const Home = () => {
           marginBottom: "2.5rem",
         }}
       >
-        {hospitalList.many_review_hospitals.length !== 0 && (
+        {/* {hospitalList.good_review_hospitals.length !== 0 && (
           <>
             <div
               css={{
@@ -167,19 +167,21 @@ const Home = () => {
               }}
             >
               후기가 좋은 병원
+              후기가 좋은 병원
             </div>
 
-            {hospitalList.many_review_hospitals.map(
+            {hospitalList.good_review_hospitals.map(
               (hospital: IHospitalInfoResult, i) => (
                 <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
                   <a>
+                    <HospitalCard hospitalInfo={hospital} />
                     <HospitalCard hospitalInfo={hospital} />
                   </a>
                 </Link>
               )
             )}
           </>
-        )}
+        )} */}
       </section>
 
       <LogginBanner>
