@@ -54,8 +54,8 @@ const Home = () => {
         }}
       />
 
-      <NewReviewSection />
-      <ManyReviewSection />
+      {/* <NewReviewSection />
+      <ManyReviewSection /> */}
       <Suspense fallback={<Spinner />}>
         <AllFilterSection />
       </Suspense>
