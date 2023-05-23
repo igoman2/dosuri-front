@@ -173,42 +173,59 @@ const MyAddressEdit = () => {
   };
 
   const onDeleteButtonClick = () => {
-    if (isCurrentAddress()) {
-      return;
-    }
     setModalIsActive({ isActive: true });
-
-    setModalContent({
-      title: "저장된 주소 삭제하기",
-      content: `이 주소를 정말 삭제할까요?`,
-      actionCancel: {
-        text: "취소",
-        action: () => {
-          setModalIsActive({ isActive: false });
+    if (isCurrentAddress()) {
+      setModalContent({
+        title: "",
+        content: `현재 사용 중인 주소는 삭제할 수 없습니다.`,
+        actionCancel: {
+          text: "",
+          action: () => {},
         },
-      },
-      actionConfirm: {
-        text: "",
-        action: () => {},
-      },
-      actionWarn: {
-        text: "삭제",
-        action: () => {
-          mutate(selectedAddress.uuid, {
-            onSuccess: () => {
-              queryClient.invalidateQueries({
-                queryKey: ["getMyAddressList"],
-                refetchInactive: true,
-              });
-              setModalIsActive({ isActive: false });
-              setMode([4]);
-              // setModeHistory(4);
-              // setMode((prev) => [...prev, 4]);
-            },
-          });
+        actionConfirm: {
+          text: "확인",
+          action: () => {
+            setModalIsActive({ isActive: false });
+          },
         },
-      },
-    });
+        actionWarn: {
+          text: "",
+          action: () => {},
+        },
+      });
+    } else {
+      setModalContent({
+        title: "저장된 주소 삭제하기",
+        content: `이 주소를 정말 삭제할까요?`,
+        actionCancel: {
+          text: "취소",
+          action: () => {
+            setModalIsActive({ isActive: false });
+          },
+        },
+        actionConfirm: {
+          text: "",
+          action: () => {},
+        },
+        actionWarn: {
+          text: "삭제",
+          action: () => {
+            mutate(selectedAddress.uuid, {
+              onSuccess: () => {
+                queryClient.invalidateQueries({
+                  queryKey: ["getMyAddressList"],
+                  refetchInactive: true,
+                });
+                setModalIsActive({ isActive: false });
+                setMode([4]);
+                // setModeHistory(4);
+                // setMode((prev) => [...prev, 4]);
+              },
+            });
+          },
+        },
+      });
+    }
   };
 
   /**
@@ -335,7 +352,6 @@ const Wrapper = styled.div`
 
     &.disable {
       color: ${(props) => props.theme.colors.grey};
-      cursor: disable;
     }
   }
 `;
