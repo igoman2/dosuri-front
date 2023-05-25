@@ -5,8 +5,6 @@ import Link from "next/link";
 import AllFilterSection from "@/components/domain/Search/AllFilterSection";
 import Header from "@/components/Layout/Header";
 import Layout from "@/components/Layout";
-import ManyReviewSection from "@/components/domain/Search/ManyReviewSection";
-import NewReviewSection from "@/components/domain/Search/NewReviewSection";
 import { NextSeo } from "next-seo";
 import Spinner from "@/components/Spinner/Spinner";
 import { locationState } from "@/store/location";
@@ -54,8 +52,6 @@ const Home = () => {
         }}
       />
 
-      {/* <NewReviewSection />
-      <ManyReviewSection /> */}
       <Suspense fallback={<Spinner />}>
         <AllFilterSection />
       </Suspense>
