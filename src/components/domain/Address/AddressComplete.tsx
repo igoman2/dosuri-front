@@ -28,7 +28,7 @@ const AddressComplete = () => {
   const [mode, setMode] = useRecoilState(addressModeState);
   const router = useRouter();
   const { closeAddressModal } = useAddress();
-  const setUserInfo = useSetRecoilState(userInfoState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   const onClick = (type: string) => {
     setSelectedType(type);
@@ -38,7 +38,6 @@ const AddressComplete = () => {
   const setModeHistory = (nextMode: number) => {
     setMode((prev) => prev.filter((mode) => mode !== nextMode));
     setMode((prev) => [...prev, nextMode]);
-    console.log(mode);
   };
 
   const onAddressMapButtonClick = () => {
@@ -65,7 +64,6 @@ const AddressComplete = () => {
   };
 
   const selectAddress = async (uuid: string) => {
-    // 예외처리로 빼놓은거 좋네요.
     try {
       await selectMyAddress({
         uuid: uuid,

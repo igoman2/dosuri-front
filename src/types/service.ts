@@ -75,6 +75,8 @@ export interface IGetHospitalInfo {
     keyword: string;
   }[];
   is_up: boolean;
+  latitude: number;
+  longitude: number;
 }
 
 export interface IHospitalTreatmentResult {

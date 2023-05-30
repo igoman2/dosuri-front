@@ -186,20 +186,17 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
   };
 
   const setModeHistory = (nextMode: number) => {
-    setMode((prev) => prev.filter((mode) => mode !== nextMode));
-    setMode((prev) => [...prev, nextMode]);
+    setMode([nextMode]);
   };
 
   const onSearchBarClick = () => {
-    setModal({ isActive: true });
     setModeHistory(1);
-    // setMode((prev) => [...prev, 1]);
+    setModal({ isActive: true });
   };
 
   const onAddressMapButtonClick = () => {
-    setModal({ isActive: true });
     setModeHistory(3);
-    // setMode((prev) => [...prev, 3]);
+    setModal({ isActive: true });
   };
 
   const onSymtomClick = (symtom: Symtom, formikState: typeof formik) => {
@@ -419,7 +416,7 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
                   onClick={onAddressMapButtonClick}
                 />
               </div>
-              {!!formik.values.address.name && (
+              {!!formik.values?.address?.name && (
                 <AliasAddressList
                   type={formik.values.address.address_type}
                   alias={formik.values.address.name}
