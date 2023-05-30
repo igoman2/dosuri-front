@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 
 import Button from "@/components/Button";
 import { EmptyText } from "@/components/etc/emotion/EmptyText";
@@ -8,6 +8,7 @@ import { formatPhoneNumber } from "@/util/format";
 import { phoneCall } from "@/util/phoneCall";
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
+import HospitalMapView from "./HospitalMapView";
 
 interface IInformationProps {
   hospitalData: IGetHospitalInfo;
@@ -67,7 +68,13 @@ const Information: FC<IInformationProps> = ({ hospitalData }) => {
           <div className="list">
             <div className="list-title">주소</div>
             {hospitalData.address ? (
-              <div>{hospitalData.address}</div>
+              <div>
+                <div className="hospital-address">{hospitalData.address}</div>
+                <HospitalMapView
+                  latitude={hospitalData.latitude}
+                  longitude={hospitalData.longitude}
+                ></HospitalMapView>
+              </div>
             ) : (
               <EmptyText>등록된 주소가 없습니다.</EmptyText>
             )}
@@ -117,6 +124,10 @@ const Content = styled.div`
       color: ${(props) => props.theme.colors.purple};
       font-weight: 700;
     }
+  }
+
+  .hospital-address {
+    margin-bottom: 1rem;
   }
 
   .phone-number {
