@@ -17,6 +17,7 @@ import { Address } from "@/types/location";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import CurrentLocationIcon from "@/public/assets/current-location.png";
+import useAddress from "@/hooks/useAddress";
 
 const initialLocation = {
   address: {
@@ -59,6 +60,7 @@ const MapView = () => {
   const [locationInfo, setLocationInfo] =
     useState<KakaoMapViewLocation>(initialLocation);
   const theme = useTheme();
+  const { closeAddressModal } = useAddress();
 
   useEffect(() => {
     markersRef.current = [];
@@ -232,7 +234,8 @@ const MapView = () => {
       <Wrapper>
         <IconWrapper
           onClick={() => {
-            setMode((prev) => prev.slice(0, prev.length - 1));
+            if (mode.length === 1) closeAddressModal();
+            else setMode((prev) => prev.slice(0, prev.length - 1));
           }}
         >
           <Icon
