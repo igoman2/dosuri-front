@@ -167,14 +167,12 @@ const Home = () => {
               }}
             >
               후기가 좋은 병원
-              후기가 좋은 병원
             </div>
 
             {hospitalList.many_review_hospitals.map(
               (hospital: IHospitalInfoResult, i) => (
                 <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
                   <a>
-                    <HospitalCard hospitalInfo={hospital} />
                     <HospitalCard hospitalInfo={hospital} />
                   </a>
                 </Link>
