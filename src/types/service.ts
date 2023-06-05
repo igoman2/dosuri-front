@@ -77,6 +77,7 @@ export interface IGetHospitalInfo {
   is_up: boolean;
   latitude: number;
   longitude: number;
+  is_partner: boolean;
 }
 
 export interface IHospitalTreatmentResult {
@@ -95,6 +96,16 @@ export interface IHospitalTreatmentsResponse {
   previous: string;
   price_per_hour: number;
   results: IHospitalTreatmentResult[];
+  hospital_rank: IHospitalRankResult;
+}
+
+export interface IHospitalRankResult {
+  near_site: string;
+  near_site_latitude: number;
+  near_site_longitude: number;
+  rank: number;
+  total_count: number;
+  avg_price_per_hour: number;
 }
 
 export interface IHospitalReviewsResult {

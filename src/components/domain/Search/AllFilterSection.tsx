@@ -1,6 +1,6 @@
 import { ListItem, SELECT_LIST } from "@/mock/searchCategory";
 import React, { memo, useEffect, useMemo, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 
 import { BottomSheet } from "react-spring-bottom-sheet";
 import Divider from "@/components/Divider/Divider";
@@ -17,6 +17,7 @@ import styled from "@emotion/styled";
 import { useInfiniteQuery } from "react-query";
 import { useTheme } from "@emotion/react";
 import ImageTextView from "@/components/CustomImage/ImageTextView";
+import { rankViewState } from "../Hospital/store";
 
 const AllFilterSection = () => {
   const theme = useTheme();
@@ -24,6 +25,8 @@ const AllFilterSection = () => {
   const [searchFilter, setSearchFilter] = useRecoilState(searchFilterState);
   const [category, setCategory] = useState(searchFilter);
   const location = useRecoilValue(locationState);
+  const rankState = useRecoilValue(rankViewState);
+  const resetRankState = useResetRecoilState(rankViewState);
 
   function onDismiss() {
     setOpen(false);
@@ -32,6 +35,9 @@ const AllFilterSection = () => {
   const onListClick = (item: ListItem) => {
     onDismiss();
     setTimeout(() => {
+      if (rankState.viewRanking) {
+        resetRankState();
+      }
       setCategory(item);
     }, 100);
   };
@@ -50,19 +56,32 @@ const AllFilterSection = () => {
     }
   }, [category, location]);
 
+  useEffect(() => {
+    if (rankState.viewRanking) {
+      setCategory({
+        title: "치료비 낮은순",
+        key: "avg_price_per_hour",
+      });
+    }
+  }, [rankState]);
+
   const fetchUrl = async (url: string) => {
     const response = await api.get<IHospitalInfoResponse>(url);
     return response.data;
   };
 
   const {
-    data: hospitalListByDistance,
+    data: hospitalList,
     fetchNextPage,
     hasNextPage,
     isFetching,
   } = useInfiniteQuery(
     [queryKeys.hospital, "hospital-by-filter", category],
-    ({ pageParam = initialUrl }) => fetchUrl(pageParam),
+    ({
+      pageParam = rankState.viewRanking
+        ? `/hospital/v1/hospitals-address-filtered-avg-price?ordering=${category.key}&longitude=${rankState.nearSiteLongitude}&latitude=${rankState.nearSiteLatitude}`
+        : initialUrl,
+    }) => fetchUrl(pageParam),
     {
       getNextPageParam: (lastPage) => {
         return lastPage.next || undefined;
@@ -101,7 +120,7 @@ const AllFilterSection = () => {
         </ImageTextViewWrapper>
 
         <InfiniteScroll loadMore={fetchNextList} hasMore={hasNextPage}>
-          {hospitalListByDistance?.pages.map((pageData) => {
+          {hospitalList?.pages.map((pageData) => {
             return pageData.results.map((hospital, i) => {
               return (
                 <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>

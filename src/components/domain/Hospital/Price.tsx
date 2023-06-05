@@ -2,9 +2,9 @@
 import { Column, useTable } from "react-table";
 import { IGetHospitalInfo, IHospitalTreatmentsResponse } from "@/types/service";
 import React, { FC, useMemo } from "react";
-
 import { EmptyText } from "@/components/etc/emotion/EmptyText";
 import styled from "@emotion/styled";
+import PriceRanking from "./PriceRanking";
 
 interface IPriceProps {
   hospitalData: IGetHospitalInfo;
@@ -61,6 +61,13 @@ const Price: FC<IPriceProps> = ({ hospitalData, hospitalTreatmentsData }) => {
               <div className="right">.</div>
             </div>
           ) : null}
+          {hospitalData.is_partner && hospitalTreatmentsData.hospital_rank ? (
+            <PriceRanking
+              hospitalRankData={hospitalTreatmentsData.hospital_rank}
+            />
+          ) : (
+            <></>
+          )}
 
           <table {...getTableProps()}>
             <thead>
