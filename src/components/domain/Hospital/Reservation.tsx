@@ -2,21 +2,55 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import PhoneIcon from "@/public/assets/phone-bold.png";
 import Button from "@/components/Button";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { userInfoState } from "@/store/user";
 import { useTheme } from "@emotion/react";
 import { reservationModalState } from "./store";
 import { useRouter } from "next/router";
+import { createReservation } from "@/service/apis/hospital";
+import { useContext } from "react";
+import { ReservationContext } from "./ReservationModal";
+import { modalContentState, modalState } from "@/components/Modal/store";
 
 const Reservation = () => {
   const userInfo = useRecoilValue(userInfoState);
   const [modal, setModal] = useRecoilState(reservationModalState);
+  const setNoticeModal = useSetRecoilState(modalState);
+  const setNoticeModalContent = useSetRecoilState(modalContentState);
   const theme = useTheme();
   const router = useRouter();
-  const handleReservation = () => {
-    setModal({ isActive: false });
-    router.back();
+  const hospitalUuid = useContext(ReservationContext);
+
+  const handleReservation = async () => {
+    try {
+      const hospital = hospitalUuid;
+      const response = await createReservation({ hospital: hospital });
+      setNoticeModal({ isActive: true });
+      setNoticeModalContent({
+        title: "",
+        content: "예약이 신청되었습니다. 병원에서 곧 전화를 드립니다.",
+        actionCancel: {
+          text: "",
+          action: () => {},
+        },
+        actionWarn: {
+          text: "",
+          action: () => {},
+        },
+        actionConfirm: {
+          text: "확인",
+          action: () => {
+            setNoticeModal({ isActive: false });
+          },
+        },
+      });
+      setModal(false);
+      router.back();
+    } catch (e) {
+      console.log(e);
+    }
   };
+
   return (
     <ReservationWrapper>
       <div className="guide">
@@ -29,10 +63,10 @@ const Reservation = () => {
         </div>
       </div>
       <div className="info">
-        <div className="bold colored">예약하는 분 정보</div>
-        <div className="bold">이름</div>
+        <div className="gap bold colored">예약하는 분 정보</div>
+        <div className="gap bold">이름</div>
         <div>{userInfo.name}</div>
-        <div className="bold last">핸드폰 번호</div>
+        <div className="gap bold last">핸드폰 번호</div>
         <div>{userInfo.phone_no}</div>
       </div>
       <ButtonsWrapper>
@@ -78,7 +112,7 @@ const ReservationWrapper = styled.div`
     font-size: ${(props) => props.theme.fontSizes.lg};
     line-height: ${(props) => props.theme.lineHeights.lg};
 
-    .bold {
+    .gap {
       margin-bottom: 1rem;
     }
 

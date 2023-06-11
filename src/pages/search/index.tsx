@@ -1,4 +1,3 @@
-import "react-spring-bottom-sheet/dist/style.css";
 import Icon from "@/util/Icon";
 import { Suspense, useEffect } from "react";
 import Link from "next/link";

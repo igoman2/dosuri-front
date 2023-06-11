@@ -22,7 +22,7 @@ const Apple = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const theme = useTheme();
   const router = useRouter();
-  const [_, setUserInfo] = useRecoilState(userInfoState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const loadScript = (url: string) => {
     const handleScript = () => {
       window.AppleID.auth.init(
@@ -81,6 +81,19 @@ const Apple = () => {
       }
 
       setUserInfo({ ...user, uuid, refreshToken, accessToken });
+
+      if (!userInfo.setting) {
+        setUserInfo((prev) => ({
+          ...prev,
+          setting: {
+            agree_marketing_personal_info: false,
+            agree_general_push: false,
+            agree_marketing_push: false,
+            agree_marketing_email: false,
+            agree_marketing_sms: false,
+          },
+        }));
+      }
 
       if (isNew) {
         router.push("/register");

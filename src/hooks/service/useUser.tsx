@@ -4,16 +4,16 @@ import { useRecoilState } from "recoil";
 import { getUser } from "@/service/apis/user";
 import { queryKeys } from "@/service/react-query/constants";
 import { userInfoState } from "@/store/user";
-import { UserInfo } from "@/types/user";
+import { UserInfo, UserSettingInfo } from "@/types/user";
 
 interface UseUser {
-  user: UserInfo;
+  user: UserInfo & UserSettingInfo;
 }
 
 export function useUser(accessToken?: string): UseUser {
   const [_, setUserInfo] = useRecoilState(userInfoState);
 
-  const fallback: UserInfo = {
+  const fallback: UserInfo & UserSettingInfo = {
     uuid: "",
     nickname: "",
     name: "",
@@ -30,6 +30,13 @@ export function useUser(accessToken?: string): UseUser {
     sex: "",
     unread_notice: false,
     pain_areas: [],
+    setting: {
+      agree_marketing_personal_info: false,
+      agree_general_push: false,
+      agree_marketing_push: false,
+      agree_marketing_email: false,
+      agree_marketing_sms: false,
+    },
   };
   const { data: user } = useQuery(
     [queryKeys.user, "getUserInfo"],

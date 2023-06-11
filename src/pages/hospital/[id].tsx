@@ -31,13 +31,20 @@ import ImageTextView from "@/components/CustomImage/ImageTextView";
 import useAuth from "@/hooks/useAuth";
 import formIcon from "@/public/assets/form_icon.png";
 import { FormikProvider, useFormik } from "formik";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { reservationModalState } from "@/components/domain/Hospital/store";
 import ReservationModal from "@/components/domain/Hospital/ReservationModal";
+import { changePersonalInfoConsent, getUser } from "@/service/apis/user";
+import { userInfoState } from "@/store/user";
 
 interface TabItem {
   title: string;
   value: string;
+}
+
+interface IHospitalInformationProps {
+  id: string;
+  tab: string;
 }
 
 const TabList: TabItem[] = [
@@ -59,11 +66,6 @@ const TabList: TabItem[] = [
   },
 ];
 
-interface IHospitalInformationProps {
-  id: string;
-  tab: string;
-}
-
 const PROTECTED_TABS = ["price"];
 
 const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
@@ -75,47 +77,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
   const { isLoggedIn } = useAuth();
   const [open, setOpen] = useState(false);
   const [modal, setModal] = useRecoilState(reservationModalState);
-
-  function onDismiss() {
-    setOpen(false);
-  }
-
-  useEffect(() => {
-    router.replace({
-      pathname: `/hospital/${id}`,
-      query: { tab: currentTab.value },
-    });
-  }, [currentTab]);
-
-  const checkTabIsProtected = (tab: TabItem) => {
-    return PROTECTED_TABS.includes(tab.value);
-  };
-
-  const onTabClickHander = (tab: TabItem) => {
-    if (checkTabIsProtected(tab) && !isLoggedIn) {
-      router.push("/login");
-      return;
-    }
-    setCurrentTab(tab);
-    router.replace({
-      pathname: `/hospital/${router.query.id}`,
-      query: { tab: tab.value },
-    });
-  };
-
-  // 단순 정보 조회라서 useQuery를 사용하였지만 서버 내부적으로는 해당 병원에 대한 조회수를 올리는 POST api로 개발되어있기 때문에 POST 요청이 캐시되는 것을 방지하기 위해 cacheTime을 0으로 설정
-  const { data: hospitalInfoData } = useQuery({
-    queryKey: ["getHospitalInfo"],
-    queryFn: async () => {
-      const data = await getHospitalInfo(id);
-      return data;
-    },
-    cacheTime: 0,
-    retry: 0,
-  });
-
-  const uuid = hospitalInfoData?.uuid;
-
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [consents, setConsents] = useState([
     {
       checked: false,
@@ -154,12 +116,53 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
       text: "SMS",
     },
   ]);
+
+  useEffect(() => {
+    router.replace({
+      pathname: `/hospital/${id}`,
+      query: { tab: currentTab.value },
+    });
+  }, [currentTab]);
+
+  function onDismiss() {
+    setOpen(false);
+  }
+
+  const checkTabIsProtected = (tab: TabItem) => {
+    return PROTECTED_TABS.includes(tab.value);
+  };
+
+  const onTabClickHander = (tab: TabItem) => {
+    if (checkTabIsProtected(tab) && !isLoggedIn) {
+      router.push("/login");
+      return;
+    }
+    setCurrentTab(tab);
+    router.replace({
+      pathname: `/hospital/${router.query.id}`,
+      query: { tab: tab.value },
+    });
+  };
+
+  // 단순 정보 조회라서 useQuery를 사용하였지만 서버 내부적으로는 해당 병원에 대한 조회수를 올리는 POST api로 개발되어있기 때문에 POST 요청이 캐시되는 것을 방지하기 위해 cacheTime을 0으로 설정
+  const { data: hospitalInfoData } = useQuery({
+    queryKey: ["getHospitalInfo"],
+    queryFn: async () => {
+      const data = await getHospitalInfo(id);
+      return data;
+    },
+    cacheTime: 0,
+    retry: 0,
+  });
+
+  const uuid = hospitalInfoData?.uuid;
+
   const formik = useFormik({
     initialValues: {
       consents: [],
     },
     onSubmit: () => {
-      setModal({ isActive: true });
+      setModal(true);
     },
   });
 
@@ -225,13 +228,41 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
     return agreeAll;
   };
 
-  const consentHandler = () => {
-    setOpen(false);
-    formik.handleSubmit();
+  const consentHandler = async () => {
+    const personalInfoConsentParams = {
+      agree_marketing_personal_info: consents[4].checked,
+      agree_general_push: true,
+      agree_marketing_push: consents[5].checked,
+      agree_marketing_email: consents[7].checked,
+      agree_marketing_sms: consents[8].checked,
+      uuid: userInfo.uuid,
+    };
+
+    try {
+      const response = await changePersonalInfoConsent(
+        personalInfoConsentParams
+      );
+      const resp = await getUser();
+      const user = resp!;
+      setUserInfo((prev) => {
+        return {
+          ...prev,
+          setting: user.setting,
+        };
+      });
+      setOpen(false);
+      formik.handleSubmit();
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const canSubmit = () => {
     return consents[1].checked && consents[2].checked && consents[3].checked;
+  };
+
+  const handleReservationClick = () => {
+    setOpen(true);
   };
 
   return (
@@ -304,7 +335,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
               )}
             </Suspense>
           </div>
-          <div className={open || modal.isActive ? "disable" : ""}>
+          <div className={open || modal ? "disable" : ""}>
             <SaleButtonWrapper>
               {hospitalInfoData.is_partner ? (
                 <Button
@@ -314,7 +345,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
                   borderRadius="0.3rem"
                   backgroundColor={theme.colors.purple_light}
                   bold
-                  onClick={() => setOpen(true)}
+                  onClick={handleReservationClick}
                 ></Button>
               ) : (
                 <Link href="/insurance-register">
@@ -526,7 +557,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
           </DosuriReservation>
         </BottomSheet>
       )}
-      <ReservationModal />
+      <ReservationModal hospitalUuid={hospitalInfoData.uuid} />
     </>
   );
 };
