@@ -46,7 +46,7 @@ const Price: FC<IPriceProps> = ({ hospitalData, hospitalTreatmentsData }) => {
         <EmptyText>등록된 비용 정보가 없습니다.</EmptyText>
       ) : (
         <>
-          {hospitalTreatmentsData.price_per_hour ? (
+          {hospitalTreatmentsData.price_per_hour && (
             <div className="price-head">
               <div className="left">60분 치료 시</div>
               <div className="center">
@@ -60,13 +60,11 @@ const Price: FC<IPriceProps> = ({ hospitalData, hospitalTreatmentsData }) => {
               </div>
               <div className="right">.</div>
             </div>
-          ) : null}
-          {hospitalData.is_partner && hospitalTreatmentsData.hospital_rank ? (
+          )}
+          {hospitalData.is_partner && hospitalTreatmentsData.hospital_rank && (
             <PriceRanking
               hospitalRankData={hospitalTreatmentsData.hospital_rank}
             />
-          ) : (
-            <></>
           )}
 
           <table {...getTableProps()}>

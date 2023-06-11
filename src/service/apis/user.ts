@@ -1,8 +1,9 @@
 import { boolean } from "yup";
 
-import { UserInfo } from "@/types/user";
+import { UserInfo, UserSettingInfo } from "@/types/user";
 
 import {
+  ChangePersonalInfoConsentResponse,
   GetUserAuthParams,
   GetUserAuthResponse,
   IApplyInsuranceResponse,
@@ -13,7 +14,6 @@ import {
   registerMyAddressResponse,
 } from "../../types/service";
 import api from "../axiosConfig";
-
 export const getUserAuth = async (params: any) => {
   const response = await api.post<GetUserAuthResponse>("/user/v1/auth", {
     token: params.token,
@@ -46,22 +46,29 @@ export const applyInsurance = async () => {
 };
 
 export const registerUser = async (data: UserInfo, accessToken?: string) => {
-  const response = await api.put<UserInfo>(`/user/v1/users/me`, data, {
-    headers: {
-      Authorization: "Bearer " + accessToken,
-    },
-  });
+  const response = await api.put<UserInfo & UserSettingInfo>(
+    `/user/v1/users/me`,
+    data,
+    {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    }
+  );
   return response.data;
 };
 
 export const getUser = async (
   accessToken?: string
-): Promise<UserInfo | null> => {
-  const { data } = await api.get<UserInfo>(`/user/v1/users/me`, {
-    headers: {
-      Authorization: "Bearer " + accessToken,
-    },
-  });
+): Promise<(UserInfo & UserSettingInfo) | null> => {
+  const { data } = await api.get<UserInfo & UserSettingInfo>(
+    `/user/v1/users/me`,
+    {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    }
+  );
 
   return data;
 };
@@ -131,6 +138,28 @@ export const selectMyAddress = async (params: {
     `/user/v1/users/me/addresses/${params.uuid}`,
     {
       is_main: params.isMain,
+    }
+  );
+  return response.data;
+};
+
+export const changePersonalInfoConsent = async (params: {
+  agree_marketing_personal_info: boolean;
+  agree_general_push: boolean;
+  agree_marketing_push: boolean;
+  agree_marketing_email: boolean;
+  agree_marketing_sms: boolean;
+  uuid: string;
+}) => {
+  const response = await api.put<ChangePersonalInfoConsentResponse>(
+    "/user/v1/users/me/personal-info-agreement",
+    {
+      agree_marketing_personal_info: params.agree_marketing_personal_info,
+      agree_general_push: params.agree_general_push,
+      agree_marketing_push: params.agree_marketing_push,
+      agree_marketing_email: params.agree_marketing_email,
+      agree_marketing_sms: params.agree_marketing_sms,
+      uuid: params.uuid,
     }
   );
   return response.data;

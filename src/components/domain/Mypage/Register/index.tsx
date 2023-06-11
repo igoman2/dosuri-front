@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useEffect, useState } from "react";
 import SearchBar from "../../Search/SearchBar";
 import AddressMapButton from "../../Address/AddressMapButton";
 import { Field, FormikProvider, useFormik } from "formik";
-import { UserInfo } from "@/types/user";
+import { UserInfo, UserSettingInfo } from "@/types/user";
 import { checkNicknameDuplication, registerUser } from "@/service/apis/user";
 import {
   formatPartialPhoneNumberToComplete,
@@ -50,44 +50,46 @@ const RegisterForm: FC<IRegisterForm> = ({ formType }) => {
   const setModal = useSetRecoilState(addressModalState);
   const addressObject = useRecoilValue(selectedAddressObject);
 
-  const { mutate } = useMutation<UserInfo, AxiosError, UserInfo, unknown>(
-    (data) => registerUser(data, userInfo.accessToken),
-    {
-      onSuccess: (resp) => {
-        queryClient.invalidateQueries({
-          queryKey: [queryKeys.hospital],
-          refetchInactive: true,
-        });
-        queryClient.invalidateQueries({
-          queryKey: [queryKeys.community],
-          refetchInactive: true,
-        });
-        queryClient.invalidateQueries({
-          queryKey: [queryKeys.user],
-          refetchInactive: true,
-        });
-        if (formType === "register") {
-          setTokenInCookie("refresh", userInfo.refreshToken);
-          setTokenInCookie("access", userInfo.accessToken);
-        }
-        setUserInfo((prev) => {
-          return {
-            ...resp,
-            uuid: prev.uuid,
-            refreshToken: prev.refreshToken,
-            accessToken: prev.accessToken,
-          };
-        });
+  const { mutate } = useMutation<
+    UserInfo & UserSettingInfo,
+    AxiosError,
+    UserInfo,
+    unknown
+  >((data) => registerUser(data, userInfo.accessToken), {
+    onSuccess: (resp) => {
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.hospital],
+        refetchInactive: true,
+      });
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.community],
+        refetchInactive: true,
+      });
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.user],
+        refetchInactive: true,
+      });
+      if (formType === "register") {
+        setTokenInCookie("refresh", userInfo.refreshToken);
+        setTokenInCookie("access", userInfo.accessToken);
+      }
+      setUserInfo((prev) => {
+        return {
+          ...resp,
+          uuid: prev.uuid,
+          refreshToken: prev.refreshToken,
+          accessToken: prev.accessToken,
+        };
+      });
 
-        if (formType === "register") {
-          router.push("/");
-        } else {
-          toast("변경사항이 저장되었습니다.");
-          router.back();
-        }
-      },
-    }
-  );
+      if (formType === "register") {
+        router.push("/");
+      } else {
+        toast("변경사항이 저장되었습니다.");
+        router.back();
+      }
+    },
+  });
 
   const { user } = useUser(userInfo.accessToken);
 

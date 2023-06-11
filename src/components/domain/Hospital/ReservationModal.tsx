@@ -2,16 +2,24 @@ import { useRecoilState } from "recoil";
 import { reservationModalState } from "./store";
 import FullModalBase from "@/components/Modal/FullModalBase";
 import Reservation from "./Reservation";
+import { FC, useEffect } from "react";
+import { createContext } from "react";
 
-const ReservationModal = () => {
+interface ReservationModalProps {
+  hospitalUuid: string;
+}
+
+export const ReservationContext = createContext("");
+
+const ReservationModal: FC<ReservationModalProps> = ({ hospitalUuid }) => {
   const [modal, setModal] = useRecoilState(reservationModalState);
   const onClose = () => {
-    setModal({ isActive: false });
+    setModal(false);
   };
-
   return (
+    // <ReservationContext.Provider value={hospitalUuid}>
     <>
-      {modal.isActive && (
+      {modal && (
         <FullModalBase
           isActive={false}
           title="예약하기"
@@ -19,10 +27,13 @@ const ReservationModal = () => {
           onClickBack={onClose}
           onClose={onClose}
         >
-          <Reservation />
+          <ReservationContext.Provider value={hospitalUuid}>
+            <Reservation />
+          </ReservationContext.Provider>
         </FullModalBase>
       )}
     </>
+    // </ReservationContext.Provider>
   );
 };
 export default ReservationModal;

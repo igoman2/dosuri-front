@@ -6,15 +6,21 @@ import Toggle_on from "@/public/assets/toggle_on.png";
 
 interface IToggleProps {
   isActive: boolean;
+  onClick?: () => void;
 }
 
-const ToggleBar: FC<IToggleProps> = ({ isActive }) => {
+const ToggleBar: FC<IToggleProps> = ({ isActive, onClick }) => {
   const [isToggleActive, setIsToggleActive] = useState<boolean>(isActive);
   const onToggle = () => {
     setIsToggleActive((prev) => !prev);
   };
   return (
-    <div onClick={onToggle}>
+    <div
+      onClick={() => {
+        if (onClick) onClick();
+        onToggle();
+      }}
+    >
       {isToggleActive ? (
         <Image src={Toggle_on} width={25} height={25} alt="toggle-on" />
       ) : (

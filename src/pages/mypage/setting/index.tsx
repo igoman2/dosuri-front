@@ -6,15 +6,83 @@ import Layout from "@/components/Layout";
 import Link from "next/link";
 import ListTab from "@/components/Tab/ListTab";
 import { NextSeo } from "next-seo";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ToggleBar from "@/components/Toggle/ToggleBar";
 import { logout } from "@/pages/withauth";
 import { settings } from "@/mock/setting";
 import styled from "@emotion/styled";
+import { useRecoilState } from "recoil";
+import { changePersonalInfoConsent, getUser } from "@/service/apis/user";
+import { userInfoState } from "@/store/user";
 
 const packageJson = require("/package.json");
 
 const Setting = () => {
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [consents, setConsents] = useState([
+    {
+      title: "광고 알림",
+      isActive: userInfo.setting.agree_marketing_push,
+    },
+    {
+      title: "일반 알림",
+      isActive: userInfo.setting.agree_general_push,
+    },
+    {
+      title: "SMS 마케팅 동의",
+      isActive: userInfo.setting.agree_marketing_sms,
+    },
+    {
+      title: "이메일 마케팅 동의",
+      isActive: userInfo.setting.agree_marketing_email,
+    },
+  ]);
+
+  const onToggleButtonClick = async (consentIdx: number) => {
+    // setConsents((prev) => {
+    //   prev[consentIdx].isActive = !prev[consentIdx].isActive;
+    //   return prev;
+    // });
+
+    const personalInfoConsent = {
+      agree_marketing_personal_info:
+        userInfo.setting.agree_marketing_personal_info,
+      agree_general_push: userInfo.setting.agree_general_push,
+      agree_marketing_push: userInfo.setting.agree_marketing_push,
+      agree_marketing_email: userInfo.setting.agree_marketing_email,
+      agree_marketing_sms: userInfo.setting.agree_marketing_sms,
+      uuid: userInfo.uuid,
+    };
+
+    if (consentIdx === 0) {
+      personalInfoConsent["agree_marketing_push"] =
+        !personalInfoConsent["agree_marketing_push"];
+    } else if (consentIdx === 1) {
+      personalInfoConsent["agree_general_push"] =
+        !personalInfoConsent["agree_general_push"];
+    } else if (consentIdx === 2) {
+      personalInfoConsent["agree_marketing_sms"] =
+        !personalInfoConsent["agree_marketing_sms"];
+    } else if (consentIdx === 3) {
+      personalInfoConsent["agree_marketing_email"] =
+        !personalInfoConsent["agree_marketing_email"];
+    }
+
+    try {
+      const response = await changePersonalInfoConsent(personalInfoConsent);
+      const resp = await getUser();
+      const user = resp!;
+      setUserInfo((prev) => {
+        return {
+          ...prev,
+          setting: user.setting,
+        };
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Layout header={<HeaderDepth />} footer={false}>
       <NextSeo title="마이페이지 | 도수리-도수치료 리얼후기" />
@@ -26,14 +94,21 @@ const Setting = () => {
           <ul className="list-section">
             <Divider height={1} />
 
-            {settings.map((setting, i) => {
+            {consents.map((consent, idx) => {
               return (
                 <ListTab
-                  text={setting.title}
+                  text={consent.title}
                   subText=""
-                  key={`${setting.title}-${i}`}
+                  key={`${consent.title}-${idx}`}
                   isLast={false}
-                  right={<ToggleBar isActive={setting.isActive} />}
+                  right={
+                    <ToggleBar
+                      isActive={consent.isActive}
+                      onClick={() => {
+                        onToggleButtonClick(idx);
+                      }}
+                    />
+                  }
                 />
               );
             })}

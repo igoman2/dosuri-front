@@ -30,6 +30,13 @@ export const userInfoState = atom<UserFullInfo>({
         name: "",
       },
     ],
+    setting: {
+      agree_marketing_personal_info: false,
+      agree_general_push: false,
+      agree_marketing_push: false,
+      agree_marketing_email: false,
+      agree_marketing_sms: false,
+    },
     accessToken: "",
     refreshToken: "",
   },

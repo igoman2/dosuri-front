@@ -25,10 +25,21 @@ export type UserInfo = {
   }[];
 };
 
-export type UserFullInfo = UserInfo & {
-  refreshToken: string;
-  accessToken: string;
+export type UserSettingInfo = {
+  setting: {
+    agree_marketing_personal_info: boolean;
+    agree_general_push: boolean;
+    agree_marketing_push: boolean;
+    agree_marketing_email: boolean;
+    agree_marketing_sms: boolean;
+  };
 };
+
+export type UserFullInfo = UserInfo &
+  UserSettingInfo & {
+    refreshToken: string;
+    accessToken: string;
+  };
 
 export type TSmallArea = {
   value: string;

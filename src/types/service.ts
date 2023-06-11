@@ -410,3 +410,18 @@ export type KakaoMapViewLocation = {
   longitude: number;
   latitude: number;
 };
+
+export interface ChangePersonalInfoConsentResponse {
+  uuid: string;
+  agree_marketing_sms: boolean;
+  agree_marketing_email: boolean;
+  agree_marketing_push: boolean;
+  agree_general_push: boolean;
+  agree_marketing_personal_info: boolean;
+}
+
+export interface ReservationResponse {
+  uuid: string;
+  hospital: string;
+  user: string;
+}

@@ -10,6 +10,7 @@ import {
   IRecentHospitalSearchListResponse,
   ITempHospitalResult,
   IToggleHospitalThumbup,
+  ReservationResponse,
 } from "../../types/service";
 
 import api from "../axiosConfig";
@@ -127,6 +128,14 @@ export const getHospitalInfoHome = async () => {
 export const createTempHospital = async (data: { name: string }) => {
   const response = await api.post<ITempHospitalResult>(
     `hospital/v1/temp-hospitals`,
+    data
+  );
+  return response.data;
+};
+
+export const createReservation = async (data: { hospital: any }) => {
+  const response = await api.post<ReservationResponse>(
+    `hospital/v1/hospital-reservations`,
     data
   );
   return response.data;

@@ -12,7 +12,5 @@ export const rankViewState = atom({
 
 export const reservationModalState = atom({
   key: `reservationModalState${v4()}`,
-  default: {
-    isActive: false,
-  },
+  default: false,
 });
