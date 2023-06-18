@@ -33,7 +33,10 @@ const PriceRanking: FC<IPriceRankingProps> = ({ hospitalRankData }) => {
           <span className="colored">로 치료비 싼 병원</span> -{" "}
           {hospitalRankData.total_count}개 병원 평균은 약{" "}
           <span className="bold colored">
-            {Math.round(hospitalRankData.avg_price_per_hour)}원
+            {Math.round(hospitalRankData.avg_price_per_hour).toLocaleString(
+              "en"
+            )}
+            원
           </span>
           입니다.
         </div>
@@ -80,6 +83,7 @@ const PriceRankingWrapper = styled.div`
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      margin-top: 1rem;
     }
   }
 `;

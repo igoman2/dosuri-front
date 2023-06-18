@@ -405,7 +405,9 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
                       }}
                     />
                     <Link href="https://dosuri.notion.site/a424b489456a4ee9af5f6067e2cc6718">
-                      <a>자세히</a>
+                      <a target="_blank" rel="noopener noreferrer">
+                        자세히
+                      </a>
                     </Link>
                   </div>
                   <div className="agree">
@@ -422,7 +424,9 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
                       }}
                     />
                     <Link href="https://dosuri.notion.site/3-e502521051ea4b8481e0c0bfd0f67f6b">
-                      <a>자세히</a>
+                      <a target="_blank" rel="noopener noreferrer">
+                        자세히
+                      </a>
                     </Link>
                   </div>
                   <div className="agree">
@@ -439,7 +443,9 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
                       }}
                     />
                     <Link href="https://dosuri.notion.site/591f0834abb54961a0fab1c24667a351">
-                      <a>자세히</a>
+                      <a target="_blank" rel="noopener noreferrer">
+                        자세히
+                      </a>
                     </Link>
                   </div>
                   <div className="agree">
@@ -456,7 +462,9 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
                       }}
                     />
                     <Link href="https://dosuri.notion.site/8c696da9c8a94c45bf9893ca213a8d2e">
-                      <a>자세히</a>
+                      <a target="_blank" rel="noopener noreferrer">
+                        자세히
+                      </a>
                     </Link>
                   </div>
 
@@ -595,6 +603,7 @@ const CheckboxWrapper = styled.div`
       font-size: ${(props) => props.theme.fontSizes.md};
       line-height: ${(props) => props.theme.lineHeights.md};
       color: ${(props) => props.theme.colors.grey};
+      white-space: nowrap;
     }
   }
 
