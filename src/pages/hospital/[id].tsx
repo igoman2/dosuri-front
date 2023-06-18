@@ -298,7 +298,7 @@ export const getServerSideProps = async (context: NextPageContext) => {
   return {
     props: {
       id,
-      tab: tab ?? "reviews",
+      tab: tab ?? "price",
     },
   };
 };
