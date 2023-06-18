@@ -71,7 +71,7 @@ const Reservation = () => {
       </div>
       <ButtonsWrapper>
         <Button
-          text="설정하기"
+          text="신청하기"
           width="100%"
           borderRadius="0.3rem"
           height="5.2rem"
