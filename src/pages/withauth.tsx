@@ -79,3 +79,13 @@ export const logout = () => {
   window.localStorage.removeItem("recoil-persist");
   window.location.replace("/");
 };
+
+/**
+ * 로그인 정보를 초기화한 후 로그인 화면으로 보냅니다.
+ */
+export const resetLogin = () => {
+  deleteCookie("accessToken");
+  deleteCookie("refreshToken");
+  window.localStorage.removeItem("recoil-persist");
+  window.location.replace("/login");
+};

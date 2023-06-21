@@ -1,7 +1,7 @@
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
 import axios from "axios";
-import { logout } from "@/pages/withauth";
+import { logout, resetLogin } from "@/pages/withauth";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -83,7 +83,7 @@ api.interceptors.response.use(
         // 401로 요청 실패했던 요청 새로운 accessToken으로 재요청
         return axios(originalRequest);
       } catch (e) {
-        logout();
+        resetLogin();
         return;
       }
     }
