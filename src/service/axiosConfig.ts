@@ -67,25 +67,25 @@ api.interceptors.response.use(
       originalRequest!.headers = { ...originalRequest!.headers };
 
       const refreshToken = getCookie("refreshToken");
+      try {
+        const resp = await api.post("/user/v1/token/refresh", {
+          refresh: refreshToken,
+        });
 
-      const resp = await api.post("/user/v1/token/refresh", {
-        refresh: refreshToken,
-      });
+        const newAccessToken = resp.data.access;
 
-      if (resp.status === 401) {
+        axios.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
+        deleteCookie("accessToken");
+        setCookie("accessToken", newAccessToken);
+
+        // 401로 요청 실패했던 요청 새로운 accessToken으로 재요청
+        return axios(originalRequest);
+      } catch (e) {
         logout();
         return;
       }
-      const newAccessToken = resp.data.access;
-
-      axios.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
-      originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-
-      deleteCookie("accessToken");
-      setCookie("accessToken", newAccessToken);
-
-      // 401로 요청 실패했던 요청 새로운 accessToken으로 재요청
-      return axios(originalRequest);
     }
     return Promise.reject(error);
   }
