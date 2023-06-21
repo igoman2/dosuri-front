@@ -112,7 +112,7 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
     <Wrapper>
       <AddressSearchBar
         inputText={inputText}
-        placeHolder="장소명, 건물명, 지번 또는 도로명으로 검색"
+        placeHolder="지번 또는 도로명으로 검색"
         onInput={onInput}
         enableDelete={enableDelete}
         onSearch={handleSearch}

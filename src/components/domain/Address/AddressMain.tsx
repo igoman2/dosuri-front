@@ -82,7 +82,7 @@ const AddressMain = () => {
     <AddressConfigWrapper>
       <SearchBar
         inputText=""
-        placeHolder="장소명, 건물명, 지번 또는 도로명으로 검색"
+        placeHolder="지번 또는 도로명으로 검색"
         onClick={onSearchBarClick}
       />
       <div className="button">
