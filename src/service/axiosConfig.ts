@@ -24,6 +24,7 @@ api.interceptors.request.use(
     try {
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
+        // config.headers.Authorization = `Bearer 2s`;
       }
 
       return config;
@@ -60,7 +61,9 @@ api.interceptors.response.use(
     } = error;
     if (status === 401) {
       if (data.code === "user_not_found" || data.code === "token_not_valid") {
-        logout();
+        const currentURL = window.location.pathname;
+        localStorage.setItem("redirectURL", currentURL.toString());
+        resetLogin();
         return;
       }
       const originalRequest = config;
@@ -83,6 +86,8 @@ api.interceptors.response.use(
         // 401로 요청 실패했던 요청 새로운 accessToken으로 재요청
         return axios(originalRequest);
       } catch (e) {
+        const currentURL = window.location.pathname;
+        localStorage.setItem("redirectURL", currentURL.toString());
         resetLogin();
         return;
       }
