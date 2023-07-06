@@ -32,7 +32,7 @@ const ReviewBanner: FC<IReviewBannerProps> = ({ parentIndex, childIndex }) => {
   return (
     <>
       {isBannerVisible() && (
-        <Link href="https://jade-grill-d5b.notion.site/4e50154c10c841b5a1eb9a8aac1355aa">
+        <Link href="https://dosuri.notion.site/4e50154c10c841b5a1eb9a8aac1355aa?pvs=4">
           <a target="_blank" rel="noopener noreferrer">
             <BannerWrapper>
               <span className="image">
