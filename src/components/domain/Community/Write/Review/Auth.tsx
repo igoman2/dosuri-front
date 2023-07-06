@@ -191,7 +191,7 @@ const Auth: FC<IAuthProps> = ({ isActive, mode, setMode, onClose, onSwap }) => {
                 </div>
               </div>
 
-              <Link href="https://jade-grill-d5b.notion.site/4e50154c10c841b5a1eb9a8aac1355aa">
+              <Link href="https://dosuri.notion.site/4e50154c10c841b5a1eb9a8aac1355aa?pvs=4">
                 <a target="_blank" rel="noopener noreferrer">
                   <QuestionIconWrapper css={{ marginLeft: "0.4rem" }}>
                     <Image src={QuestionMarkIcon} alt="도움말" />
@@ -280,7 +280,7 @@ const Auth: FC<IAuthProps> = ({ isActive, mode, setMode, onClose, onSwap }) => {
                     setPersonalAgreement((prev) => !prev);
                   }}
                 />
-                <Link href="https://jade-grill-d5b.notion.site/a424b489456a4ee9af5f6067e2cc6718">
+                <Link href="https://dosuri.notion.site/a424b489456a4ee9af5f6067e2cc6718?pvs=4">
                   <a target="_blank" rel="noopener noreferrer">
                     <QuestionIconWrapper css={{ marginLeft: "0.4rem" }}>
                       <Image src={QuestionMarkIcon} alt="도움말" />
@@ -296,7 +296,7 @@ const Auth: FC<IAuthProps> = ({ isActive, mode, setMode, onClose, onSwap }) => {
                     setSensitiveAgreement((prev) => !prev);
                   }}
                 />
-                <Link href="https://jade-grill-d5b.notion.site/591f0834abb54961a0fab1c24667a351">
+                <Link href="https://dosuri.notion.site/591f0834abb54961a0fab1c24667a351?pvs=4">
                   <a target="_blank" rel="noopener noreferrer">
                     <QuestionIconWrapper css={{ marginLeft: "0.4rem" }}>
                       <Image src={QuestionMarkIcon} alt="도움말" />

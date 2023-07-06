@@ -63,7 +63,7 @@ const Mypage = () => {
       {
         text: "공지사항",
         subtext: "",
-        link: "https://jade-grill-d5b.notion.site/5f996c9048314c699fac080cd2f22509",
+        link: "https://dosuri.notion.site/5f996c9048314c699fac080cd2f22509?pvs=4",
         hasNoti: userInfo.unread_notice,
         isExternalURL: true,
       },

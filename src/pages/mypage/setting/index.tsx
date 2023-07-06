@@ -122,7 +122,7 @@ const Setting = () => {
               isLast={false}
               right={<Version> v {packageJson.version}</Version>}
             />
-            <Link href="https://jade-grill-d5b.notion.site/2022-10-d9fbe2e7bb934b759df98242274af094">
+            <Link href="https://dosuri.notion.site/2022-10-d9fbe2e7bb934b759df98242274af094?pvs=4">
               <a target="_blank" rel="noopener noreferrer">
                 <ListTab
                   text="이용약관"
@@ -143,7 +143,7 @@ const Setting = () => {
               </a>
             </Link>
 
-            <Link href="https://jade-grill-d5b.notion.site/2022-10-3b9b6c4354e1413eb18af3987cc58d10">
+            <Link href="https://dosuri.notion.site/71957af0778a4f59afb98fd2fbdd6639?pvs=4">
               <a target="_blank" rel="noopener noreferrer">
                 <ListTab
                   text="개인정보 처리방침"
