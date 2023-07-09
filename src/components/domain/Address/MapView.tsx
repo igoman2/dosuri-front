@@ -141,7 +141,8 @@ const MapView = () => {
   };
 
   useEffect(() => {
-    if (!isDragged) {
+    // 맵뷰 진입시 선택한 주소가 있는 경우에는 그 주소를 초기값으로 노출
+    if (!isDragged && selectedAddress.name !== "") {
       setSimpleAddress(selectedAddress.name);
     } else if (
       locationInfo &&
@@ -163,7 +164,8 @@ const MapView = () => {
   }, [isDragged, locationInfo]);
 
   useEffect(() => {
-    if (!isDragged) {
+    // 맵뷰 진입시 선택한 주소가 있는 경우에는 그 주소를 초기값으로 노출
+    if (!isDragged && selectedAddress.address !== "") {
       setDetailAddress(selectedAddress.address);
     } else if (
       locationInfo &&
