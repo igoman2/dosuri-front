@@ -10,8 +10,14 @@ import {
   locationState,
   selectedAddressObject,
 } from "./store";
-import { SearchedAddressByAddress } from "@/types/location";
-import { getLocationByAddress } from "@/service/apis/location";
+import {
+  SearchedAddressByAddress,
+  SearchedAddressByKeyword,
+} from "@/types/location";
+import {
+  getLocationByAddress,
+  getLocationByKeyword,
+} from "@/service/apis/location";
 
 interface AddressSearchComponentProps {
   inputText: string;
@@ -34,12 +40,20 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
   const [searchedAddressList, setSearchedAddressList] = useState<
     SearchedAddressByAddress[]
   >([]);
-  const [searchFlag, setSearchFlag] = useState(false);
+  const [searchedKeywordAddressList, setSearchedKeywordAddressList] = useState<
+    SearchedAddressByKeyword[]
+  >([]);
+  const [isQuerying, setIsQuerying] = useState(false);
 
   const handleSearch = async () => {
     const data = await getLocationByAddress({ query: inputText });
-    setSearchedAddressList(data.documents);
-    setSearchFlag(true);
+    if (!isSearchedAddressValid()) {
+      const data = await getLocationByKeyword({ query: inputText });
+      setSearchedKeywordAddressList(data.documents);
+    } else {
+      setSearchedAddressList(data.documents);
+    }
+    setIsQuerying(true);
   };
 
   const extractAddress = (address: SearchedAddressByAddress) => {
@@ -84,7 +98,27 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
     });
 
     setModeHistory(nextMode);
-    // setMode((prev) => [...prev, nextMode]);
+  };
+
+  const onKeywordAddressClick = (address: SearchedAddressByKeyword) => {
+    const newAddressObject = {
+      uuid: address.id,
+      alias: "",
+      name: address.place_name,
+      address: address.address_name,
+      longitude: Number(address.x),
+      latitude: Number(address.y),
+      address_type:
+        isNewAddressValue && selectedType !== "etc" ? selectedType : "",
+    };
+    setSelectedAddressObject(newAddressObject);
+
+    setLocation({
+      longitude: Number(address.x),
+      latitude: Number(address.y),
+    });
+
+    setModeHistory(nextMode);
   };
 
   const setModeHistory = (nextMode: number) => {
@@ -93,10 +127,6 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
   };
 
   const isSearchedAddressValid = () => {
-    if (!searchFlag) {
-      return true;
-    }
-
     if (searchedAddressList.length === 0) {
       return false;
     }
@@ -108,6 +138,48 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
     return true;
   };
 
+  const isSearchedKeywordAddressValid = () => {
+    if (searchedKeywordAddressList.length === 0) {
+      return false;
+    }
+
+    if (!!!searchedKeywordAddressList[0].address_name) {
+      return false;
+    }
+
+    return true;
+  };
+
+  const renderAddressItem = () => {
+    if (!isQuerying) {
+      return null;
+    } else if (isSearchedAddressValid()) {
+      return searchedAddressList.map((address, idx) => (
+        <SearchedAddressList
+          addressName={extractAddress(address)}
+          address={
+            !!address.road_address
+              ? address.road_address.address_name
+              : address.address.address_name
+          }
+          key={`address-${idx}`}
+          onClick={() => onAddressClick(address)}
+        />
+      ));
+    } else if (isSearchedKeywordAddressValid()) {
+      return searchedKeywordAddressList.map((address, idx) => (
+        <SearchedAddressList
+          addressName={address.place_name}
+          address={address.address_name}
+          key={`address-${idx}`}
+          onClick={() => onKeywordAddressClick(address)}
+        />
+      ));
+    } else {
+      return <div className="noneSearched">검색 결과가 없습니다.</div>;
+    }
+  };
+
   return (
     <Wrapper>
       <AddressSearchBar
@@ -117,24 +189,7 @@ const AddressSearchComponent: FC<AddressSearchComponentProps> = ({
         enableDelete={enableDelete}
         onSearch={handleSearch}
       />
-      <div className="searchedAddressList">
-        {isSearchedAddressValid() ? (
-          searchedAddressList.map((address, idx) => (
-            <SearchedAddressList
-              addressName={extractAddress(address)}
-              address={
-                !!address.road_address
-                  ? address.road_address.address_name
-                  : address.address.address_name
-              }
-              key={`address-${idx}`}
-              onClick={() => onAddressClick(address)}
-            />
-          ))
-        ) : (
-          <div className="noneSearched">검색 결과가 없습니다.</div>
-        )}
-      </div>
+      <div className="searchedAddressList">{renderAddressItem()}</div>
     </Wrapper>
   );
 };

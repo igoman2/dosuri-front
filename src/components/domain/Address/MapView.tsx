@@ -47,7 +47,9 @@ const initialLocation = {
 const MapView = () => {
   const router = useRouter();
   const [mode, setMode] = useRecoilState(addressModeState);
-  const setSelectedAddressObject = useSetRecoilState(selectedAddressObject);
+  const [selectedAddress, setSelectedAddress] = useRecoilState(
+    selectedAddressObject
+  );
   const { coordinates, loaded } = useGeolocation();
   const setLocation = useSetRecoilState(locationState);
   const [isValidAddress, setIsValidAddress] = useState(true);
@@ -61,10 +63,17 @@ const MapView = () => {
     useState<KakaoMapViewLocation>(initialLocation);
   const theme = useTheme();
   const { closeAddressModal } = useAddress();
+  const [simpleAddress, setSimpleAddress] = useState("");
+  const [detailAddress, setDetailAddress] = useState("");
+  const [isDragged, setIsDragged] = useState(false);
 
   useEffect(() => {
     markersRef.current = [];
   }, []);
+
+  const handleMapDrag = (value: boolean) => {
+    setIsDragged(value);
+  };
 
   const handleValidAddress = (value: boolean) => {
     setIsValidAddress(value);
@@ -92,19 +101,19 @@ const MapView = () => {
   };
 
   const handleSetLocation = () => {
-    setSelectedAddressObject((prev) => {
+    setSelectedAddress((prev) => {
       if (prev.address_type === "etc") {
         return {
           ...prev,
-          address: detailAddress(),
+          address: detailAddress,
           latitude: locationInfo.latitude,
           longitude: locationInfo.longitude,
         };
       } else {
         return {
           ...prev,
-          name: simpleAddress(),
-          address: detailAddress(),
+          name: simpleAddress,
+          address: detailAddress,
           latitude: locationInfo.latitude,
           longitude: locationInfo.longitude,
         };
@@ -118,10 +127,8 @@ const MapView = () => {
 
     if (router.asPath === "/mypage") {
       setModeHistory(7);
-      // setMode((prev) => [...prev, 7]);
     } else {
       setModeHistory(2);
-      // setMode((prev) => [...prev, 2]);
     }
   };
 
@@ -133,43 +140,49 @@ const MapView = () => {
     }
   };
 
-  const simpleAddress = () => {
-    if (
+  useEffect(() => {
+    if (!isDragged) {
+      setSimpleAddress(selectedAddress.name);
+    } else if (
       locationInfo &&
       locationInfo.road_address &&
       locationInfo.road_address.building_name
     ) {
-      return locationInfo.road_address.building_name;
+      setSimpleAddress(locationInfo.road_address.building_name);
     } else {
       if (locationInfo && locationInfo.address)
-        return `${
-          locationInfo.address.region_3depth_name
-        } ${extractAddressNumber(locationInfo.address)}`;
+        setSimpleAddress(
+          `${locationInfo.address.region_3depth_name} ${extractAddressNumber(
+            locationInfo.address
+          )}`
+        );
       else {
-        return "";
+        setSimpleAddress("");
       }
     }
-  };
+  }, [isDragged, locationInfo]);
 
-  const detailAddress = () => {
-    if (
+  useEffect(() => {
+    if (!isDragged) {
+      setDetailAddress(selectedAddress.address);
+    } else if (
       locationInfo &&
       locationInfo.road_address &&
       locationInfo.road_address.address_name
     ) {
-      return locationInfo.road_address.address_name;
+      setDetailAddress(locationInfo.road_address.address_name);
     } else {
       if (
         locationInfo &&
         locationInfo.address &&
         locationInfo.address.address_name
       ) {
-        return locationInfo.address.address_name;
+        setDetailAddress(locationInfo.address.address_name);
       } else {
-        return "";
+        setDetailAddress("");
       }
     }
-  };
+  }, [isDragged, locationInfo]);
 
   const deleteMarkers = () => {
     markersRef.current.forEach((marker: kakao.maps.Marker) => {
@@ -271,12 +284,11 @@ const MapView = () => {
           showMarkers={showMarkers}
           mapCenter={mapCenter}
           setMapCenter={handleMapCenter}
-          // map={map}
-          // setMap={handleMap}
+          setIsDragged={handleMapDrag}
         />
         <SaleButtonWrapper>
-          <div className="simple-address">{simpleAddress()}</div>
-          <div className="detail-address">{detailAddress()}</div>
+          <div className="simple-address">{simpleAddress}</div>
+          <div className="detail-address">{detailAddress}</div>
           <ButtonWrapper>
             <Button
               text="설정하기"

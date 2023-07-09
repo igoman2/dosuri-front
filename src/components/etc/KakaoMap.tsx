@@ -26,6 +26,7 @@ interface IMapProps {
   showMarkers: () => void;
   mapCenter: Location;
   setMapCenter: (val: Location) => void;
+  setIsDragged: (val: boolean) => void;
 }
 
 const emptyAddress = {
@@ -65,6 +66,7 @@ const KakaoMap: FC<IMapProps> = ({
   showMarkers,
   mapCenter,
   setMapCenter,
+  setIsDragged,
 }) => {
   const location = useRecoilValue(locationState);
 
@@ -163,6 +165,7 @@ const KakaoMap: FC<IMapProps> = ({
 
         // 지도 드래그 이벤트 발생 시 마커를 지우고 새로 생성한다.
         kakao.maps.event.addListener(mapRef.current, "drag", function () {
+          setIsDragged(true);
           deleteMarkers();
           markersRef.current = [];
           // 지도 중심좌표를 얻어옵니다
