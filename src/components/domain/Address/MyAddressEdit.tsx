@@ -78,7 +78,7 @@ const MyAddressEdit = () => {
       case "office":
         return "회사";
       default:
-        return inputText.length > 0 ? inputText : selectedAddress.address;
+        return inputText.length > 0 ? inputText : selectedAddress.name;
     }
   };
 
