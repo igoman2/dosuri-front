@@ -17,6 +17,7 @@ const AppBanner: FC<AppBannerProp> = ({ onClose }) => {
         "https://play.google.com/store/apps/details?id=com.ytw418.dosuriapp"
       );
     } else if (
+      mobileType.indexOf("mac") > -1 ||
       mobileType.indexOf("iphone") > -1 ||
       mobileType.indexOf("ipad") > -1 ||
       mobileType.indexOf("ipod") > -1
