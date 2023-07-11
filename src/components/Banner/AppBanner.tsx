@@ -12,18 +12,20 @@ const AppBanner: FC<AppBannerProp> = ({ onClose }) => {
   const onInstall = () => {
     const mobileType = navigator.userAgent.toLowerCase();
 
-    if (mobileType.indexOf("Android") > -1) {
+    if (mobileType.indexOf("android") > -1) {
       return window.open(
         "https://play.google.com/store/apps/details?id=com.ytw418.dosuriapp"
       );
     } else if (
-      mobileType.indexOf("iPhone") > -1 ||
-      mobileType.indexOf("iPad") > -1 ||
-      mobileType.indexOf("mac") > -1
+      mobileType.indexOf("iphone") > -1 ||
+      mobileType.indexOf("ipad") > -1 ||
+      mobileType.indexOf("ipod") > -1
     ) {
       return window.open(
         "https://apps.apple.com/kr/app/%EB%8F%84%EC%88%98%EB%A6%AC/id6448676216"
       );
+    } else {
+      alert("기기를 인식할 수 없습니다.");
     }
   };
   return (
@@ -71,6 +73,7 @@ const AppBannerWrapper = styled.div`
     .banner-contents {
       display: flex;
       align-items: center;
+      width: 100%;
       padding-left: 2rem;
     }
 
@@ -78,6 +81,7 @@ const AppBannerWrapper = styled.div`
       width: 12.1rem;
       height: 4rem;
       margin-left: 1rem;
+      flex-grow: 1;
     }
 
     .text {
@@ -90,7 +94,7 @@ const AppBannerWrapper = styled.div`
     }
 
     .install-button {
-      margin-left: 3rem;
+      margin: 0 3rem;
       width: 8.8rem;
       height: 3.4rem;
       justify-content: center;
