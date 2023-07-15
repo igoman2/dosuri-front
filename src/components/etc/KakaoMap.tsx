@@ -7,12 +7,6 @@ import { useRecoilValue } from "recoil";
 import { locationState } from "../domain/Address/store";
 import { 강남구청 } from "@/constants/Location";
 
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
-
 interface IMapProps {
   locationInfo: KakaoMapViewLocation;
   setLocationInfo: (value: KakaoMapViewLocation) => void;

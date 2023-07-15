@@ -12,12 +12,6 @@ import Button from "../Button";
 import Spinner from "../Spinner/Spinner";
 import theme from "@/styles/theme";
 
-declare global {
-  interface Window {
-    AppleID: any;
-  }
-}
-
 const Apple = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const theme = useTheme();
