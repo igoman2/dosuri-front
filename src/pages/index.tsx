@@ -24,12 +24,14 @@ import SelectAddressBar from "@/components/domain/Address/SelectAddressBar";
 import SelectAddressModal from "@/components/domain/Address/SelectAddressModal";
 import { getCookie, setCookie } from "cookies-next";
 import AppBanner from "@/components/Banner/AppBanner";
+import useRN from "@/hooks/useRN";
 
 const expirationPeriod = 1;
 
 const Home = () => {
   const theme = useTheme();
   const [hasCookie, setHasCookie] = useState(true);
+  const { isApp } = useRN();
   const { isLoggedIn } = useAuth();
   const location = useGeolocation();
   const setLocaton = useSetRecoilState(locationState);
@@ -84,7 +86,7 @@ const Home = () => {
               </Link>
             }
           />
-          {!hasCookie && <AppBanner onClose={onCloseBanner} />}
+          {!hasCookie && !isApp && <AppBanner onClose={onCloseBanner} />}
         </>
       }
     >
