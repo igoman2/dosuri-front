@@ -21,13 +21,6 @@ import withAuth from "./withauth";
 import { Toaster } from "react-hot-toast";
 import { DefaultSeo } from "next-seo";
 import DEFAULT_SEO from "../lib/seo/seo.config";
-import useAuth from "@/hooks/useAuth";
-
-declare global {
-  interface Window {
-    ReactNativeWebView: any;
-  }
-}
 
 function MyApp({
   Component,
@@ -37,7 +30,6 @@ function MyApp({
   session: any;
 }>) {
   const router = useRouter();
-  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     fbq.pageview();
@@ -51,15 +43,6 @@ function MyApp({
       router.events.off("routeChangeComplete", handleRouteChange);
     };
   }, [router.events]);
-
-  useEffect(() => {
-    if (!isLoggedIn && typeof window !== "undefined") {
-      if (window.ReactNativeWebView) {
-        // alert("웹뷰입니다 로그인 페이지로 이동");
-        router.push("/login");
-      }
-    }
-  }, [isLoggedIn, router]);
 
   return (
     <>
