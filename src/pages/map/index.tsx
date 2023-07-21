@@ -55,6 +55,15 @@ const Maps = () => {
   const [fetchEnable, setFetchEnable] = useState(true);
   const [level, setLevel] = useState(4);
   const hospitals = useRef<IGetMapHospitals[]>([]);
+  const [isClusterClicked, setIsClusterClicked] = useState(false);
+  const [hospitalState, setHospitalState] = useState<IGetMapHospitals[]>([]);
+  const [markerClusterer, setMarkerClusterer] = useState<any>(null); // ref 사용 금지, 생성된 이벤트를 가지고 effect 발생시키기 위함.
+  const [markerOverlay, setMarkerOverlay] = useState<any>(null); // ref 사용 금지, 생성된 이벤트를 가지고 effect 발생시키기 위함.
+  const [customOverlayCreated, setCustomOverlayCreated] = useState(true);
+  const prevTarget = useRef<any>(null);
+  const [swiperHospitals, setSwiperHospitals] = useState<IGetMapHospitals[]>(
+    []
+  );
   const { data, refetch } = useQuery(
     ["getMapHospitals"],
     async () => {
@@ -73,19 +82,16 @@ const Maps = () => {
       staleTime: 1000,
       cacheTime: 5000,
       suspense: false,
+      onSuccess: (resp: IGetMapHospitals[]) => {
+        setSwiperHospitals(resp);
+      },
     }
   );
+  // const swiperHospitals = useMemo(() => {
+  //   return isClusterClicked ? hospitalState : data;
+  // }, [isClusterClicked, data, hospitalState]);
 
-  const [isClusterClicked, setIsClusterClicked] = useState(false);
-  const [hospitalState, setHospitalState] = useState<IGetMapHospitals[]>([]);
-  const [markerClusterer, setMarkerClusterer] = useState<any>(null); // ref 사용 금지, 생성된 이벤트를 가지고 effect 발생시키기 위함.
-  const [markerOverlay, setMarkerOverlay] = useState<any>(null); // ref 사용 금지, 생성된 이벤트를 가지고 effect 발생시키기 위함.
-  const [customOverlayCreated, setCustomOverlayCreated] = useState(true);
-  const prevTarget = useRef<any>(null);
-  const swiperHospitals = useMemo(() => {
-    return isClusterClicked ? hospitalState : data;
-  }, [isClusterClicked, data, hospitalState]);
-
+  // console.log(swiperHospitals);
   const handleDrag = (map: kakao.maps.Map) => {
     setMapCenter({
       latitude: map.getCenter().getLat(),
@@ -263,6 +269,7 @@ const Maps = () => {
                   data-id={pos.uuid}
                   onClick={() => {
                     setIsClusterClicked(true);
+                    setSwiperHospitals([pos]);
                     setHospitalState([pos]);
                     setMapCenter({
                       latitude: Number(pos.latitude),
