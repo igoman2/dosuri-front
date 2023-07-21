@@ -125,14 +125,16 @@ const AllFilterSection = () => {
               return (
                 <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
                   <a>
-                    <HospitalCard
-                      hospitalInfo={hospital}
-                      type={
-                        category.key === "avg_price_per_hour"
-                          ? "price"
-                          : "review"
-                      }
-                    />
+                    <div css={{ marginTop: "1rem" }}>
+                      <HospitalCard
+                        hospitalInfo={hospital}
+                        type={
+                          category.key === "avg_price_per_hour"
+                            ? "price"
+                            : "review"
+                        }
+                      />
+                    </div>
                   </a>
                 </Link>
               );

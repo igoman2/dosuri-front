@@ -11,9 +11,15 @@ interface ILayoutProps {
   header?: ReactElement;
   children: ReactElement | ReactElement[];
   footer?: boolean;
+  full?: boolean;
 }
 
-const Layout: FC<ILayoutProps> = ({ header, children, footer = true }) => {
+const Layout: FC<ILayoutProps> = ({
+  header,
+  children,
+  footer = true,
+  full = false,
+}) => {
   const router = useRouter();
   const setMenu = useSetRecoilState(menuState);
 
@@ -34,7 +40,7 @@ const Layout: FC<ILayoutProps> = ({ header, children, footer = true }) => {
           css={{
             overflowY: `auto`,
             overflowX: "hidden",
-            padding: "0 2rem",
+            padding: full ? "0" : "0 2rem",
             marginBottom: footer ? "6.5rem" : "",
             height: "100%",
           }}

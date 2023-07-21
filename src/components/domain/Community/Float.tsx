@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { DIRECTION } from "@/types/common";
 
 interface IFloatProps {
-  scrollDir: DIRECTION | undefined;
+  scrollDir?: DIRECTION | undefined;
   distance: string;
   onClick: () => void;
 }

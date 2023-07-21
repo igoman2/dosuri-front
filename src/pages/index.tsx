@@ -118,7 +118,9 @@ const Home = () => {
               (hospital: IGoodPriceHospitals, i) => (
                 <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
                   <a>
-                    <HospitalCard hospitalInfo={hospital} type="price" />
+                    <div css={{ marginTop: "1rem" }}>
+                      <HospitalCard hospitalInfo={hospital} type="price" />
+                    </div>
                   </a>
                 </Link>
               )
@@ -164,7 +166,9 @@ const Home = () => {
                 (hospital: IHospitalInfoResult, i) => (
                   <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
                     <a>
-                      <HospitalCard hospitalInfo={hospital} />
+                      <div css={{ marginTop: "1rem" }}>
+                        <HospitalCard hospitalInfo={hospital} />
+                      </div>{" "}
                     </a>
                   </Link>
                 )
@@ -197,7 +201,9 @@ const Home = () => {
               (hospital: IHospitalInfoResult, i) => (
                 <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
                   <a>
-                    <HospitalCard hospitalInfo={hospital} />
+                    <div css={{ marginTop: "1rem" }}>
+                      <HospitalCard hospitalInfo={hospital} />
+                    </div>{" "}
                   </a>
                 </Link>
               )

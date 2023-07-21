@@ -1,6 +1,8 @@
 import * as fbq from "../lib/fpixel";
 import * as gtag from "../lib/gtag";
 import "react-spring-bottom-sheet/dist/style.css";
+import "swiper/css";
+import "swiper/css/pagination";
 import { Global, ThemeProvider } from "@emotion/react";
 import { Hydrate, QueryClientProvider } from "react-query";
 import { Suspense, useEffect } from "react";
