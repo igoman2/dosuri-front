@@ -18,6 +18,9 @@ import { useInfiniteQuery } from "react-query";
 import { useTheme } from "@emotion/react";
 import ImageTextView from "@/components/CustomImage/ImageTextView";
 import { rankViewState } from "../Hospital/store";
+import SearchHospitalModal from "./FilterOptionModal";
+import { searchModalState } from "./store";
+import FilterOptionModal from "./FilterOptionModal";
 
 const AllFilterSection = () => {
   const theme = useTheme();
@@ -27,6 +30,7 @@ const AllFilterSection = () => {
   const location = useRecoilValue(locationState);
   const rankState = useRecoilValue(rankViewState);
   const resetRankState = useResetRecoilState(rankViewState);
+  const [mode, setMode] = useRecoilState(searchModalState);
 
   function onDismiss() {
     setOpen(false);
@@ -111,12 +115,21 @@ const AllFilterSection = () => {
         >
           모든 병원 보기
         </div>
-        <ImageTextViewWrapper onClick={() => setOpen(true)}>
-          <ImageTextView
-            text={category.title}
-            border
-            image={<Icon name={`chevron`} height="12" width="12" />}
-          />
+        <ImageTextViewWrapper>
+          <div onClick={() => setOpen(true)}>
+            <ImageTextView
+              text={category.title}
+              border
+              image={<Icon name={`chevron`} height="12" width="12" />}
+            />
+          </div>
+          <div onClick={() => setMode(true)}>
+            <ImageTextView
+              text="필터"
+              border
+              image={<Icon name={`chevron`} height="12" width="12" />}
+            />
+          </div>
         </ImageTextViewWrapper>
 
         <InfiniteScroll loadMore={fetchNextList} hasMore={hasNextPage}>
@@ -165,6 +178,7 @@ const AllFilterSection = () => {
           })}
         </BottomSheet>
       )}
+      <FilterOptionModal />
     </>
   );
 };
@@ -174,6 +188,8 @@ export default memo(AllFilterSection);
 const ImageTextViewWrapper = styled.div`
   margin-top: 0.5rem;
   margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
 `;
 
 const SelectList = styled.div`
