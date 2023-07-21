@@ -3,13 +3,16 @@ import React, { FC, ReactElement } from "react";
 import Icon from "@/util/Icon";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
+import { useTheme } from "@emotion/react";
 
 interface IHeaderDepthProps {
   left?: ReactElement;
+  bottomLine?: boolean;
 }
 
-const HeaderDepth: FC<IHeaderDepthProps> = ({ left }) => {
+const HeaderDepth: FC<IHeaderDepthProps> = ({ left, bottomLine }) => {
   const router = useRouter();
+  const theme = useTheme();
 
   const onBack = () => {
     router.back();
@@ -30,6 +33,9 @@ const HeaderDepth: FC<IHeaderDepthProps> = ({ left }) => {
         padding: "0 1rem",
         zIndex: "50",
         position: "relative",
+        borderBottom: bottomLine
+          ? `1px solid ${theme.colors.grey_light}`
+          : "none",
       }}
     >
       <BackButton onClick={onBack}>

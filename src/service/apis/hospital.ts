@@ -3,6 +3,8 @@ import {
   IGetFilteredHospitalListParams,
   IGetHospitalInfo,
   IGetHospitalListParams,
+  IGetMapHospitals,
+  IGetMapHospitalsParams,
   IGetRecentHospitalSearchListParams,
   IHospitalInfoHomeResponse,
   IHospitalInfoResponse,
@@ -137,6 +139,16 @@ export const createReservation = async (data: { hospital: any }) => {
   const response = await api.post<ReservationResponse>(
     `hospital/v1/hospital-reservations`,
     data
+  );
+  return response.data;
+};
+
+export const getMapHospitals = async (params: IGetMapHospitalsParams) => {
+  const response = await api.get<IGetMapHospitals[]>(
+    `hospital/v1/hospitals/map`,
+    {
+      params,
+    }
   );
   return response.data;
 };

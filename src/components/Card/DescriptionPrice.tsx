@@ -62,7 +62,9 @@ const DescriptionPrice: FC<IDescriptionPriceProps> = ({
         >
           <span>60분</span>
           <span css={{ color: theme.colors.purple, fontWeight: 700 }}>
-            {hospitalInfo.avg_price_per_hour.toLocaleString()}원
+            {hospitalInfo.avg_price_per_hour
+              ? `${hospitalInfo.avg_price_per_hour.toLocaleString()}원`
+              : ""}
           </span>
         </span>
       </div>

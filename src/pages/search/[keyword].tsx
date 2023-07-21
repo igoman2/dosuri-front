@@ -93,7 +93,9 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
         {hospitalsInAllTab?.results.map((hospital: IHospitalInfoResult) => (
           <Link href={`/hospital/${hospital.uuid}`} key={hospital.uuid}>
             <a>
-              <HospitalCard hospitalInfo={hospital} />
+              <div css={{ marginTop: "1rem" }}>
+                <HospitalCard hospitalInfo={hospital} />
+              </div>
             </a>
           </Link>
         ))}

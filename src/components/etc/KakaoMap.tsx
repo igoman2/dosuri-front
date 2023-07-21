@@ -124,13 +124,6 @@ const KakaoMap: FC<IMapProps> = ({
 
   // 카카오맵 이니셜라이징 및 마커 이벤트 등록
   useEffect(() => {
-    const mapScript = document.createElement("script");
-
-    mapScript.async = true;
-    mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY}&autoload=false`;
-
-    document.head.appendChild(mapScript);
-
     const onLoadKakaoMap = () => {
       window.kakao.maps.load(() => {
         const mapContainer = document.getElementById("map");
@@ -159,6 +152,7 @@ const KakaoMap: FC<IMapProps> = ({
 
         // 지도 드래그 이벤트 발생 시 마커를 지우고 새로 생성한다.
         kakao.maps.event.addListener(mapRef.current, "drag", function () {
+          console.log("!!");
           setIsDragged(true);
           deleteMarkers();
           markersRef.current = [];
@@ -184,7 +178,7 @@ const KakaoMap: FC<IMapProps> = ({
         });
       });
     };
-    mapScript.addEventListener("load", onLoadKakaoMap);
+    onLoadKakaoMap();
   }, [coordinates]);
 
   return <MapWrapper id="map" />;

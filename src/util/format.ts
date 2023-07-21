@@ -82,3 +82,31 @@ export const addComma = (value: string) => {
 export const removeComma = (value: string) => {
   return value.replace(/[^\d]+/g, "");
 };
+
+/**
+ * @param money
+ * @example 172,200 -> 17.2만원
+ *
+ */
+export const formatMoney = (money: number) => {
+  if (isNaN(money)) {
+    throw new Error("Invalid input. Please provide a valid number.");
+  }
+
+  const suffixes = ["", "만", "억", "조", "경"]; // Add more if needed
+
+  let num = Math.abs(money);
+  let suffixIndex = 0;
+
+  while (num >= 10000 && suffixIndex < suffixes.length - 1) {
+    num /= 10000;
+    suffixIndex++;
+  }
+
+  const formattedNumber = new Intl.NumberFormat("ko-KR", {
+    style: "decimal",
+    maximumFractionDigits: 1,
+  }).format(num);
+
+  return `${formattedNumber}${suffixes[suffixIndex]}원`;
+};

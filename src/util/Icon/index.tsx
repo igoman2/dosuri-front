@@ -32,6 +32,7 @@ import TalkSqaure from "@/public/assets/talk_square.svg";
 import Talk from "@/public/assets/talk.svg";
 import Thumb from "@/public/assets/thumb.svg";
 import Write from "@/public/assets/write.svg";
+import Refresh from "@/public/assets/refresh.svg";
 
 export const iconTypes: any = {
   home: Home,
@@ -66,6 +67,7 @@ export const iconTypes: any = {
   happy: Happy,
   location: Location,
   appleIcon: AppleIcon,
+  refresh: Refresh,
 } as const;
 export type IconName = keyof typeof iconTypes;
 

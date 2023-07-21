@@ -5,6 +5,7 @@ import Document, {
   Main,
   NextScript,
 } from "next/document";
+import Script from "next/script";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -13,6 +14,8 @@ class MyDocument extends Document {
   }
 
   render() {
+    const KAKAO_SDK_URL = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY}&autoload=false`;
+
     return (
       <Html lang="kr">
         <Head>
@@ -156,6 +159,11 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <Script src={KAKAO_SDK_URL} strategy="beforeInteractive" />
+          <Script
+            src={`${KAKAO_SDK_URL}&libraries=services,clusterer,drawing`}
+            strategy="beforeInteractive"
+          />
         </body>
       </Html>
     );

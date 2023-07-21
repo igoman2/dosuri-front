@@ -1,12 +1,8 @@
-import "swiper/css";
-import "swiper/css/pagination";
-
 import { A11y, Scrollbar } from "swiper";
 import React, { FC } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import Image from "next/image";
-import styled from "@emotion/styled";
 
 interface DoSwiperProps {
   source: string[];

@@ -425,3 +425,25 @@ export interface ReservationResponse {
   hospital: string;
   user: string;
 }
+
+export interface IGetMapHospitalsParams {
+  latitude: number;
+  longitude: number;
+  distance_range: number;
+}
+
+export interface IGetMapHospitals {
+  uuid: string;
+  name: string;
+  area: string;
+  up_count: number;
+  view_count: number;
+  article_count: number;
+  avg_price_per_hour: number;
+  is_partner: boolean;
+  attachments: {
+    signed_path: string;
+  }[];
+  latitude: string;
+  longitude: string;
+}

@@ -20,7 +20,6 @@ const HospitalCard: FC<IHospitalCardProps> = ({
     <div
       css={{
         display: "flex",
-        marginTop: "1rem",
       }}
     >
       <div
