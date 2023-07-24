@@ -25,3 +25,16 @@ export interface ListItem {
   title: string;
   key: string;
 }
+
+export const MAP_SELECT_LIST: MapListItem[] = [
+  { title: "치료비 (60분)", key: "price" },
+  {
+    title: "후기 개수",
+    key: "review",
+  },
+];
+
+export interface MapListItem {
+  title: "후기 개수" | "치료비 (60분)";
+  key: "review" | "price";
+}

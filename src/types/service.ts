@@ -430,6 +430,11 @@ export interface IGetMapHospitalsParams {
   latitude: number;
   longitude: number;
   distance_range: number;
+  map_type: "price" | "review";
+  price_range_from: number;
+  price_range_to: number;
+  opened_at_range_from: string;
+  opened_at_range_to: string;
 }
 
 export interface IGetMapHospitals {

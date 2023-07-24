@@ -1,20 +1,18 @@
 import FullModalBase from "@/components/Modal/FullModalBase";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { price, searchModalState, year } from "./store";
 import styled from "@emotion/styled";
 import Button from "@/components/Button";
 import theme from "@/styles/theme";
 import Slider from "@/components/Slider";
 import { useState } from "react";
-
-const MAX_PRICE = 2000000;
-const MAX_YEAR = 80;
+import { MAX_PRICE, MAX_YEAR } from "@/constants/Filter";
 
 const FilterOptionModal = () => {
   const [modal, setModal] = useRecoilState(searchModalState);
+  const [defaultFlag, setDefault] = useState(false);
   const [filterPrice, setFilterPrice] = useRecoilState(price);
   const [filterYear, setFilterYear] = useRecoilState(year);
-  const [defaultFlag, setDefault] = useState(false);
 
   const closeModal = () => {
     setModal(false);
@@ -32,10 +30,15 @@ const FilterOptionModal = () => {
   };
 
   const onClick = () => {
-    console.log(filterPrice);
-    console.log(filterYear);
-
     closeModal();
+  };
+
+  const handlePriceChange = (value: number) => {
+    setFilterPrice(value);
+  };
+
+  const handleYearChange = (value: number) => {
+    setFilterYear(value);
   };
 
   return (
@@ -61,7 +64,7 @@ const FilterOptionModal = () => {
               max={MAX_PRICE}
               min={0}
               value={filterPrice}
-              setValue={setFilterPrice}
+              setValue={handlePriceChange}
               step={10000}
               setDefault={setDefault}
               defaultFlag={defaultFlag}
@@ -77,7 +80,7 @@ const FilterOptionModal = () => {
               max={MAX_YEAR}
               min={0}
               value={filterYear}
-              setValue={setFilterYear}
+              setValue={handleYearChange}
               step={1}
               setDefault={setDefault}
               defaultFlag={defaultFlag}
