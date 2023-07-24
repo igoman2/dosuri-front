@@ -10,7 +10,7 @@ export const searchFilterState = atom<{
   title: string;
   key: string;
 }>({
-  key: `scroll${v4()}`,
+  key: `searchFilter${v4()}`,
   default: {
     title: "치료비 낮은순",
     key: "avg_price_per_hour",

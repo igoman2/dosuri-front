@@ -21,6 +21,22 @@ import { IGetMapHospitals } from "@/types/service";
 import HospitalCard from "@/components/Card/HospitalCard";
 import { formatMoney } from "@/util/format";
 import { set } from "lodash";
+import FilterOptionModal from "@/components/domain/Search/FilterOptionModal";
+import {
+  price,
+  searchModalState,
+  year,
+} from "@/components/domain/Search/store";
+import { useRecoilState, useRecoilValue } from "recoil";
+import FilterSection from "@/components/domain/Map/FilterSection";
+import { searchFilterState } from "@/store/searchOption";
+import { MAP_SELECT_LIST } from "@/mock/searchCategory";
+import dayjs from "dayjs";
+import { getCurrentDateMinusYears } from "@/util/extractYear";
+import { MAX_PRICE, MAX_YEAR } from "@/constants/Filter";
+import { useDebounce } from "usehooks-ts";
+import Link from "next/link";
+import { mapFilterState } from "@/store/mapFilter";
 
 type ZoomMap = {
   [key: number]: number;
@@ -64,8 +80,14 @@ const Maps = () => {
   const [swiperHospitals, setSwiperHospitals] = useState<IGetMapHospitals[]>(
     []
   );
+  const currentHospital = useRef<IGetMapHospitals | null>(null);
+  const filterPrice = useRecoilValue(price);
+  const debouncedFilterPrice = useDebounce<number>(filterPrice, 500);
+  const filterYear = useRecoilValue(year);
+  const debouncedFilterYear = useDebounce<number>(filterYear, 500);
+  const [category, setCategory] = useRecoilState(mapFilterState);
   const { data, refetch } = useQuery(
-    ["getMapHospitals"],
+    ["getMapHospitals", category, debouncedFilterPrice, debouncedFilterYear],
     async () => {
       if (mapCenter.latitude === 0 && mapCenter.longitude === 0) {
         return;
@@ -74,6 +96,11 @@ const Maps = () => {
         latitude: mapCenter.latitude,
         longitude: mapCenter.longitude,
         distance_range: zoomMap[level],
+        map_type: category.key,
+        opened_at_range_from: getCurrentDateMinusYears(filterYear),
+        opened_at_range_to: dayjs().toISOString(),
+        price_range_from: 0,
+        price_range_to: filterPrice,
       });
       return resp;
     },
@@ -84,6 +111,7 @@ const Maps = () => {
       suspense: false,
       onSuccess: (resp: IGetMapHospitals[]) => {
         setSwiperHospitals(resp);
+        currentHospital.current = resp[0];
       },
     }
   );
@@ -92,6 +120,7 @@ const Maps = () => {
   // }, [isClusterClicked, data, hospitalState]);
 
   // console.log(swiperHospitals);
+
   const handleDrag = (map: kakao.maps.Map) => {
     setMapCenter({
       latitude: map.getCenter().getLat(),
@@ -203,18 +232,7 @@ const Maps = () => {
 
   return (
     <Layout full header={<HeaderDepth bottomLine />} footer={false}>
-      <ImageTextViewWrapper>
-        <ImageTextView
-          text={"표시: 치료비"}
-          border
-          image={<Icon name={`chevron`} height="12" width="12" />}
-        />
-        <ImageTextView
-          text={"필터"}
-          border
-          image={<Icon name={`chevron`} height="12" width="12" />}
-        />
-      </ImageTextViewWrapper>
+      <FilterSection category={category} setCategory={setCategory} />
       <div
         style={{
           width: "100%",
@@ -225,10 +243,6 @@ const Maps = () => {
         <Map
           id="map"
           isPanto
-          // center={{
-          //   lat: 37.4794266,
-          //   lng: 126.9507878,
-          // }}
           center={{
             lat: mapCenter.latitude,
             lng: mapCenter.longitude,
@@ -264,6 +278,7 @@ const Maps = () => {
                   lat: Number(pos.latitude),
                   lng: Number(pos.longitude),
                 }}
+                zIndex={currentHospital.current?.uuid === pos.uuid ? 100 : 1}
               >
                 <div
                   data-id={pos.uuid}
@@ -271,6 +286,8 @@ const Maps = () => {
                     setIsClusterClicked(true);
                     setSwiperHospitals([pos]);
                     setHospitalState([pos]);
+                    currentHospital.current = pos;
+
                     setMapCenter({
                       latitude: Number(pos.latitude),
                       longitude: Number(pos.longitude),
@@ -282,7 +299,10 @@ const Maps = () => {
                     textAlign: "center",
                     background: "white",
                     borderRadius: "5px",
-                    border: "none",
+                    border:
+                      currentHospital.current?.uuid === pos.uuid
+                        ? `1px solid ${theme.colors.purple_light}`
+                        : `1px solid ${theme.colors.grey_light}`,
                     fontWeight: "bold",
                     padding: "1rem 0.5rem",
                   }}
@@ -334,7 +354,7 @@ const Maps = () => {
             width: "90%",
             padding: "0 1em",
             borderRadius: "0.5rem",
-            zIndex: 50,
+            zIndex: 3,
           }}
         >
           <Swiper
@@ -352,6 +372,7 @@ const Maps = () => {
                 latitude: Number(hospital?.latitude),
                 longitude: Number(hospital?.longitude),
               });
+              currentHospital.current = hospital;
             }}
           >
             {swiperHospitals?.map((item: IGetMapHospitals, i) => (
@@ -361,24 +382,21 @@ const Maps = () => {
                     padding: "1rem 0",
                   }}
                 >
-                  {<HospitalCard hospitalInfo={item} type="price" />}
+                  <Link href={`/hospital/${item.uuid}`} key={item.uuid}>
+                    <a>{<HospitalCard hospitalInfo={item} type="price" />}</a>
+                  </Link>
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
       </div>
+      <FilterOptionModal />
     </Layout>
   );
 };
 
 export default Maps;
-
-const ImageTextViewWrapper = styled.div`
-  display: flex;
-  gap: 1rem;
-  margin: 0.5rem 0 1rem 1rem;
-`;
 
 const ImageWrapper = styled.div`
   position: relative;
