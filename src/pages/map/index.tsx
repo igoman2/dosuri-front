@@ -37,6 +37,7 @@ import { MAX_PRICE, MAX_YEAR } from "@/constants/Filter";
 import { useDebounce } from "usehooks-ts";
 import Link from "next/link";
 import { mapFilterState } from "@/store/mapFilter";
+import Spinner from "@/components/Spinner/Spinner";
 
 type ZoomMap = {
   [key: number]: number;
@@ -229,6 +230,10 @@ const Maps = () => {
   //     };
   //   }
   // }, [markerClusterer]);
+
+  if (!loaded) {
+    return <Spinner />;
+  }
 
   return (
     <Layout full header={<HeaderDepth bottomLine />} footer={false}>
