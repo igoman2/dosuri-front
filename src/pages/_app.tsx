@@ -111,10 +111,10 @@ function MyApp({
               <Global styles={global} />
               <div
                 css={{
+                  height: "100dvh",
                   margin: "0 auto",
                   minWidth: "32rem",
                   maxWidth: "40rem",
-                  height: "100vh",
                   display: "flex",
                   flexDirection: "column",
                 }}

@@ -241,7 +241,7 @@ const Maps = () => {
       <div
         style={{
           width: "100%",
-          height: "calc(100% - 44px)",
+          height: "100%",
           position: "relative",
         }}
       >

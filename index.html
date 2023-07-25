@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Content - Full Viewport Height</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+      }
+
+      /* 부모 컨테이너를 100vh로 뷰포트 높이만큼 설정합니다. */
+      .parent-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* 최소 높이를 뷰포트 높이로 설정합니다. */
+      }
+
+      /* 헤더와 푸터를 flex-shrink: 0;로 설정하여 크기 조절이 불가능하게 합니다. */
+      .header,
+      .footer {
+        flex-shrink: 0;
+        background-color: lightblue;
+        padding: 10px;
+      }
+
+      /* 컨텐츠 영역을 flex-grow: 1;로 설정하여 남은 공간을 모두 채우도록 합니다. */
+      .content {
+        flex-grow: 1;
+        background-color: lightgreen;
+        padding: 10px;
+        overflow-y: hidden; /* 세로 스크롤이 보이지 않도록 합니다. */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="parent-container">
+      <div class="header">Header</div>
+      <div class="content">
+        <!-- 동적으로 길이가 변하는 컨텐츠를 이곳에 추가합니다. -->
+        <!-- 예를 들어, 다음과 같이 내용을 추가할 수 있습니다. -->
+        <!-- <p>Some dynamic content goes here...</p> -->
+      </div>
+      <div class="footer">Footer</div>
+    </div>
+  </body>
+</html>
