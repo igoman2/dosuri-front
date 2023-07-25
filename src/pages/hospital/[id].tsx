@@ -337,30 +337,15 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
           </div>
           <div className={open || modal ? "disable" : ""}>
             <SaleButtonWrapper>
-              {hospitalInfoData.is_partner ? (
-                <Button
-                  text="도수리에서 예약하고 3,000원 적립받기"
-                  width="100%"
-                  height="5.2rem"
-                  borderRadius="0.3rem"
-                  backgroundColor={theme.colors.purple_light}
-                  bold
-                  onClick={handleReservationClick}
-                ></Button>
-              ) : (
-                <Link href="/insurance-register">
-                  <a>
-                    <Button
-                      text="도수리에서 최대 70% 싸게 도수치료 받기"
-                      width="100%"
-                      height="5.2rem"
-                      borderRadius="0.3rem"
-                      backgroundColor={theme.colors.purple_light}
-                      bold
-                    />
-                  </a>
-                </Link>
-              )}
+              <Button
+                text="도수리에서 예약하고 3,000원 적립받기"
+                width="100%"
+                height="5.2rem"
+                borderRadius="0.3rem"
+                backgroundColor={theme.colors.purple_light}
+                bold
+                onClick={handleReservationClick}
+              ></Button>
             </SaleButtonWrapper>
           </div>
         </Hospital>
