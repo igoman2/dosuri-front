@@ -107,8 +107,8 @@ const Maps = () => {
         longitude: mapCenter.longitude,
         distance_range: zoomMap[level],
         map_type: category.key,
-        opened_at_range_from: getCurrentDateMinusYears(filterYear.min),
-        opened_at_range_to: getCurrentDateMinusYears(filterYear.max),
+        opened_at_range_from: getCurrentDateMinusYears(filterYear.max),
+        opened_at_range_to: getCurrentDateMinusYears(filterYear.min),
         price_range_from: filterPrice.min,
         price_range_to: filterPrice.max,
       });
