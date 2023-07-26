@@ -1,3 +1,4 @@
+import { DefaultLocation } from "@/constants/Map";
 import { Location } from "@/types/location";
 import { useEffect, useState } from "react";
 
@@ -8,18 +9,9 @@ interface locationType {
 }
 
 const useGeolocation = () => {
-  // location의 default 값은 강남역입니다.
-  const DefaultLocation = {
-    LATITUDE: 37.497942,
-    LONGITUDE: 127.027621,
-  };
-
   const [location, setLocation] = useState<locationType>({
     loaded: false,
-    coordinates: {
-      latitude: DefaultLocation.LATITUDE,
-      longitude: DefaultLocation.LONGITUDE,
-    },
+    coordinates: { latitude: 0, longitude: 0 },
   });
 
   // 성공에 대한 로직

@@ -122,6 +122,12 @@ const Maps = () => {
       onSuccess: (resp: IGetMapHospitals[]) => {
         setSwiperHospitals(resp);
         currentHospital.current = resp[0];
+        if (resp.length > 0) {
+          setMapCenter({
+            latitude: Number(resp[0].latitude),
+            longitude: Number(resp[0].longitude),
+          });
+        }
       },
     }
   );
