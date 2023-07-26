@@ -32,6 +32,7 @@ import TalkSqaure from "@/public/assets/talk_square.svg";
 import Talk from "@/public/assets/talk.svg";
 import Thumb from "@/public/assets/thumb.svg";
 import Write from "@/public/assets/write.svg";
+import Map from "@/public/assets/map.svg";
 import Refresh from "@/public/assets/refresh.svg";
 
 export const iconTypes: any = {
@@ -60,6 +61,7 @@ export const iconTypes: any = {
   logo2: Logo2,
   logo3: Logo3,
   write: Write,
+  map: Map,
   search: Search,
   delete: Delete,
   sad: Sad,

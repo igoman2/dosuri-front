@@ -25,11 +25,16 @@ import SelectAddressModal from "@/components/domain/Address/SelectAddressModal";
 import { getCookie, setCookie } from "cookies-next";
 import AppBanner from "@/components/Banner/AppBanner";
 import useRN from "@/hooks/useRN";
+import Float from "@/components/domain/Community/Float";
+import useDirection from "@/hooks/useDirection";
+import { useRouter } from "next/router";
 
 const expirationPeriod = 1;
 
 const Home = () => {
   const theme = useTheme();
+  const router = useRouter();
+  const [scrollDir] = useDirection();
   const [hasCookie, setHasCookie] = useState(true);
   const { isApp } = useRN();
   const { isLoggedIn } = useAuth();
@@ -97,7 +102,6 @@ const Home = () => {
           url: "https://www.dosuri.site",
         }}
       />
-
       <section
         css={{
           marginBottom: "2.5rem",
@@ -144,7 +148,6 @@ const Home = () => {
           </Link>
         )}
       </LogginBanner>
-
       <section
         css={{
           marginBottom: "2.5rem",
@@ -211,7 +214,6 @@ const Home = () => {
           </>
         )}
       </section>
-
       <LogginBanner>
         {!isLoggedIn && (
           <Link href="/login">
@@ -228,7 +230,6 @@ const Home = () => {
           </Link>
         )}
       </LogginBanner>
-
       <section
         css={{
           marginBottom: "2.5rem",
@@ -261,6 +262,20 @@ const Home = () => {
           </EmptyTextWrapper>
         )}
       </section>
+      <Float
+        scrollDir={scrollDir}
+        distance="8.5rem"
+        icon={
+          <Button
+            iconName="map"
+            text="지도로 보기"
+            onClick={() => {
+              router.push("/map");
+            }}
+          />
+        }
+      />
+
       <SelectAddressModal />
     </Layout>
   );

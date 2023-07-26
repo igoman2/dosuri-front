@@ -18,6 +18,7 @@ import { useInfiniteQuery } from "react-query";
 import { useRecoilValue } from "recoil";
 import { userInfoState } from "@/store/user";
 import Link from "next/link";
+import Button from "@/components/Button";
 
 const Review = () => {
   const [scrollDir] = useDirection();
@@ -98,11 +99,18 @@ const Review = () => {
         <Float
           scrollDir={scrollDir}
           distance="1.5rem"
-          onClick={() => {
-            setModalType("review");
-            setIsActive(true);
-          }}
+          icon={
+            <Button
+              iconName="pen"
+              text="후기 또는 질문 쓰기"
+              onClick={() => {
+                setModalType("review");
+                setIsActive(true);
+              }}
+            />
+          }
         />
+
         {isActive && (
           <ModalFactory
             isActive={isActive}
