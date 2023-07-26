@@ -451,4 +451,5 @@ export interface IGetMapHospitals {
   }[];
   latitude: string;
   longitude: string;
+  latest_article: string;
 }
