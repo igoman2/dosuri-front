@@ -53,7 +53,7 @@ const FilterOptionModal = () => {
         <FullModalBase
           isActive={false}
           onClose={() => {
-            closeModal;
+            closeModal();
           }}
           title="필터"
           isBackBtnVisible={true}
