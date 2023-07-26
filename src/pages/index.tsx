@@ -171,7 +171,7 @@ const Home = () => {
                     <a>
                       <div css={{ marginTop: "1rem" }}>
                         <HospitalCard hospitalInfo={hospital} />
-                      </div>{" "}
+                      </div>
                     </a>
                   </Link>
                 )
@@ -206,7 +206,7 @@ const Home = () => {
                   <a>
                     <div css={{ marginTop: "1rem" }}>
                       <HospitalCard hospitalInfo={hospital} />
-                    </div>{" "}
+                    </div>
                   </a>
                 </Link>
               )
