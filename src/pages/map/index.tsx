@@ -83,12 +83,21 @@ const Maps = () => {
   );
   const currentHospital = useRef<IGetMapHospitals | null>(null);
   const filterPrice = useRecoilValue(price);
-  const debouncedFilterPrice = useDebounce<number>(filterPrice, 500);
+  const debouncedMaxFilterPrice = useDebounce<number>(filterPrice.max, 500);
+  const debouncedMinFilterPrice = useDebounce<number>(filterPrice.min, 500);
   const filterYear = useRecoilValue(year);
-  const debouncedFilterYear = useDebounce<number>(filterYear, 500);
+  const debouncedMinFilterYear = useDebounce<number>(filterYear.min, 500);
+  const debouncedMaxFilterYear = useDebounce<number>(filterYear.max, 500);
   const [category, setCategory] = useRecoilState(mapFilterState);
   const { data, refetch } = useQuery(
-    ["getMapHospitals", category, debouncedFilterPrice, debouncedFilterYear],
+    [
+      "getMapHospitals",
+      category,
+      debouncedMaxFilterPrice,
+      debouncedMaxFilterYear,
+      debouncedMinFilterPrice,
+      debouncedMinFilterYear,
+    ],
     async () => {
       if (mapCenter.latitude === 0 && mapCenter.longitude === 0) {
         return;
@@ -98,10 +107,10 @@ const Maps = () => {
         longitude: mapCenter.longitude,
         distance_range: zoomMap[level],
         map_type: category.key,
-        opened_at_range_from: getCurrentDateMinusYears(filterYear),
-        opened_at_range_to: dayjs().toISOString(),
-        price_range_from: 0,
-        price_range_to: filterPrice,
+        opened_at_range_from: getCurrentDateMinusYears(filterYear.min),
+        opened_at_range_to: getCurrentDateMinusYears(filterYear.max),
+        price_range_from: filterPrice.min,
+        price_range_to: filterPrice.max,
       });
       return resp;
     },
@@ -116,11 +125,6 @@ const Maps = () => {
       },
     }
   );
-  // const swiperHospitals = useMemo(() => {
-  //   return isClusterClicked ? hospitalState : data;
-  // }, [isClusterClicked, data, hospitalState]);
-
-  // console.log(swiperHospitals);
 
   const handleDrag = (map: kakao.maps.Map) => {
     setMapCenter({
