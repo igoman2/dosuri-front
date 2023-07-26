@@ -8,9 +8,18 @@ interface locationType {
 }
 
 const useGeolocation = () => {
+  // location의 default 값은 강남역입니다.
+  const DefaultLocation = {
+    LATITUDE: 37.497942,
+    LONGITUDE: 127.027621,
+  };
+
   const [location, setLocation] = useState<locationType>({
     loaded: false,
-    coordinates: { latitude: 0, longitude: 0 },
+    coordinates: {
+      latitude: DefaultLocation.LATITUDE,
+      longitude: DefaultLocation.LONGITUDE,
+    },
   });
 
   // 성공에 대한 로직
@@ -29,8 +38,11 @@ const useGeolocation = () => {
   // 에러에 대한 로직
   const onError = (error: { code: number; message: string }) => {
     setLocation({
-      loaded: false,
-      coordinates: { latitude: 0, longitude: 0 },
+      loaded: true,
+      coordinates: {
+        latitude: DefaultLocation.LATITUDE,
+        longitude: DefaultLocation.LONGITUDE,
+      },
       error,
     });
   };
@@ -43,10 +55,11 @@ const useGeolocation = () => {
         code: 0,
         message: "Geolocation not supported",
       });
+    } else {
+      navigator.geolocation.getCurrentPosition(onSuccess, onError, {
+        enableHighAccuracy: true,
+      });
     }
-    navigator.geolocation.getCurrentPosition(onSuccess, onError, {
-      enableHighAccuracy: true,
-    });
   }, []);
 
   return location;
