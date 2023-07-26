@@ -95,10 +95,16 @@ const Community = () => {
         <Float
           scrollDir={scrollDir}
           distance="8.5rem"
-          onClick={() => {
-            setModalType("review");
-            setIsActive(true);
-          }}
+          icon={
+            <Button
+              iconName="pen"
+              text="후기 또는 질문 쓰기"
+              onClick={() => {
+                setModalType("review");
+                setIsActive(true);
+              }}
+            />
+          }
         />
         {isActive && (
           <ModalFactory

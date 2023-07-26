@@ -83,12 +83,21 @@ const Maps = () => {
   );
   const currentHospital = useRef<IGetMapHospitals | null>(null);
   const filterPrice = useRecoilValue(price);
-  const debouncedFilterPrice = useDebounce<number>(filterPrice, 500);
+  const debouncedMaxFilterPrice = useDebounce<number>(filterPrice.max, 500);
+  const debouncedMinFilterPrice = useDebounce<number>(filterPrice.min, 500);
   const filterYear = useRecoilValue(year);
-  const debouncedFilterYear = useDebounce<number>(filterYear, 500);
+  const debouncedMinFilterYear = useDebounce<number>(filterYear.min, 500);
+  const debouncedMaxFilterYear = useDebounce<number>(filterYear.max, 500);
   const [category, setCategory] = useRecoilState(mapFilterState);
   const { data, refetch } = useQuery(
-    ["getMapHospitals", category, debouncedFilterPrice, debouncedFilterYear],
+    [
+      "getMapHospitals",
+      category,
+      debouncedMaxFilterPrice,
+      debouncedMaxFilterYear,
+      debouncedMinFilterPrice,
+      debouncedMinFilterYear,
+    ],
     async () => {
       if (mapCenter.latitude === 0 && mapCenter.longitude === 0) {
         return;
@@ -98,10 +107,10 @@ const Maps = () => {
         longitude: mapCenter.longitude,
         distance_range: zoomMap[level],
         map_type: category.key,
-        opened_at_range_from: getCurrentDateMinusYears(filterYear),
-        opened_at_range_to: dayjs().toISOString(),
-        price_range_from: 0,
-        price_range_to: filterPrice,
+        opened_at_range_from: getCurrentDateMinusYears(filterYear.max),
+        opened_at_range_to: getCurrentDateMinusYears(filterYear.min),
+        price_range_from: filterPrice.min,
+        price_range_to: filterPrice.max,
       });
       return resp;
     },
@@ -113,14 +122,15 @@ const Maps = () => {
       onSuccess: (resp: IGetMapHospitals[]) => {
         setSwiperHospitals(resp);
         currentHospital.current = resp[0];
+        if (resp.length > 0) {
+          setMapCenter({
+            latitude: Number(resp[0].latitude),
+            longitude: Number(resp[0].longitude),
+          });
+        }
       },
     }
   );
-  // const swiperHospitals = useMemo(() => {
-  //   return isClusterClicked ? hospitalState : data;
-  // }, [isClusterClicked, data, hospitalState]);
-
-  // console.log(swiperHospitals);
 
   const handleDrag = (map: kakao.maps.Map) => {
     setMapCenter({
@@ -241,7 +251,7 @@ const Maps = () => {
       <div
         style={{
           width: "100%",
-          height: "100%",
+          height: "calc(100% - 44px)",
           position: "relative",
         }}
       >
@@ -353,10 +363,10 @@ const Maps = () => {
             display: "flex",
             justifyContent: "center",
             position: "absolute",
-            bottom: 40,
+            bottom: 0,
             left: "50%",
             transform: "translate(-50%, -10%)",
-            width: "95%",
+            width: "90%",
             padding: "0 1em",
             borderRadius: "0.5rem",
             zIndex: 3,

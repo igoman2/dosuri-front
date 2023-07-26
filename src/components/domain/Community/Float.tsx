@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, ReactElement } from "react";
 
 import Button from "../../Button";
 import styled from "@emotion/styled";
@@ -7,13 +7,14 @@ import { DIRECTION } from "@/types/common";
 interface IFloatProps {
   scrollDir?: DIRECTION | undefined;
   distance: string;
-  onClick: () => void;
+  icon?: ReactElement;
 }
 
-const Float: FC<IFloatProps> = ({ scrollDir, distance, onClick }) => {
+const Float: FC<IFloatProps> = ({ scrollDir, distance, icon }) => {
   return (
     <FloatWrapper direction={scrollDir} distance={distance}>
-      <Button iconName="pen" text="후기 또는 질문 쓰기" onClick={onClick} />
+      {icon}
+      {/* <Button iconName="pen" text={text} onClick={onClick} /> */}
     </FloatWrapper>
   );
 };
