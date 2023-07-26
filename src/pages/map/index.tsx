@@ -322,7 +322,9 @@ const Maps = () => {
                     padding: "1rem 0.5rem",
                   }}
                 >
-                  {formatMoney(pos.avg_price_per_hour)}
+                  {category.key === "price"
+                    ? formatMoney(pos.avg_price_per_hour)
+                    : `${pos.article_count}개`}
                 </div>
               </CustomOverlayMap>
             ))}
@@ -398,7 +400,9 @@ const Maps = () => {
                   }}
                 >
                   <Link href={`/hospital/${item.uuid}`} key={item.uuid}>
-                    <a>{<HospitalCard hospitalInfo={item} type="price" />}</a>
+                    <a>
+                      {<HospitalCard hospitalInfo={item} type={category.key} />}
+                    </a>
                   </Link>
                 </div>
               </SwiperSlide>
