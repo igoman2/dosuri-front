@@ -5,7 +5,10 @@ import styled from "@emotion/styled";
 interface ISliderProps {
   min: number;
   max: number;
-  value: number;
+  value: {
+    min: number;
+    max: number;
+  };
   step: number;
   setValue: any;
   setDefault: any;
@@ -13,6 +16,7 @@ interface ISliderProps {
 }
 
 interface ISliderFillTrackProps {
+  gap: string;
   fill: string;
 }
 
@@ -29,29 +33,61 @@ const Slider: FC<ISliderProps> = ({
 
   useEffect(() => {
     if (defaultFlag) {
-      setCurrentValue(max);
+      setCurrentValue({ min: min, max: max });
       setDefault(false);
     }
   }, [defaultFlag]);
 
-  const onSliderChange = (e: any) => {
-    const newValue = parseInt(e.target.value);
-    setCurrentValue(newValue);
-    setValue(newValue);
+  const onMinSliderChange = (e: any) => {
+    let newValue = parseInt(e.target.value);
+    const currentMax = currentValue.max;
+    if (newValue >= currentMax) {
+      if (currentMax === 0) newValue = 0;
+      else newValue = currentMax - step;
+    }
+    setCurrentValue((prev) => ({ ...prev, min: newValue }));
+    setValue((prev: any) => ({ ...prev, min: newValue }));
   };
+
+  const onMaxSliderChange = (e: any) => {
+    let newValue = parseInt(e.target.value);
+    const currentMin = currentValue.min;
+    if (newValue <= currentMin) {
+      if (currentMin === max) newValue = max;
+      newValue = currentValue.min + step;
+    }
+    setCurrentValue((prev) => ({ ...prev, max: newValue }));
+    setValue((prev: any) => ({ ...prev, max: newValue }));
+  };
+
   return (
     <SliderWrapper>
-      <div className="slider-start" />
       <SliderRail />
-      <SliderFillTrack fill={`${(currentValue / (max - min)) * 100}%`} />
+      <SliderFillTrack
+        gap={`${(currentValue.min / (max - min)) * 100}%`}
+        fill={`${((currentValue.max - currentValue.min) / (max - min)) * 100}%`}
+      />
       <input
         type="range"
-        min={step}
+        id="input-left"
+        min={min}
         max={max}
         className="slider"
-        value={defaultFlag ? max : currentValue}
+        value={currentValue.min}
         onChange={(e) => {
-          onSliderChange(e);
+          onMinSliderChange(e);
+        }}
+        step={step}
+      />
+      <input
+        type="range"
+        id="input-right"
+        min={min}
+        max={max}
+        className="slider"
+        value={currentValue.max}
+        onChange={(e) => {
+          onMaxSliderChange(e);
         }}
         step={step}
       />
@@ -66,20 +102,9 @@ const SliderWrapper = styled.div`
   position: relative;
   height: 2rem;
 
-  .slider-start {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 1rem;
-    border: 2px solid ${(props) => props.theme.colors.purple_light};
-    background: ${(props) => props.theme.colors.white};
-    z-index: 2;
-  }
-
   .slider {
     position: absolute;
+    pointer-events: none;
     width: 100%;
     height: 1rem;
     -webkit-appearance: none;
@@ -91,6 +116,7 @@ const SliderWrapper = styled.div`
   .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
+    pointer-events: all;
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
@@ -107,14 +133,16 @@ const SliderRail = styled.div`
   border-radius: 0.5rem;
   background-color: ${(props) => props.theme.colors.grey};
   top: 5px;
+  margin: 0 0.2rem;
 `;
 
 const SliderFillTrack = styled.div<ISliderFillTrackProps>`
+  margin: 0 0.2rem;
   width: ${(props) => props.fill};
   height: 1rem;
   border-radius: 0.5rem;
   position: absolute;
   background-color: ${(props) => props.theme.colors.purple_light};
   top: 5px;
-  left: 0.1rem;
+  left: ${(props) => props.gap};
 `;

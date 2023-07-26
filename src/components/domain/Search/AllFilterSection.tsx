@@ -1,7 +1,6 @@
 import { ListItem, SELECT_LIST } from "@/mock/searchCategory";
 import React, { memo, useEffect, useMemo, useState } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
-
 import { BottomSheet } from "react-spring-bottom-sheet";
 import Divider from "@/components/Divider/Divider";
 import HospitalCard from "@/components/Card/HospitalCard";
@@ -18,9 +17,10 @@ import { useInfiniteQuery } from "react-query";
 import { useTheme } from "@emotion/react";
 import ImageTextView from "@/components/CustomImage/ImageTextView";
 import { rankViewState } from "../Hospital/store";
-import SearchHospitalModal from "./FilterOptionModal";
-import { searchModalState } from "./store";
 import FilterOptionModal from "./FilterOptionModal";
+import { clicked, price, searchModalState, year } from "./store";
+
+const timezoneOffset = new Date().getTimezoneOffset() * 60000;
 
 const AllFilterSection = () => {
   const theme = useTheme();
@@ -31,6 +31,10 @@ const AllFilterSection = () => {
   const rankState = useRecoilValue(rankViewState);
   const resetRankState = useResetRecoilState(rankViewState);
   const [mode, setMode] = useRecoilState(searchModalState);
+  const filterPrice = useRecoilValue(price);
+  const filterYear = useRecoilValue(year);
+  const [yearISOString, setyearISOString] = useState({ from: "", to: "" });
+  const [filterFlag, setFilterFlag] = useRecoilState(clicked);
 
   function onDismiss() {
     setOpen(false);
@@ -50,15 +54,20 @@ const AllFilterSection = () => {
     setSearchFilter(category);
   }, [category]);
 
+  useEffect(() => {
+    setyearISOString({
+      from: convertToISOString(filterYear.max),
+      to: convertToISOString(filterYear.min),
+    });
+  }, [filterYear]);
+
   const initialUrl = useMemo(() => {
     if (category.key === "distance") {
-      return `/hospital/v1/hospitals?latitude=${location.lat}&longitude=${location.lng}&ordering=${category.key}`;
-    } else if (category.key === "avg_price_per_hour") {
-      return `/hospital/v1/hospitals-address-filtered-avg-price?ordering=${category.key}`;
+      return `/hospital/v1/hospitals-address-filtered-avg-price?latitude=${location.lat}&longitude=${location.lng}&ordering=${category.key}&price_range_from=${filterPrice.min}&price_range_to=${filterPrice.max}&opened_at_range_from=${yearISOString.from}&opened_at_range_to=${yearISOString.to}`;
     } else {
-      return `/hospital/v1/hospitals-address-filtered?ordering=${category.key}`;
+      return `/hospital/v1/hospitals-address-filtered-avg-price?ordering=${category.key}&price_range_from=${filterPrice.min}&price_range_to=${filterPrice.max}&opened_at_range_from=${yearISOString.from}&opened_at_range_to=${yearISOString.to}`;
     }
-  }, [category, location]);
+  }, [category, location, filterPrice, yearISOString]);
 
   useEffect(() => {
     if (rankState.viewRanking) {
@@ -74,16 +83,18 @@ const AllFilterSection = () => {
     return response.data;
   };
 
+  1;
+
   const {
     data: hospitalList,
     fetchNextPage,
     hasNextPage,
     isFetching,
   } = useInfiniteQuery(
-    [queryKeys.hospital, "hospital-by-filter", category],
+    [queryKeys.hospital, "hospital-by-filter", category, filterFlag === true],
     ({
       pageParam = rankState.viewRanking
-        ? `/hospital/v1/hospitals-address-filtered-avg-price?ordering=${category.key}&longitude=${rankState.nearSiteLongitude}&latitude=${rankState.nearSiteLatitude}`
+        ? `/hospital/v1/hospitals-address-filtered-avg-price?ordering=${category.key}&longitude=${rankState.nearSiteLongitude}&latitude=${rankState.nearSiteLatitude}&price_range_from=${filterPrice.min}&price_range_to=${filterPrice.max}&opened_at_range_from=${yearISOString.from}&opened_at_range_to=${yearISOString.to}`
         : initialUrl,
     }) => fetchUrl(pageParam),
     {
@@ -98,6 +109,11 @@ const AllFilterSection = () => {
       return;
     }
     fetchNextPage();
+  };
+
+  const convertToISOString = (year: number) => {
+    const yearOffset = year * 31536000000;
+    return new Date(Date.now() - timezoneOffset - yearOffset).toISOString();
   };
 
   return (
@@ -123,7 +139,12 @@ const AllFilterSection = () => {
               image={<Icon name={`chevron`} height="12" width="12" />}
             />
           </div>
-          <div onClick={() => setMode(true)}>
+          <div
+            onClick={() => {
+              setFilterFlag(false);
+              setMode(true);
+            }}
+          >
             <ImageTextView
               text="필터"
               border
@@ -138,16 +159,14 @@ const AllFilterSection = () => {
               return (
                 <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
                   <a>
-                    <div css={{ marginTop: "1rem" }}>
-                      <HospitalCard
-                        hospitalInfo={hospital}
-                        type={
-                          category.key === "avg_price_per_hour"
-                            ? "price"
-                            : "review"
-                        }
-                      />
-                    </div>
+                    <HospitalCard
+                      hospitalInfo={hospital}
+                      type={
+                        category.key === "avg_price_per_hour"
+                          ? "price"
+                          : "review"
+                      }
+                    />
                   </a>
                 </Link>
               );
