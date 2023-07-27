@@ -21,6 +21,7 @@ api.interceptors.request.use(
     // 서버측 미들웨어에서 이를 확인하고 검증한 후 해당 API에 요청함.
     const token = getCookie("accessToken");
     config!.headers = { ...config!.headers };
+    config.withCredentials = true;
     try {
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
