@@ -351,6 +351,7 @@ const Maps = () => {
           <Button
             iconName="refresh"
             text="이 지역 재검색"
+            shadow
             bold
             backgroundColor={theme.colors.white}
             color={theme.colors.black}
@@ -371,6 +372,7 @@ const Maps = () => {
             width: "90%",
             padding: "0 1em",
             borderRadius: "0.5rem",
+            boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
             zIndex: 3,
           }}
         >
@@ -416,9 +418,3 @@ const Maps = () => {
 };
 
 export default Maps;
-
-const ImageWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  height: 9rem;
-`;

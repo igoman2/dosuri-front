@@ -13,11 +13,18 @@ import { useSetRecoilState } from "recoil";
 import SelectAddressBar from "@/components/domain/Address/SelectAddressBar";
 import useAuth from "@/hooks/useAuth";
 import SelectAddressModal from "@/components/domain/Address/SelectAddressModal";
+import Float from "@/components/domain/Community/Float";
+import Button from "@/components/Button";
+import useDirection from "@/hooks/useDirection";
+import { useRouter } from "next/router";
 
 const Home = () => {
   const location = useGeolocation();
   const setLocaton = useSetRecoilState(locationState);
   const { isLoggedIn } = useAuth();
+  const [scrollDir] = useDirection();
+  const router = useRouter();
+
   useScrollRestoration();
 
   useEffect(() => {
@@ -55,6 +62,19 @@ const Home = () => {
         <AllFilterSection />
       </Suspense>
       <SelectAddressModal />
+      <Float
+        scrollDir={scrollDir}
+        distance="8.5rem"
+        icon={
+          <Button
+            iconName="map"
+            text="지도로 보기"
+            onClick={() => {
+              router.push("/map");
+            }}
+          />
+        }
+      />
     </Layout>
   );
 };
