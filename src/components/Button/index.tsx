@@ -20,6 +20,7 @@ interface IButtonProps {
   fontSize?: "xxxl" | "xxl" | "xl" | "lg" | "md" | "sm" | "xs";
   dense?: boolean;
   padding?: string;
+  shadow?: boolean;
 }
 
 const Button: FC<IButtonProps> = ({
@@ -38,6 +39,7 @@ const Button: FC<IButtonProps> = ({
   dense,
   padding,
   fontSize,
+  shadow,
   ...props
 }) => {
   const theme = useTheme();
@@ -57,7 +59,7 @@ const Button: FC<IButtonProps> = ({
       ? backgroundColor
       : theme.colors.purple_light2};
     padding: ${padding ? padding : dense ? "0.5rem" : "1rem"};
-    box-shadow: none;
+    box-shadow: ${shadow ? `0px 1px 4px 0px rgba(0, 0, 0, 0.25)` : "none"};
     border-radius: ${borderRadius
       ? borderRadius
       : iconName

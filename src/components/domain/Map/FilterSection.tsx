@@ -31,7 +31,7 @@ const FilterSection = ({ category, setCategory }: IFilterSectionProps) => {
       <ImageTextViewWrapper>
         <div onClick={() => setOpen(true)}>
           <ImageTextView
-            text={category.title}
+            text={`표시: ${category.title}`}
             border
             image={<Icon name={`chevron`} height="12" width="12" />}
           />
