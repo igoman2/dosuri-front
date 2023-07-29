@@ -18,7 +18,7 @@ import { useTheme } from "@emotion/react";
 import ImageTextView from "@/components/CustomImage/ImageTextView";
 import { rankViewState } from "../Hospital/store";
 import FilterOptionModal from "./FilterOptionModal";
-import { clicked, price, searchModalState, year } from "./store";
+import { price, searchModalState, year } from "./store";
 
 const timezoneOffset = new Date().getTimezoneOffset() * 60000;
 
@@ -34,7 +34,6 @@ const AllFilterSection = () => {
   const filterPrice = useRecoilValue(price);
   const filterYear = useRecoilValue(year);
   const [yearISOString, setyearISOString] = useState({ from: "", to: "" });
-  const [filterFlag, setFilterFlag] = useRecoilState(clicked);
 
   function onDismiss() {
     setOpen(false);
@@ -91,7 +90,13 @@ const AllFilterSection = () => {
     hasNextPage,
     isFetching,
   } = useInfiniteQuery(
-    [queryKeys.hospital, "hospital-by-filter", category, filterFlag === true],
+    [
+      queryKeys.hospital,
+      "hospital-by-filter",
+      category,
+      filterYear,
+      filterPrice,
+    ],
     ({
       pageParam = rankState.viewRanking
         ? `/hospital/v1/hospitals-address-filtered-avg-price?ordering=${category.key}&longitude=${rankState.nearSiteLongitude}&latitude=${rankState.nearSiteLatitude}&price_range_from=${filterPrice.min}&price_range_to=${filterPrice.max}&opened_at_range_from=${yearISOString.from}&opened_at_range_to=${yearISOString.to}`
@@ -141,7 +146,7 @@ const AllFilterSection = () => {
           </div>
           <div
             onClick={() => {
-              setFilterFlag(false);
+              // setFilterFlag(false);
               setMode(true);
             }}
           >

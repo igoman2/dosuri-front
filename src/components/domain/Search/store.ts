@@ -7,11 +7,6 @@ export const searchModalState = atom({
   default: false,
 });
 
-export const clicked = atom({
-  key: `filterFlag${v4()}`,
-  default: false,
-});
-
 export const price = atom({
   key: `filterPrice${v4()}`,
   default: {
