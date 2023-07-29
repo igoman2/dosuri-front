@@ -1,6 +1,6 @@
 import FullModalBase from "@/components/Modal/FullModalBase";
 import { useRecoilState } from "recoil";
-import { clicked, price, searchModalState, year } from "./store";
+import { price, searchModalState, year } from "./store";
 import styled from "@emotion/styled";
 import Button from "@/components/Button";
 import theme from "@/styles/theme";
@@ -13,37 +13,41 @@ const FilterOptionModal = () => {
   const [defaultFlag, setDefault] = useState(false);
   const [filterPrice, setFilterPrice] = useRecoilState(price);
   const [filterYear, setFilterYear] = useRecoilState(year);
-  const [filterFlag, setFilterFlag] = useRecoilState(clicked);
+  const [tmpPrice, setPrice] = useState(filterPrice);
+  const [tmpYear, setYear] = useState(filterYear);
 
   const closeModal = () => {
     setModal(false);
   };
 
   const getMaxPrice = () => {
-    if (filterPrice.max === MAX_PRICE) return "제한없음";
-    return Math.round(filterPrice.max).toLocaleString("en");
+    if (tmpPrice.max === MAX_PRICE) return "제한없음";
+    return Math.round(tmpPrice.max).toLocaleString("en");
   };
 
   const onDefault = () => {
     setDefault(true);
-    setFilterPrice({ min: 0, max: MAX_PRICE });
-    setFilterYear({ min: 0, max: MAX_YEAR });
+    setPrice({ min: 0, max: MAX_PRICE });
+    setYear({ min: 0, max: MAX_YEAR });
   };
 
   const onClick = () => {
-    setFilterFlag(true);
+    setFilterPrice(tmpPrice);
+    setFilterYear(tmpYear);
     closeModal();
   };
 
   const handlePriceChange = (value: { min: number; max: number }) => {
-    setFilterPrice(value);
+    setPrice(value);
   };
 
   const handleYearChange = (value: { min: number; max: number }) => {
-    setFilterYear(value);
+    setYear(value);
   };
 
   const onClickBack = () => {
+    setPrice(filterPrice);
+    setYear(filterYear);
     closeModal();
   };
 
@@ -66,14 +70,14 @@ const FilterOptionModal = () => {
               원하는 예산 범위를 설정할 수 있어요.
             </div>
             <div className="range-text">
-              ₩ {filterPrice.min} ~ ₩ {getMaxPrice()}
+              ₩ {tmpPrice.min} ~ ₩ {getMaxPrice()}
             </div>
             <Slider
               max={MAX_PRICE}
               min={0}
-              value={filterPrice}
+              value={tmpPrice}
               setValue={handlePriceChange}
-              step={10000}
+              step={50000}
               setDefault={setDefault}
               defaultFlag={defaultFlag}
             />
@@ -82,13 +86,13 @@ const FilterOptionModal = () => {
               오래된 병원인지 새 병원인지 설정할 수 있어요.
             </div>
             <div className="range-text">
-              {filterYear.min}년 ~{" "}
-              {filterYear.max === MAX_YEAR ? "제한없음" : filterYear.max + "년"}
+              {tmpYear.min}년 ~{" "}
+              {tmpYear.max === MAX_YEAR ? "제한없음" : tmpYear.max + "년"}
             </div>
             <Slider
               max={MAX_YEAR}
               min={0}
-              value={filterYear}
+              value={tmpYear}
               setValue={handleYearChange}
               step={1}
               setDefault={setDefault}
