@@ -152,7 +152,6 @@ const KakaoMap: FC<IMapProps> = ({
 
         // 지도 드래그 이벤트 발생 시 마커를 지우고 새로 생성한다.
         kakao.maps.event.addListener(mapRef.current, "drag", function () {
-          console.log("!!");
           setIsDragged(true);
           deleteMarkers();
           markersRef.current = [];
