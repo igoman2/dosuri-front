@@ -5,30 +5,11 @@ import CloseIcon from "@/public/assets/white-close-button.png";
 import Image from "next/image";
 
 export interface AppBannerProp {
+  onInstall: () => void;
   onClose: () => void;
 }
 
-const AppBanner: FC<AppBannerProp> = ({ onClose }) => {
-  const onInstall = () => {
-    const mobileType = navigator.userAgent.toLowerCase();
-
-    if (mobileType.indexOf("android") > -1) {
-      return window.open(
-        "https://play.google.com/store/apps/details?id=com.ytw418.dosuriapp"
-      );
-    } else if (
-      mobileType.indexOf("mac") > -1 ||
-      mobileType.indexOf("iphone") > -1 ||
-      mobileType.indexOf("ipad") > -1 ||
-      mobileType.indexOf("ipod") > -1
-    ) {
-      return window.open(
-        "https://apps.apple.com/kr/app/%EB%8F%84%EC%88%98%EB%A6%AC/id6448676216"
-      );
-    } else {
-      alert("기기를 인식할 수 없습니다.");
-    }
-  };
+const AppBanner: FC<AppBannerProp> = ({ onClose, onInstall }) => {
   return (
     <AppBannerWrapper>
       <div className="banner">

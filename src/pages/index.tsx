@@ -28,6 +28,7 @@ import useRN from "@/hooks/useRN";
 import Float from "@/components/domain/Community/Float";
 import useDirection from "@/hooks/useDirection";
 import { useRouter } from "next/router";
+import { modalContentState, modalState } from "@/components/Modal/store";
 
 const expirationPeriod = 1;
 
@@ -40,6 +41,8 @@ const Home = () => {
   const { isLoggedIn } = useAuth();
   const location = useGeolocation();
   const setLocaton = useSetRecoilState(locationState);
+  const setModalIsActive = useSetRecoilState(modalState);
+  const setModalContent = useSetRecoilState(modalContentState);
 
   useEffect(() => {
     if (location.loaded) {
@@ -78,6 +81,49 @@ const Home = () => {
     setHasCookie(true);
   };
 
+  const onInstallApp = () => {
+    setModalIsActive({ isActive: true });
+    setModalContent({
+      title: "도수리 앱 버전 안내",
+      content:
+        "모바일로 보고 계신가요? 도수리 앱을 설치하시면 훨씬 편하게 이용하실 수 있습니다.",
+      actionCancel: {
+        text: "다음에",
+        action: () => {
+          setModalIsActive({ isActive: false });
+        },
+      },
+      actionWarn: {
+        text: "",
+        action: () => {},
+      },
+      actionConfirm: {
+        text: "앱 설치하기",
+        action: () => {
+          setModalIsActive({ isActive: false });
+          const mobileType = navigator.userAgent.toLowerCase();
+
+          if (mobileType.indexOf("android") > -1) {
+            return window.open(
+              "https://play.google.com/store/apps/details?id=com.ytw418.dosuriapp"
+            );
+          } else if (
+            mobileType.indexOf("mac") > -1 ||
+            mobileType.indexOf("iphone") > -1 ||
+            mobileType.indexOf("ipad") > -1 ||
+            mobileType.indexOf("ipod") > -1
+          ) {
+            return window.open(
+              "https://apps.apple.com/kr/app/%EB%8F%84%EC%88%98%EB%A6%AC/id6448676216"
+            );
+          } else {
+            alert("기기를 인식할 수 없습니다.");
+          }
+        },
+      },
+    });
+  };
+
   return (
     <Layout
       header={
@@ -91,7 +137,9 @@ const Home = () => {
               </Link>
             }
           />
-          {!hasCookie && !isApp && <AppBanner onClose={onCloseBanner} />}
+          {!hasCookie && !isApp && (
+            <AppBanner onClose={onCloseBanner} onInstall={onInstallApp} />
+          )}
         </>
       }
     >
