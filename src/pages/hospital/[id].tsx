@@ -207,7 +207,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
   };
 
   const imageSource = hospitalInfoData.attachments.map(
-    (image) => image.signed_path
+    (image) => image?.signed_path
   );
 
   const handleAgreeAll = () => {

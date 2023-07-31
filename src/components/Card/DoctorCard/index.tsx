@@ -13,24 +13,29 @@ const DoctorCard: FC<IDoctorCardProps> = ({ doctor }) => {
   return (
     <DoctorCardWrapper>
       <div className="profile">
-        <Image
-          style={{
-            borderRadius: "50%",
-          }}
-          src={doctor.attachments[0].signed_path}
-          width={90}
-          height={90}
-          alt="hospitalImage"
-        />
+        {doctor.attachments.length > 0 && (
+          <span className="doctor-image">
+            <Image
+              style={{
+                borderRadius: "50%",
+              }}
+              src={doctor.attachments[0]?.signed_path}
+              width={90}
+              height={90}
+              alt="hospitalImage"
+            />
+          </span>
+        )}
+
         <div className="detail">
           <div className="name">{`${doctor.name} ${doctor.title}`}</div>
           <div className="major">
             <div>{doctor.subtitle}</div>
           </div>
           <div className="tags">
-            {doctor.descriptions.map((el, i) => {
-              return <div key={i}>{`#${el.description}`}</div>;
-            })}
+            {doctor.keywords.map((e, i) => (
+              <li key={i}>{`- ${e.keyword}`}</li>
+            ))}
           </div>
         </div>
       </div>
@@ -41,6 +46,9 @@ const DoctorCard: FC<IDoctorCardProps> = ({ doctor }) => {
           lineHeight: theme.lineHeights.md,
         }}
       >
+        {doctor.descriptions.map((el, i) => {
+          return <div key={i}>{`#${el.description}`}</div>;
+        })}
         {doctor.keywords.map((e, i) => (
           <li key={i}>{`- ${e.keyword}`}</li>
         ))}
@@ -61,12 +69,15 @@ const DoctorCardWrapper = styled.div`
     display: flex;
   }
 
+  .doctor-image {
+    margin-right: 1rem;
+  }
+
   .detail {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 0.5rem;
-    margin-left: 1rem;
   }
 
   .name {
