@@ -28,9 +28,9 @@ const DoctorCard: FC<IDoctorCardProps> = ({ doctor }) => {
             <div>{doctor.subtitle}</div>
           </div>
           <div className="tags">
-            {doctor.descriptions.map((el, i) => {
-              return <div key={i}>{`#${el.description}`}</div>;
-            })}
+            {doctor.keywords.map((e, i) => (
+              <li key={i}>{`- ${e.keyword}`}</li>
+            ))}
           </div>
         </div>
       </div>
@@ -41,6 +41,9 @@ const DoctorCard: FC<IDoctorCardProps> = ({ doctor }) => {
           lineHeight: theme.lineHeights.md,
         }}
       >
+        {doctor.descriptions.map((el, i) => {
+          return <div key={i}>{`#${el.description}`}</div>;
+        })}
         {doctor.keywords.map((e, i) => (
           <li key={i}>{`- ${e.keyword}`}</li>
         ))}
