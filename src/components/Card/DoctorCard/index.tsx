@@ -17,7 +17,7 @@ const DoctorCard: FC<IDoctorCardProps> = ({ doctor }) => {
           style={{
             borderRadius: "50%",
           }}
-          src={doctor.attachments[0].signed_path}
+          src={doctor.attachments[0]?.signed_path}
           width={90}
           height={90}
           alt="hospitalImage"
