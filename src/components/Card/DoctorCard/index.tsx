@@ -4,7 +4,6 @@ import { IGetDoctorListResult } from "@/types/service";
 import Image from "next/image";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";
-import ImageFallback from "@/components/CustomImage/ImageFallback";
 
 export interface IDoctorCardProps {
   doctor: IGetDoctorListResult;
@@ -14,18 +13,18 @@ const DoctorCard: FC<IDoctorCardProps> = ({ doctor }) => {
   return (
     <DoctorCardWrapper>
       <div className="profile">
-        {doctor.attachments.length === 0 ? (
-          <ImageFallback width="9rem" height="9rem" />
-        ) : (
-          <Image
-            style={{
-              borderRadius: "50%",
-            }}
-            src={doctor.attachments[0]?.signed_path}
-            width={90}
-            height={90}
-            alt="hospitalImage"
-          />
+        {doctor.attachments.length > 0 && (
+          <span className="doctor-image">
+            <Image
+              style={{
+                borderRadius: "50%",
+              }}
+              src={doctor.attachments[0]?.signed_path}
+              width={90}
+              height={90}
+              alt="hospitalImage"
+            />
+          </span>
         )}
 
         <div className="detail">
@@ -70,12 +69,15 @@ const DoctorCardWrapper = styled.div`
     display: flex;
   }
 
+  .doctor-image {
+    margin-right: 1rem;
+  }
+
   .detail {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 0.5rem;
-    margin-left: 1rem;
   }
 
   .name {
