@@ -143,10 +143,6 @@ export const global = css`
     font-size: 62.5%;
   }
 
-  body {
-    min-height: 100vh; /*그냥 height를 주면 고정된다. 반응형을 위해 min-height를 사용하자*/
-  }
-
   body,
   body * {
     font-family: "Noto Sans KR",  sans-serif;
