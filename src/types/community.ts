@@ -48,3 +48,8 @@ export type Tab = {
   title: "전체" | "치료후기만 보기" | "질문/상담만 보기";
   value: "all" | "review" | "question";
 };
+
+export type TabItem = {
+  title: string;
+  value: string;
+};

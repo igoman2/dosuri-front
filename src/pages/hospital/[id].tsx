@@ -31,46 +31,24 @@ import ImageTextView from "@/components/CustomImage/ImageTextView";
 import useAuth from "@/hooks/useAuth";
 import formIcon from "@/public/assets/form_icon.png";
 import { FormikProvider, useFormik } from "formik";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { reservationModalState } from "@/components/domain/Hospital/store";
 import ReservationModal from "@/components/domain/Hospital/ReservationModal";
 import { changePersonalInfoConsent, getUser } from "@/service/apis/user";
 import { userInfoState } from "@/store/user";
-
-interface TabItem {
-  title: string;
-  value: string;
-}
+import { HospitalInfoTabList } from "@/constants/Tab";
+import { TabItem } from "@/types/community";
 
 interface IHospitalInformationProps {
   id: string;
   tab: string;
 }
 
-const TabList: TabItem[] = [
-  {
-    title: "병원정보",
-    value: "information",
-  },
-  {
-    title: "의료진",
-    value: "doctors",
-  },
-  {
-    title: "치료후기",
-    value: "reviews",
-  },
-  {
-    title: "비용정보",
-    value: "price",
-  },
-];
-
 const PROTECTED_TABS = ["price"];
 
 const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
   const [currentTab, setCurrentTab] = useState<TabItem>(
-    TabList.find((t) => t.value === tab) ?? TabList[0]
+    HospitalInfoTabList.find((t) => t.value === tab) ?? HospitalInfoTabList[0]
   );
   const [isUp, setIsUp] = useState<boolean>();
   const router = useRouter();
@@ -151,7 +129,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
       const data = await getHospitalInfo(id);
       return data;
     },
-    cacheTime: 0,
+    cacheTime: Infinity,
     retry: 0,
   });
 
@@ -312,7 +290,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
             </div>
             <div className="tab-wrapper">
               <Tab
-                tabList={TabList}
+                tabList={HospitalInfoTabList}
                 currentTab={currentTab}
                 onTabClickHander={onTabClickHander}
               />

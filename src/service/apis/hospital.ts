@@ -1,5 +1,6 @@
 import {
   IGetDoctorList,
+  IGetDoctorListResult,
   IGetFilteredHospitalListParams,
   IGetHospitalInfo,
   IGetHospitalListParams,
@@ -149,6 +150,13 @@ export const getMapHospitals = async (params: IGetMapHospitalsParams) => {
     {
       params,
     }
+  );
+  return response.data;
+};
+
+export const getDoctorInfo = async (doctorId: string) => {
+  const response = await api.get<IGetDoctorListResult>(
+    `hospital/v1/doctors/${doctorId}`
   );
   return response.data;
 };

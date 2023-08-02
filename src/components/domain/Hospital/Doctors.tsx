@@ -24,10 +24,10 @@ const Doctors: FC<IDoctorsProps> = ({ hospitalData }) => {
   });
 
   const doctors = useMemo(() => {
-    return data?.filter((doctor) => doctor.title !== "치료사");
+    return data?.filter((doctor) => doctor.position !== "치료사");
   }, [data]);
   const subDoctors = useMemo(() => {
-    return data?.filter((doctor) => doctor.title === "치료사");
+    return data?.filter((doctor) => doctor.position === "치료사");
   }, [data]);
 
   return (
@@ -37,9 +37,9 @@ const Doctors: FC<IDoctorsProps> = ({ hospitalData }) => {
         {doctors?.length !== 0 ? (
           <div>
             {doctors
-              ?.filter((doctor) => doctor.title !== "치료사")
+              ?.filter((doctor) => doctor.position !== "치료사")
               .map((doctor) => (
-                <DoctorCard doctor={doctor} key={doctor.uuid} />
+                <DoctorCard doctor={doctor} isLink key={doctor.uuid} />
               ))}
           </div>
         ) : (
@@ -52,9 +52,9 @@ const Doctors: FC<IDoctorsProps> = ({ hospitalData }) => {
         {subDoctors?.length !== 0 ? (
           <div>
             {subDoctors
-              ?.filter((subDoctor) => subDoctor.title === "치료사")
+              ?.filter((subDoctor) => subDoctor.position === "치료사")
               .map((subDoctor) => (
-                <DoctorCard doctor={subDoctor} key={subDoctor.uuid} />
+                <DoctorCard doctor={subDoctor} isLink key={subDoctor.uuid} />
               ))}
           </div>
         ) : (
@@ -76,7 +76,7 @@ const DoctorsWrapper = styled.div`
     margin-bottom: 1rem;
 
     &.sub {
-      margin-top: 1rem;
+      margin-top: 2.5rem;
     }
   }
 `;

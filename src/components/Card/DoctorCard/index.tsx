@@ -4,55 +4,26 @@ import { IGetDoctorListResult } from "@/types/service";
 import Image from "next/image";
 import styled from "@emotion/styled";
 import theme from "@/styles/theme";
+import Link from "next/link";
+import ProfileHead from "./ProfileHead";
 
 export interface IDoctorCardProps {
   doctor: IGetDoctorListResult;
+  isLink: boolean;
 }
 
-const DoctorCard: FC<IDoctorCardProps> = ({ doctor }) => {
+const DoctorCard: FC<IDoctorCardProps> = ({ doctor, isLink }) => {
   return (
     <DoctorCardWrapper>
-      <div className="profile">
-        {doctor.attachments.length > 0 && (
-          <span className="doctor-image">
-            <Image
-              style={{
-                borderRadius: "50%",
-              }}
-              src={doctor.attachments[0]?.signed_path}
-              width={90}
-              height={90}
-              alt="hospitalImage"
-            />
-          </span>
-        )}
-
-        <div className="detail">
-          <div className="name">{`${doctor.name} ${doctor.title}`}</div>
-          <div className="major">
-            <div>{doctor.subtitle}</div>
-          </div>
-          <div className="tags">
-            {doctor.keywords.map((e, i) => (
-              <li key={i}>{`- ${e.keyword}`}</li>
-            ))}
-          </div>
-        </div>
-      </div>
-      <div
-        css={{
-          marginTop: "1rem",
-          fontSize: theme.fontSizes.md,
-          lineHeight: theme.lineHeights.md,
-        }}
-      >
-        {doctor.descriptions.map((el, i) => {
-          return <div key={i}>{`#${el.description}`}</div>;
-        })}
-        {doctor.keywords.map((e, i) => (
-          <li key={i}>{`- ${e.keyword}`}</li>
-        ))}
-      </div>
+      {isLink ? (
+        <Link href={`/hospital/doctor/${doctor.uuid}`}>
+          <a>
+            <ProfileHead doctor={doctor} />
+          </a>
+        </Link>
+      ) : (
+        <ProfileHead doctor={doctor} />
+      )}
     </DoctorCardWrapper>
   );
 };
