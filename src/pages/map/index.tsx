@@ -38,6 +38,7 @@ import { useDebounce } from "usehooks-ts";
 import Link from "next/link";
 import { mapFilterState } from "@/store/mapFilter";
 import Spinner from "@/components/Spinner/Spinner";
+import { userInfoState } from "@/store/user";
 
 type ZoomMap = {
   [key: number]: number;
@@ -89,6 +90,8 @@ const Maps = () => {
   const debouncedMinFilterYear = useDebounce<number>(filterYear.min, 500);
   const debouncedMaxFilterYear = useDebounce<number>(filterYear.max, 500);
   const [category, setCategory] = useRecoilState(mapFilterState);
+  const userInfo = useRecoilValue(userInfoState);
+
   const { data, refetch } = useQuery(
     [
       "getMapHospitals",
@@ -183,8 +186,8 @@ const Maps = () => {
 
   useEffect(() => {
     setMapCenter({
-      latitude: coordinates.latitude,
-      longitude: coordinates.longitude,
+      latitude: userInfo.address.latitude,
+      longitude: userInfo.address.longitude,
     });
   }, [coordinates, loaded]);
 
