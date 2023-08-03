@@ -1,4 +1,8 @@
-import { IGoodPriceHospitals, IHospitalInfoResult } from "@/types/service";
+import {
+  IGoodPriceHospitals,
+  IHospitalInfoHomeResponse,
+  IHospitalInfoResult,
+} from "@/types/service";
 import React, { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import Icon from "@/util/Icon";
@@ -29,6 +33,7 @@ import Float from "@/components/domain/Community/Float";
 import useDirection from "@/hooks/useDirection";
 import { useRouter } from "next/router";
 import { modalContentState, modalState } from "@/components/Modal/store";
+import { queryClient } from "@/service/react-query/queryClient";
 
 const expirationPeriod = 1;
 
@@ -58,10 +63,14 @@ const Home = () => {
     setHasCookie(false);
   }, []);
 
-  const { data: hospitalList } = useQuery(
-    queryKeys.hospital,
-    getHospitalInfoHome
-  );
+  const { data: hospitalList } = useQuery({
+    queryKey: [queryKeys.hospital, "homeHospitalList"],
+    queryFn: getHospitalInfoHome,
+    enabled: !queryClient.getQueryData([
+      queryKeys.hospital,
+      "homeHospitalList",
+    ]),
+  });
 
   const { data: hotCommunity } = useQuery("getHotCommunity", getHotCommunity);
 
@@ -155,30 +164,32 @@ const Home = () => {
           marginBottom: "2.5rem",
         }}
       >
-        {hospitalList.good_price_hospitals.length !== 0 && (
-          <>
-            <div
-              css={{
-                fontSize: theme.fontSizes.xl,
-                fontWeight: 700,
-              }}
-            >
-              {`${hospitalList.address} 주변 치료비 싼 병원`}
-            </div>
+        <>
+          {hospitalList.top_hospitals.length !== 0 && (
+            <>
+              <div
+                css={{
+                  fontSize: theme.fontSizes.xl,
+                  fontWeight: 700,
+                }}
+              >
+                {`${hospitalList.address} 주변 TOP 병원`}
+              </div>
 
-            {hospitalList.good_price_hospitals.map(
-              (hospital: IGoodPriceHospitals, i) => (
-                <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
-                  <a>
-                    <div css={{ marginTop: "1rem" }}>
-                      <HospitalCard hospitalInfo={hospital} type="price" />
-                    </div>
-                  </a>
-                </Link>
-              )
-            )}
-          </>
-        )}
+              {hospitalList.top_hospitals.map(
+                (hospital: IHospitalInfoResult, i) => (
+                  <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+                    <a>
+                      <div css={{ marginTop: "1rem" }}>
+                        <HospitalCard hospitalInfo={hospital} type="top" />
+                      </div>
+                    </a>
+                  </Link>
+                )
+              )}
+            </>
+          )}
+        </>
       </section>
       <LogginBanner>
         {!isLoggedIn && (

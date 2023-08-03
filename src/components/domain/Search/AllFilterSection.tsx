@@ -4,7 +4,11 @@ import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { BottomSheet } from "react-spring-bottom-sheet";
 import Divider from "@/components/Divider/Divider";
 import HospitalCard from "@/components/Card/HospitalCard";
-import { IHospitalInfoResponse } from "@/types/service";
+import {
+  IHospitalInfoHomeResponse,
+  IHospitalInfoResponse,
+  IHospitalInfoResult,
+} from "@/types/service";
 import Icon from "@/util/Icon";
 import InfiniteScroll from "react-infinite-scroller";
 import Link from "next/link";
@@ -19,6 +23,9 @@ import ImageTextView from "@/components/CustomImage/ImageTextView";
 import { rankViewState } from "../Hospital/store";
 import FilterOptionModal from "./FilterOptionModal";
 import { price, searchModalState, year } from "./store";
+import { useQuery } from "react-query";
+import { queryClient } from "@/service/react-query/queryClient";
+import { getHospitalInfoHome } from "@/service/apis/hospital";
 
 const timezoneOffset = new Date().getTimezoneOffset() * 60000;
 
@@ -34,6 +41,15 @@ const AllFilterSection = () => {
   const filterPrice = useRecoilValue(price);
   const filterYear = useRecoilValue(year);
   const [yearISOString, setyearISOString] = useState({ from: "", to: "" });
+
+  const { data: homeHospitalList } = useQuery({
+    queryKey: [queryKeys.hospital, "homeHospitalList"],
+    queryFn: getHospitalInfoHome,
+    enabled: !queryClient.getQueryData([
+      queryKeys.hospital,
+      "homeHospitalList",
+    ]),
+  });
 
   function onDismiss() {
     setOpen(false);
@@ -123,6 +139,37 @@ const AllFilterSection = () => {
 
   return (
     <>
+      <section
+        css={{
+          marginBottom: "2.5rem",
+        }}
+      >
+        {homeHospitalList && homeHospitalList.top_hospitals.length !== 0 && (
+          <>
+            <div
+              css={{
+                fontSize: theme.fontSizes.xl,
+                fontWeight: 700,
+              }}
+            >
+              {`${homeHospitalList.address} 주변 TOP 병원`}
+            </div>
+
+            {homeHospitalList.top_hospitals.map(
+              (hospital: IHospitalInfoResult, i) => (
+                <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+                  <a>
+                    <div css={{ marginTop: "1rem" }}>
+                      <HospitalCard hospitalInfo={hospital} type="top" />
+                    </div>
+                  </a>
+                </Link>
+              )
+            )}
+          </>
+        )}
+      </section>
+
       <div
         css={{
           marginBottom: "2.5rem",
