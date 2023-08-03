@@ -7,9 +7,10 @@ import { useTheme } from "@emotion/react";
 export interface IDescriptionProps {
   hospitalInfo: IHospitalInfoResult;
   size: "xxxl" | "xxl" | "xl" | "lg" | "md" | "sm" | "xs";
+  isAd?: boolean;
 }
 
-const Description: FC<IDescriptionProps> = ({ hospitalInfo, size }) => {
+const Description: FC<IDescriptionProps> = ({ hospitalInfo, size, isAd }) => {
   const theme = useTheme();
 
   return (
@@ -21,6 +22,7 @@ const Description: FC<IDescriptionProps> = ({ hospitalInfo, size }) => {
         gap: "0.5rem",
         marginLeft: "1rem",
         minWidth: 0,
+        position: "relative",
       }}
     >
       <div
@@ -100,6 +102,24 @@ const Description: FC<IDescriptionProps> = ({ hospitalInfo, size }) => {
           </span>
         )}
       </div>
+      {isAd && (
+        <span
+          css={{
+            fontSize: theme.fontSizes.xs,
+            lineHeight: theme.lineHeights.xs,
+            border: "solid 1px",
+            borderColor: theme.colors.purple_light2,
+            borderRadius: "0.5em",
+            textAlign: "center",
+            top: "13px",
+            right: "10px",
+            padding: "0 0.5em",
+            position: "absolute",
+          }}
+        >
+          AD
+        </span>
+      )}
     </div>
   );
 };

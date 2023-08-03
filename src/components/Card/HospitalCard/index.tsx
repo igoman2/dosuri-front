@@ -9,7 +9,7 @@ import styled from "@emotion/styled";
 
 export interface IHospitalCardProps {
   hospitalInfo: IHospitalInfoResult | IGoodPriceHospitals;
-  type?: "review" | "price";
+  type?: "review" | "price" | "top";
 }
 
 const HospitalCard: FC<IHospitalCardProps> = ({
@@ -44,12 +44,20 @@ const HospitalCard: FC<IHospitalCardProps> = ({
           </ImageWrapper>
         )}
       </div>
-      {type === "review" ? (
+      {type === "review" && (
         <Description
           hospitalInfo={hospitalInfo as IHospitalInfoResult}
           size="md"
         />
-      ) : (
+      )}
+      {type === "top" && (
+        <Description
+          hospitalInfo={hospitalInfo as IHospitalInfoResult}
+          size="md"
+          isAd={true}
+        />
+      )}
+      {type === "price" && (
         <DescriptionPrice
           hospitalInfo={hospitalInfo as IGoodPriceHospitals}
           size="md"
