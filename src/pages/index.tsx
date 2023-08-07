@@ -30,8 +30,11 @@ import Float from "@/components/domain/Community/Float";
 import useDirection from "@/hooks/useDirection";
 import { useRouter } from "next/router";
 import { modalContentState, modalState } from "@/components/Modal/store";
-
-const expirationPeriod = 1;
+import {
+  PLAY_STORE,
+  APP_STORE,
+  INSTALL_APP_EXP,
+} from "@/constants/Application";
 
 const Home = () => {
   const theme = useTheme();
@@ -66,6 +69,7 @@ const Home = () => {
         actionCancel: {
           text: "다음에",
           action: () => {
+            onClose();
             setModalIsActive({ isActive: false });
           },
         },
@@ -76,9 +80,9 @@ const Home = () => {
         actionConfirm: {
           text: "앱 설치하기",
           action: () => {
-            return window.open(
-              "https://apps.apple.com/kr/app/%EB%8F%84%EC%88%98%EB%A6%AC/id6448676216"
-            );
+            onClose();
+            setModalIsActive({ isActive: false });
+            return window.open(isApple() ? APP_STORE : PLAY_STORE);
           },
         },
       });
@@ -98,33 +102,44 @@ const Home = () => {
 
   const getPopUpExpireDate = () => {
     const date = new Date();
-    date.setDate(date.getDate() + expirationPeriod);
+    date.setDate(date.getDate() + INSTALL_APP_EXP);
     return date;
   };
 
-  const onCloseBanner = () => {
+  const onClose = () => {
     const expires = getPopUpExpireDate();
     setCookie("BANNER_EXPIRES", true, { path: "/", expires });
     setHasCookie(true);
   };
 
-  const onInstallApp = () => {
+  const isApple = () => {
     const user = navigator.userAgent.toLowerCase();
-    if (user.indexOf("android")) {
-      return window.open(
-        "https://play.google.com/store/apps/details?id=com.ytw418.dosuriapp"
-      );
-    } else if (
-      user.indexOf("iphone") > -1 ||
-      user.indexOf("ipad") > -1 ||
-      user.indexOf("ipod") > -1
-    ) {
-      return window.open(
-        "https://apps.apple.com/kr/app/%EB%8F%84%EC%88%98%EB%A6%AC/id6448676216"
-      );
+    if (!isMobile) {
+      if (
+        user.indexOf("apple") > -1 ||
+        user.indexOf("safari") > -1 ||
+        user.indexOf("mac") > -1
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
-      alert("기기를 인식할 수 없습니다.");
+      if (
+        user.indexOf("iphone") > -1 ||
+        user.indexOf("ipad") > -1 ||
+        user.indexOf("ipod") > -1 ||
+        user.indexOf("safari") > -1
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     }
+  };
+
+  const onInstallApp = () => {
+    return window.open(isApple() ? APP_STORE : PLAY_STORE);
   };
 
   return (
@@ -141,7 +156,7 @@ const Home = () => {
             }
           />
           {!hasCookie && !isApp && isMobile && (
-            <AppBanner onClose={onCloseBanner} onInstall={onInstallApp} />
+            <AppBanner onClose={onClose} onInstall={onInstallApp} />
           )}
         </>
       }
