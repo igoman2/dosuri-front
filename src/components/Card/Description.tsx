@@ -109,11 +109,11 @@ const Description: FC<IDescriptionProps> = ({ hospitalInfo, size, isAd }) => {
             lineHeight: theme.lineHeights.xs,
             border: "solid 1px",
             borderColor: theme.colors.purple_light2,
-            borderRadius: "0.5em",
+            borderRadius: "0.5rem",
             textAlign: "center",
             top: "13px",
             right: "10px",
-            padding: "0 0.5em",
+            padding: "0 0.5rem",
             position: "absolute",
           }}
         >
