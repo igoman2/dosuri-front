@@ -39,6 +39,7 @@ import {
   APP_STORE,
   INSTALL_APP_EXP,
 } from "@/constants/Application";
+import { queryClient } from "@/service/react-query/queryClient";
 
 const Home = () => {
   const theme = useTheme();
