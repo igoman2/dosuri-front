@@ -5,9 +5,10 @@ import { useTheme } from "@emotion/react";
 interface IImageFallbackProps {
   width: string;
   height: string;
+  circle?: boolean;
 }
 
-const ImageFallback: FC<IImageFallbackProps> = ({ width, height }) => {
+const ImageFallback: FC<IImageFallbackProps> = ({ width, height, circle }) => {
   const theme = useTheme();
   return (
     <div
@@ -15,7 +16,7 @@ const ImageFallback: FC<IImageFallbackProps> = ({ width, height }) => {
         width,
         height,
         backgroundColor: theme.colors.grey_light,
-        borderRadius: "0.5rem",
+        borderRadius: circle ? "5rem" : "0.5rem",
       }}
     ></div>
   );

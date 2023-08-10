@@ -3,16 +3,18 @@ import React from "react";
 import { IGetDoctorListResult } from "@/types/service";
 import Image from "next/image";
 import styled from "@emotion/styled";
+import ImageFallback from "@/components/CustomImage/ImageFallback";
 
 export interface IProfileHeadProps {
   doctor: IGetDoctorListResult;
 }
 
 const ProfileHead = ({ doctor }: IProfileHeadProps) => {
+  console.log(doctor.attachments);
   return (
     <div className="profile">
-      {doctor.attachments.length > 0 && (
-        <span className="doctor-image">
+      <span className="doctor-image">
+        {doctor.attachments.length > 0 ? (
           <Image
             style={{
               borderRadius: "50%",
@@ -22,8 +24,11 @@ const ProfileHead = ({ doctor }: IProfileHeadProps) => {
             height={90}
             alt="hospitalImage"
           />
-        </span>
-      )}
+        ) : (
+          <ImageFallback width="9rem" height="9rem" circle />
+        )}
+      </span>
+
       <div className="detail">
         <div className="name">{`${doctor.name} ${doctor.title}`}</div>
         <div className="major">
