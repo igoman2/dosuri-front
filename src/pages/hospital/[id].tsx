@@ -78,7 +78,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
       const data = await getHospitalInfo(id);
       return data;
     },
-    cacheTime: Infinity,
+    cacheTime: 0,
     retry: 0,
   });
 
