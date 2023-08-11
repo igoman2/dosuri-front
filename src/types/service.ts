@@ -74,6 +74,8 @@ export interface IGetHospitalInfo {
   keywords: {
     keyword: string;
   }[];
+  parking_info: string;
+  is_ad: boolean;
   is_up: boolean;
   latitude: number;
   longitude: number;
@@ -140,6 +142,7 @@ export interface IGetDoctorListResult {
   title: string;
   subtitle: string;
   position: string;
+  hospital_name?: string;
   descriptions: [
     {
       description: string;

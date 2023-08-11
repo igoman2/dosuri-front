@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 
 import Button from "@/components/Button";
 import Float from "@/components/domain/Community/Float";
@@ -92,7 +92,7 @@ const Community = () => {
         </div>
         <ReviewSection currentTab={currentTab} />
 
-        <Float
+        {/* <Float
           scrollDir={scrollDir}
           distance="8.5rem"
           icon={
@@ -105,7 +105,7 @@ const Community = () => {
               }}
             />
           }
-        />
+        /> */}
         {isActive && (
           <ModalFactory
             isActive={isActive}
