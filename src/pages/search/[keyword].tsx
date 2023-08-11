@@ -1,6 +1,5 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { IGetHospitalListParams, IHospitalInfoResult } from "@/types/service";
-import { TabItem, TabList } from "@/mock/tabList";
 
 import ArrowRight from "@/public/assets/arrow-right-bold.png";
 import Button from "@/components/Button";
@@ -21,6 +20,8 @@ import { useHospital } from "@/hooks/service/useHospital";
 import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
 import Link from "next/link";
+import { TabItem } from "@/types/community";
+import { SearchTabList } from "@/constants/Tab";
 
 interface ISearchResultProps {
   keyword: string;
@@ -28,13 +29,15 @@ interface ISearchResultProps {
 
 const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
   const [inputText, setInputText] = useState(keyword);
-  const [currentTab, setCurrentTab] = useState<TabItem>(TabList[0]);
+  const [currentTab, setCurrentTab] = useState<TabItem>(SearchTabList[0]);
   const router = useRouter();
   const theme = useTheme();
 
   useEffect(() => {
-    const currentTab = TabList.find((tab) => tab.value === router.query.tab);
-    setCurrentTab(currentTab ?? TabList[0]);
+    const currentTab = SearchTabList.find(
+      (tab) => tab.value === router.query.tab
+    );
+    setCurrentTab(currentTab ?? SearchTabList[0]);
   }, [router]);
 
   const params: IGetHospitalListParams = {
@@ -188,7 +191,7 @@ const SearchResult: FC<ISearchResultProps> = ({ keyword }) => {
 
       <>
         <Tab
-          tabList={TabList}
+          tabList={SearchTabList}
           currentTab={currentTab}
           onTabClickHander={onTabClickHander}
         />
