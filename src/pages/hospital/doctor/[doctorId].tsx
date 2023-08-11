@@ -26,6 +26,35 @@ const DoctorInformation = ({ doctorId }: IDoctorInformationProps) => {
           fontWeight: 700,
         }}
       >
+        경력정보
+      </div>
+      <div
+        css={{
+          marginTop: "1rem",
+        }}
+      >
+        {doctorInfo.descriptions.map((e, i) => (
+          <div
+            key={e.description}
+            css={{
+              fontSize: theme.fontSizes.lg,
+              lineHeight: theme.lineHeights.lg,
+            }}
+          >
+            {e.description}
+          </div>
+        ))}
+      </div>
+
+      <div
+        css={{
+          marginTop: "2.5rem",
+          fontSize: theme.fontSizes.lg,
+          lineHeight: theme.lineHeights.lg,
+          color: theme.colors.purple,
+          fontWeight: 700,
+        }}
+      >
         진료항목
       </div>
       <div
