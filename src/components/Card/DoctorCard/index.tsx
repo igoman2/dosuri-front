@@ -6,6 +6,7 @@ import styled from "@emotion/styled";
 import theme from "@/styles/theme";
 import Link from "next/link";
 import ProfileHead from "./ProfileHead";
+import { useRouter } from "next/router";
 
 export interface IDoctorCardProps {
   doctor: IGetDoctorListResult;
@@ -13,10 +14,11 @@ export interface IDoctorCardProps {
 }
 
 const DoctorCard: FC<IDoctorCardProps> = ({ doctor, isLink }) => {
+  const router = useRouter();
   return (
     <DoctorCardWrapper>
       {isLink ? (
-        <Link href={`/hospital/doctor/${doctor.uuid}`}>
+        <Link href={`/hospital/${router.query.id}/doctor/${doctor.uuid}`}>
           <a>
             <ProfileHead doctor={doctor} />
           </a>
