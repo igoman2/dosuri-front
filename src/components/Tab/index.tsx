@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
-import { TabItem } from "@/mock/tabList";
 import styled from "@emotion/styled";
+import { TabItem } from "@/types/community";
 
 interface ITabProps {
   tabList: TabItem[];
