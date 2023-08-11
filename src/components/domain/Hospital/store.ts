@@ -9,8 +9,3 @@ export const rankViewState = atom({
     nearSiteLongitude: 0,
   },
 });
-
-export const reservationModalState = atom({
-  key: `reservationModalState${v4()}`,
-  default: false,
-});
