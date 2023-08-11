@@ -3,6 +3,7 @@ import { Location } from "@/types/location";
 import { useEffect, useState } from "react";
 import { getCookie, setCookie } from "cookies-next";
 import dayjs from "dayjs";
+import _ from "lodash";
 
 interface locationType {
   loaded: boolean;
@@ -53,26 +54,18 @@ const useGeolocation = () => {
   };
 
   useEffect(() => {
-    const cachedLocation = JSON.parse(getCookie("getLocation") as string);
-
-    // 쿠키에 위치 정보가 있다면
-    if (cachedLocation) {
-      setLocation({
-        loaded: true,
-        coordinates: {
-          latitude: Number(cachedLocation.latitude),
-          longitude: Number(cachedLocation.longitude),
-        },
-      });
-    } else {
+    if (!("geolocation" in navigator)) {
       // navigator 객체 안에 geolocation이 없다면
       // 위치 정보가 없는 것.
-      if (!("geolocation" in navigator)) {
-        onError({
-          code: 0,
-          message: "Geolocation not supported",
-        });
-      } else {
+      onError({
+        code: 0,
+        message: "Geolocation not supported",
+      });
+    } else {
+      const cachedLocation = getCookie("getLocation") as string;
+
+      // 쿠키에 위치 정보가 있다면
+      if (_.isNil(cachedLocation)) {
         navigator.geolocation.getCurrentPosition(onSuccess, onError, {
           enableHighAccuracy: true,
         });
