@@ -1,3 +1,5 @@
+import { ModalContent } from "@/types/common";
+import { ReactElement, ReactNode } from "react";
 import { atom } from "recoil";
 import { v4 } from "uuid";
 
@@ -16,7 +18,7 @@ export const closeModalDirectionState = atom({
   },
 });
 
-export const modalContentState = atom({
+export const modalContentState = atom<ModalContent>({
   key: `modalContentState${v4()}`,
   default: {
     title: "",
