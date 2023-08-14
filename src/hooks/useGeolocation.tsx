@@ -63,7 +63,6 @@ const useGeolocation = () => {
       });
     } else {
       const cachedLocation = getCookie("getLocation") as string;
-
       // 쿠키에 위치 정보가 없으면
       if (_.isNil(cachedLocation)) {
         navigator.geolocation.getCurrentPosition(onSuccess, onError, {
@@ -73,8 +72,8 @@ const useGeolocation = () => {
         setLocation({
           loaded: true,
           coordinates: {
-            latitude: DefaultLocation.LATITUDE,
-            longitude: DefaultLocation.LONGITUDE,
+            latitude: JSON.parse(cachedLocation).latitude,
+            longitude: JSON.parse(cachedLocation).longitude,
           },
         });
       }
