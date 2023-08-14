@@ -99,6 +99,7 @@ const DoctorInformation = ({ id, doctorId }: IDoctorInformationProps) => {
           display: "flex",
           gap: "1rem",
           marginTop: "1rem",
+          flexWrap: "wrap",
         }}
       >
         {doctorInfo.keywords.map((e, i) => (
