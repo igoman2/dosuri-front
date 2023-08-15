@@ -1,7 +1,15 @@
-import React from "react";
+import { NextPageContext } from "next";
+import { useRouter } from "next/router";
+import React, { useLayoutEffect } from "react";
 
 const Error404 = () => {
-  return <div>404</div>;
+  const router = useRouter();
+
+  useLayoutEffect(() => {
+    router.replace("/");
+  }, []);
+
+  return;
 };
 
 export default Error404;
