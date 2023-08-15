@@ -11,36 +11,56 @@ import { useEffect, useState } from "react";
 import MyAddressSearch from "./MyAddressSearch";
 import useAddress from "@/hooks/useAddress";
 import MyAddressSearchDetail from "./MyAddressSearchDetail";
+import { useRouter } from "next/router";
 
 const SelectAddressModal = () => {
-  const modal = useRecoilValue(addressModalState);
+  const [modal, setModal] = useRecoilState(addressModalState);
   const [mode, setMode] = useRecoilState(addressModeState);
   const [addressModalTitle, setAddressModalTitle] = useState("");
   const [backBtnVisibility, setBackBtnVisibility] = useState(false);
   const { closeAddressModal } = useAddress();
+  const router = useRouter();
 
   useEffect(() => {
-    setModalTitle();
-    setModalButtonType();
-  }, [mode]);
+    // popstate 이벤트를 감지하는 핸들러 함수
+    const handleBackButtonEvent = (e: any) => {
+      if (mode.length === 0) {
+        setModal((prev) => ({ ...prev, isActive: false }));
+        return;
+      }
+
+      onClickBack();
+    };
+
+    // popstate 이벤트 리스너 추가
+    window.addEventListener("popstate", handleBackButtonEvent);
+
+    // 컴포넌트가 언마운트될 때 리스너 제거
+    return () => {
+      window.removeEventListener("popstate", handleBackButtonEvent);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!modal.isActive) {
+      return;
+    }
+
+    if (mode.length === 0) {
+      setModal((prev) => ({ ...prev, isActive: false }));
+      closeAddressModal();
+    } else {
+      router.push(
+        {
+          query: { mode: mode.at(-1) },
+        },
+        undefined,
+        { shallow: true }
+      );
+    }
+  }, [mode, modal.isActive]);
 
   const currentMode = mode.at(-1);
-
-  const setModalTitle = () => {
-    if (currentMode === 4) {
-      setAddressModalTitle("내 주소 관리");
-    } else if (currentMode === 3) {
-      setAddressModalTitle("");
-    } else {
-      setAddressModalTitle("주소 설정");
-    }
-  };
-
-  const setModalButtonType = () => {
-    mode.length === 1
-      ? setBackBtnVisibility(false)
-      : setBackBtnVisibility(true);
-  };
 
   const onClickBack = () => {
     setMode((prev) => prev.slice(0, -1));
