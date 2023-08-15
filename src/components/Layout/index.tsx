@@ -24,7 +24,7 @@ const Layout: FC<ILayoutProps> = ({
   const setMenu = useSetRecoilState(menuState);
 
   useEffect(() => {
-    setMenu(router.asPath);
+    setMenu(router.pathname);
   }, [router, setMenu]);
 
   return (
