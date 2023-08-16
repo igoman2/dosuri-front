@@ -56,7 +56,6 @@ const Home = () => {
   const setModalIsActive = useSetRecoilState(modalState);
   const setModalContent = useSetRecoilState(modalContentState);
 
-
   useEffect(() => {
     if (location.loaded) {
       setLocaton({
@@ -106,16 +105,20 @@ const Home = () => {
       queryKey: [queryKeys.hospital, "homeHospitalList"],
       queryFn: getHospitalInfoHome,
       staleTime: Infinity,
-    }, 
+    },
     {
       queryKey: "getHotCommunity",
       queryFn: getHotCommunity,
-      staleTime: Infinity
-    }
+      staleTime: Infinity,
+    },
   ]);
 
-  if(data[0].isLoading || data[1].isLoading) {
-    return <LoadingContainer><Spinner /></LoadingContainer>
+  if (data[0].isLoading || data[1].isLoading) {
+    return (
+      <LoadingContainer>
+        <Spinner />
+      </LoadingContainer>
+    );
   }
 
   const hospitalList = data[0].data;
