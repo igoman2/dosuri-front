@@ -24,7 +24,7 @@ import useAuth from "@/hooks/useAuth";
 import useGeolocation from "@/hooks/useGeolocation";
 import { useQuery } from "react-query";
 import { useTheme } from "@emotion/react";
-import isMobile from "react-device-detect";
+import { isMobile } from "react-device-detect";
 import SelectAddressBar from "@/components/domain/Address/SelectAddressBar";
 import SelectAddressModal from "@/components/domain/Address/SelectAddressModal";
 import { getCookie, setCookie } from "cookies-next";
@@ -39,6 +39,7 @@ import {
   APP_STORE,
   INSTALL_APP_EXP,
 } from "@/constants/Application";
+import QR from "qrcode.react";
 import { queryClient } from "@/service/react-query/queryClient";
 
 const Home = () => {
@@ -83,12 +84,22 @@ const Home = () => {
           action: () => {},
         },
         actionConfirm: {
-          text: "앱 설치하기",
-          action: () => {
-            onClose();
-            setModalIsActive({ isActive: false });
-            return window.open(isApple() ? APP_STORE : PLAY_STORE);
-          },
+          text: (
+            <div
+              css={{
+                display: "flex",
+              }}
+            >
+              <QR
+                value={"https://pink1016.tistory.com/"}
+                size={100}
+                id="qr-gen"
+                level={"H"}
+                includeMargin={false}
+              />
+            </div>
+          ),
+          action: () => {},
         },
       });
     }
