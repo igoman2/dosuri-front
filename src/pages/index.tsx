@@ -39,7 +39,6 @@ import {
   APP_STORE,
   INSTALL_APP_EXP,
 } from "@/constants/Application";
-import QR from "qrcode.react";
 import { queryClient } from "@/service/react-query/queryClient";
 
 const Home = () => {
@@ -84,23 +83,17 @@ const Home = () => {
           action: () => {},
         },
         actionConfirm: {
-          text: (
-            <div
-              css={{
-                display: "flex",
-              }}
-            >
-              <QR
-                value={"https://pink1016.tistory.com/"}
-                size={100}
-                id="qr-gen"
-                level={"H"}
-                includeMargin={false}
-              />
-            </div>
-          ),
+          text: "",
           action: () => {},
         },
+        qr: {
+          text: "QR 코드 스캔하고 설치",
+          qrValues: {
+            value: "https://pink1016.tistory.com/",
+            size: 60,
+
+          }
+        }
       });
     }
   }, []);
