@@ -24,7 +24,7 @@ import useAuth from "@/hooks/useAuth";
 import useGeolocation from "@/hooks/useGeolocation";
 import { useQuery } from "react-query";
 import { useTheme } from "@emotion/react";
-import isMobile from "react-device-detect";
+import { isMobile } from "react-device-detect";
 import SelectAddressBar from "@/components/domain/Address/SelectAddressBar";
 import SelectAddressModal from "@/components/domain/Address/SelectAddressModal";
 import { getCookie, setCookie } from "cookies-next";
