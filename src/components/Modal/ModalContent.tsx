@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import React from "react";
 import styled from "@emotion/styled";
 import { useRecoilState } from "recoil";
+import QR from "qrcode.react";
 
 const ModalContent = () => {
   const theme = useTheme();
@@ -41,6 +42,19 @@ const ModalContent = () => {
             onClick={modalContent.actionWarn.action}
           />
         )}
+
+        {modalContent.qr && (
+          <div className="action_box">
+            <div className="qr">
+              {modalContent.qr.text}
+              <QR
+                value={modalContent.qr.qrValues.value}
+                size={modalContent.qr.qrValues.size}
+                includeMargin={false}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </ModalWrapper>
   );
@@ -72,11 +86,20 @@ const ModalWrapper = styled.div`
     justify-content: space-around;
     flex-grow: 1;
     gap: 2rem;
+    width: 100%;
     button {
       width: 100%;
       font-size: ${(props) => props.theme.fontSizes.md};
       line-height: ${(props) => props.theme.lineHeights.md};
       font-weight: 700;
+    }
+
+    .qr {
+      font-size: ${(props) => props.theme.fontSizes.md};
+      line-height: ${(props) => props.theme.lineHeights.md};
+      color: ${(props) => props.theme.colors.purple_light};
+      margin-bottom: 3px;
+      text-align: center;
     }
   }
 `;
