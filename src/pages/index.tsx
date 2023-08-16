@@ -40,7 +40,7 @@ import {
   INSTALL_APP_EXP,
 } from "@/constants/Application";
 import { queryClient } from "@/service/react-query/queryClient";
-import isApple from "@/util/isApple"
+import isApple from "@/util/isApple";
 
 const Home = () => {
   const theme = useTheme();
@@ -53,6 +53,8 @@ const Home = () => {
   const setLocaton = useSetRecoilState(locationState);
   const setModalIsActive = useSetRecoilState(modalState);
   const setModalContent = useSetRecoilState(modalContentState);
+
+  console.log(isMobile);
 
   useEffect(() => {
     if (location.loaded) {
@@ -92,9 +94,8 @@ const Home = () => {
           qrValues: {
             value: isApple() ? APP_STORE : PLAY_STORE,
             size: 60,
-
-          }
-        }
+          },
+        },
       });
     }
   }, []);
