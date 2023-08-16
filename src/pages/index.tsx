@@ -40,6 +40,7 @@ import {
   INSTALL_APP_EXP,
 } from "@/constants/Application";
 import { queryClient } from "@/service/react-query/queryClient";
+import isApple from "@/util/isApple";
 
 const Home = () => {
   const theme = useTheme();
@@ -52,6 +53,8 @@ const Home = () => {
   const setLocaton = useSetRecoilState(locationState);
   const setModalIsActive = useSetRecoilState(modalState);
   const setModalContent = useSetRecoilState(modalContentState);
+
+  console.log(isMobile);
 
   useEffect(() => {
     if (location.loaded) {
@@ -89,11 +92,10 @@ const Home = () => {
         qr: {
           text: "QR 코드 스캔하고 설치",
           qrValues: {
-            value: "https://pink1016.tistory.com/",
+            value: isApple() ? APP_STORE : PLAY_STORE,
             size: 60,
-
-          }
-        }
+          },
+        },
       });
     }
   }, []);
@@ -123,32 +125,6 @@ const Home = () => {
     const expires = getPopUpExpireDate();
     setCookie("BANNER_EXPIRES", true, { path: "/", expires });
     setHasCookie(true);
-  };
-
-  const isApple = () => {
-    const user = navigator.userAgent.toLowerCase();
-    if (!isMobile) {
-      if (
-        user.indexOf("apple") > -1 ||
-        user.indexOf("safari") > -1 ||
-        user.indexOf("mac") > -1
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      if (
-        user.indexOf("iphone") > -1 ||
-        user.indexOf("ipad") > -1 ||
-        user.indexOf("ipod") > -1 ||
-        user.indexOf("safari") > -1
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    }
   };
 
   const onInstallApp = () => {
