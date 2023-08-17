@@ -77,12 +77,12 @@ const ModalWrapper = styled.div`
   .msg {
     font-size: ${(props) => props.theme.fontSizes.md};
     line-height: ${(props) => props.theme.lineHeights.md};
-    margin: 2rem 0 3rem 0;
+    margin: 2rem 0 1.5rem 0;
   }
 
   .action_box {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-around;
     flex-grow: 1;
     gap: 2rem;
@@ -92,14 +92,18 @@ const ModalWrapper = styled.div`
       font-size: ${(props) => props.theme.fontSizes.md};
       line-height: ${(props) => props.theme.lineHeights.md};
       font-weight: 700;
+      margin-top: 1.5rem;
     }
 
     .qr {
+      display: flex;
+      flex-direction: column;
       font-size: ${(props) => props.theme.fontSizes.md};
       line-height: ${(props) => props.theme.lineHeights.md};
       color: ${(props) => props.theme.colors.purple_light};
-      margin-bottom: 3px;
-      text-align: center;
+      justify-content: center;
+        align-items: center;
+      gap: 0.3rem;
     }
   }
 `;
