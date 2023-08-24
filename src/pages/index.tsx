@@ -56,6 +56,22 @@ const Home = () => {
   const setModalIsActive = useSetRecoilState(modalState);
   const setModalContent = useSetRecoilState(modalContentState);
 
+  const getPopUpExpireDate = () => {
+    const date = new Date();
+    date.setDate(date.getDate() + INSTALL_APP_EXP);
+    return date;
+  };
+
+  const onInstallApp = () => {
+    return window.open(isApple() ? APP_STORE : PLAY_STORE);
+  };
+
+  const onClose = () => {
+    const expires = getPopUpExpireDate();
+    setCookie("BANNER_EXPIRES", true, { path: "/", expires });
+    setHasCookie(true);
+  };
+
   useEffect(() => {
     if (location.loaded) {
       setLocaton({
@@ -127,22 +143,6 @@ const Home = () => {
   if (!hospitalList || !hotCommunity) {
     return;
   }
-
-  const getPopUpExpireDate = () => {
-    const date = new Date();
-    date.setDate(date.getDate() + INSTALL_APP_EXP);
-    return date;
-  };
-
-  const onClose = () => {
-    const expires = getPopUpExpireDate();
-    setCookie("BANNER_EXPIRES", true, { path: "/", expires });
-    setHasCookie(true);
-  };
-
-  const onInstallApp = () => {
-    return window.open(isApple() ? APP_STORE : PLAY_STORE);
-  };
 
   return (
     <Layout
