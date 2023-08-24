@@ -56,7 +56,6 @@ const Home = () => {
   const setModalIsActive = useSetRecoilState(modalState);
   const setModalContent = useSetRecoilState(modalContentState);
 
-  console.log(isMobile);
 
   useEffect(() => {
     if (location.loaded) {
@@ -114,7 +113,6 @@ const Home = () => {
       staleTime: Infinity
     }
   ]);
-  console.log(data)
 
   if(data[0].isLoading || data[1].isLoading) {
     return <LoadingContainer><Spinner /></LoadingContainer>
