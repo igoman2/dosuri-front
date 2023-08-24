@@ -102,7 +102,7 @@ const ModalWrapper = styled.div`
       line-height: ${(props) => props.theme.lineHeights.md};
       color: ${(props) => props.theme.colors.purple_light};
       justify-content: center;
-        align-items: center;
+      align-items: center;
       gap: 0.3rem;
     }
   }
