@@ -64,7 +64,20 @@ const Information: FC<IInformationProps> = ({ hospitalData }) => {
           <div className="list">
             <div className="list-title">병원 소개</div>
             {hospitalData.introduction ? (
-              <div>{hospitalData.introduction}</div>
+              <div>
+                {hospitalData.introduction
+                  .split("\n")
+                  .map((str, index, array) =>
+                    index === array.length - 1 ? (
+                      str
+                    ) : (
+                      <>
+                        {str}
+                        <br />
+                      </>
+                    )
+                  )}
+              </div>
             ) : (
               <EmptyText>등록된 병원 소개가 없습니다.</EmptyText>
             )}
