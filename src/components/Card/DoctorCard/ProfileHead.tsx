@@ -10,7 +10,6 @@ export interface IProfileHeadProps {
 }
 
 const ProfileHead = ({ doctor }: IProfileHeadProps) => {
-  console.log(doctor.attachments);
   return (
     <div className="profile">
       <span className="doctor-image">
