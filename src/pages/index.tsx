@@ -2,6 +2,7 @@ import {
   IGoodPriceHospitals,
   IHospitalInfoHomeResponse,
   IHospitalInfoResult,
+  IHotCommunityResponse,
 } from "@/types/service";
 import React, { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -22,7 +23,7 @@ import { queryKeys } from "@/service/react-query/constants";
 import styled from "@emotion/styled";
 import useAuth from "@/hooks/useAuth";
 import useGeolocation from "@/hooks/useGeolocation";
-import { useQuery } from "react-query";
+import { useQueries, useQuery } from "react-query";
 import { useTheme } from "@emotion/react";
 import { isMobile } from "react-device-detect";
 import SelectAddressBar from "@/components/domain/Address/SelectAddressBar";
@@ -40,7 +41,8 @@ import {
   INSTALL_APP_EXP,
 } from "@/constants/Application";
 import { queryClient } from "@/service/react-query/queryClient";
-import isApple from "@/util/isApple"
+import isApple from "@/util/isApple";
+import Spinner from "src/components/Spinner/Spinner";
 
 const Home = () => {
   const theme = useTheme();
@@ -92,23 +94,35 @@ const Home = () => {
           qrValues: {
             value: isApple() ? APP_STORE : PLAY_STORE,
             size: 60,
-
-          }
-        }
+          },
+        },
       });
     }
   }, []);
 
-  const { data: hospitalList } = useQuery({
-    queryKey: [queryKeys.hospital, "homeHospitalList"],
-    queryFn: getHospitalInfoHome,
-    enabled: !queryClient.getQueryData([
-      queryKeys.hospital,
-      "homeHospitalList",
-    ]),
-  });
+  const data = useQueries([
+    {
+      queryKey: [queryKeys.hospital, "homeHospitalList"],
+      queryFn: getHospitalInfoHome,
+      staleTime: Infinity,
+    },
+    {
+      queryKey: "getHotCommunity",
+      queryFn: getHotCommunity,
+      staleTime: Infinity,
+    },
+  ]);
 
-  const { data: hotCommunity } = useQuery("getHotCommunity", getHotCommunity);
+  if (data[0].isLoading || data[1].isLoading) {
+    return (
+      <LoadingContainer>
+        <Spinner />
+      </LoadingContainer>
+    );
+  }
+
+  const hospitalList = data[0].data;
+  const hotCommunity = data[1].data;
 
   if (!hospitalList || !hotCommunity) {
     return;
@@ -347,4 +361,12 @@ const EmptyTextWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 1rem;
+`;
+
+const LoadingContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
 `;
