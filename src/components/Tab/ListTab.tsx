@@ -62,7 +62,7 @@ const ListTabWrapper = styled.div<ListTapWrapperProps>`
 
     & .bubble {
       position: absolute;
-      top: 0.2rem;
+      top: -0.2rem;
       right: -0.7rem;
       border-radius: 50%;
       background-color: red;
@@ -73,7 +73,6 @@ const ListTabWrapper = styled.div<ListTapWrapperProps>`
     & .text {
       position: relative;
       font-size: ${(props) => props.theme.fontSizes.xl};
-      line-height: ${(props) => props.theme.lineHeights.xl};
       font-weight: 700;
       color: ${(props) =>
         props.color
@@ -84,7 +83,6 @@ const ListTabWrapper = styled.div<ListTapWrapperProps>`
     & .sub-text {
       color: ${(props) => props.theme.colors.purple};
       font-size: ${(props) => props.theme.fontSizes.lg};
-      line-height: ${(props) => props.theme.lineHeights.lg};
     }
   }
 `;
