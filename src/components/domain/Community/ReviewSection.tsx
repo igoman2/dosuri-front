@@ -3,7 +3,7 @@ import PostBottom from "@/components/Card/PostCard/PostBottom";
 import api from "@/service/axiosConfig";
 import { queryKeys } from "@/service/react-query/constants";
 import { IHotCommunityResponse } from "@/types/service";
-import React, { FC, useMemo } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { useInfiniteQuery } from "react-query";
 import Link from "next/link";
@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import _ from "lodash";
 import ModalPostCard from "@/components/Card/PostCard/ModalPostCard";
 import ReviewBanner from "@/components/domain/Community/ReviewBanner";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
 type Tab = {
   title: "전체" | "치료후기만 보기" | "질문/상담만 보기";
@@ -23,6 +24,7 @@ interface IReviewSectionProps {
 
 const ReviewSection: FC<IReviewSectionProps> = ({ currentTab }) => {
   const router = useRouter();
+  const { lockScroll, openScroll } = useBodyScrollLock();
 
   const initialUrl = useMemo(() => {
     return `/community/v1/community/articles?article_type=${currentTab.value}&ordering=-created_at`;
@@ -59,6 +61,14 @@ const ReviewSection: FC<IReviewSectionProps> = ({ currentTab }) => {
     return router.query.id;
   }, [router]);
   const showDetailModal = !_.isNil(detailId);
+
+  useEffect(() => {
+    if (showDetailModal) {
+      lockScroll();
+    } else {
+      openScroll();
+    }
+  }, [showDetailModal]);
 
   return (
     <>

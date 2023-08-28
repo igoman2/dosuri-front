@@ -33,7 +33,7 @@ const FloatWrapper = styled.div<FloatProps>`
   bottom: ${(props) => props.distance};
   left: 0;
   right: 0;
-  z-index: 10;
+  z-index: 3;
   transition: all 0.3s linear;
   transform: ${(props) => {
     if (!props.direction) {

@@ -92,7 +92,7 @@ const Community = () => {
         </div>
         <ReviewSection currentTab={currentTab} />
 
-        {/* <Float
+        <Float
           scrollDir={scrollDir}
           distance="8.5rem"
           icon={
@@ -105,7 +105,7 @@ const Community = () => {
               }}
             />
           }
-        /> */}
+        />
         {isActive && (
           <ModalFactory
             isActive={isActive}

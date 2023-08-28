@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { BottomSheet } from "react-spring-bottom-sheet";
 import { useRecoilState } from "recoil";
 import { searchModalState } from "../Search/store";
+import { SelectList } from "@/components/etc/emotion/BottomSheet/SelectList";
 
 interface IFilterSectionProps {
   category: MapListItem;
@@ -70,20 +71,6 @@ const FilterSection = ({ category, setCategory }: IFilterSectionProps) => {
 };
 
 export default FilterSection;
-
-const SelectList = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 2rem;
-  z-index: 100;
-
-  .list-title {
-    padding: 1rem 0;
-    font-size: ${(props) => props.theme.fontSizes.xxl};
-    line-height: ${(props) => props.theme.lineHeights.xxl};
-  }
-`;
 
 const ImageTextViewWrapper = styled.div`
   display: flex;
