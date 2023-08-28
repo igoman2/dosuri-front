@@ -26,6 +26,7 @@ import { price, searchModalState, year } from "./store";
 import { useQuery } from "react-query";
 import { queryClient } from "@/service/react-query/queryClient";
 import { getHospitalInfoHome } from "@/service/apis/hospital";
+import { SelectList } from "@/components/etc/emotion/BottomSheet/SelectList";
 
 const timezoneOffset = new Date().getTimezoneOffset() * 60000;
 
@@ -267,17 +268,4 @@ const ImageTextViewWrapper = styled.div`
   margin-bottom: 1rem;
   display: flex;
   gap: 1rem;
-`;
-
-const SelectList = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 2rem;
-
-  .list-title {
-    padding: 1rem 0;
-    font-size: ${(props) => props.theme.fontSizes.xxl};
-    line-height: ${(props) => props.theme.lineHeights.xxl};
-  }
 `;
