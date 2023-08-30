@@ -23,7 +23,8 @@ import withAuth from "./withauth";
 import { Toaster } from "react-hot-toast";
 import { DefaultSeo } from "next-seo";
 import DEFAULT_SEO from "../lib/seo/seo.config";
-
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 function MyApp({
   Component,
   pageProps,
@@ -45,6 +46,16 @@ function MyApp({
       router.events.off("routeChangeComplete", handleRouteChange);
     };
   }, [router.events]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const firebaseConfig = JSON.parse(
+        process.env.NEXT_PUBLIC_FIREBASE_CONFIG!
+      );
+      const app = initializeApp(firebaseConfig);
+      getAnalytics(app);
+    }
+  }, []);
 
   return (
     <>
