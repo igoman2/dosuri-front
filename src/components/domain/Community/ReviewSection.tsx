@@ -26,6 +26,7 @@ const ReviewSection: FC<IReviewSectionProps> = ({ currentTab }) => {
   const router = useRouter();
   const { lockScroll, openScroll } = useBodyScrollLock();
 
+  console.log("@");
   const initialUrl = useMemo(() => {
     return `/community/v1/community/articles?article_type=${currentTab.value}&ordering=-created_at`;
   }, [currentTab]);
