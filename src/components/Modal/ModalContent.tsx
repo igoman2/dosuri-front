@@ -1,11 +1,13 @@
-import { css, useTheme } from "@emotion/react";
-import { modalContentState, modalState } from "./store";
+import { useTheme } from "@emotion/react";
+import { modalContentState } from "./store";
 
 import Button from "@/components/Button";
 import React from "react";
 import styled from "@emotion/styled";
 import { useRecoilState } from "recoil";
-import QR from "qrcode.react";
+import QRCode from "@/public/assets/app-qr.png";
+
+import Image from "next/image";
 
 const ModalContent = () => {
   const theme = useTheme();
@@ -47,10 +49,11 @@ const ModalContent = () => {
           <div className="action_box">
             <div className="qr">
               {modalContent.qr.text}
-              <QR
-                value={modalContent.qr.qrValues.value}
-                size={modalContent.qr.qrValues.size}
-                includeMargin={false}
+              <Image
+                src={QRCode}
+                width={modalContent.qr.qrValues.size}
+                height={modalContent.qr.qrValues.size}
+                alt="app-qrcode"
               />
             </div>
           </div>
