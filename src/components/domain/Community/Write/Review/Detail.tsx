@@ -306,13 +306,13 @@ const Detail: FC<IDetailProps> = ({
             />
           </Content>
         </div>
-        <ModalBottom
-          mode={mode}
-          setMode={handleMode}
-          onSwap={onSwap}
-          disabled={!isValid()}
-        />
       </WriteReviewWrapper>
+      <ModalBottom
+        mode={mode}
+        setMode={handleMode}
+        onSwap={onSwap}
+        disabled={!isValid()}
+      />
     </FullModalBase>
   );
 };

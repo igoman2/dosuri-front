@@ -307,14 +307,14 @@ const Auth: FC<IAuthProps> = ({ isActive, mode, setMode, onClose, onSwap }) => {
             </Agreement>
           </Content>
         </div>
-        <ModalBottom
-          mode={mode}
-          setMode={handleMode}
-          onSwap={onSwap}
-          disabled={!isValid()}
-          action={submitReview}
-        />
       </WriteReviewWrapper>
+      <ModalBottom
+        mode={mode}
+        setMode={handleMode}
+        onSwap={onSwap}
+        disabled={!isValid()}
+        action={submitReview}
+      />
     </FullModalBase>
   );
 };
