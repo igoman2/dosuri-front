@@ -77,7 +77,7 @@ const ButtonWrapper = styled.div`
   align-items: center;
   position: -webkit-sticky; /* 사파리 브라우저 지원 */
   position: sticky;
-  bottom: -2rem;
+  bottom: 0;
   padding: 1rem 0 1rem 0;
   background: white;
   z-index: 100;
