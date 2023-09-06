@@ -5,6 +5,7 @@ import Kakao from "@/components/Oauth/Kakao";
 import { NextSeo } from "next-seo";
 import React from "react";
 import Apple from "@/components/Oauth/Apple";
+import Google from "@/components/Oauth/Google";
 
 const Login = () => {
   const theme = useTheme();
@@ -54,7 +55,7 @@ const Login = () => {
       <div css={buttonSection}>
         <Kakao />
         <Apple />
-        {/* <Google /> */}
+        <Google />
       </div>
     </main>
   );
