@@ -3,6 +3,8 @@ import { FC, ReactElement } from "react";
 import Divider from "../Divider/Divider";
 import { Theme } from "@emotion/react";
 import styled from "@emotion/styled";
+import useMobile from "@/hooks/useMobile";
+import classNames from "classnames";
 
 interface IListTabProps {
   text: string;
@@ -24,6 +26,8 @@ const ListTab: FC<IListTabProps> = ({
   color,
   onClick,
 }) => {
+  const { isIphone } = useMobile();
+
   return (
     <>
       <ListTabWrapper isLast={isLast} color={color} onClick={onClick}>
@@ -32,7 +36,13 @@ const ListTab: FC<IListTabProps> = ({
             <div>{text}</div>
             {hasNoti && <div className="bubble"></div>}
           </div>
-          <div className="sub-text">{subText}</div>
+          <div
+            className={classNames("sub-text", {
+              iphone: isIphone,
+            })}
+          >
+            {subText}
+          </div>
         </div>
         <div>{right}</div>
       </ListTabWrapper>
@@ -83,6 +93,10 @@ const ListTabWrapper = styled.div<ListTapWrapperProps>`
     & .sub-text {
       color: ${(props) => props.theme.colors.purple};
       font-size: ${(props) => props.theme.fontSizes.lg};
+    }
+
+    & .iphone {
+      padding-bottom: 0.2rem;
     }
   }
 `;
