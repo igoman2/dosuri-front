@@ -1,0 +1,2 @@
+export type Colors = "purple" | "purple_light" | "purple_light2" | "red" | "red_light" | "green" | "mint_green" | "olive_green" | "olive_green_light" | "yellow" | "yellow_light" | "grey" | "grey_light" | "black" | "white";
+export type TextSizes = "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | "xxxl";
