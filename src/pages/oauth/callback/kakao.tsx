@@ -42,11 +42,10 @@ const Kakao = ({ uuid, accessToken, refreshToken, isNew }: IKakaoProps) => {
     const redirect = window.localStorage.getItem("redirectURL");
     window.localStorage.setItem("redirectURL", "");
 
-    if (!!redirect) {
-      router.push(redirect);
-    }
     if (isNew) {
       router.push("/register");
+    } else if (!!redirect) {
+      router.push(redirect);
     } else {
       setTokenInCookie("refresh", refreshToken);
       setTokenInCookie("access", accessToken);
