@@ -30,6 +30,8 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { HospitalInfoTabList } from "@/constants/Tab";
 import { TabItem } from "@/types/community";
 import { modalState, modalContentState } from "@/components/Modal/store";
+import ReservationModal from "@/components/domain/Hospital/ReservationModal";
+import { reservationModalState } from "@/components/domain/Hospital/store";
 
 interface IHospitalInformationProps {
   id: string;
@@ -47,6 +49,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
   const { isLoggedIn } = useAuth();
   const setNoticeModal = useSetRecoilState(modalState);
   const setNoticeModalContent = useSetRecoilState(modalContentState);
+  const [modal, setModal] = useRecoilState(reservationModalState);
 
   useEffect(() => {
     router.replace({
@@ -99,12 +102,12 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
       setIsUp(hospitalInfoData.is_up);
 
       // is_ad인 경우 기본텝을 병원정보로 변환
-      if(hospitalInfoData.is_ad) {
+      if (hospitalInfoData.is_ad) {
         setCurrentTab(HospitalInfoTabList[0]);
         router.replace({
           pathname: `/hospital/${router.query.id}`,
           query: { tab: currentTab.value },
-        })
+        });
       }
     }
   }, [hospitalInfoData]);
@@ -137,33 +140,33 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
     (image) => image?.signed_path
   );
 
-  const handleReservationClick = async () => {
-    try {
-      await createReservation({ hospital: id });
-      setNoticeModal({ isActive: true });
-      setNoticeModalContent({
-        title: "",
-        content: "예약이 신청되었습니다. 병원에서 곧 전화를 드립니다.",
-        actionCancel: {
-          text: "",
-          action: () => {},
-        },
-        actionWarn: {
-          text: "",
-          action: () => {},
-        },
-        actionConfirm: {
-          text: "확인",
-          action: () => {
-            setNoticeModal({ isActive: false });
-            router.back();
-          },
-        },
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const handleReservationClick = async () => {
+  //   try {
+  //     await createReservation({ hospital: id });
+  //     setNoticeModal({ isActive: true });
+  //     setNoticeModalContent({
+  //       title: "",
+  //       content: "예약이 신청되었습니다. 병원에서 곧 전화를 드립니다.",
+  //       actionCancel: {
+  //         text: "",
+  //         action: () => {},
+  //       },
+  //       actionWarn: {
+  //         text: "",
+  //         action: () => {},
+  //       },
+  //       actionConfirm: {
+  //         text: "확인",
+  //         action: () => {
+  //           setNoticeModal({ isActive: false });
+  //           router.back();
+  //         },
+  //       },
+  //     });
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   return (
     <>
@@ -244,12 +247,13 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
                 borderRadius="0.3rem"
                 backgroundColor={theme.colors.purple_light}
                 bold
-                onClick={handleReservationClick}
+                onClick={() => setModal(true)}
               ></Button>
             </SaleButtonWrapper>
           </div>
         </Hospital>
       </Layout>
+      <ReservationModal hospitalUuid={hospitalInfoData.uuid} />
     </>
   );
 };
