@@ -100,10 +100,39 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
   useEffect(() => {
     if (hospitalInfoData) {
       setIsUp(hospitalInfoData.is_up);
-
       // is_ad인 경우 기본텝을 병원정보로 변환
       if (hospitalInfoData.is_ad) {
         setCurrentTab(HospitalInfoTabList[0]);
+        router.replace({
+          pathname: `/hospital/${router.query.id}`,
+          query: { tab: currentTab.value },
+        });
+      }
+
+      // 병원 소개가 있는 경우 병원 정보
+      else if (!!hospitalInfoData.introduction) {
+        setCurrentTab(HospitalInfoTabList[0]);
+        router.replace({
+          pathname: `/hospital/${router.query.id}`,
+          query: { tab: currentTab.value },
+        });
+      }
+
+      // 가격 정보가 있는 경우 가격 정보
+      else if (
+        hospitalTreatmentsData &&
+        hospitalTreatmentsData?.results.length > 0
+      ) {
+        setCurrentTab(HospitalInfoTabList[3]);
+        router.replace({
+          pathname: `/hospital/${router.query.id}`,
+          query: { tab: currentTab.value },
+        });
+      }
+
+      // 그 외 치료 후기
+      else {
+        setCurrentTab(HospitalInfoTabList[2]);
         router.replace({
           pathname: `/hospital/${router.query.id}`,
           query: { tab: currentTab.value },
