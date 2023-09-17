@@ -6,9 +6,11 @@ import { NextSeo } from "next-seo";
 import React from "react";
 import Apple from "@/components/Oauth/Apple";
 import Google from "@/components/Oauth/Google";
+import useRN from "@/hooks/useRN";
 
 const Login = () => {
   const theme = useTheme();
+  const { isApp } = useRN();
 
   const mainLayout = css`
     position: relative;
@@ -55,7 +57,7 @@ const Login = () => {
       <div css={buttonSection}>
         <Kakao />
         <Apple />
-        <Google />
+        {isApp ? null : <Google />}
       </div>
     </main>
   );

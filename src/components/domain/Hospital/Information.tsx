@@ -53,14 +53,14 @@ const Information: FC<IInformationProps> = ({ hospitalData }) => {
               <EmptyText>등록된 주소가 없습니다.</EmptyText>
             )}
           </div>
-          <div className="list">
+          {/* <div className="list">
             <div className="list-title">주차</div>
             {hospitalData.parking_info ? (
               <div>{hospitalData.parking_info}</div>
             ) : (
               <EmptyText>등록된 주차 정보가 없습니다.</EmptyText>
             )}
-          </div>
+          </div> */}
           <div className="list">
             <div className="list-title">병원 소개</div>
             {hospitalData.introduction ? (
