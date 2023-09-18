@@ -45,6 +45,8 @@ const Kakao = ({ uuid, accessToken, refreshToken, isNew }: IKakaoProps) => {
     if (isNew) {
       router.push("/register");
     } else if (!!redirect) {
+      setTokenInCookie("refresh", refreshToken);
+      setTokenInCookie("access", accessToken);
       router.push(redirect);
     } else {
       setTokenInCookie("refresh", refreshToken);
