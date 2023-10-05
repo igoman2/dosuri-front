@@ -3,10 +3,10 @@ import { css, useTheme } from "@emotion/react";
 import Icon from "@/util/Icon";
 import Kakao from "@/components/Oauth/Kakao";
 import { NextSeo } from "next-seo";
-import React from "react";
 import Apple from "@/components/Oauth/Apple";
 import Google from "@/components/Oauth/Google";
 import useRN from "@/hooks/useRN";
+import { isAndroid } from "react-device-detect";
 
 const Login = () => {
   const theme = useTheme();
@@ -56,7 +56,8 @@ const Login = () => {
 
       <div css={buttonSection}>
         <Kakao />
-        <Apple />
+        {/* 안드로이드 앱에서 애플 노출x */}
+        {isApp && isAndroid ? null : <Apple />}
         {isApp ? null : <Google />}
       </div>
     </main>
