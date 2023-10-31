@@ -13,6 +13,9 @@ import { ReservationContext } from "./ReservationModal";
 import { modalContentState, modalState } from "@/components/Modal/store";
 import { Field, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
+import { DatePicker } from "antd";
+import { EmptyText } from "@/components/etc/emotion/EmptyText";
+import dayjs from "dayjs";
 
 const Reservation = () => {
   const userInfo = useRecoilValue(userInfoState);
@@ -26,16 +29,18 @@ const Reservation = () => {
   const handleReservation = async ({
     name,
     phone,
+    date,
   }: {
     name: string;
     phone: string;
+    date: string;
   }) => {
     try {
       const sendData = {
         hospital: hospitalUuid,
         name: name,
         phone_no: phone,
-        reservation_date: new Date(),
+        reservation_date: date,
       };
 
       const response = await createReservation(sendData);
@@ -69,13 +74,14 @@ const Reservation = () => {
     initialValues: {
       name: userInfo.name ?? "",
       phone: userInfo.phone_no ?? "",
+      date: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string(),
+      name: Yup.string().required(),
       phone: Yup.string().length(8).required(),
+      date: Yup.string(),
     }),
     onSubmit: (data) => {
-      console.log("data :>> ", data);
       handleReservation(data);
     },
   });
@@ -130,6 +136,39 @@ const Reservation = () => {
                 />
               </div>
             </div>
+
+            <div className="divider">
+              <label className="label gap bold" htmlFor="phone">
+                예약 날짜
+              </label>
+
+              <div className="input-section">
+                <DatePicker
+                  showNow={false}
+                  showTime
+                  showSecond={false}
+                  inputReadOnly
+                  onOk={(date) => {
+                    formik.setFieldValue(
+                      "date",
+                      dayjs(date).format("YYYY-MM-DDTHH:mm:ss") + "Z"
+                    );
+                  }}
+                  onChange={(value) =>
+                    formik.setFieldValue(
+                      "date",
+                      dayjs(value).format("YYYY-MM-DDTHH:mm:ss") + "Z"
+                    )
+                  }
+                  placeholder="예약시간을 선택해주세요."
+                  style={{ width: "100%", height: "4.2rem" }}
+                />
+              </div>
+              {formik.errors.date && (
+                <EmptyText>{formik.errors.date}</EmptyText>
+              )}
+            </div>
+
             <ButtonsWrapper>
               <Button
                 text="신청하기"
