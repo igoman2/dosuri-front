@@ -337,7 +337,9 @@ const Home = () => {
         distance="8.5rem"
         icon={
           <Button
+            shadow
             iconName="map"
+            bold
             text="지도로 보기"
             onClick={() => {
               router.push("/map");
