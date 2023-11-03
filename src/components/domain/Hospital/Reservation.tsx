@@ -73,7 +73,8 @@ const Reservation = () => {
   const formik = useFormik({
     initialValues: {
       name: userInfo.name ?? "",
-      phone: userInfo.phone_no ?? "",
+      phone:
+        userInfo.phone_no.split("-")[1] + userInfo.phone_no.split("-")[2] ?? "",
       date: "",
     },
     isInitialValid: false,
@@ -84,6 +85,13 @@ const Reservation = () => {
     }),
     onSubmit: (data) => {
       handleReservation(data);
+    },
+  });
+
+  const disabledTime = () => ({
+    disabledHours: () => {
+      const numbersArray = Array.from({ length: 25 }, (_, index) => index);
+      return numbersArray.filter((h) => h < 10 || h > 17);
     },
   });
 
@@ -158,6 +166,7 @@ const Reservation = () => {
                     format: "HH:mm",
                     minuteStep: 30, // 30분 간격으로 설정
                   }}
+                  disabledTime={disabledTime}
                   format="YYYY-MM-DD HH:mm"
                   showSecond={false}
                   inputReadOnly
