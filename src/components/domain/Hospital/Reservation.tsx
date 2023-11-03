@@ -73,8 +73,9 @@ const Reservation = () => {
   const formik = useFormik({
     initialValues: {
       name: userInfo.name ?? "",
-      phone:
-        userInfo.phone_no.split("-")[1] + userInfo.phone_no.split("-")[2] ?? "",
+      phone: userInfo.phone_no
+        ? userInfo.phone_no.split("-")[1] + userInfo.phone_no.split("-")[2]
+        : "",
       date: "",
     },
     isInitialValid: false,
