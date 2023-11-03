@@ -66,7 +66,6 @@ const Price: FC<IPriceProps> = ({ hospitalData, hospitalTreatmentsData }) => {
               hospitalRankData={hospitalTreatmentsData.hospital_rank}
             />
           )}
-
           <table {...getTableProps()}>
             <thead>
               {headerGroups.map((headerGroup, i) => (
@@ -102,6 +101,7 @@ const Price: FC<IPriceProps> = ({ hospitalData, hospitalTreatmentsData }) => {
               })}
             </tbody>
           </table>
+
           <ul className="etc">
             <li>
               비급여 진료비용 공개제도에 의해 병원이 직접 건강보험심사평가원에

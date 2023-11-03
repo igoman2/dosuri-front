@@ -32,7 +32,9 @@ import { TabItem } from "@/types/community";
 import { modalState, modalContentState } from "@/components/Modal/store";
 import ReservationModal from "@/components/domain/Hospital/ReservationModal";
 import { reservationModalState } from "@/components/domain/Hospital/store";
-
+import BenefitBanner from "@/public/assets/benefit-banner.png";
+import BenefitButton from "@/public/assets/benefit-button.png";
+import Image from "next/image";
 interface IHospitalInformationProps {
   id: string;
   tab: string;
@@ -269,6 +271,27 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
           </div>
           <div>
             <SaleButtonWrapper>
+              <div
+                css={{
+                  display: "flex",
+                  "& .benefit": {
+                    flex: "1",
+                  },
+                }}
+              >
+                <Image
+                  src={BenefitBanner}
+                  alt="benefit-banner"
+                  css={{ width: "100%", objectFit: "cover" }}
+                />
+
+                <Image
+                  src={BenefitButton}
+                  objectFit="contain"
+                  alt="benefit-banner"
+                />
+              </div>
+
               <Button
                 text="도수치료 예약하기"
                 width="100%"
@@ -298,7 +321,7 @@ const Hospital = styled.div`
 
   .hospital-content {
     padding: 0 2rem;
-    margin-bottom: 8.7rem;
+    margin-bottom: 15.7rem;
     overflow-x: hidden;
   }
 
