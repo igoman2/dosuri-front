@@ -76,10 +76,11 @@ const Reservation = () => {
       phone: userInfo.phone_no ?? "",
       date: "",
     },
+    isInitialValid: false,
     validationSchema: Yup.object({
       name: Yup.string().required(),
       phone: Yup.string().length(8).required(),
-      date: Yup.string(),
+      date: Yup.string().length(20).required(),
     }),
     onSubmit: (data) => {
       handleReservation(data);
@@ -112,7 +113,11 @@ const Reservation = () => {
                 value={formik.values.name}
                 onChange={formik.handleChange}
                 placeholder="이름 입력"
+                autocomplete="off"
               />
+              {/* {formik.errors.name && (
+                <EmptyText>{formik.errors.name}</EmptyText>
+              )} */}
             </div>
             <div className="divider">
               <label className="label gap bold" htmlFor="phone">
@@ -133,8 +138,12 @@ const Reservation = () => {
                   placeholder="숫자만 입력"
                   onChange={formik.handleChange}
                   value={formik.values.phone}
+                  autocomplete="off"
                 />
               </div>
+              {/* {formik.errors.phone && (
+                <EmptyText>{formik.errors.phone}</EmptyText>
+              )} */}
             </div>
 
             <div className="divider">
@@ -145,7 +154,11 @@ const Reservation = () => {
               <div className="input-section">
                 <DatePicker
                   showNow={false}
-                  showTime
+                  showTime={{
+                    format: "HH:mm",
+                    minuteStep: 30, // 30분 간격으로 설정
+                  }}
+                  format="YYYY-MM-DD HH:mm"
                   showSecond={false}
                   inputReadOnly
                   onOk={(date) => {
@@ -164,9 +177,9 @@ const Reservation = () => {
                   style={{ width: "100%", height: "4.2rem" }}
                 />
               </div>
-              {formik.errors.date && (
+              {/* {formik.errors.date && (
                 <EmptyText>{formik.errors.date}</EmptyText>
-              )}
+              )} */}
             </div>
 
             <ButtonsWrapper>
@@ -178,6 +191,7 @@ const Reservation = () => {
                 backgroundColor={theme.colors.purple_light}
                 bold
                 type="submit"
+                disabled={!formik.isValid}
               />
             </ButtonsWrapper>
           </form>
