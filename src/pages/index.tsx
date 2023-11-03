@@ -43,6 +43,8 @@ import {
 import { queryClient } from "@/service/react-query/queryClient";
 import isApple from "@/util/isApple";
 import Spinner from "src/components/Spinner/Spinner";
+import Maps from "./map";
+import Submap from "@/components/domain/Map/Submap";
 
 const Home = () => {
   const theme = useTheme();
@@ -202,7 +204,14 @@ const Home = () => {
           )}
         </>
       </section>
-      <LogginBanner>
+      <div
+        css={{
+          height: "100%",
+        }}
+      >
+        <Submap />
+      </div>
+      {/* <LogginBanner>
         {!isLoggedIn && (
           <Link href="/login">
             <a>
@@ -331,7 +340,7 @@ const Home = () => {
             <EmptyText>등록된 후기가 없습니다.</EmptyText>
           </EmptyTextWrapper>
         )}
-      </section>
+      </section> */}
       <Float
         scrollDir={scrollDir}
         distance="8.5rem"
@@ -345,7 +354,6 @@ const Home = () => {
           />
         }
       />
-
       <SelectAddressModal />
     </Layout>
   );

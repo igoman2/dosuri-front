@@ -63,7 +63,7 @@ const zoomMap: ZoomMap = {
   14: 4,
 };
 
-const Maps = () => {
+const Submap = () => {
   const { coordinates, loaded } = useGeolocation();
   const theme = useTheme();
   const [mapCenter, setMapCenter] = useState({
@@ -169,7 +169,7 @@ const Maps = () => {
   }
 
   return (
-    <Layout full header={<HeaderDepth bottomLine />} footer={false}>
+    <>
       <FilterSection category={category} setCategory={setCategory} />
       <div
         style={{
@@ -336,8 +336,8 @@ const Maps = () => {
         </div>
       </div>
       <FilterOptionModal />
-    </Layout>
+    </>
   );
 };
 
-export default Maps;
+export default Submap;
