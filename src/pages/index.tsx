@@ -204,111 +204,15 @@ const Home = () => {
           )}
         </>
       </section>
-      <div
+
+      <section
         css={{
-          height: "100%",
+          height: "45rem",
         }}
       >
         <Submap />
-      </div>
-      {/* <LogginBanner>
-        {!isLoggedIn && (
-          <Link href="/login">
-            <a>
-              <Button
-                text="로그인하고 내 주변 TOP 병원 보기"
-                backgroundColor={theme.colors.purple_light}
-                borderRadius="0.3rem"
-                height="5.2rem"
-                bold
-                width="100%"
-              />
-            </a>
-          </Link>
-        )}
-      </LogginBanner>
-      <section
-        css={{
-          marginBottom: "2.5rem",
-        }}
-      >
-        <>
-          <div
-            css={{
-              fontSize: theme.fontSizes.xl,
-              fontWeight: 700,
-            }}
-          >
-            새로 생긴 병원
-          </div>
-
-          {hospitalList.new_hospitals.length !== 0 ? (
-            <>
-              {hospitalList.new_hospitals.map(
-                (hospital: IHospitalInfoResult, i) => (
-                  <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
-                    <a>
-                      <div css={{ marginTop: "1rem" }}>
-                        <HospitalCard hospitalInfo={hospital} />
-                      </div>
-                    </a>
-                  </Link>
-                )
-              )}
-            </>
-          ) : (
-            <EmptyTextWrapper>
-              <EmptyText>새로 생긴 병원이 없습니다.</EmptyText>
-            </EmptyTextWrapper>
-          )}
-        </>
       </section>
-      <section
-        css={{
-          marginBottom: "2.5rem",
-        }}
-      >
-        {hospitalList.many_review_hospitals.length !== 0 && (
-          <>
-            <div
-              css={{
-                fontSize: theme.fontSizes.xl,
-                fontWeight: 700,
-              }}
-            >
-              후기가 좋은 병원
-            </div>
 
-            {hospitalList.many_review_hospitals.map(
-              (hospital: IHospitalInfoResult, i) => (
-                <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
-                  <a>
-                    <div css={{ marginTop: "1rem" }}>
-                      <HospitalCard hospitalInfo={hospital} />
-                    </div>
-                  </a>
-                </Link>
-              )
-            )}
-          </>
-        )}
-      </section>
-      <LogginBanner>
-        {!isLoggedIn && (
-          <Link href="/login">
-            <a>
-              <Button
-                text="로그인하고 내 주변 TOP 병원 보기"
-                backgroundColor={theme.colors.purple_light}
-                borderRadius="0.3rem"
-                height="5.2rem"
-                bold
-                width="100%"
-              />
-            </a>
-          </Link>
-        )}
-      </LogginBanner>
       <section
         css={{
           marginBottom: "2.5rem",
@@ -340,8 +244,8 @@ const Home = () => {
             <EmptyText>등록된 후기가 없습니다.</EmptyText>
           </EmptyTextWrapper>
         )}
-      </section> */}
-      <Float
+      </section>
+      {/* <Float
         scrollDir={scrollDir}
         distance="8.5rem"
         icon={
@@ -353,7 +257,7 @@ const Home = () => {
             }}
           />
         }
-      />
+      /> */}
       <SelectAddressModal />
     </Layout>
   );

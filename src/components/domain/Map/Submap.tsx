@@ -39,6 +39,7 @@ import Link from "next/link";
 import { mapFilterState } from "@/store/mapFilter";
 import Spinner from "@/components/Spinner/Spinner";
 import { userInfoState } from "@/store/user";
+import { useRouter } from "next/router";
 
 type ZoomMap = {
   [key: number]: number;
@@ -64,6 +65,7 @@ const zoomMap: ZoomMap = {
 };
 
 const Submap = () => {
+  const router = useRouter();
   const { coordinates, loaded } = useGeolocation();
   const theme = useTheme();
   const [mapCenter, setMapCenter] = useState({
@@ -71,7 +73,7 @@ const Submap = () => {
     longitude: 0,
   });
   const [fetchEnable, setFetchEnable] = useState(true);
-  const [level, setLevel] = useState(4);
+  const [level, setLevel] = useState(5);
   const hospitals = useRef<IGetMapHospitals[]>([]);
   const [isClusterClicked, setIsClusterClicked] = useState(false);
   const [hospitalState, setHospitalState] = useState<IGetMapHospitals[]>([]);
@@ -170,7 +172,6 @@ const Submap = () => {
 
   return (
     <>
-      <FilterSection category={category} setCategory={setCategory} />
       <div
         style={{
           width: "100%",
@@ -185,7 +186,12 @@ const Submap = () => {
             lat: mapCenter.latitude,
             lng: mapCenter.longitude,
           }}
-          style={{ width: "100%", height: "100%", position: "relative" }}
+          style={{
+            width: "100%",
+            height: "100%",
+            position: "relative",
+            borderRadius: "1rem",
+          }}
           level={level} // 지도의 확대 레벨
           onDragEnd={(map) => handleDrag(map)}
           onZoomChanged={(map) => {
@@ -271,15 +277,24 @@ const Submap = () => {
             zIndex: 50,
           }}
         >
-          <Button
+          {/* <Button
             iconName="refresh"
-            text="이 지역 재검색"
+            text="지도 크게 보기"
             shadow
             bold
             backgroundColor={theme.colors.white}
             color={theme.colors.black}
             onClick={() => {
               refetch();
+            }}
+          /> */}
+          <Button
+            bold
+            shadow
+            iconName="map"
+            text="지도 크게 보기"
+            onClick={() => {
+              router.push("/map");
             }}
           />
         </div>
@@ -292,7 +307,7 @@ const Submap = () => {
             bottom: 0,
             left: "50%",
             transform: "translate(-50%, -10%)",
-            width: "90%",
+            width: "95%",
             padding: "0 1em",
             borderRadius: "0.5rem",
             boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
