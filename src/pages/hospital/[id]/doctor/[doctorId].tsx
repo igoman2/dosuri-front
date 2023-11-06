@@ -120,7 +120,7 @@ const DoctorInformation = ({ id, doctorId }: IDoctorInformationProps) => {
       </div>
       <SaleButtonWrapper>
         <Button
-          text="도수치료 상담 신청하기"
+          text="도수치료 예약하기"
           width="100%"
           height="5.2rem"
           borderRadius="0.3rem"
