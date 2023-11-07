@@ -208,6 +208,7 @@ const Home = () => {
       <section
         css={{
           height: "45rem",
+          marginBottom: "2.5rem",
         }}
       >
         <Submap />
@@ -245,7 +246,7 @@ const Home = () => {
           </EmptyTextWrapper>
         )}
       </section>
-      {/* <Float
+      <Float
         scrollDir={scrollDir}
         distance="8.5rem"
         icon={
@@ -259,7 +260,7 @@ const Home = () => {
             }}
           />
         }
-      /> */}
+      />
       <SelectAddressModal />
     </Layout>
   );
