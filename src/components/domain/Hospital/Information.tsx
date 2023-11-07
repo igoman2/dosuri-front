@@ -9,6 +9,7 @@ import { phoneCall } from "@/util/phoneCall";
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
 import HospitalMapView from "./HospitalMapView";
+import { useRouter } from "next/router";
 
 interface IInformationProps {
   hospitalData: IGetHospitalInfo;
@@ -16,6 +17,10 @@ interface IInformationProps {
 
 const Information: FC<IInformationProps> = ({ hospitalData }) => {
   const theme = useTheme();
+  const router = useRouter();
+  const 전화예약가능 = router.asPath.includes(
+    "dd53e8ffb1bd45a3a0ed7517af6069e0"
+  );
 
   return (
     <HospitalInformationWrapper>
@@ -103,11 +108,16 @@ const Information: FC<IInformationProps> = ({ hospitalData }) => {
           <div className="list">
             <div className="list-title">전화번호</div>
             {hospitalData.phone_no ? (
-              <div
-                className="phone-number"
-                onClick={() => phoneCall(hospitalData.phone_no)}
-              >
-                {formatPhoneNumber(hospitalData.phone_no)}
+              <div>
+                <span
+                  className="phone-number"
+                  onClick={() => phoneCall(hospitalData.phone_no)}
+                >
+                  {formatPhoneNumber(hospitalData.phone_no)}
+                </span>
+                {전화예약가능 && (
+                  <div className="phone-number-sub">(전화예약가능)</div>
+                )}
               </div>
             ) : (
               <EmptyText>등록된 전화번호가 없습니다.</EmptyText>
@@ -154,6 +164,11 @@ const Content = styled.div`
   .phone-number {
     color: ${(props) => props.theme.colors.purple_light};
     text-decoration: underline;
+  }
+
+  .phone-number-sub {
+    color: ${(props) => props.theme.colors.black};
+    font-size: ${(props) => props.theme.fontSizes.md};
   }
 `;
 
