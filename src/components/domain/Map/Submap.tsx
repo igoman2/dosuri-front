@@ -40,6 +40,8 @@ import { mapFilterState } from "@/store/mapFilter";
 import Spinner from "@/components/Spinner/Spinner";
 import { userInfoState } from "@/store/user";
 import { useRouter } from "next/router";
+import MapFullButton from "@/public/assets/map-full.png";
+import Image from "next/image";
 
 type ZoomMap = {
   [key: number]: number;
@@ -175,7 +177,7 @@ const Submap = () => {
       <div
         style={{
           width: "100%",
-          height: "calc(100% - 44px)",
+          height: "100%",
           position: "relative",
         }}
       >
@@ -191,6 +193,7 @@ const Submap = () => {
             height: "100%",
             position: "relative",
             borderRadius: "1rem",
+            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
           }}
           level={level} // 지도의 확대 레벨
           onDragEnd={(map) => handleDrag(map)}
@@ -288,7 +291,27 @@ const Submap = () => {
               refetch();
             }}
           /> */}
-          <Button
+          <span
+            css={{
+              position: "absolute",
+              top: "-10px",
+              right: 0,
+              cursor: "pointer",
+            }}
+            role="button"
+            onClick={() => {
+              router.push("/map");
+            }}
+          >
+            <Image
+              src={MapFullButton}
+              width={40}
+              height={40}
+              alt="map-full-button"
+            />
+          </span>
+
+          {/* <Button
             bold
             shadow
             iconName="map"
@@ -296,7 +319,7 @@ const Submap = () => {
             onClick={() => {
               router.push("/map");
             }}
-          />
+          /> */}
         </div>
         <div
           css={{
