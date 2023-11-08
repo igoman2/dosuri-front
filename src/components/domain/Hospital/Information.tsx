@@ -86,11 +86,13 @@ const Information: FC<IInformationProps> = ({ hospitalData }) => {
                     )}
                 </div>
 
-                <Link href="https://m.booking.naver.com/booking/13/bizes/625475?theme=place&entry=pll&area=pll">
-                  <a target="_blank" rel="noopener noreferrer">
-                    <span className="link">네이버 예약</span>
-                  </a>
-                </Link>
+                {전화예약가능 && (
+                  <Link href="https://m.booking.naver.com/booking/13/bizes/625475?theme=place&entry=pll&area=pll">
+                    <a target="_blank" rel="noopener noreferrer">
+                      <span className="link">네이버 예약</span>
+                    </a>
+                  </Link>
+                )}
               </>
             ) : (
               <EmptyText>등록된 병원 소개가 없습니다.</EmptyText>
