@@ -344,6 +344,16 @@ const Home = () => {
           </EmptyTextWrapper>
         )}
       </section>
+
+      <section
+        css={{
+          height: "45rem",
+          marginBottom: "2.5rem",
+        }}
+      >
+        <Submap />
+      </section>
+
       <Float
         scrollDir={scrollDir}
         distance="8.5rem"
