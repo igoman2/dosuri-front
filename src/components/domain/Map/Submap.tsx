@@ -280,9 +280,9 @@ const Submap = () => {
             zIndex: 50,
           }}
         >
-          {/* <Button
+          <Button
             iconName="refresh"
-            text="지도 크게 보기"
+            text="이 지역 재검색"
             shadow
             bold
             backgroundColor={theme.colors.white}
@@ -290,7 +290,19 @@ const Submap = () => {
             onClick={() => {
               refetch();
             }}
-          /> */}
+          />
+        </div>
+        <div
+          css={{
+            display: "flex",
+            justifyContent: "center",
+            position: "absolute",
+            top: 20,
+            left: 0,
+            width: "100%",
+            zIndex: 50,
+          }}
+        >
           <span
             css={{
               position: "absolute",
@@ -310,16 +322,6 @@ const Submap = () => {
               alt="map-full-button"
             />
           </span>
-
-          {/* <Button
-            bold
-            shadow
-            iconName="map"
-            text="지도 크게 보기"
-            onClick={() => {
-              router.push("/map");
-            }}
-          /> */}
         </div>
         <div
           css={{

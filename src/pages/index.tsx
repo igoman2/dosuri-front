@@ -43,9 +43,9 @@ import {
 import { queryClient } from "@/service/react-query/queryClient";
 import isApple from "@/util/isApple";
 import Spinner from "src/components/Spinner/Spinner";
-import StarbucksBanner from "@/components/etc/StarbucksBanner";
 import Maps from "./map";
 import Submap from "@/components/domain/Map/Submap";
+import StarbucksBanner from "@/components/etc/StarbucksBanner";
 
 const Home = () => {
   const theme = useTheme();
@@ -210,7 +210,7 @@ const Home = () => {
           marginBottom: "2.5rem",
         }}
       >
-        <StarbucksBanner showButton />
+        <StarbucksBanner />
       </section>
 
       <LogginBanner>
@@ -229,8 +229,9 @@ const Home = () => {
           </Link>
         )}
       </LogginBanner>
-      {/* <section
+      {/* <seion
         css={{
+          height: "45rem",
           marginBottom: "2.5rem",
         }}
       >
@@ -264,8 +265,8 @@ const Home = () => {
             </EmptyTextWrapper>
           )}
         </>
-      </section> */}
-      {/* <section
+      </section>
+      <section
         css={{
           marginBottom: "2.5rem",
         }}
@@ -343,6 +344,16 @@ const Home = () => {
           </EmptyTextWrapper>
         )}
       </section>
+
+      <section
+        css={{
+          height: "45rem",
+          marginBottom: "2.5rem",
+        }}
+      >
+        <Submap />
+      </section>
+
       <Float
         scrollDir={scrollDir}
         distance="8.5rem"
@@ -356,7 +367,6 @@ const Home = () => {
           />
         }
       />
-
       <SelectAddressModal />
     </Layout>
   );
