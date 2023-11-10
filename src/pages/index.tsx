@@ -43,6 +43,7 @@ import {
 import { queryClient } from "@/service/react-query/queryClient";
 import isApple from "@/util/isApple";
 import Spinner from "src/components/Spinner/Spinner";
+import StarbucksBanner from "@/components/etc/StarbucksBanner";
 import Maps from "./map";
 import Submap from "@/components/domain/Map/Submap";
 
@@ -204,16 +205,112 @@ const Home = () => {
           )}
         </>
       </section>
-
       <section
         css={{
-          height: "45rem",
           marginBottom: "2.5rem",
         }}
       >
-        <Submap />
+        <StarbucksBanner showButton />
       </section>
 
+      <LogginBanner>
+        {!isLoggedIn && (
+          <Link href="/login">
+            <a>
+              <Button
+                text="로그인하고 내 주변 TOP 병원 보기"
+                backgroundColor={theme.colors.purple_light}
+                borderRadius="0.3rem"
+                height="5.2rem"
+                bold
+                width="100%"
+              />
+            </a>
+          </Link>
+        )}
+      </LogginBanner>
+      {/* <section
+        css={{
+          marginBottom: "2.5rem",
+        }}
+      >
+        <>
+          <div
+            css={{
+              fontSize: theme.fontSizes.xl,
+              fontWeight: 700,
+            }}
+          >
+            새로 생긴 병원
+          </div>
+
+          {hospitalList.new_hospitals.length !== 0 ? (
+            <>
+              {hospitalList.new_hospitals.map(
+                (hospital: IHospitalInfoResult, i) => (
+                  <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+                    <a>
+                      <div css={{ marginTop: "1rem" }}>
+                        <HospitalCard hospitalInfo={hospital} />
+                      </div>
+                    </a>
+                  </Link>
+                )
+              )}
+            </>
+          ) : (
+            <EmptyTextWrapper>
+              <EmptyText>새로 생긴 병원이 없습니다.</EmptyText>
+            </EmptyTextWrapper>
+          )}
+        </>
+      </section> */}
+      {/* <section
+        css={{
+          marginBottom: "2.5rem",
+        }}
+      >
+        {hospitalList.many_review_hospitals.length !== 0 && (
+          <>
+            <div
+              css={{
+                fontSize: theme.fontSizes.xl,
+                fontWeight: 700,
+              }}
+            >
+              후기가 좋은 병원
+            </div>
+
+            {hospitalList.many_review_hospitals.map(
+              (hospital: IHospitalInfoResult, i) => (
+                <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+                  <a>
+                    <div css={{ marginTop: "1rem" }}>
+                      <HospitalCard hospitalInfo={hospital} />
+                    </div>
+                  </a>
+                </Link>
+              )
+            )}
+          </>
+        )}
+      </section> */}
+      <LogginBanner>
+        {!isLoggedIn && (
+          <Link href="/login">
+            <a>
+              <Button
+                text="로그인하고 내 주변 TOP 병원 보기"
+                backgroundColor={theme.colors.purple_light}
+                borderRadius="0.3rem"
+                height="5.2rem"
+                bold
+                width="100%"
+              />
+            </a>
+          </Link>
+        )}
+      </LogginBanner>
       <section
         css={{
           marginBottom: "2.5rem",
@@ -251,9 +348,7 @@ const Home = () => {
         distance="8.5rem"
         icon={
           <Button
-            shadow
             iconName="map"
-            bold
             text="지도로 보기"
             onClick={() => {
               router.push("/map");
@@ -261,6 +356,7 @@ const Home = () => {
           />
         }
       />
+
       <SelectAddressModal />
     </Layout>
   );

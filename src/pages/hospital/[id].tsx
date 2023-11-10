@@ -1,6 +1,5 @@
 import React, { FC, Suspense, useEffect, useState } from "react";
 import {
-  createReservation,
   getHospitalInfo,
   getHospitalTreatments,
   toggleHospitalThumbup,
@@ -33,6 +32,7 @@ import { modalState, modalContentState } from "@/components/Modal/store";
 import ReservationModal from "@/components/domain/Hospital/ReservationModal";
 import { reservationModalState } from "@/components/domain/Hospital/store";
 
+import StarbucksBanner from "@/components/etc/StarbucksBanner";
 interface IHospitalInformationProps {
   id: string;
   tab: string;
@@ -269,6 +269,8 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
           </div>
           <div>
             <SaleButtonWrapper>
+              <StarbucksBanner showButton hospitalId={id} />
+
               <Button
                 text="도수치료 예약하기"
                 width="100%"
@@ -298,7 +300,7 @@ const Hospital = styled.div`
 
   .hospital-content {
     padding: 0 2rem;
-    margin-bottom: 8.7rem;
+    margin-bottom: 15.7rem;
     overflow-x: hidden;
   }
 
