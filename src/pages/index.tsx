@@ -43,6 +43,7 @@ import {
 import { queryClient } from "@/service/react-query/queryClient";
 import isApple from "@/util/isApple";
 import Spinner from "src/components/Spinner/Spinner";
+import StarbucksBanner from "@/components/etc/StarbucksBanner";
 
 const Home = () => {
   const theme = useTheme();
@@ -202,6 +203,14 @@ const Home = () => {
           )}
         </>
       </section>
+      <section
+        css={{
+          marginBottom: "2.5rem",
+        }}
+      >
+        <StarbucksBanner />
+      </section>
+
       <LogginBanner>
         {!isLoggedIn && (
           <Link href="/login">
@@ -218,7 +227,7 @@ const Home = () => {
           </Link>
         )}
       </LogginBanner>
-      <section
+      {/* <section
         css={{
           marginBottom: "2.5rem",
         }}
@@ -253,8 +262,8 @@ const Home = () => {
             </EmptyTextWrapper>
           )}
         </>
-      </section>
-      <section
+      </section> */}
+      {/* <section
         css={{
           marginBottom: "2.5rem",
         }}
@@ -283,7 +292,7 @@ const Home = () => {
             )}
           </>
         )}
-      </section>
+      </section> */}
       <LogginBanner>
         {!isLoggedIn && (
           <Link href="/login">
