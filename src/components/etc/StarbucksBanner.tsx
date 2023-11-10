@@ -5,11 +5,10 @@ import BenefitButton from "@/public/assets/benefit-button.png";
 import Image from "next/image";
 
 interface StarbucksBannerProps {
-  showButton?: boolean;
   hospitalId?: string;
 }
 
-const StarbucksBanner = ({ showButton, hospitalId }: StarbucksBannerProps) => {
+const StarbucksBanner = ({ hospitalId }: StarbucksBannerProps) => {
   const router = useRouter();
   console.log(hospitalId);
   return (
@@ -35,9 +34,7 @@ const StarbucksBanner = ({ showButton, hospitalId }: StarbucksBannerProps) => {
         css={{ width: "100%", objectFit: "cover" }}
       />
 
-      {showButton && (
-        <Image src={BenefitButton} objectFit="contain" alt="benefit-banner" />
-      )}
+      <Image src={BenefitButton} objectFit="contain" alt="benefit-banner" />
     </div>
   );
 };

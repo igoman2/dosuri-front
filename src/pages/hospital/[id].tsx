@@ -269,7 +269,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
           </div>
           <div>
             <SaleButtonWrapper>
-              <StarbucksBanner showButton hospitalId={id} />
+              <StarbucksBanner hospitalId={id} />
 
               <Button
                 text="도수치료 예약하기"
