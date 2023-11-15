@@ -9,6 +9,8 @@ import { phoneCall } from "@/util/phoneCall";
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
 import HospitalMapView from "./HospitalMapView";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface IInformationProps {
   hospitalData: IGetHospitalInfo;
@@ -16,6 +18,10 @@ interface IInformationProps {
 
 const Information: FC<IInformationProps> = ({ hospitalData }) => {
   const theme = useTheme();
+  const router = useRouter();
+  const 전화예약가능 = router.asPath.includes(
+    "dd53e8ffb1bd45a3a0ed7517af6069e0"
+  );
 
   return (
     <HospitalInformationWrapper>
@@ -64,20 +70,30 @@ const Information: FC<IInformationProps> = ({ hospitalData }) => {
           <div className="list">
             <div className="list-title">병원 소개</div>
             {hospitalData.introduction ? (
-              <div>
-                {hospitalData.introduction
-                  .split("\n")
-                  .map((str, index, array) =>
-                    index === array.length - 1 ? (
-                      str
-                    ) : (
-                      <div key={index}>
-                        {str}
-                        <br />
-                      </div>
-                    )
-                  )}
-              </div>
+              <>
+                <div>
+                  {hospitalData.introduction
+                    .split("\n")
+                    .map((str, index, array) =>
+                      index === array.length - 1 ? (
+                        str
+                      ) : (
+                        <>
+                          {str}
+                          <br />
+                        </>
+                      )
+                    )}
+                </div>
+
+                {전화예약가능 && (
+                  <Link href="https://m.booking.naver.com/booking/13/bizes/625475?theme=place&entry=pll&area=pll">
+                    <a target="_blank" rel="noopener noreferrer">
+                      <span className="link">네이버 예약</span>
+                    </a>
+                  </Link>
+                )}
+              </>
             ) : (
               <EmptyText>등록된 병원 소개가 없습니다.</EmptyText>
             )}
@@ -103,11 +119,14 @@ const Information: FC<IInformationProps> = ({ hospitalData }) => {
           <div className="list">
             <div className="list-title">전화번호</div>
             {hospitalData.phone_no ? (
-              <div
-                className="phone-number"
-                onClick={() => phoneCall(hospitalData.phone_no)}
-              >
-                {formatPhoneNumber(hospitalData.phone_no)}
+              <div>
+                <span
+                  className="link"
+                  onClick={() => phoneCall(hospitalData.phone_no)}
+                >
+                  {formatPhoneNumber(hospitalData.phone_no)}
+                </span>
+                {전화예약가능 && <div className="link-sub">(전화예약가능)</div>}
               </div>
             ) : (
               <EmptyText>등록된 전화번호가 없습니다.</EmptyText>
@@ -151,9 +170,14 @@ const Content = styled.div`
     margin-bottom: 1rem;
   }
 
-  .phone-number {
+  .link {
     color: ${(props) => props.theme.colors.purple_light};
     text-decoration: underline;
+  }
+
+  .link-sub {
+    color: ${(props) => props.theme.colors.black};
+    font-size: ${(props) => props.theme.fontSizes.md};
   }
 `;
 

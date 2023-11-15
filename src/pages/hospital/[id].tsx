@@ -52,7 +52,9 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
   const setNoticeModal = useSetRecoilState(modalState);
   const setNoticeModalContent = useSetRecoilState(modalContentState);
   const [modal, setModal] = useRecoilState(reservationModalState);
-
+  const 전화예약가능 = router.asPath.includes(
+    "dd53e8ffb1bd45a3a0ed7517af6069e0"
+  );
   useEffect(() => {
     router.replace({
       pathname: `/hospital/${id}`,
@@ -269,35 +271,37 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
               )}
             </Suspense>
           </div>
-          <div>
-            <SaleButtonWrapper>
-              <StarbucksBanner
-                bannerButton={
-                  <Image
-                    src={BenefitButton}
-                    objectFit="contain"
-                    alt="benefit-banner"
-                  />
-                }
-                onClick={() => {
-                  router.push({
-                    pathname: `/event`,
-                    query: id,
-                  });
-                }}
-              />
+          {!전화예약가능 && (
+            <div>
+              <SaleButtonWrapper>
+                <StarbucksBanner
+                  bannerButton={
+                    <Image
+                      src={BenefitButton}
+                      objectFit="contain"
+                      alt="benefit-banner"
+                    />
+                  }
+                  onClick={() => {
+                    router.push({
+                      pathname: `/event`,
+                      query: id,
+                    });
+                  }}
+                />
 
-              <Button
-                text="도수치료 예약하기"
-                width="100%"
-                height="5.2rem"
-                borderRadius="0.3rem"
-                backgroundColor={theme.colors.purple_light}
-                bold
-                onClick={() => setModal(true)}
-              ></Button>
-            </SaleButtonWrapper>
-          </div>
+                <Button
+                  text="도수치료 예약하기"
+                  width="100%"
+                  height="5.2rem"
+                  borderRadius="0.3rem"
+                  backgroundColor={theme.colors.purple_light}
+                  bold
+                  onClick={() => setModal(true)}
+                ></Button>
+              </SaleButtonWrapper>
+            </div>
+          )}
         </Hospital>
       </Layout>
       <ReservationModal hospitalUuid={hospitalInfoData.uuid} />
