@@ -1,51 +1,46 @@
-import {
-  IGoodPriceHospitals,
-  IHospitalInfoHomeResponse,
-  IHospitalInfoResult,
-  IHotCommunityResponse,
-} from "@/types/service";
-import React, { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import Icon from "@/util/Icon";
+import AppBanner from "@/components/Banner/AppBanner";
 import Button from "@/components/Button";
-import { EmptyText } from "@/components/etc/emotion/EmptyText";
-import Header from "@/components/Layout/Header";
 import HospitalCard from "@/components/Card/HospitalCard";
-import Layout from "@/components/Layout";
-import Link from "next/link";
-import { NextSeo } from "next-seo";
-import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
-import { getHospitalInfoHome } from "@/service/apis/hospital";
-import { getHotCommunity } from "@/service/apis/community";
-import { locationState } from "@/store/location";
-import { queryKeys } from "@/service/react-query/constants";
-import styled from "@emotion/styled";
-import useAuth from "@/hooks/useAuth";
-import useGeolocation from "@/hooks/useGeolocation";
-import { useQueries, useQuery } from "react-query";
-import { useTheme } from "@emotion/react";
-import { isMobile } from "react-device-detect";
+import PostBottom from "@/components/Card/PostCard/PostBottom";
 import SelectAddressBar from "@/components/domain/Address/SelectAddressBar";
 import SelectAddressModal from "@/components/domain/Address/SelectAddressModal";
-import { getCookie, setCookie } from "cookies-next";
-import AppBanner from "@/components/Banner/AppBanner";
-import useRN from "@/hooks/useRN";
 import Float from "@/components/domain/Community/Float";
-import useDirection from "@/hooks/useDirection";
-import { useRouter } from "next/router";
+import Submap from "@/components/domain/Map/Submap";
+import { EmptyText } from "@/components/etc/emotion/EmptyText";
+import StarbucksBanner from "@/components/etc/StarbucksBanner";
+import Layout from "@/components/Layout";
+import Header from "@/components/Layout/Header";
 import { modalContentState, modalState } from "@/components/Modal/store";
 import {
-  PLAY_STORE,
   APP_STORE,
   INSTALL_APP_EXP,
+  PLAY_STORE,
 } from "@/constants/Application";
-import { queryClient } from "@/service/react-query/queryClient";
+import useAuth from "@/hooks/useAuth";
+import useDirection from "@/hooks/useDirection";
+import useGeolocation from "@/hooks/useGeolocation";
+import useRN from "@/hooks/useRN";
+import BenefitButton from "@/public/assets/benefit-button2.png";
+import { getHotCommunity } from "@/service/apis/community";
+import { getHospitalInfoHome } from "@/service/apis/hospital";
+import { queryKeys } from "@/service/react-query/constants";
+import { locationState } from "@/store/location";
+import { IHospitalInfoResult } from "@/types/service";
+import Icon from "@/util/Icon";
 import isApple from "@/util/isApple";
+import { useTheme } from "@emotion/react";
+import styled from "@emotion/styled";
+import { getCookie, setCookie } from "cookies-next";
+import { NextSeo } from "next-seo";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
+import { useQueries } from "react-query";
+import { useSetRecoilState } from "recoil";
 import Spinner from "src/components/Spinner/Spinner";
-import Maps from "./map";
-import Submap from "@/components/domain/Map/Submap";
-import StarbucksBanner from "@/components/etc/StarbucksBanner";
 
 const Home = () => {
   const theme = useTheme();
@@ -210,7 +205,18 @@ const Home = () => {
           marginBottom: "2.5rem",
         }}
       >
-        <StarbucksBanner />
+        <StarbucksBanner
+          bannerButton={
+            <Image
+              src={BenefitButton}
+              objectFit="contain"
+              alt="benefit-banner"
+            />
+          }
+          onClick={() => {
+            router.push("/search");
+          }}
+        />
       </section>
 
       <LogginBanner>

@@ -1,38 +1,40 @@
-import React, { FC, Suspense, useEffect, useState } from "react";
+import Button from "@/components/Button";
+import ImageTextView from "@/components/CustomImage/ImageTextView";
+import Doctors from "@/components/domain/Hospital/Doctors";
+import Information from "@/components/domain/Hospital/Information";
+import Price from "@/components/domain/Hospital/Price";
+import ReservationModal from "@/components/domain/Hospital/ReservationModal";
+import Reviews from "@/components/domain/Hospital/Reviews";
+import { reservationModalState } from "@/components/domain/Hospital/store";
+import DoSwiper from "@/components/DoSwiper";
+import StarbucksBanner from "@/components/etc/StarbucksBanner";
+import Layout from "@/components/Layout";
+import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
+import { modalContentState, modalState } from "@/components/Modal/store";
+import Spinner from "@/components/Spinner/Spinner";
+import Tab from "@/components/Tab";
+import { HospitalInfoTabList } from "@/constants/Tab";
+import useAuth from "@/hooks/useAuth";
+import BenefitButton from "@/public/assets/benefit-button.png";
 import {
   getHospitalInfo,
   getHospitalTreatments,
   toggleHospitalThumbup,
 } from "@/service/apis/hospital";
-import { useMutation, useQuery } from "react-query";
-import Button from "@/components/Button";
-import DoSwiper from "@/components/DoSwiper";
-import Doctors from "@/components/domain/Hospital/Doctors";
-import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
+import { queryKeys } from "@/service/react-query/constants";
+import { queryClient } from "@/service/react-query/queryClient";
+import theme from "@/styles/theme";
+import { TabItem } from "@/types/community";
 import Icon from "@/util/Icon";
-import Information from "@/components/domain/Hospital/Information";
-import Layout from "@/components/Layout";
+import styled from "@emotion/styled";
 import { NextPageContext } from "next";
 import { NextSeo } from "next-seo";
-import Price from "@/components/domain/Hospital/Price";
-import Reviews from "@/components/domain/Hospital/Reviews";
-import Spinner from "@/components/Spinner/Spinner";
-import Tab from "@/components/Tab";
-import { queryClient } from "@/service/react-query/queryClient";
-import { queryKeys } from "@/service/react-query/constants";
-import styled from "@emotion/styled";
-import theme from "@/styles/theme";
+import Image from "next/image";
 import { useRouter } from "next/router";
-import ImageTextView from "@/components/CustomImage/ImageTextView";
-import useAuth from "@/hooks/useAuth";
+import { FC, Suspense, useEffect, useState } from "react";
+import { useMutation, useQuery } from "react-query";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { HospitalInfoTabList } from "@/constants/Tab";
-import { TabItem } from "@/types/community";
-import { modalState, modalContentState } from "@/components/Modal/store";
-import ReservationModal from "@/components/domain/Hospital/ReservationModal";
-import { reservationModalState } from "@/components/domain/Hospital/store";
 
-import StarbucksBanner from "@/components/etc/StarbucksBanner";
 interface IHospitalInformationProps {
   id: string;
   tab: string;
@@ -269,7 +271,21 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
           </div>
           <div>
             <SaleButtonWrapper>
-              <StarbucksBanner hospitalId={id} />
+              <StarbucksBanner
+                bannerButton={
+                  <Image
+                    src={BenefitButton}
+                    objectFit="contain"
+                    alt="benefit-banner"
+                  />
+                }
+                onClick={() => {
+                  router.push({
+                    pathname: `/event`,
+                    query: id,
+                  });
+                }}
+              />
 
               <Button
                 text="도수치료 예약하기"
