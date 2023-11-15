@@ -1,16 +1,13 @@
-import { useRouter } from "next/router";
-import React from "react";
 import BenefitBanner from "@/public/assets/benefit-banner.png";
-import BenefitButton from "@/public/assets/benefit-button.png";
 import Image from "next/image";
+import { ReactNode } from "react";
 
 interface StarbucksBannerProps {
-  hospitalId?: string;
+  onClick?: () => void;
+  bannerButton?: ReactNode;
 }
 
-const StarbucksBanner = ({ hospitalId }: StarbucksBannerProps) => {
-  const router = useRouter();
-  console.log(hospitalId);
+const StarbucksBanner = ({ onClick, bannerButton }: StarbucksBannerProps) => {
   return (
     <div
       css={{
@@ -21,12 +18,7 @@ const StarbucksBanner = ({ hospitalId }: StarbucksBannerProps) => {
         cursor: "pointer",
       }}
       role="link"
-      onClick={() => {
-        router.push({
-          pathname: `/event`,
-          query: hospitalId ? { hospitalId } : undefined,
-        });
-      }}
+      onClick={onClick}
     >
       <Image
         src={BenefitBanner}
@@ -34,7 +26,7 @@ const StarbucksBanner = ({ hospitalId }: StarbucksBannerProps) => {
         css={{ width: "100%", objectFit: "cover" }}
       />
 
-      <Image src={BenefitButton} objectFit="contain" alt="benefit-banner" />
+      {bannerButton}
     </div>
   );
 };
