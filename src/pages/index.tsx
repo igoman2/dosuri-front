@@ -302,22 +302,7 @@ const Home = () => {
           </>
         )}
       </section> */}
-      <LogginBanner>
-        {!isLoggedIn && (
-          <Link href="/login">
-            <a>
-              <Button
-                text="로그인하고 내 주변 TOP 병원 보기"
-                backgroundColor={theme.colors.purple_light}
-                borderRadius="0.3rem"
-                height="5.2rem"
-                bold
-                width="100%"
-              />
-            </a>
-          </Link>
-        )}
-      </LogginBanner>
+
       <section
         css={{
           marginBottom: "2.5rem",
