@@ -27,6 +27,7 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
         router.asPath === "/" ||
         router.asPath === "/search" ||
         router.asPath.includes("/hospital") ||
+        router.asPath.includes("/event") ||
         router.asPath === "/500" ||
         router.asPath === "/404"
       ) {
