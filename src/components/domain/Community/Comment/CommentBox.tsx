@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useContext } from "react";
+import React, { FC, ReactNode, useContext } from "react";
 
 import Button from "../../../Button";
 import { CommentStore } from "@/store/context/Comment";
@@ -13,7 +13,7 @@ interface ICommentBoxProps {
   id?: string;
   inner?: boolean;
   threadOwner?: string;
-  children?: ReactElement;
+  children?: ReactNode;
 }
 
 const CommentBox: FC<ICommentBoxProps> = ({

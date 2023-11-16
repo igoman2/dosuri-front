@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactNode } from "react";
 
 import Icon from "@/util/Icon";
 import styled from "@emotion/styled";
@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
 
 interface IHeaderDepthProps {
-  left?: ReactElement;
+  left?: ReactNode;
   bottomLine?: boolean;
 }
 
