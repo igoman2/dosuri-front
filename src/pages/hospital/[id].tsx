@@ -244,13 +244,29 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
                 />
               </div>
             </div>
+            <Tab
+              tabList={HospitalInfoTabList}
+              currentTab={currentTab}
+              onTabClickHander={onTabClickHander}
+            />
             <div className="tab-wrapper">
-              <Tab
-                tabList={HospitalInfoTabList}
-                currentTab={currentTab}
-                onTabClickHander={onTabClickHander}
+              <StarbucksBanner
+                bannerButton={
+                  <Image
+                    src={BenefitButton}
+                    objectFit="contain"
+                    alt="benefit-banner"
+                  />
+                }
+                onClick={() => {
+                  router.push({
+                    pathname: `/event`,
+                    query: id,
+                  });
+                }}
               />
             </div>
+
             <Suspense fallback={<Spinner />}>
               {currentTab.value === "information" && (
                 <Information hospitalData={hospitalInfoData} />
@@ -271,22 +287,6 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
           </div>
           <div>
             <SaleButtonWrapper>
-              <StarbucksBanner
-                bannerButton={
-                  <Image
-                    src={BenefitButton}
-                    objectFit="contain"
-                    alt="benefit-banner"
-                  />
-                }
-                onClick={() => {
-                  router.push({
-                    pathname: `/event`,
-                    query: id,
-                  });
-                }}
-              />
-
               <Button
                 text="도수치료 예약하기"
                 width="100%"
@@ -335,7 +335,7 @@ const Hospital = styled.div`
   }
 
   .tab-wrapper {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .disable {

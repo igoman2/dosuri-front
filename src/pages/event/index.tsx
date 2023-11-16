@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { reservationModalState } from "@/components/domain/Hospital/store";
 import { useSetRecoilState } from "recoil";
 import { isEmpty } from "ramda";
+import { NextSeo } from "next-seo";
 
 const Event = () => {
   const theme = useTheme();
@@ -25,6 +26,14 @@ const Event = () => {
           marginBottom: "6rem",
         }}
       >
+        <NextSeo
+          title={`도수치료 예약 이벤트`}
+          description="인증 후기 남기면 아메리카노 100% 제공"
+          canonical={`https://www.dosuri.site/event`}
+          openGraph={{
+            url: `https://www.dosuri.site/event`,
+          }}
+        />
         <Image src={EventPageImage} objectFit="contain" alt="event" />
         {!hasQuery && (
           <SaleButtonWrapper>
