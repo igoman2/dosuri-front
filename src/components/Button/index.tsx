@@ -1,11 +1,11 @@
 import Icon, { IconName } from "@/util/Icon";
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactNode } from "react";
 import { css, useTheme } from "@emotion/react";
 
 import styled from "@emotion/styled";
 
 interface IButtonProps {
-  text: string | ReactElement;
+  text: string | ReactNode;
   color?: string;
   backgroundColor?: string;
   border?: string;

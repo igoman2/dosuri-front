@@ -1,4 +1,4 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactNode } from "react";
 
 import Divider from "../Divider/Divider";
 import { Theme } from "@emotion/react";
@@ -11,7 +11,7 @@ interface IListTabProps {
   subText: string;
   hasNoti?: boolean;
   isLast: boolean;
-  right?: ReactElement;
+  right?: ReactNode;
   color?: keyof Theme["colors"];
   onClick?: () => void;
 }

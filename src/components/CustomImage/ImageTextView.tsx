@@ -1,10 +1,10 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactNode } from "react";
 
 import Icon from "@/util/Icon";
 import styled from "@emotion/styled";
 
 interface ImageTextViewProps {
-  image: ReactElement;
+  image: ReactNode;
   text: string;
   reverse?: boolean;
   border?: boolean;

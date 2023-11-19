@@ -29,7 +29,7 @@ import { locationState } from "@/store/location";
 import { IHospitalInfoResult } from "@/types/service";
 import Icon from "@/util/Icon";
 import isApple from "@/util/isApple";
-import { useTheme } from "@emotion/react";
+import { keyframes, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { getCookie, setCookie } from "cookies-next";
 import { NextSeo } from "next-seo";
@@ -39,8 +39,10 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { useQueries } from "react-query";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import Spinner from "src/components/Spinner/Spinner";
+import StarbucksPopup from "@/public/assets/starbucks-popup.png";
+import { mainPopupState } from "@/components/Layout/store";
 
 const Home = () => {
   const theme = useTheme();
@@ -53,6 +55,11 @@ const Home = () => {
   const setLocaton = useSetRecoilState(locationState);
   const setModalIsActive = useSetRecoilState(modalState);
   const setModalContent = useSetRecoilState(modalContentState);
+  const [isPopupOpen, setIsPopupOpen] = useRecoilState(mainPopupState);
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
 
   const getPopUpExpireDate = () => {
     const date = new Date();
@@ -200,24 +207,6 @@ const Home = () => {
           )}
         </>
       </section>
-      <section
-        css={{
-          marginBottom: "2.5rem",
-        }}
-      >
-        <StarbucksBanner
-          bannerButton={
-            <Image
-              src={BenefitButton}
-              objectFit="contain"
-              alt="benefit-banner"
-            />
-          }
-          onClick={() => {
-            router.push("/search");
-          }}
-        />
-      </section>
 
       <LogginBanner>
         {!isLoggedIn && (
@@ -361,6 +350,43 @@ const Home = () => {
         }
       />
       <SelectAddressModal />
+
+      {isPopupOpen ? (
+        <PopupContainer>
+          <div css={{ position: "relative" }}>
+            <Image
+              css={{
+                cursor: "pointer",
+              }}
+              src={StarbucksPopup}
+              objectFit="cover"
+              alt="starbucks-popup"
+              height={250}
+              width={250}
+              onClick={() => {
+                closePopup();
+                router.push("/search");
+              }}
+            />
+            <span
+              onClick={closePopup}
+              css={{
+                position: "absolute",
+                top: 10,
+                right: 10,
+              }}
+              role="button"
+            >
+              <Icon
+                name="close"
+                fill={theme.colors.white}
+                width="18"
+                height="18"
+              />
+            </span>
+          </div>
+        </PopupContainer>
+      ) : null}
     </Layout>
   );
 };
@@ -383,4 +409,22 @@ const LoadingContainer = styled.div`
   left: 0;
   z-index: 999;
   width: 100%;
+`;
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const PopupContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ${fadeIn} 0.5s ease-in-out;
+  z-index: 999;
 `;

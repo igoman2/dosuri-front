@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect } from "react";
+import React, { FC, ReactNode, useEffect } from "react";
 
 import Footer from "./Footer";
 import ModalBase from "../Modal/ModalBase";
@@ -8,8 +8,8 @@ import { useRouter } from "next/router";
 import { useSetRecoilState } from "recoil";
 
 interface ILayoutProps {
-  header?: ReactElement;
-  children: ReactElement | ReactElement[];
+  header?: ReactNode;
+  children: ReactNode | ReactNode[];
   footer?: boolean;
   full?: boolean;
 }

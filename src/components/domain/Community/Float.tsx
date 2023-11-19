@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactNode } from "react";
 
 import Button from "../../Button";
 import styled from "@emotion/styled";
@@ -7,7 +7,7 @@ import { DIRECTION } from "@/types/common";
 interface IFloatProps {
   scrollDir?: DIRECTION | undefined;
   distance: string;
-  icon?: ReactElement;
+  icon?: ReactNode;
 }
 
 const Float: FC<IFloatProps> = ({ scrollDir, distance, icon }) => {
