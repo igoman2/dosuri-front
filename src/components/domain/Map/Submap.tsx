@@ -39,6 +39,9 @@ import Link from "next/link";
 import { mapFilterState } from "@/store/mapFilter";
 import Spinner from "@/components/Spinner/Spinner";
 import { userInfoState } from "@/store/user";
+import { useRouter } from "next/router";
+import MapFullButton from "@/public/assets/map-full.png";
+import Image from "next/image";
 
 type ZoomMap = {
   [key: number]: number;
@@ -63,7 +66,8 @@ const zoomMap: ZoomMap = {
   14: 4,
 };
 
-const Maps = () => {
+const Submap = () => {
+  const router = useRouter();
   const { coordinates, loaded } = useGeolocation();
   const theme = useTheme();
   const [mapCenter, setMapCenter] = useState({
@@ -71,7 +75,7 @@ const Maps = () => {
     longitude: 0,
   });
   const [fetchEnable, setFetchEnable] = useState(true);
-  const [level, setLevel] = useState(4);
+  const [level, setLevel] = useState(5);
   const hospitals = useRef<IGetMapHospitals[]>([]);
   const [isClusterClicked, setIsClusterClicked] = useState(false);
   const [hospitalState, setHospitalState] = useState<IGetMapHospitals[]>([]);
@@ -169,12 +173,11 @@ const Maps = () => {
   }
 
   return (
-    <Layout full header={<HeaderDepth bottomLine />} footer={false}>
-      <FilterSection category={category} setCategory={setCategory} />
+    <>
       <div
         style={{
           width: "100%",
-          height: "calc(100% - 44px)",
+          height: "100%",
           position: "relative",
         }}
       >
@@ -185,7 +188,13 @@ const Maps = () => {
             lat: mapCenter.latitude,
             lng: mapCenter.longitude,
           }}
-          style={{ width: "100%", height: "100%", position: "relative" }}
+          style={{
+            width: "100%",
+            height: "100%",
+            position: "relative",
+            borderRadius: "1rem",
+            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+          }}
           level={level} // 지도의 확대 레벨
           onDragEnd={(map) => handleDrag(map)}
           onZoomChanged={(map) => {
@@ -285,6 +294,37 @@ const Maps = () => {
         </div>
         <div
           css={{
+            display: "flex",
+            justifyContent: "center",
+            position: "absolute",
+            top: 20,
+            left: 0,
+            width: "100%",
+            zIndex: 50,
+          }}
+        >
+          <span
+            css={{
+              position: "absolute",
+              top: "-10px",
+              right: 0,
+              cursor: "pointer",
+            }}
+            role="button"
+            onClick={() => {
+              router.push("/map");
+            }}
+          >
+            <Image
+              src={MapFullButton}
+              width={40}
+              height={40}
+              alt="map-full-button"
+            />
+          </span>
+        </div>
+        <div
+          css={{
             backgroundColor: "white",
             display: "flex",
             justifyContent: "center",
@@ -292,7 +332,7 @@ const Maps = () => {
             bottom: 0,
             left: "50%",
             transform: "translate(-50%, -10%)",
-            width: "90%",
+            width: "95%",
             padding: "0 1em",
             borderRadius: "0.5rem",
             boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
@@ -336,8 +376,8 @@ const Maps = () => {
         </div>
       </div>
       <FilterOptionModal />
-    </Layout>
+    </>
   );
 };
 
-export default Maps;
+export default Submap;
