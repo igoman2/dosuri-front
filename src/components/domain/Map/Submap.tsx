@@ -1,47 +1,29 @@
-import Layout from "@/components/Layout";
-import useGeolocation from "@/hooks/useGeolocation";
-import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  CustomOverlayMap,
-  Map,
-  MapMarker,
-  MarkerClusterer,
-} from "react-kakao-maps-sdk";
-import HeaderDepth from "@/components/Layout/Header/HeaderDepth";
 import Button from "@/components/Button";
-import { useTheme } from "@emotion/react";
-import styled from "@emotion/styled";
-import ImageTextView from "@/components/CustomImage/ImageTextView";
-import Icon from "@/util/Icon";
-import { useQuery } from "react-query";
-import { getMapHospitals } from "@/service/apis/hospital";
-import { A11y, Scrollbar } from "swiper";
-import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
-import { IGetMapHospitals } from "@/types/service";
 import HospitalCard from "@/components/Card/HospitalCard";
-import { formatMoney } from "@/util/format";
-import { set } from "lodash";
 import FilterOptionModal from "@/components/domain/Search/FilterOptionModal";
-import {
-  price,
-  searchModalState,
-  year,
-} from "@/components/domain/Search/store";
-import { useRecoilState, useRecoilValue } from "recoil";
-import FilterSection from "@/components/domain/Map/FilterSection";
-import { searchFilterState } from "@/store/searchOption";
-import { MAP_SELECT_LIST } from "@/mock/searchCategory";
-import dayjs from "dayjs";
-import { getCurrentDateMinusYears } from "@/util/extractYear";
-import { MAX_PRICE, MAX_YEAR } from "@/constants/Filter";
-import { useDebounce } from "usehooks-ts";
-import Link from "next/link";
-import { mapFilterState } from "@/store/mapFilter";
+import { price, year } from "@/components/domain/Search/store";
 import Spinner from "@/components/Spinner/Spinner";
-import { userInfoState } from "@/store/user";
-import { useRouter } from "next/router";
+import { 강남구청 } from "@/constants/Location";
+import useAuth from "@/hooks/useAuth";
+import useGeolocation from "@/hooks/useGeolocation";
 import MapFullButton from "@/public/assets/map-full.png";
+import { getMapHospitals } from "@/service/apis/hospital";
+import { mapFilterState } from "@/store/mapFilter";
+import { userInfoState } from "@/store/user";
+import { IGetMapHospitals } from "@/types/service";
+import { getCurrentDateMinusYears } from "@/util/extractYear";
+import { formatMoney } from "@/util/format";
+import { useTheme } from "@emotion/react";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useRef, useState } from "react";
+import { CustomOverlayMap, Map } from "react-kakao-maps-sdk";
+import { useQuery } from "react-query";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { A11y, Scrollbar } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { useDebounce } from "usehooks-ts";
 
 type ZoomMap = {
   [key: number]: number;
@@ -74,6 +56,7 @@ const Submap = () => {
     latitude: 0,
     longitude: 0,
   });
+  const { isLoggedIn } = useAuth();
   const [fetchEnable, setFetchEnable] = useState(true);
   const [level, setLevel] = useState(5);
   const hospitals = useRef<IGetMapHospitals[]>([]);
@@ -109,6 +92,7 @@ const Submap = () => {
       if (mapCenter.latitude === 0 && mapCenter.longitude === 0) {
         return;
       }
+
       const resp = await getMapHospitals({
         latitude: mapCenter.latitude,
         longitude: mapCenter.longitude,
@@ -122,7 +106,7 @@ const Submap = () => {
       return resp;
     },
     {
-      enabled: mapCenter.latitude !== 0 && mapCenter.longitude !== 0,
+      enabled: loaded,
       staleTime: 1000,
       cacheTime: 5000,
       suspense: false,
@@ -162,11 +146,20 @@ const Submap = () => {
   };
 
   useEffect(() => {
+    // 비회원인 경우
+
+    if (!isLoggedIn) {
+      setMapCenter({
+        latitude: 강남구청.latitude,
+        longitude: 강남구청.longitude,
+      });
+      return;
+    }
     setMapCenter({
       latitude: userInfo.address.latitude,
       longitude: userInfo.address.longitude,
     });
-  }, [coordinates, loaded]);
+  }, [isLoggedIn, userInfo.address.latitude, userInfo.address.longitude]);
 
   if (!loaded) {
     return <Spinner />;

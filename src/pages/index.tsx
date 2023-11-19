@@ -1,50 +1,48 @@
-import {
-  IGoodPriceHospitals,
-  IHospitalInfoHomeResponse,
-  IHospitalInfoResult,
-  IHotCommunityResponse,
-} from "@/types/service";
-import React, { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import Icon from "@/util/Icon";
+import AppBanner from "@/components/Banner/AppBanner";
 import Button from "@/components/Button";
-import { EmptyText } from "@/components/etc/emotion/EmptyText";
-import Header from "@/components/Layout/Header";
 import HospitalCard from "@/components/Card/HospitalCard";
-import Layout from "@/components/Layout";
-import Link from "next/link";
-import { NextSeo } from "next-seo";
-import PostBottom from "@/components/Card/PostCard/PostBottom";
 import PostCard from "@/components/Card/PostCard";
-import { getHospitalInfoHome } from "@/service/apis/hospital";
-import { getHotCommunity } from "@/service/apis/community";
-import { locationState } from "@/store/location";
-import { queryKeys } from "@/service/react-query/constants";
-import styled from "@emotion/styled";
-import useAuth from "@/hooks/useAuth";
-import useGeolocation from "@/hooks/useGeolocation";
-import { useQueries, useQuery } from "react-query";
-import { useTheme } from "@emotion/react";
-import { isMobile } from "react-device-detect";
+import PostBottom from "@/components/Card/PostCard/PostBottom";
 import SelectAddressBar from "@/components/domain/Address/SelectAddressBar";
 import SelectAddressModal from "@/components/domain/Address/SelectAddressModal";
-import { getCookie, setCookie } from "cookies-next";
-import AppBanner from "@/components/Banner/AppBanner";
-import useRN from "@/hooks/useRN";
 import Float from "@/components/domain/Community/Float";
-import useDirection from "@/hooks/useDirection";
-import { useRouter } from "next/router";
+import Submap from "@/components/domain/Map/Submap";
+import { EmptyText } from "@/components/etc/emotion/EmptyText";
+import StarbucksBanner from "@/components/etc/StarbucksBanner";
+import Layout from "@/components/Layout";
+import Header from "@/components/Layout/Header";
 import { modalContentState, modalState } from "@/components/Modal/store";
 import {
-  PLAY_STORE,
   APP_STORE,
   INSTALL_APP_EXP,
+  PLAY_STORE,
 } from "@/constants/Application";
-import { queryClient } from "@/service/react-query/queryClient";
+import useAuth from "@/hooks/useAuth";
+import useDirection from "@/hooks/useDirection";
+import useGeolocation from "@/hooks/useGeolocation";
+import useRN from "@/hooks/useRN";
+import BenefitButton from "@/public/assets/benefit-button2.png";
+import { getHotCommunity } from "@/service/apis/community";
+import { getHospitalInfoHome } from "@/service/apis/hospital";
+import { queryKeys } from "@/service/react-query/constants";
+import { locationState } from "@/store/location";
+import { IHospitalInfoResult } from "@/types/service";
+import Icon from "@/util/Icon";
 import isApple from "@/util/isApple";
+import { keyframes, useTheme } from "@emotion/react";
+import styled from "@emotion/styled";
+import { getCookie, setCookie } from "cookies-next";
+import { NextSeo } from "next-seo";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
+import { useQueries } from "react-query";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import Spinner from "src/components/Spinner/Spinner";
-import Maps from "./map";
-import Submap from "@/components/domain/Map/Submap";
+import StarbucksPopup from "@/public/assets/starbucks-popup.png";
+import { mainPopupState } from "@/components/Layout/store";
 
 const Home = () => {
   const theme = useTheme();
@@ -57,6 +55,11 @@ const Home = () => {
   const setLocaton = useSetRecoilState(locationState);
   const setModalIsActive = useSetRecoilState(modalState);
   const setModalContent = useSetRecoilState(modalContentState);
+  const [isPopupOpen, setIsPopupOpen] = useRecoilState(mainPopupState);
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
 
   const getPopUpExpireDate = () => {
     const date = new Date();
@@ -205,14 +208,89 @@ const Home = () => {
         </>
       </section>
 
-      <section
+      <LogginBanner>
+        {!isLoggedIn && (
+          <Link href="/login">
+            <a>
+              <Button
+                text="로그인하고 내 주변 TOP 병원 보기"
+                backgroundColor={theme.colors.purple_light}
+                borderRadius="0.3rem"
+                height="5.2rem"
+                bold
+                width="100%"
+              />
+            </a>
+          </Link>
+        )}
+      </LogginBanner>
+      {/* <seion
         css={{
           height: "45rem",
           marginBottom: "2.5rem",
         }}
       >
-        <Submap />
+        <>
+          <div
+            css={{
+              fontSize: theme.fontSizes.xl,
+              fontWeight: 700,
+            }}
+          >
+            새로 생긴 병원
+          </div>
+
+          {hospitalList.new_hospitals.length !== 0 ? (
+            <>
+              {hospitalList.new_hospitals.map(
+                (hospital: IHospitalInfoResult, i) => (
+                  <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+                    <a>
+                      <div css={{ marginTop: "1rem" }}>
+                        <HospitalCard hospitalInfo={hospital} />
+                      </div>
+                    </a>
+                  </Link>
+                )
+              )}
+            </>
+          ) : (
+            <EmptyTextWrapper>
+              <EmptyText>새로 생긴 병원이 없습니다.</EmptyText>
+            </EmptyTextWrapper>
+          )}
+        </>
       </section>
+      <section
+        css={{
+          marginBottom: "2.5rem",
+        }}
+      >
+        {hospitalList.many_review_hospitals.length !== 0 && (
+          <>
+            <div
+              css={{
+                fontSize: theme.fontSizes.xl,
+                fontWeight: 700,
+              }}
+            >
+              후기가 좋은 병원
+            </div>
+
+            {hospitalList.many_review_hospitals.map(
+              (hospital: IHospitalInfoResult, i) => (
+                <Link href={`hospital/${hospital.uuid}`} key={hospital.uuid}>
+                  <a>
+                    <div css={{ marginTop: "1rem" }}>
+                      <HospitalCard hospitalInfo={hospital} />
+                    </div>
+                  </a>
+                </Link>
+              )
+            )}
+          </>
+        )}
+      </section> */}
 
       <section
         css={{
@@ -246,11 +324,23 @@ const Home = () => {
           </EmptyTextWrapper>
         )}
       </section>
+
+      <section
+        css={{
+          height: "45rem",
+          marginBottom: "2.5rem",
+        }}
+      >
+        <Submap />
+      </section>
+
       <Float
         scrollDir={scrollDir}
         distance="8.5rem"
         icon={
           <Button
+            shadow
+            bold
             iconName="map"
             text="지도로 보기"
             onClick={() => {
@@ -260,6 +350,43 @@ const Home = () => {
         }
       />
       <SelectAddressModal />
+
+      {isPopupOpen ? (
+        <PopupContainer>
+          <div css={{ position: "relative" }}>
+            <Image
+              css={{
+                cursor: "pointer",
+              }}
+              src={StarbucksPopup}
+              objectFit="cover"
+              alt="starbucks-popup"
+              height={250}
+              width={250}
+              onClick={() => {
+                closePopup();
+                router.push("/search");
+              }}
+            />
+            <span
+              onClick={closePopup}
+              css={{
+                position: "absolute",
+                top: 10,
+                right: 10,
+              }}
+              role="button"
+            >
+              <Icon
+                name="close"
+                fill={theme.colors.white}
+                width="18"
+                height="18"
+              />
+            </span>
+          </div>
+        </PopupContainer>
+      ) : null}
     </Layout>
   );
 };
@@ -282,4 +409,22 @@ const LoadingContainer = styled.div`
   left: 0;
   z-index: 999;
   width: 100%;
+`;
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const PopupContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ${fadeIn} 0.5s ease-in-out;
+  z-index: 999;
 `;

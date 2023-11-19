@@ -78,10 +78,10 @@ const Information: FC<IInformationProps> = ({ hospitalData }) => {
                       index === array.length - 1 ? (
                         str
                       ) : (
-                        <>
+                        <div key={index}>
                           {str}
                           <br />
-                        </>
+                        </div>
                       )
                     )}
                 </div>

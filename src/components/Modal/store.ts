@@ -1,5 +1,5 @@
 import { ModalContent } from "@/types/common";
-import { ReactElement, ReactNode } from "react";
+import { ReactNode } from "react";
 import { atom } from "recoil";
 import { v4 } from "uuid";
 

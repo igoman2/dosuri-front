@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactNode } from "react";
 
 import Icon from "@/util/Icon";
 import Link from "next/link";
@@ -8,8 +8,8 @@ import useGeolocation from "@/hooks/useGeolocation";
 
 interface IHeaderProps {
   left?: boolean;
-  center?: ReactElement;
-  right?: ReactElement;
+  center?: ReactNode;
+  right?: ReactNode;
 }
 
 const Header: FC<IHeaderProps> = ({ left, center, right }) => {
