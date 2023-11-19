@@ -70,6 +70,7 @@ export interface IGetHospitalInfo {
     friday: string | null;
     saturday: string | null;
     sunday: string | null;
+    lunch_time: string | null;
   };
   keywords: {
     keyword: string;
