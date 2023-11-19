@@ -12,6 +12,7 @@ interface IPriceProps {
 }
 
 const Price: FC<IPriceProps> = ({ hospitalData, hospitalTreatmentsData }) => {
+  console.log(hospitalData);
   const data = useMemo(() => {
     return hospitalTreatmentsData.results.map((data) => {
       return { ...data, price: `${data.price.toLocaleString()}원` };
@@ -101,14 +102,19 @@ const Price: FC<IPriceProps> = ({ hospitalData, hospitalTreatmentsData }) => {
               })}
             </tbody>
           </table>
-
-          <ul className="etc">
-            <li>
-              비급여 진료비용 공개제도에 의해 병원이 직접 건강보험심사평가원에
-              제출한 비용정보입니다.
-            </li>
-            <li>진료시 상황 등에 따라 실제 치료비와는 다를 수 있습니다.</li>
-          </ul>
+          {hospitalData.is_contract ? (
+            <ul className="etc">
+              <li>병원이 직접 등록한 비용정보입니다.</li>
+            </ul>
+          ) : (
+            <ul className="etc">
+              <li>
+                비급여 진료비용 공개제도에 의해 병원이 직접 건강보험심사평가원에
+                제출한 비용정보입니다.
+              </li>
+              <li>진료시 상황 등에 따라 실제 치료비와는 다를 수 있습니다.</li>
+            </ul>
+          )}
         </>
       )}
     </PriceWrapper>

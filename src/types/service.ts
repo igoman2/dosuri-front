@@ -81,6 +81,7 @@ export interface IGetHospitalInfo {
   latitude: number;
   longitude: number;
   is_partner: boolean;
+  is_contract: boolean;
 }
 
 export interface IHospitalTreatmentResult {
