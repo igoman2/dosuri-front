@@ -30,17 +30,30 @@ const Information: FC<IInformationProps> = ({ hospitalData }) => {
           <div className="list">
             <div className="list-title">진료시간</div>
             {hospitalData.calendar ? (
-              <TimeTable
-                times={{
-                  monday: hospitalData.calendar.monday,
-                  tuesday: hospitalData.calendar.tuesday,
-                  wednesday: hospitalData.calendar.wednesday,
-                  thursday: hospitalData.calendar.thursday,
-                  friday: hospitalData.calendar.friday,
-                  saturday: hospitalData.calendar.saturday,
-                  sunday: hospitalData.calendar.sunday,
-                }}
-              />
+              <>
+                <TimeTable
+                  times={{
+                    monday: hospitalData.calendar.monday,
+                    tuesday: hospitalData.calendar.tuesday,
+                    wednesday: hospitalData.calendar.wednesday,
+                    thursday: hospitalData.calendar.thursday,
+                    friday: hospitalData.calendar.friday,
+                    saturday: hospitalData.calendar.saturday,
+                    sunday: hospitalData.calendar.sunday,
+                  }}
+                />
+                {hospitalData.calendar.lunch_time && (
+                  <li
+                    css={{
+                      paddingLeft: "1rem",
+                      listStyleType: "disc",
+                    }}
+                  >
+                    평일 오후 {hospitalData.calendar.lunch_time} 시는 점심시간
+                    입니다.
+                  </li>
+                )}
+              </>
             ) : (
               <EmptyText>등록된 진료 시간이 없습니다.</EmptyText>
             )}
@@ -78,10 +91,10 @@ const Information: FC<IInformationProps> = ({ hospitalData }) => {
                       index === array.length - 1 ? (
                         str
                       ) : (
-                        <>
+                        <div key={index}>
                           {str}
                           <br />
-                        </>
+                        </div>
                       )
                     )}
                 </div>
