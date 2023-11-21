@@ -46,7 +46,9 @@ const Information: FC<IInformationProps> = ({ hospitalData }) => {
                   <li
                     css={{
                       paddingLeft: "1rem",
+                      marginBottom: "1rem",
                       listStyleType: "disc",
+                      fontSize: theme.fontSizes.md,
                     }}
                   >
                     평일 오후 {hospitalData.calendar.lunch_time} 시는 점심시간
