@@ -67,6 +67,8 @@ const Home = () => {
         distance="8.5rem"
         icon={
           <Button
+            shadow
+            bold
             iconName="map"
             text="지도로 보기"
             onClick={() => {

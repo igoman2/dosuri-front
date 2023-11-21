@@ -292,7 +292,7 @@ const Home = () => {
         )}
       </section> */}
 
-      <section
+      {/* <section
         css={{
           marginBottom: "2.5rem",
         }}
@@ -323,7 +323,7 @@ const Home = () => {
             <EmptyText>등록된 후기가 없습니다.</EmptyText>
           </EmptyTextWrapper>
         )}
-      </section>
+      </section> */}
 
       <section
         css={{
@@ -334,7 +334,7 @@ const Home = () => {
         <Submap />
       </section>
 
-      <Float
+      {/* <Float
         scrollDir={scrollDir}
         distance="8.5rem"
         icon={
@@ -348,7 +348,7 @@ const Home = () => {
             }}
           />
         }
-      />
+      /> */}
       <SelectAddressModal />
 
       {isPopupOpen ? (
