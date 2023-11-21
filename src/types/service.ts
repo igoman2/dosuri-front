@@ -57,6 +57,7 @@ export interface IGetRecentHospitalSearchListParams {
 export interface IGetHospitalInfo {
   uuid: string;
   address: string;
+  website_address: string;
   name: string;
   introduction: string;
   area: string;
