@@ -127,6 +127,15 @@ const Information: FC<IInformationProps> = ({ hospitalData }) => {
                   {formatPhoneNumber(hospitalData.phone_no)}
                 </span>
                 {전화예약가능 && <div className="link-sub">(전화예약가능)</div>}
+                {hospitalData.website_address && (
+                  <div>
+                    <Link href={hospitalData.website_address}>
+                      <a target="_blank" rel="noopener noreferrer">
+                        <span className="link">홈페이지</span>
+                      </a>
+                    </Link>
+                  </div>
+                )}
               </div>
             ) : (
               <EmptyText>등록된 전화번호가 없습니다.</EmptyText>
