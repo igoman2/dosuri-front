@@ -16,6 +16,7 @@ import * as Yup from "yup";
 import { DatePicker } from "antd";
 import { EmptyText } from "@/components/etc/emotion/EmptyText";
 import dayjs from "dayjs";
+import useAuth from "@/hooks/useAuth";
 
 const Reservation = () => {
   const userInfo = useRecoilValue(userInfoState);
@@ -25,6 +26,7 @@ const Reservation = () => {
   const theme = useTheme();
   const router = useRouter();
   const hospitalUuid = useContext(ReservationContext);
+  const { isLoggedIn } = useAuth();
 
   const handleReservation = async ({
     name,
@@ -109,6 +111,26 @@ const Reservation = () => {
       </div>
       <div className="info">
         <div className="gap bold colored">예약하는 분 정보</div>
+        {!isLoggedIn && (
+          <Button
+            css={{
+              marginBottom: "1rem",
+              padding: "1.5rem",
+            }}
+            bold
+            width="100%"
+            text="로그인 하고 간편하게 예약하기"
+            backgroundColor={theme.colors.white}
+            color={theme.colors.purple}
+            border={`1px solid ${theme.colors.purple}`}
+            onClick={() => {
+              const currentURL = window.location.pathname;
+              localStorage.setItem("redirectURL", currentURL.toString());
+              router.push("/login");
+            }}
+          />
+        )}
+
         <FormikProvider value={formik}>
           <form onSubmit={formik.handleSubmit}>
             <div className="divider">
