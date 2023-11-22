@@ -175,7 +175,7 @@ const Submap = () => {
         }}
       >
         <Map
-          id="map"
+          id="map2"
           isPanto
           center={{
             lat: mapCenter.latitude,
