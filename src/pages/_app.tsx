@@ -83,6 +83,11 @@ function MyApp({
           `,
         }}
       />
+      <Script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6320493705036796"
+        crossOrigin="anonymous"
+      />
 
       <Script
         strategy="afterInteractive"
