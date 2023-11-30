@@ -6,12 +6,14 @@ import { IGetHospitalInfo } from "@/types/service";
 import { getDoctorList } from "@/service/apis/hospital";
 import styled from "@emotion/styled";
 import { useQuery } from "react-query";
+import { useTheme } from "@emotion/react";
 
 interface IDoctorsProps {
   hospitalData: IGetHospitalInfo;
 }
 
 const Doctors: FC<IDoctorsProps> = ({ hospitalData }) => {
+  const theme = useTheme();
   const { data } = useQuery({
     queryKey: ["getDoctorList", hospitalData.uuid],
     queryFn: async () => {
@@ -32,6 +34,15 @@ const Doctors: FC<IDoctorsProps> = ({ hospitalData }) => {
 
   return (
     <DoctorsWrapper>
+      <div
+        css={{
+          margin: "2rem 0",
+          fontSize: theme.fontSizes.lg,
+          color: theme.colors.grey_dark,
+        }}
+      >
+        프로필 카드를 누르면 자세한 정보를 볼 수 있어요
+      </div>
       <div>
         <div className="title-doctor">의사</div>
         {doctors?.length !== 0 ? (
