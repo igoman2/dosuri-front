@@ -33,6 +33,7 @@ const theme: Theme = {
     yellow_light: "#FFC073",
     grey: "#C9CACA",
     grey_light: "#EFEFEF",
+    grey_dark: "#7C7C7C",
     black: "#000000",
     white: "#FFFFFF",
   },
