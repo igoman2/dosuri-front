@@ -7,16 +7,14 @@ import { userInfoState } from "@/store/user";
 import { useTheme } from "@emotion/react";
 import { reservationModalState } from "./store";
 import { useRouter } from "next/router";
-import { createReservation } from "@/service/apis/hospital";
-import { useContext } from "react";
-import { ReservationContext } from "./ReservationModal";
+import { createReservation, getHospitalInfo } from "@/service/apis/hospital";
 import { modalContentState, modalState } from "@/components/Modal/store";
 import { Field, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
 import { DatePicker } from "antd";
-import { EmptyText } from "@/components/etc/emotion/EmptyText";
 import dayjs from "dayjs";
 import useAuth from "@/hooks/useAuth";
+import { useQuery } from "react-query";
 
 const Reservation = () => {
   const userInfo = useRecoilValue(userInfoState);
@@ -25,8 +23,17 @@ const Reservation = () => {
   const setNoticeModalContent = useSetRecoilState(modalContentState);
   const theme = useTheme();
   const router = useRouter();
-  const hospitalUuid = useContext(ReservationContext);
   const { isLoggedIn } = useAuth();
+
+  const hospitalUuid = router.query.id as string;
+
+  const { data: hospitalInfoData } = useQuery({
+    queryKey: ["getHospitalInfo"],
+    queryFn: async () => {
+      const data = await getHospitalInfo(hospitalUuid);
+      return data;
+    },
+  });
 
   const handleReservation = async ({
     name,
@@ -104,12 +111,34 @@ const Reservation = () => {
         <Image src={PhoneIcon} alt="phone-icon" width={45} height={45}></Image>
         <div className="text">
           <div className="bold colored">
-            예약을 위해 병원에서 직접 전화드려요
+            예약을 위해 상담원이 직접 전화드려요
           </div>
           <div>처음 보는 번호로 전화가 와도 꼭 받아주세요.</div>
         </div>
       </div>
       <div className="info">
+        <div
+          css={{
+            marginBottom: "2rem",
+          }}
+        >
+          <div
+            css={{
+              fontWeight: 700,
+              fontSize: theme.fontSizes.lg,
+            }}
+          >
+            {hospitalInfoData?.name}
+          </div>
+          <div
+            css={{
+              fontSize: theme.fontSizes.md,
+            }}
+          >
+            {hospitalInfoData?.address}
+          </div>
+        </div>
+
         <div className="gap bold colored">예약하는 분 정보</div>
         {!isLoggedIn && (
           <Button

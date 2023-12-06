@@ -49,12 +49,11 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
   const [isUp, setIsUp] = useState<boolean>();
   const router = useRouter();
   const { isLoggedIn } = useAuth();
-  const setNoticeModal = useSetRecoilState(modalState);
-  const setNoticeModalContent = useSetRecoilState(modalContentState);
   const [modal, setModal] = useRecoilState(reservationModalState);
   const 전화예약가능 = router.asPath.includes(
     "dd53e8ffb1bd45a3a0ed7517af6069e0"
   );
+
   useEffect(() => {
     router.replace({
       pathname: `/hospital/${id}`,
@@ -304,7 +303,7 @@ const HospitalInformation: FC<IHospitalInformationProps> = ({ id, tab }) => {
           )}
         </Hospital>
       </Layout>
-      <ReservationModal hospitalUuid={hospitalInfoData.uuid} />
+      <ReservationModal />
     </>
   );
 };
